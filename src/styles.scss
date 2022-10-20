@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~primeicons/primeicons.css";
+@import "~primeflex/primeflex.css";
+@import "~primeng/resources/themes/saga-blue/theme.css";
+@import "~primeng/resources/primeng.min.css";
+$primary: #b14166;
+$secondary: #fff2f6;
+
+body {
+  font-family: "Arial";
+  padding-bottom: 100px;
+}
+
+.p-selectbutton .p-button.p-highlight,
+.p-selectbutton .p-button.p-highlight:hover {
+  background: $primary;
+  border-color: $primary;
+  color: #ffffff;
+}
+
+.p-selectbutton .p-button {
+  background: #ffffff;
+  border: 2px solid $primary;
+}
+
+.p-button {
+  color: #ffffff;
+  background: $primary;
+  border: 1px solid $primary;
+}
+
+.p-selectbutton .p-button:not(.p-disabled):not(.p-highlight):hover {
+  background: $secondary;
+  border-color: $primary;
+}

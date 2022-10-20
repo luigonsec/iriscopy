@@ -12,9 +12,9 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "es2020",
-    "lib": [
-      "es2018",
-      "dom"
-    ]
+    "paths": {
+      "primeng/*": ["node_modules/primeng-lts/*"]
+    },
+    "lib": ["es2018", "dom"]
   }
 }

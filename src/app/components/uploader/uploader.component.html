@@ -1,0 +1,6 @@
+<div id="Uploader">
+  <p>Sube aquí tus documentos</p>
+  <p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000"
+    (onUpload)="onUpload($event)" [auto]="true" chooseLabel="Cargar documentos"></p-fileUpload>
+
+</div>
