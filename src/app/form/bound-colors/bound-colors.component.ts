@@ -51,4 +51,14 @@ export class BoundColorsComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  colorDelantera($event) {
+    this.colorActive.delantera = $event;
+  }
+  colorTrasera($event) {
+    this.colorActive.trasera = $event;
+  }
+  colorAnillas($event) {
+    this.colorActive.anillas = $event;
+  }
 }

@@ -11,19 +11,31 @@
 
 <div *ngIf="this.option && this.option.code === 'tapa-delantera'">
   <div class="Colors">
-    <app-color-option [active]="this.colorActive.delantera === color.id" [option]="color"
+    <app-color-option (eventEmitter)="this.colorDelantera($event)"
+      [active]="this.colorActive.delantera && this.colorActive.delantera.id === color.id" [option]="color"
       *ngFor="let color of this.colors"></app-color-option>
+    <div class="Colors__title" *ngIf="this.colorActive.delantera">
+      {{this.colorActive.delantera.name}}
+    </div>
   </div>
 </div>
 <div *ngIf="this.option && this.option.code === 'tapa-trasera'">
   <div class="Colors">
-    <app-color-option [active]="this.colorActive.trasera === color.id" [option]="color"
+    <app-color-option (eventEmitter)="this.colorTrasera($event)"
+      [active]="this.colorActive.trasera && this.colorActive.trasera.id === color.id" [option]="color"
       *ngFor="let color of this.colors"></app-color-option>
+    <div class="Colors__title" *ngIf="this.colorActive.trasera">
+      {{this.colorActive.trasera.name}}
+    </div>
   </div>
 </div>
 <div *ngIf="this.option && this.option.code === 'anillas'">
   <div class="Colors">
-    <app-color-option [active]="this.colorActive.anillas === color.id" [option]="color"
+    <app-color-option (eventEmitter)="this.colorAnillas($event)"
+      [active]="this.colorActive.anillas && this.colorActive.anillas.id === color.id" [option]="color"
       *ngFor="let color of this.colors"></app-color-option>
+    <div class="Colors__title" *ngIf="this.colorActive.anillas">
+      {{this.colorActive.anillas.name}}
+    </div>
   </div>
 </div>
