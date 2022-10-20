@@ -11,7 +11,9 @@ export class BoundColorsComponent implements OnInit {
   public option: Option;
   @Output() emitChange = new EventEmitter<any>();
 
-  public colors: { id: number; color: string; name: string }[];
+  public colorsCover: { id: number; color: string; name: string }[];
+  public colorsRings: { id: number; color: string; name: string }[];
+
   @Input() public colorActive: {
     delantera?: string;
     trasera?: string;
@@ -21,7 +23,26 @@ export class BoundColorsComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.colors = [
+    this.colorsRings = [
+      {
+        id: 1,
+        color:
+          'repeating-linear-gradient(-45deg,white,white 4px,rgba(0,0,0,.1) 4px,rgba(0,0,0,.1) 9px)',
+        name: 'Transparente',
+      },
+      { id: 2, color: 'white', name: 'Blanco' },
+      { id: 3, color: 'black', name: 'Negro' },
+      { id: 4, color: '#40e0d0', name: 'Turquesa' },
+      { id: 5, color: '#ffc0cb', name: 'Rosa pastel' },
+      { id: 6, color: '#9370db', name: 'Lila pastel' },
+      { id: 7, color: '#87cefa', name: 'Azul pastel' },
+      { id: 8, color: '#ffa500', name: 'Naranja pastel' },
+      { id: 9, color: '#ffff00', name: 'Amarillo pastel' },
+      { id: 10, color: '#bdecb6', name: 'Verde pastel' },
+      { id: 11, color: '#ff6961', name: 'Rojo' },
+    ];
+
+    this.colorsCover = [
       {
         id: 1,
         color:
