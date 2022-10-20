@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import Option from 'src/app/interfaces/Option';
 
 @Component({
@@ -9,6 +9,7 @@ import Option from 'src/app/interfaces/Option';
 export class OrientationComponent implements OnInit {
   public options: Option[];
   public option: Option = undefined;
+  @Output() emitChange = new EventEmitter<Option>();
 
   constructor() {}
 
@@ -31,5 +32,11 @@ export class OrientationComponent implements OnInit {
     };
     this.options = [vdi, haa, vaa, hdi];
     this.option = vdi;
+    this.emitChange.emit(this.option);
+  }
+
+  handleChange($event) {
+    const orientation = $event.value;
+    this.emitChange.emit(orientation);
   }
 }

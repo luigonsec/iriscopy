@@ -23,6 +23,10 @@ import { BoundColorsComponent } from './form/bound-colors/bound-colors.component
 import { TabViewModule } from 'primeng/tabview';
 import { BadgeModule } from 'primeng/badge';
 import { ColorOptionComponent } from './components/color-option/color-option.component';
+import { QuantityCopiesComponent } from './form/quantity-copies/quantity-copies.component';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { AdditionalCommentComponent } from './form/additional-comment/additional-comment.component';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @NgModule({
   declarations: [
@@ -40,6 +44,8 @@ import { ColorOptionComponent } from './components/color-option/color-option.com
     BoundTypeComponent,
     BoundColorsComponent,
     ColorOptionComponent,
+    QuantityCopiesComponent,
+    AdditionalCommentComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +55,9 @@ import { ColorOptionComponent } from './components/color-option/color-option.com
     FileUploadModule,
     MenubarModule,
     HttpClientModule,
+    InputNumberModule,
     TabViewModule,
+    InputTextareaModule,
     BadgeModule,
   ],
   providers: [],

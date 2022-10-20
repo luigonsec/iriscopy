@@ -40,7 +40,8 @@ body {
 .Form__Section {
   margin-bottom: 20px;
 
-  label {
+  .Label {
+    margin-bottom: 20px;
     font-size: 18px;
     font-weight: bold;
   }
@@ -57,4 +58,10 @@ body {
   .Button__description {
     font-size: 10px;
   }
+}
+
+.p-button:enabled:hover {
+  background: $primary;
+  color: #ffffff;
+  border-color: $primary;
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import Option from 'src/app/interfaces/Option';
 
 @Component({
@@ -9,13 +9,20 @@ import Option from 'src/app/interfaces/Option';
 export class PrintTypeComponent implements OnInit {
   public options: Option[];
   public option: Option = undefined;
+  @Output() emitChange = new EventEmitter<Option>();
 
   constructor() {}
+
+  handleChange($event) {
+    const printForm = $event.value;
+    this.emitChange.emit(printForm);
+  }
 
   ngOnInit(): void {
     const blancoNegro = { name: 'Blanco y negro', code: 'blanco-negro' };
     const color = { name: 'Color', code: 'color' };
     this.options = [blancoNegro, color];
     this.option = color;
+    this.emitChange.emit(this.option);
   }
 }

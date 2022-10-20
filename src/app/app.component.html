@@ -5,57 +5,73 @@
   <div class="col-12 md:col-4">
     <div class="Form__Section p-field">
       <div class="p-fluid">
-        <label>Tamaño del papel</label>
-        <app-paper-size></app-paper-size>
+        <label class="Label">Tamaño del papel</label>
+        <app-paper-size (emitChange)="getPaperSize($event)"></app-paper-size>
       </div>
     </div>
 
     <div class="Form__Section p-field">
       <div class="p-fluid">
-        <label>Gramaje del papel</label>
-        <app-paper-grammage></app-paper-grammage>
+        <label class="Label">Gramaje del papel</label>
+        <app-paper-grammage (emitChange)="getPaperGrammage($event)"></app-paper-grammage>
       </div>
     </div>
 
     <div class="Form__Section p-field">
       <div class="p-fluid">
-        <label>Tipo de impresión</label>
-        <app-print-type></app-print-type>
+        <label class="Label">Tipo de impresión</label>
+        <app-print-type (emitChange)="getPrintType($event)"></app-print-type>
       </div>
     </div>
 
     <div class="Form__Section p-field">
       <div class="p-fluid">
-        <label>Forma de impresión</label>
-        <app-print-form></app-print-form>
+        <label class="Label">Forma de impresión</label>
+        <app-print-form (emitChange)="getPrintForm($event)"></app-print-form>
       </div>
     </div>
 
     <div class="Form__Section p-field">
       <div class="p-fluid">
-        <label>Páginas por cara</label>
-        <app-pages-per-side></app-pages-per-side>
+        <label class="Label">Páginas por cara</label>
+        <app-pages-per-side (emitChange)="getPagesPerSide($event)"></app-pages-per-side>
       </div>
     </div>
 
 
     <div class="Form__Section p-field">
       <div class="p-fluid">
-        <label>Orientación</label>
-        <app-orientation></app-orientation>
+        <label class="Label">Orientación</label>
+        <app-orientation (emitChange)="getOrientation($event)"></app-orientation>
       </div>
     </div>
 
     <div class="Form__Section p-field">
       <div class="p-fluid">
-        <label>Tipo de acabado</label>
+        <label class="Label">Tipo de acabado</label>
         <app-finish-type (emitChange)="getFinishType($event)"></app-finish-type>
       </div>
     </div>
     <div class="Form__Section p-field" *ngIf="this.finishType && this.finishType.code === 'encuadernado'">
       <div class="p-fluid">
-        <label>Encuadernar los documentos</label>
-        <app-bound></app-bound>
+        <label class="Label">Encuadernar los documentos</label>
+        <app-bound [boundType]="this.boundType" (emitChangeBoundType)="getBoundType($event)"
+          (emitChangeBoundColors)="getBoundColors($event)" [boundColors]="this.boundColors">
+        </app-bound>
+      </div>
+    </div>
+
+    <div class="Form__Section p-field">
+      <div class="p-fluid">
+        <label class="Label">Cantidad de copias</label>
+        <app-quantity-copies (emitChange)="getCopiesQuantity($event)"></app-quantity-copies>
+      </div>
+    </div>
+
+    <div class="Form__Section p-field">
+      <div class="p-fluid">
+        <label class="Label">Comentarios adicionales</label>
+        <app-additional-comment (emitChange)="getAdditionalComments($event)"></app-additional-comment>
       </div>
     </div>
   </div>

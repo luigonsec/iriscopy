@@ -14,7 +14,7 @@ export class FinishTypeComponent implements OnInit {
 
   constructor() {}
 
-  onSelect(event: { value: any }) {
+  onSelect(event: { value: Option }) {
     this.emitChange.emit(event.value);
   }
 
@@ -35,7 +35,7 @@ export class FinishTypeComponent implements OnInit {
       description: 'En espiral',
     };
     this.options = [sinAcabado, grapado, encuadernado];
-    this.option = encuadernado;
-    this.emitChange.emit(encuadernado);
+    this.option = sinAcabado;
+    this.emitChange.emit(this.option);
   }
 }

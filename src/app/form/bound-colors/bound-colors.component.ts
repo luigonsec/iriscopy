@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { stringify } from 'querystring';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import Option from 'src/app/interfaces/Option';
 
 @Component({
@@ -10,14 +9,18 @@ import Option from 'src/app/interfaces/Option';
 export class BoundColorsComponent implements OnInit {
   public options: Option[];
   public option: Option;
+  @Output() emitChange = new EventEmitter<any>();
+
   public colors: { id: number; color: string; name: string }[];
-  public colorActive: {
+  @Input() public colorActive: {
     delantera?: string;
     trasera?: string;
     anillas?: string;
   };
 
-  constructor() {
+  constructor() {}
+
+  ngOnInit(): void {
     this.colors = [
       {
         id: 1,
@@ -43,22 +46,25 @@ export class BoundColorsComponent implements OnInit {
 
     this.option = this.options[0];
 
-    this.colorActive = {
+    this.colorActive = this.colorActive || {
       delantera: undefined,
       trasera: undefined,
       anillas: undefined,
     };
-  }
 
-  ngOnInit(): void {}
+    this.emitChange.emit(this.colorActive);
+  }
 
   colorDelantera($event) {
     this.colorActive.delantera = $event;
+    this.emitChange.emit(this.colorActive);
   }
   colorTrasera($event) {
     this.colorActive.trasera = $event;
+    this.emitChange.emit(this.colorActive);
   }
   colorAnillas($event) {
     this.colorActive.anillas = $event;
+    this.emitChange.emit(this.colorActive);
   }
 }

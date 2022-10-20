@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import Option from 'src/app/interfaces/Option';
 
 @Component({
@@ -9,8 +9,14 @@ import Option from 'src/app/interfaces/Option';
 export class PrintFormComponent implements OnInit {
   public options: Option[];
   public option: Option = undefined;
+  @Output() emitChange = new EventEmitter<Option>();
 
   constructor() {}
+
+  handleChange($event) {
+    const printForm = $event.value;
+    this.emitChange.emit(printForm);
+  }
 
   ngOnInit(): void {
     const unaCara = {
@@ -25,5 +31,6 @@ export class PrintFormComponent implements OnInit {
     };
     this.options = [unaCara, dobleCara];
     this.option = unaCara;
+    this.emitChange.emit(this.option);
   }
 }

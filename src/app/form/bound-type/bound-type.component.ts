@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import Option from 'src/app/interfaces/Option';
 
 @Component({
@@ -8,9 +8,17 @@ import Option from 'src/app/interfaces/Option';
 })
 export class BoundTypeComponent implements OnInit {
   public options: Option[];
-  public option: Option = undefined;
+  @Input() public option: Option;
+  @Output() emitChange = new EventEmitter<Option>();
 
-  constructor() {
+  constructor() {}
+
+  handleChange($event) {
+    const printForm = $event.value;
+    this.emitChange.emit(printForm);
+  }
+
+  ngOnInit(): void {
     const individual = {
       name: 'Individualmente',
       code: 'individual',
@@ -23,8 +31,7 @@ export class BoundTypeComponent implements OnInit {
     };
 
     this.options = [individual, agrupados];
-    this.option = individual;
+    this.option = this.option || individual;
+    this.emitChange.emit(this.option);
   }
-
-  ngOnInit(): void {}
 }
