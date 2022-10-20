@@ -10,12 +10,12 @@ export class PaperGrammageComponent implements OnInit {
   public options: Option[];
   public option: Option = undefined;
 
-  constructor() {
-    this.options = [
-      { name: '80gr', code: '80gr' },
-      { name: '100gr', code: '100gr' },
-    ];
-  }
+  constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const gr80 = { name: '80gr', code: '80gr', description: 'Navigator' };
+    const gr100 = { name: '100gr', code: '100gr', description: 'Navigator' };
+    this.options = [gr80, gr100];
+    this.option = gr80;
+  }
 }

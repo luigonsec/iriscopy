@@ -49,10 +49,17 @@
     <div class="Form__Section p-field">
       <div class="p-fluid">
         <label>Tipo de acabado</label>
-        <app-finish-type></app-finish-type>
+        <app-finish-type (emitChange)="getFinishType($event)"></app-finish-type>
+      </div>
+    </div>
+    <div class="Form__Section p-field" *ngIf="this.finishType && this.finishType.code === 'encuadernado'">
+      <div class="p-fluid">
+        <label>Encuadernar los documentos</label>
+        <app-bound></app-bound>
       </div>
     </div>
   </div>
+
 
   <div class="col-12 md:col-8">
     <app-uploader></app-uploader>

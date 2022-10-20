@@ -10,12 +10,12 @@ export class PrintTypeComponent implements OnInit {
   public options: Option[];
   public option: Option = undefined;
 
-  constructor() {
-    this.options = [
-      { name: 'Blanco y negro', code: 'blanco-negro' },
-      { name: 'Color', code: 'color' },
-    ];
-  }
+  constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const blancoNegro = { name: 'Blanco y negro', code: 'blanco-negro' };
+    const color = { name: 'Color', code: 'color' };
+    this.options = [blancoNegro, color];
+    this.option = color;
+  }
 }

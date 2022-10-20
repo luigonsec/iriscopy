@@ -12,11 +12,18 @@ import { PrintFormComponent } from './form/print-form/print-form.component';
 import { PagesPerSideComponent } from './form/pages-per-side/pages-per-side.component';
 import { OrientationComponent } from './form/orientation/orientation.component';
 import { FinishTypeComponent } from './form/finish-type/finish-type.component';
+import { BoundTypeComponent } from './form/bound-type/bound-type.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuComponent } from './components/menu/menu.component';
 import { UploaderComponent } from './components/uploader/uploader.component';
 import { HttpClientModule } from '@angular/common/http';
+import { BoundComponent } from './components/bound/bound.component';
+import { BoundColorsComponent } from './form/bound-colors/bound-colors.component';
+import { TabViewModule } from 'primeng/tabview';
+import { BadgeModule } from 'primeng/badge';
+import { ColorOptionComponent } from './components/color-option/color-option.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,8 +34,12 @@ import { HttpClientModule } from '@angular/common/http';
     PagesPerSideComponent,
     OrientationComponent,
     FinishTypeComponent,
+    BoundComponent,
     MenuComponent,
     UploaderComponent,
+    BoundTypeComponent,
+    BoundColorsComponent,
+    ColorOptionComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +49,8 @@ import { HttpClientModule } from '@angular/common/http';
     FileUploadModule,
     MenubarModule,
     HttpClientModule,
+    TabViewModule,
+    BadgeModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

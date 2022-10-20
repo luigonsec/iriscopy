@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import Option from 'src/app/interfaces/Option';
 
 @Component({
@@ -10,19 +10,32 @@ export class FinishTypeComponent implements OnInit {
   public options: Option[];
   public option: Option = undefined;
 
-  constructor() {
-    this.options = [
-      {
-        name: 'Sin acabado',
-        code: 'sin-acabado',
-      },
-      { name: 'Grapado', code: 'grapado' },
-      {
-        name: 'Encuadernado',
-        code: 'encuadernado',
-      },
-    ];
+  @Output() emitChange = new EventEmitter<any>();
+
+  constructor() {}
+
+  onSelect(event: { value: any }) {
+    this.emitChange.emit(event.value);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const sinAcabado = {
+      name: 'Sin acabado',
+      code: 'sin-acabado',
+      description: 'Folios sueltos',
+    };
+    const grapado = {
+      name: 'Grapado',
+      code: 'grapado',
+      description: 'En esquina',
+    };
+    const encuadernado = {
+      name: 'Encuadernado',
+      code: 'encuadernado',
+      description: 'En espiral',
+    };
+    this.options = [sinAcabado, grapado, encuadernado];
+    this.option = encuadernado;
+    this.emitChange.emit(encuadernado);
+  }
 }

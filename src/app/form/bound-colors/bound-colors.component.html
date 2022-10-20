@@ -1,0 +1,29 @@
+<label class="Label" for="">Color de las anillas</label>
+
+<p-selectButton [options]="options" [(ngModel)]="option" optionLabel="name">
+  <ng-template let-item>
+    <div class="Button">
+      <div class="Button__label">{{item.name}}</div>
+      <div class="Button__description">{{item.description}}</div>
+    </div>
+  </ng-template>
+</p-selectButton>
+
+<div *ngIf="this.option && this.option.code === 'tapa-delantera'">
+  <div class="Colors">
+    <app-color-option [active]="this.colorActive.delantera === color.id" [option]="color"
+      *ngFor="let color of this.colors"></app-color-option>
+  </div>
+</div>
+<div *ngIf="this.option && this.option.code === 'tapa-trasera'">
+  <div class="Colors">
+    <app-color-option [active]="this.colorActive.trasera === color.id" [option]="color"
+      *ngFor="let color of this.colors"></app-color-option>
+  </div>
+</div>
+<div *ngIf="this.option && this.option.code === 'anillas'">
+  <div class="Colors">
+    <app-color-option [active]="this.colorActive.anillas === color.id" [option]="color"
+      *ngFor="let color of this.colors"></app-color-option>
+  </div>
+</div>

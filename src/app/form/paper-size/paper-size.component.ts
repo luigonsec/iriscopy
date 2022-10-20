@@ -10,13 +10,14 @@ export class PaperSizeComponent implements OnInit {
   public options: Option[];
   public option: Option = undefined;
 
-  constructor() {
-    this.options = [
-      { name: 'A3', code: 'A3' },
-      { name: 'A4', code: 'A4' },
-      { name: 'A5', code: 'A5' },
-    ];
-  }
+  constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const A3 = { name: 'A3', code: 'A3' };
+    const A4 = { name: 'A4', code: 'A4' };
+    const A5 = { name: 'A5', code: 'A5' };
+
+    this.options = [A3, A4, A5];
+    this.option = A4;
+  }
 }

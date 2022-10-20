@@ -10,12 +10,20 @@ export class PrintFormComponent implements OnInit {
   public options: Option[];
   public option: Option = undefined;
 
-  constructor() {
-    this.options = [
-      { name: 'Una cara', code: 'una-cara' },
-      { name: 'Doble cara', code: 'doble-cara' },
-    ];
-  }
+  constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const unaCara = {
+      name: 'Una cara',
+      code: 'una-cara',
+      description: 'Por una cara del papel',
+    };
+    const dobleCara = {
+      name: 'Doble cara',
+      code: 'doble-cara',
+      description: 'Por ambas caras del papel',
+    };
+    this.options = [unaCara, dobleCara];
+    this.option = unaCara;
+  }
 }

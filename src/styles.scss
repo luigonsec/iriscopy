@@ -36,3 +36,25 @@ body {
   background: $secondary;
   border-color: $primary;
 }
+
+.Form__Section {
+  margin-bottom: 20px;
+
+  label {
+    font-size: 18px;
+    font-weight: bold;
+  }
+}
+
+.Button {
+  text-align: center;
+  width: 100%;
+  .Button__label {
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .Button__description {
+    font-size: 10px;
+  }
+}
