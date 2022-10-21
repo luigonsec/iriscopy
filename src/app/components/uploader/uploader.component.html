@@ -1,6 +1,14 @@
 <div id="Uploader">
   <p>Sube aquí tus documentos</p>
-  <p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000"
-    (onUpload)="onUpload($event)" [auto]="true" chooseLabel="Cargar documentos"></p-fileUpload>
+
+
+  <p-fileUpload name="file[]" (onSelect)="onUpload($event)" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+    text/plain, application/pdf" maxFileSize="1000000" webkitdirectory>
+    <ng-template pTemplate="content">
+      <div *ngFor="let file of (uploadedFiles || [])">
+        {{file.name}} - {{file.size}} bytes - {{this.pages}} páginas
+      </div>
+    </ng-template>
+  </p-fileUpload>
 
 </div>

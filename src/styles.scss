@@ -65,3 +65,13 @@ body {
   color: #ffffff;
   border-color: $primary;
 }
+
+.p-fileupload-choose:not(.p-disabled):hover {
+  background: $primary;
+  color: #ffffff;
+  border-color: $primary;
+}
+
+.p-fileupload-files {
+  display: none;
+}
