@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.js';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
 
 @Component({
   selector: 'app-uploader',
@@ -10,12 +10,15 @@ export class UploaderComponent implements OnInit {
   public uploadedFiles: any[] = [];
   public pages: number = 0;
   public src: string;
+  @Output() emitChange = new EventEmitter<any>();
+
   constructor() {}
 
   onUpload($event) {
     const reader = new FileReader();
     const file = $event.currentFiles[0];
     this.uploadedFiles = [file];
+
     if (file) {
       reader.readAsBinaryString(file);
       reader.onloadend = () => {
@@ -25,7 +28,12 @@ export class UploaderComponent implements OnInit {
 
         this.pages = count;
       };
+
+      this.emitChange.emit(file);
     }
   }
-  ngOnInit(): void {}
+
+  ngOnInit(): void {
+    if (this.uploadedFiles.length) this.emitChange.emit(this.uploadedFiles[0]);
+  }
 }

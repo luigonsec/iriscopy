@@ -78,6 +78,9 @@
 
 
   <div class="col-12 sm:col-12 md:col-7 lg:col-8">
-    <app-uploader></app-uploader>
+    <app-uploader (emitChange)="getFile($event)"></app-uploader>
   </div>
 </div>
+
+
+<app-confirm-bar *ngIf="this.isReady()"></app-confirm-bar>

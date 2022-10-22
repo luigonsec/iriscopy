@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { tryEach } from 'async';
 import Option from './interfaces/Option';
 
 @Component({
@@ -19,6 +20,7 @@ export class AppComponent {
     code: 'individual',
     description: 'Por cada documento',
   };
+
   public boundColors: {
     delantera: { id: number; color: string; name: string };
     anillas: { id: number; color: string; name: string };
@@ -32,7 +34,10 @@ export class AppComponent {
   public copiesQuantity: number;
   public additionalComments: string;
 
+  public ready: boolean = true;
+
   title = 'iriscopy';
+  file: any;
 
   getPaperGrammage(value) {
     this.paperGrammage = value;
@@ -76,5 +81,31 @@ export class AppComponent {
 
   getAdditionalComments(value) {
     this.additionalComments = value;
+  }
+
+  getFile(file) {
+    this.file = file;
+  }
+
+  isReady() {
+    if (!!!this.orientation) return false;
+    if (!!!this.finishType) return false;
+    if (!!!this.pagesPerSide) return false;
+    if (!!!this.printForm) return false;
+    if (!!!this.printType) return false;
+    if (!!!this.paperGrammage) return false;
+    if (!!!this.paperSize) return false;
+    if (!!!this.boundType) return false;
+
+    if (this.finishType.code === 'encuadernado') {
+      if (!!!this.boundColors.anillas) return false;
+      if (!!!this.boundColors.delantera) return false;
+      if (!!!this.boundColors.trasera) return false;
+    }
+
+    if (!!!this.copiesQuantity) return false;
+    if (!!!this.file) return false;
+
+    return true;
   }
 }

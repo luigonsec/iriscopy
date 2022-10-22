@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
+import { CardModule } from 'primeng/card';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SelectButtonModule } from 'primeng/selectbutton';
@@ -27,6 +27,7 @@ import { QuantityCopiesComponent } from './form/quantity-copies/quantity-copies.
 import { InputNumberModule } from 'primeng/inputnumber';
 import { AdditionalCommentComponent } from './form/additional-comment/additional-comment.component';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ConfirmBarComponent } from './components/confirm-bar/confirm-bar.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     ColorOptionComponent,
     QuantityCopiesComponent,
     AdditionalCommentComponent,
+    ConfirmBarComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +59,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     HttpClientModule,
     InputNumberModule,
     TabViewModule,
+    CardModule,
     InputTextareaModule,
     BadgeModule,
   ],

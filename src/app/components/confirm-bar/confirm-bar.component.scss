@@ -1,0 +1,15 @@
+@import "../../../assets/scss/colors.scss";
+
+#ConfirmBar {
+  background-color: $primary;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 20px;
+
+  #Precio {
+    color: white;
+    font-size: 30px;
+  }
+}

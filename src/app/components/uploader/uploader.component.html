@@ -1,14 +1,29 @@
 <div id="Uploader">
   <p>Sube aquí tus documentos</p>
 
+  <div>
 
-  <p-fileUpload name="file[]" (onSelect)="onUpload($event)" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
-    text/plain, application/pdf" maxFileSize="1000000" webkitdirectory>
-    <ng-template pTemplate="content">
-      <div *ngFor="let file of (uploadedFiles || [])">
-        {{file.name}} - {{file.size}} bytes - {{this.pages}} páginas
+  </div>
+
+  <div class="grid">
+    <div class="md:col-6 md:col-offset-3">
+      <div class="p-fluid">
+        <p-card *ngFor="let file of (uploadedFiles || [])" [header]="file.name"
+          [subheader]="file.size  + ' bytes. ' + this.pages + ' páginas'" [style]="{ padding: '25px'}"
+          styleClass="p-card-shadow">
+          <ng-template pTemplate="header">
+            <img alt="Card" src="assets/images/pdf.png">
+          </ng-template>
+        </p-card>
+
       </div>
-    </ng-template>
-  </p-fileUpload>
+    </div>
+  </div>
 
+
+  <p-fileUpload *ngIf="uploadedFiles.length === 0" mode="basic" name="file[]" (onSelect)="onUpload($event)" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+    text/plain, application/pdf" maxFileSize="1000000" uploadLabel="Confirmar y subir"
+    chooseLabel="Seleccionar archivo..." cancelLabel="Cancelar">
+
+  </p-fileUpload>
 </div>
