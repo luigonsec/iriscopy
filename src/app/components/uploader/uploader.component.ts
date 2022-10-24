@@ -7,7 +7,12 @@ import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
   styleUrls: ['./uploader.component.scss'],
 })
 export class UploaderComponent implements OnInit {
-  public uploadedFiles: any[] = [];
+  public uploadedFiles: any[] = [
+    {
+      name: 'example',
+      size: 5000,
+    },
+  ];
   public pages: number = 0;
   public src: string;
   @Output() emitChange = new EventEmitter<any>();

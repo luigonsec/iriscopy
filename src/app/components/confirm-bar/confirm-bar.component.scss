@@ -6,10 +6,29 @@
   position: fixed;
   bottom: 0;
   left: 0;
-  padding: 20px;
+  padding: 10px;
+  box-shadow: 0px 0px 5px gray;
+
+  #Botones {
+    text-align: center;
+    .Boton {
+      color: black;
+      font-weight: bold;
+      text-align: center !important;
+    }
+  }
 
   #Precio {
     color: white;
-    font-size: 30px;
+    text-align: center;
+
+    #Texto {
+      font-size: 20px;
+    }
+
+    #Cantidad {
+      font-weight: bold;
+      font-size: 30px;
+    }
   }
 }
