@@ -18,10 +18,16 @@ export class PaperGrammageComponent implements OnInit {
     this.emitChange.emit(paperGrammage);
   }
   ngOnInit(): void {
-    const gr80 = { name: '80gr', code: '80gr', description: 'Navigator' };
-    const gr100 = { name: '100gr', code: '100gr', description: 'Navigator' };
-    this.options = [gr80, gr100];
-    this.option = gr80;
+    const normal = { name: 'Normal', code: 'normal', factor: 0 };
+    const cartulina = { name: 'Cartulina', code: 'cartulina', factor: 0.1 };
+    const fotografico = {
+      name: 'Fortográfico',
+      code: 'fotografico',
+      factor: 0.15,
+    };
+
+    this.options = [normal, cartulina, fotografico];
+    this.option = normal;
     this.emitChange.emit(this.option);
   }
 }

@@ -13,7 +13,7 @@ export class UploaderComponent implements OnInit {
       size: 5000,
     },
   ];
-  public pages: number = 0;
+  public pages: number = 21;
   public src: string;
   @Output() emitChange = new EventEmitter<any>();
 
@@ -39,6 +39,10 @@ export class UploaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.uploadedFiles.length) this.emitChange.emit(this.uploadedFiles[0]);
+    if (this.uploadedFiles.length) {
+      const file = this.uploadedFiles[0];
+      file.pages = this.pages;
+      this.emitChange.emit(file);
+    }
   }
 }

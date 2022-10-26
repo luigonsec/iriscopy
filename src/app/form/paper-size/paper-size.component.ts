@@ -21,9 +21,8 @@ export class PaperSizeComponent implements OnInit {
   ngOnInit(): void {
     const A3 = { name: 'A3', code: 'A3' };
     const A4 = { name: 'A4', code: 'A4' };
-    const A5 = { name: 'A5', code: 'A5' };
 
-    this.options = [A3, A4, A5];
+    this.options = [A3, A4];
     this.option = A4;
     this.emitChange.emit(this.option);
   }

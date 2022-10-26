@@ -21,7 +21,8 @@ export class PrintTypeComponent implements OnInit {
   ngOnInit(): void {
     const blancoNegro = { name: 'Blanco y negro', code: 'blanco-negro' };
     const color = { name: 'Color', code: 'color' };
-    this.options = [blancoNegro, color];
+    const eco = { name: 'Color ECO', code: 'color-eco' };
+    this.options = [blancoNegro, color, eco];
     this.option = color;
     this.emitChange.emit(this.option);
   }

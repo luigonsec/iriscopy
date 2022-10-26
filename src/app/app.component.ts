@@ -40,6 +40,8 @@ export class AppComponent {
   public file: any;
 
   constructor() {
+    console.log(this.file);
+
     this.order = {
       orientation: this.orientation,
       finishType: this.finishType,
@@ -112,6 +114,8 @@ export class AppComponent {
   }
 
   getFile(file) {
+    console.log(file);
+
     this.file = file;
     this.order.file = this.file;
   }
