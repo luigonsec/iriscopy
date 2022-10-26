@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import Option from 'src/app/interfaces/Option';
+import options from 'src/config/options';
 
 @Component({
   selector: 'app-pages-per-side',
@@ -19,11 +20,8 @@ export class PagesPerSideComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const una = { name: '1 página', code: '1', description: 'Por cara' };
-    const dos = { name: '2 páginas', code: '2', description: 'Por cara' };
-    const cuatro = { name: '4 páginas', code: '4', description: 'Por cara' };
-    this.options = [una, dos, cuatro];
-    this.option = una;
+    this.options = options.pagesPerSide;
+    this.option = this.options.find((x) => x.default);
     this.emitChange.emit(this.option);
   }
 }

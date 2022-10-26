@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import Option from 'src/app/interfaces/Option';
+import options from 'src/config/options';
 
 @Component({
   selector: 'app-paper-grammage',
@@ -18,16 +19,8 @@ export class PaperGrammageComponent implements OnInit {
     this.emitChange.emit(paperGrammage);
   }
   ngOnInit(): void {
-    const normal = { name: 'Normal', code: 'normal', factor: 0 };
-    const cartulina = { name: 'Cartulina', code: 'cartulina', factor: 0.1 };
-    const fotografico = {
-      name: 'Fortográfico',
-      code: 'fotografico',
-      factor: 0.15,
-    };
-
-    this.options = [normal, cartulina, fotografico];
-    this.option = normal;
+    this.options = options.paperType;
+    this.option = options.paperType.find((x) => x.default);
     this.emitChange.emit(this.option);
   }
 }

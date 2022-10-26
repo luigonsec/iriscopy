@@ -22,11 +22,13 @@ export class PrintFormComponent implements OnInit {
     const unaCara = {
       name: 'Una cara',
       code: 'una-cara',
+      factor: 1,
       description: 'Por una cara del papel',
     };
     const dobleCara = {
       name: 'Doble cara',
       code: 'doble-cara',
+      factor: 0.5,
       description: 'Por ambas caras del papel',
     };
     this.options = [unaCara, dobleCara];

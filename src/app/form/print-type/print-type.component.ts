@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import Option from 'src/app/interfaces/Option';
+import options from 'src/config/options';
 
 @Component({
   selector: 'app-print-type',
@@ -19,11 +20,8 @@ export class PrintTypeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const blancoNegro = { name: 'Blanco y negro', code: 'blanco-negro' };
-    const color = { name: 'Color', code: 'color' };
-    const eco = { name: 'Color ECO', code: 'color-eco' };
-    this.options = [blancoNegro, color, eco];
-    this.option = color;
+    this.options = options.printType;
+    this.option = this.options.find((x) => x.default);
     this.emitChange.emit(this.option);
   }
 }

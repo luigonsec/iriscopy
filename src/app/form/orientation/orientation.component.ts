@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import Option from 'src/app/interfaces/Option';
+import options from 'src/config/options';
 
 @Component({
   selector: 'app-orientation',
@@ -14,24 +15,8 @@ export class OrientationComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    const vdi = {
-      name: 'Vertical. Derecha-Izquierda',
-      code: 'vertical-derecha-izquierda',
-    };
-    const haa = {
-      name: 'Horizontal. Abajo-Arriba',
-      code: 'horizontal-abajo-arriba',
-    };
-    const vaa = {
-      name: 'Vertical. Abajo-Arriba',
-      code: 'vertical-abajo-arriba',
-    };
-    const hdi = {
-      name: 'Horizontal. Derecha-Izquierda',
-      code: 'horizontal-derecha-izquierda',
-    };
-    this.options = [vdi, haa, vaa, hdi];
-    this.option = vdi;
+    this.options = options.orientation;
+    this.option = options.orientation.find((x) => x.default);
     this.emitChange.emit(this.option);
   }
 

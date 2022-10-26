@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import Option from 'src/app/interfaces/Option';
-
+import options from 'src/config/options';
 @Component({
   selector: 'app-paper-size',
   templateUrl: './paper-size.component.html',
@@ -19,11 +19,8 @@ export class PaperSizeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const A3 = { name: 'A3', code: 'A3' };
-    const A4 = { name: 'A4', code: 'A4' };
-
-    this.options = [A3, A4];
-    this.option = A4;
+    this.options = options.paperSize;
+    this.option = this.options.find((x) => x.default);
     this.emitChange.emit(this.option);
   }
 }

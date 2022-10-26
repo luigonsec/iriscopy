@@ -17,31 +17,16 @@ export class AppComponent {
   public printType: Option;
   public paperGrammage: Option;
   public paperSize: Option;
-  public boundType: Option = {
-    name: 'Individualmente',
-    code: 'individual',
-    description: 'Por cada documento',
-  };
+  public boundType: Option;
 
-  public boundColors: {
-    delantera: { id: number; color: string; name: string };
-    anillas: { id: number; color: string; name: string };
-    trasera: { id: number; color: string; name: string };
-  } = {
-    delantera: undefined,
-    anillas: undefined,
-    trasera: undefined,
-  };
+  public boundColors;
 
   public copiesQuantity: number;
   public additionalComments: string;
-  public ready: boolean = true;
   public order: Order;
   public file: any;
 
   constructor() {
-    console.log(this.file);
-
     this.order = {
       orientation: this.orientation,
       finishType: this.finishType,
@@ -98,13 +83,11 @@ export class AppComponent {
     this.order.copiesQuantity = this.copiesQuantity;
   }
 
-  getBoundType(value) {
-    this.boundType = value;
-    this.order.boundType = this.boundType;
-  }
+  getBound(value) {
+    this.boundType = value.boundType;
+    this.boundColors = value.boundColors;
 
-  getBoundColors(value) {
-    this.boundColors = value;
+    this.order.boundType = this.boundType;
     this.order.boundColors = this.boundColors;
   }
 
@@ -114,31 +97,31 @@ export class AppComponent {
   }
 
   getFile(file) {
-    console.log(file);
-
     this.file = file;
     this.order.file = this.file;
   }
 
   isReady() {
-    if (!!!this.orientation) return false;
-    if (!!!this.finishType) return false;
-    if (!!!this.pagesPerSide) return false;
-    if (!!!this.printForm) return false;
-    if (!!!this.printType) return false;
-    if (!!!this.paperGrammage) return false;
-    if (!!!this.paperSize) return false;
-    if (!!!this.boundType) return false;
+    let res = true;
+
+    if (!!!this.orientation) res = false;
+    if (!!!this.finishType) res = false;
+    if (!!!this.pagesPerSide) res = false;
+    if (!!!this.printForm) res = false;
+    if (!!!this.printType) res = false;
+    if (!!!this.paperGrammage) res = false;
+    if (!!!this.paperSize) res = false;
 
     if (this.finishType.code === 'encuadernado') {
-      if (!!!this.boundColors.anillas) return false;
-      if (!!!this.boundColors.delantera) return false;
-      if (!!!this.boundColors.trasera) return false;
+      if (!!!this.boundType) res = false;
+      if (!!!this.boundColors || !!!this.boundColors.anillas) res = false;
+      if (!!!this.boundColors || !!!this.boundColors.delantera) res = false;
+      if (!!!this.boundColors || !!!this.boundColors.trasera) res = false;
     }
 
-    if (!!!this.copiesQuantity) return false;
-    if (!!!this.file) return false;
+    if (!!!this.copiesQuantity) res = false;
+    if (!!!this.file) res = false;
 
-    return true;
+    return res;
   }
 }

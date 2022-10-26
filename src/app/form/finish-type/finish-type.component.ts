@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import Option from 'src/app/interfaces/Option';
+import options from 'src/config/options';
 
 @Component({
   selector: 'app-finish-type',
@@ -19,23 +20,8 @@ export class FinishTypeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const sinAcabado = {
-      name: 'Sin acabado',
-      code: 'sin-acabado',
-      description: 'Folios sueltos',
-    };
-    const grapado = {
-      name: 'Grapado',
-      code: 'grapado',
-      description: 'En esquina',
-    };
-    const encuadernado = {
-      name: 'Encuadernado',
-      code: 'encuadernado',
-      description: 'En espiral',
-    };
-    this.options = [sinAcabado, grapado, encuadernado];
-    this.option = sinAcabado;
+    this.options = options.finishType;
+    this.option = this.options.find((x) => x.default);
     this.emitChange.emit(this.option);
   }
 }

@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import BoundColor from 'src/app/interfaces/BoundColor';
 import Option from 'src/app/interfaces/Option';
+import options from 'src/config/options';
 
 @Component({
   selector: 'app-bound-colors',
@@ -7,70 +9,31 @@ import Option from 'src/app/interfaces/Option';
   styleUrls: ['./bound-colors.component.scss'],
 })
 export class BoundColorsComponent implements OnInit {
-  public options: Option[];
+  public bounds: Option[];
   public option: Option;
   @Output() emitChange = new EventEmitter<any>();
 
-  public colorsCover: { id: number; color: string; name: string }[];
-  public colorsRings: { id: number; color: string; name: string }[];
+  public colorsCover: BoundColor[];
+  public colorsRings: BoundColor[];
 
-  @Input() public colorActive: {
-    delantera?: string;
-    trasera?: string;
-    anillas?: string;
+  public colorActive: {
+    delantera?: BoundColor;
+    trasera?: BoundColor;
+    anillas?: BoundColor;
   };
 
   constructor() {}
 
   ngOnInit(): void {
-    this.colorsRings = [
-      {
-        id: 1,
-        color:
-          'repeating-linear-gradient(-45deg,white,white 4px,rgba(0,0,0,.1) 4px,rgba(0,0,0,.1) 9px)',
-        name: 'Transparente',
-      },
-      { id: 2, color: 'white', name: 'Blanco' },
-      { id: 3, color: 'black', name: 'Negro' },
-      { id: 4, color: '#40e0d0', name: 'Turquesa' },
-      { id: 5, color: '#ffc0cb', name: 'Rosa pastel' },
-      { id: 6, color: '#9370db', name: 'Lila pastel' },
-      { id: 7, color: '#87cefa', name: 'Azul pastel' },
-      { id: 8, color: '#ffa500', name: 'Naranja pastel' },
-      { id: 9, color: '#ffff00', name: 'Amarillo pastel' },
-      { id: 10, color: '#bdecb6', name: 'Verde pastel' },
-      { id: 11, color: '#ff6961', name: 'Rojo' },
-    ];
-
-    this.colorsCover = [
-      {
-        id: 1,
-        color:
-          'repeating-linear-gradient(-45deg,white,white 4px,rgba(0,0,0,.1) 4px,rgba(0,0,0,.1) 9px)',
-        name: 'Transparente',
-      },
-      { id: 2, color: 'black', name: 'Negro' },
-      { id: 3, color: '#40e0d0', name: 'Turquesa' },
-      { id: 4, color: '#ffc0cb', name: 'Rosa pastel' },
-      { id: 5, color: '#9370db', name: 'Lila pastel' },
-      { id: 6, color: '#87cefa', name: 'Azul pastel' },
-      { id: 7, color: '#ffa500', name: 'Naranja pastel' },
-      { id: 8, color: '#ffff00', name: 'Amarillo pastel' },
-      { id: 9, color: '#ff6961', name: 'Rojo' },
-    ];
-
-    this.options = [
-      { name: 'Anillas', code: 'anillas' },
-      { name: 'Tapa delantera', code: 'tapa-delantera' },
-      { name: 'Tapa trasera', code: 'tapa-trasera' },
-    ];
-
-    this.option = this.options[0];
+    this.colorsRings = options.colorsRings;
+    this.colorsCover = options.colorsCover;
+    this.bounds = options.bounds;
+    this.option = this.bounds.find((x) => x.default) || this.bounds[0];
 
     this.colorActive = this.colorActive || {
-      delantera: undefined,
-      trasera: undefined,
-      anillas: undefined,
+      delantera: this.colorsCover.find((x) => x.default),
+      trasera: this.colorsCover.find((x) => x.default),
+      anillas: this.colorsRings.find((x) => x.default),
     };
 
     this.emitChange.emit(this.colorActive);

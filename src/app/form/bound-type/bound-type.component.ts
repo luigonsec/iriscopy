@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import Option from 'src/app/interfaces/Option';
-
+import options from 'src/config/options';
 @Component({
   selector: 'app-bound-type',
   templateUrl: './bound-type.component.html',
@@ -8,7 +8,7 @@ import Option from 'src/app/interfaces/Option';
 })
 export class BoundTypeComponent implements OnInit {
   public options: Option[];
-  @Input() public option: Option;
+  public option: Option;
   @Output() emitChange = new EventEmitter<Option>();
 
   constructor() {}
@@ -19,19 +19,8 @@ export class BoundTypeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const individual = {
-      name: 'Individualmente',
-      code: 'individual',
-      description: 'Por cada documento',
-    };
-    const agrupados = {
-      name: 'Agrupados',
-      code: 'agrupados',
-      description: 'Todos en uno',
-    };
-
-    this.options = [individual, agrupados];
-    this.option = this.option || individual;
+    this.options = options.boundTypes;
+    this.option = this.option || options.boundTypes.find((x) => x.default);
     this.emitChange.emit(this.option);
   }
 }

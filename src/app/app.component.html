@@ -55,8 +55,7 @@
     <div class="Form__Section p-field" *ngIf="this.finishType && this.finishType.code === 'encuadernado'">
       <div class="p-fluid">
         <label class="Label">Encuadernar los documentos</label>
-        <app-bound [boundType]="this.boundType" (emitChangeBoundType)="getBoundType($event)"
-          (emitChangeBoundColors)="getBoundColors($event)" [boundColors]="this.boundColors">
+        <app-bound (emitChangeBound)="getBound($event)">
         </app-bound>
       </div>
     </div>

@@ -1,5 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import BoundColor from 'src/app/interfaces/BoundColor';
 import Option from 'src/app/interfaces/Option';
+import options from 'src/config/options';
+interface Bound {
+  boundType: Option;
+  boundColors: {
+    delantera: BoundColor;
+    anillas: BoundColor;
+    trasera: BoundColor;
+  };
+}
 
 @Component({
   selector: 'app-bound',
@@ -7,31 +17,37 @@ import Option from 'src/app/interfaces/Option';
   styleUrls: ['./bound.component.scss'],
 })
 export class BoundComponent implements OnInit {
-  @Input() boundColors: {
-    delantera: { id: number; color: string; name: string };
-    anillas: { id: number; color: string; name: string };
-    trasera: { id: number; color: string; name: string };
+  public boundColors: {
+    delantera: BoundColor;
+    anillas: BoundColor;
+    trasera: BoundColor;
   };
-  @Input() boundType: Option;
+  public boundType: Option;
 
-  @Output() emitChangeBoundType = new EventEmitter<Option>();
-  @Output() emitChangeBoundColors = new EventEmitter<{
-    delantera: { id: number; color: string; name: string };
-    anillas: { id: number; color: string; name: string };
-    trasera: { id: number; color: string; name: string };
-  }>();
+  public bound = {
+    boundType: options.boundTypes.find((x) => x.default),
+    boundColors: {
+      anillas: options.colorsRings.find((x) => x.default),
+      trasera: options.colorsRings.find((x) => x.default),
+      delantera: options.colorsRings.find((x) => x.default),
+    },
+  };
+
+  @Output() emitChangeBound = new EventEmitter<Bound>();
 
   constructor() {}
 
   handleBoundType(value) {
-    const boundType = value;
-    this.emitChangeBoundType.emit(boundType);
+    this.bound.boundType = value;
+    this.emitChangeBound.emit(this.bound);
   }
 
   handleBoundColors(value) {
-    const boundColors = value;
-    this.emitChangeBoundColors.emit(boundColors);
+    this.bound.boundColors = value;
+    this.emitChangeBound.emit(this.bound);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.emitChangeBound.emit(this.bound);
+  }
 }

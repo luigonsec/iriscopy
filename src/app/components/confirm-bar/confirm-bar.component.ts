@@ -118,11 +118,9 @@ export class ConfirmBarComponent implements OnInit {
 
   getPrecio() {
     if (this.order && this.order.file) {
-      const factorDobleCara =
-        this.order.printForm.code === 'doble-cara' ? 0.5 : 1;
+      const factorDobleCara = this.order.printForm.factor;
       const pages = Math.ceil(
-        (this.order.file.pages * factorDobleCara) /
-          +this.order.pagesPerSide.code
+        this.order.file.pages * factorDobleCara * this.order.pagesPerSide.factor
       );
 
       const pricePerPage =
@@ -137,8 +135,6 @@ export class ConfirmBarComponent implements OnInit {
   onClick() {
     this.orderService.create(this.order).subscribe(
       () => {
-        console.log('AAAA');
-
         this.messageService.add({
           severity: 'success',
           summary: 'Sent',
@@ -146,7 +142,6 @@ export class ConfirmBarComponent implements OnInit {
         });
       },
       (err) => {
-        console.log('EEE');
         this.messageService.add({
           severity: 'success',
           summary: 'Sent',
