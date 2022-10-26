@@ -28,6 +28,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { AdditionalCommentComponent } from './form/additional-comment/additional-comment.component';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ConfirmBarComponent } from './components/confirm-bar/confirm-bar.component';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,7 @@ import { ConfirmBarComponent } from './components/confirm-bar/confirm-bar.compon
     InputTextareaModule,
     BadgeModule,
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
