@@ -1,10 +1,6 @@
+import BoundColor from './BoundColor';
+import File from './File';
 import Option from './Option';
-
-interface BoundColor {
-  id: number;
-  color: string;
-  name: string;
-}
 
 export interface Order {
   orientation: Option;
@@ -24,5 +20,5 @@ export interface Order {
 
   copiesQuantity: number;
   additionalComments: string;
-  file: any;
+  files: File[];
 }

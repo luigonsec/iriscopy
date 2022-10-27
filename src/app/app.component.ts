@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { MessageService } from 'primeng/api';
+
 import Option from './interfaces/Option';
 import { Order } from './interfaces/Order';
-import { OrdersService } from './services/orders.service';
+import options from 'src/config/options';
+import File from './interfaces/File';
 
 @Component({
   selector: 'app-root',
@@ -17,14 +18,18 @@ export class AppComponent {
   public printType: Option;
   public paperGrammage: Option;
   public paperSize: Option;
-  public boundType: Option;
+  public boundType: Option = options.boundTypes.find((x) => x.default);
 
-  public boundColors;
+  public boundColors = {
+    delantera: options.colorsCover.find((x) => x.default),
+    anillas: options.colorsRings.find((x) => x.default),
+    trasera: options.colorsCover.find((x) => x.default),
+  };
 
   public copiesQuantity: number;
   public additionalComments: string;
   public order: Order;
-  public file: any;
+  public files: File[];
 
   constructor() {
     this.order = {
@@ -39,7 +44,7 @@ export class AppComponent {
       boundColors: this.boundColors,
       copiesQuantity: this.copiesQuantity,
       additionalComments: this.additionalComments,
-      file: this.file,
+      files: this.files,
     };
   }
 
@@ -96,9 +101,9 @@ export class AppComponent {
     this.order.additionalComments = this.additionalComments;
   }
 
-  getFile(file) {
-    this.file = file;
-    this.order.file = this.file;
+  getFile(files) {
+    this.files = files;
+    this.order.files = this.files;
   }
 
   isReady() {
@@ -120,7 +125,7 @@ export class AppComponent {
     }
 
     if (!!!this.copiesQuantity) res = false;
-    if (!!!this.file) res = false;
+    if (!!!this.files || !!!this.files.length) res = false;
 
     return res;
   }

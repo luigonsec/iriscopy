@@ -8,7 +8,7 @@ import options from 'src/config/options';
 })
 export class BoundTypeComponent implements OnInit {
   public options: Option[];
-  public option: Option;
+  @Input() public option: Option;
   @Output() emitChange = new EventEmitter<Option>();
 
   constructor() {}

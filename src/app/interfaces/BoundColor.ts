@@ -3,4 +3,5 @@ export default interface BoundColor {
   color: string;
   name: string;
   default?: boolean;
+  factor?: number;
 }

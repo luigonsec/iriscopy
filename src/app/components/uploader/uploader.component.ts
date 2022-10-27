@@ -1,19 +1,13 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
-
+import * as async from 'async';
+import * as uuid from 'uuid';
 @Component({
   selector: 'app-uploader',
   templateUrl: './uploader.component.html',
   styleUrls: ['./uploader.component.scss'],
 })
 export class UploaderComponent implements OnInit {
-  public uploadedFiles: any[] = [
-    {
-      name: 'example',
-      size: 5000,
-    },
-  ];
-  public pages: number = 21;
+  public uploadedFiles: any[] = [];
   public src: string;
   @Output() emitChange = new EventEmitter<any>();
 
@@ -21,28 +15,39 @@ export class UploaderComponent implements OnInit {
 
   onUpload($event) {
     const reader = new FileReader();
-    const file = $event.currentFiles[0];
-    this.uploadedFiles = [file];
+    const files = $event.currentFiles;
+    this.uploadedFiles = files;
 
-    if (file) {
-      reader.readAsBinaryString(file);
-      reader.onloadend = () => {
-        const count = (reader.result as string).match(
-          /\/Type[\s]*\/Page[^s]/g
-        ).length;
-
-        this.pages = count;
-      };
-
-      this.emitChange.emit(file);
+    if (files) {
+      async.eachSeries(
+        files,
+        (file: any, done) => {
+          reader.readAsBinaryString(file);
+          reader.onloadend = () => {
+            const count = (reader.result as string).match(
+              /\/Type[\s]*\/Page[^s]/g
+            ).length;
+            file.id = uuid.v4();
+            file.pages = count;
+            return done();
+          };
+        },
+        () => {
+          this.emitChange.emit(files);
+        }
+      );
     }
+  }
+
+  removeFile(id) {
+    this.uploadedFiles = this.uploadedFiles.filter((x) => x.id !== id);
+    this.emitChange.emit(this.uploadedFiles);
   }
 
   ngOnInit(): void {
     if (this.uploadedFiles.length) {
-      const file = this.uploadedFiles[0];
-      file.pages = this.pages;
-      this.emitChange.emit(file);
+      const files = this.uploadedFiles;
+      this.emitChange.emit(files);
     }
   }
 }

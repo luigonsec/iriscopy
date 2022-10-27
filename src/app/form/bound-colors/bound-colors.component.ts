@@ -16,7 +16,7 @@ export class BoundColorsComponent implements OnInit {
   public colorsCover: BoundColor[];
   public colorsRings: BoundColor[];
 
-  public colorActive: {
+  @Input() public colorActive: {
     delantera?: BoundColor;
     trasera?: BoundColor;
     anillas?: BoundColor;

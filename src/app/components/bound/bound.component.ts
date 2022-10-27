@@ -17,12 +17,12 @@ interface Bound {
   styleUrls: ['./bound.component.scss'],
 })
 export class BoundComponent implements OnInit {
-  public boundColors: {
+  @Input() public boundColors: {
     delantera: BoundColor;
     anillas: BoundColor;
     trasera: BoundColor;
   };
-  public boundType: Option;
+  @Input() public boundType: Option;
 
   public bound = {
     boundType: options.boundTypes.find((x) => x.default),
@@ -48,6 +48,6 @@ export class BoundComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.emitChangeBound.emit(this.bound);
+    // this.emitChangeBound.emit(this.bound);
   }
 }
