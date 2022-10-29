@@ -55,15 +55,15 @@ export class ConfirmBarComponent implements OnInit {
       () => {
         this.messageService.add({
           severity: 'success',
-          summary: 'Sent',
-          detail: 'All right',
+          detail: 'Su pedido ha sido recibido y se está procesando',
+          summary: '¡Recibido!',
         });
       },
       (err) => {
         this.messageService.add({
-          severity: 'success',
-          summary: 'Sent',
-          detail: 'All right',
+          severity: 'error',
+          detail: 'Ha habido un error y su pedido no ha podido procesarse',
+          summary: '¡Error!',
         });
       }
     );

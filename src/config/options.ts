@@ -20,6 +20,22 @@ export default {
     { name: 'Color ECO', code: 'color-eco' },
   ],
 
+  printForm: [
+    {
+      default: true,
+      name: 'Una cara',
+      code: 'una-cara',
+      factor: 1,
+      description: 'Por una cara del papel',
+    },
+    {
+      name: 'Doble cara',
+      code: 'doble-cara',
+      factor: 0.5,
+      description: 'Por ambas caras del papel',
+    },
+  ],
+
   pagesPerSide: [
     {
       name: '1 página',

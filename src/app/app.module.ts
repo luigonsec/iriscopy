@@ -25,6 +25,8 @@ import { BadgeModule } from 'primeng/badge';
 import { ColorOptionComponent } from './components/color-option/color-option.component';
 import { QuantityCopiesComponent } from './form/quantity-copies/quantity-copies.component';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { ToastModule } from 'primeng/toast';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdditionalCommentComponent } from './form/additional-comment/additional-comment.component';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ConfirmBarComponent } from './components/confirm-bar/confirm-bar.component';
@@ -63,6 +65,8 @@ import { MessageService } from 'primeng/api';
     CardModule,
     InputTextareaModule,
     BadgeModule,
+    ToastModule,
+    BrowserAnimationsModule,
   ],
   providers: [MessageService],
   bootstrap: [AppComponent],
