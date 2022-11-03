@@ -5,10 +5,22 @@ export default {
   ],
 
   paperType: [
-    { name: 'Normal', code: 'normal', factor: 0, default: true },
-    { name: 'Cartulina', code: 'cartulina', factor: 0.1 },
+    {
+      name: 'Normal',
+      code: 'normal',
+      factor: 0,
+      description: '80 grs',
+      default: true,
+    },
+    {
+      name: 'Cartulina',
+      code: 'cartulina',
+      description: '180 grs',
+      factor: 0.1,
+    },
     {
       name: 'Fortográfico',
+      description: '250 grs',
       code: 'fotografico',
       factor: 0.15,
     },
