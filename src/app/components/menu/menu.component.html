@@ -1,11 +1,11 @@
 <div id="Menu" class="grid">
-  <div class="sm:col-4 md:col-2">
+  <div class="Logo col-6 sm:col-4 md:col-2">
     <div class="p-fluid">
       <img src="assets/images/logo.png" style="width: 100%;" alt="">
     </div>
   </div>
 
-  <div class="sm:col-8 md:col-10">
+  <div class="Shopcart col-6 sm:col-8 md:col-10">
 
     <i *ngIf="this.orders.length" class="ShoppingCart__Icon fas fa-shopping-cart" (click)="toggleSidebar()" pBadge
       [value]="this.orders.length"></i>

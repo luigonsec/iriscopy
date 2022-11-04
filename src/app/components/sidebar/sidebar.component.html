@@ -13,19 +13,21 @@
       </div>
     </div>
     <div class="Description">
-      <div class="Item">Tamaño de papel {{order.paperSize.name}}</div>
-      <div class="Item">Tipo de papel {{order.paperGrammage.name}}</div>
-      <div class="Item">Tipo de impresión {{order.printType.name}}</div>
-      <div class="Item">Forma de impresión {{order.printForm.name}}</div>
-      <div class="Item">Páginas por cara {{order.pagesPerSide.name}}</div>
-      <div class="Item">Tipo de acabado {{order.finishType.name}}</div>
-      <div *ngIf="order.finishType.code === 'encuadernado'" class="Item">Encuadernado {{order.boundType.name}}</div>
-      <div *ngIf="order.finishType.code === 'encuadernado'" class="Item">Anillas {{order.boundColors.anillas.name}}
+      <div class="Item">Tamaño de papel: {{order.paperSize.name}}</div>
+      <div class="Item">Tipo de papel: {{order.paperGrammage.name}}</div>
+      <div class="Item">Tipo de impresión: {{order.printType.name}}</div>
+      <div class="Item">Forma de impresión: {{order.printForm.name}}</div>
+      <div class="Item">Páginas por cara: {{order.pagesPerSide.name}}</div>
+      <div class="Item">Orientación: {{order.orientation.name}}</div>
+      <div class="Item">Tipo de acabado: {{order.finishType.name}}</div>
+      <div *ngIf="order.finishType.code === 'encuadernado'" class="Item">Encuadernado: {{order.boundType.name}}</div>
+      <div *ngIf="order.finishType.code === 'encuadernado'" class="Item">Anillas: {{order.boundColors.anillas.name}}
       </div>
       <div *ngIf="order.finishType.code === 'encuadernado'" class="Item">Tapa delantera
-        {{order.boundColors.delantera.name}}
+        : {{order.boundColors.delantera.name}}
       </div>
-      <div *ngIf="order.finishType.code === 'encuadernado'" class="Item">Tapa trasera {{order.boundColors.trasera.name}}
+      <div *ngIf="order.finishType.code === 'encuadernado'" class="Item">Tapa trasera:
+        {{order.boundColors.trasera.name}}
       </div>
 
       <div class="Item">Copias {{order.copiesQuantity}}</div>

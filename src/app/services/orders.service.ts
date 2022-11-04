@@ -3,18 +3,30 @@ import { Injectable } from '@angular/core';
 import { Order } from '../interfaces/Order';
 import { environment } from 'src/environments/environment';
 import precios from 'src/config/prices';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrdersService {
-  constructor(private http: HttpClient) {}
+  private order$: Subject<Order>;
+  constructor(private http: HttpClient) {
+    this.order$ = new Subject();
+  }
 
   create(order: Order) {
     return this.http.post(
       `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/orders`,
       { order }
     );
+  }
+
+  edit(order: Order) {
+    this.order$.next(order);
+  }
+
+  getOrder() {
+    return this.order$;
   }
 
   getPrecio(order: Order): number {

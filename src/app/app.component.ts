@@ -5,6 +5,7 @@ import { Order } from './interfaces/Order';
 import options from 'src/config/options';
 import File from './interfaces/File';
 import { UploaderComponent } from './components/uploader/uploader.component';
+import { OrdersService } from './services/orders.service';
 
 @Component({
   selector: 'app-root',
@@ -34,7 +35,7 @@ export class AppComponent {
 
   @ViewChild('uploader') public uploader: UploaderComponent;
 
-  constructor() {
+  constructor(private orderService: OrdersService) {
     this.order = {
       orientation: this.orientation,
       finishType: this.finishType,
@@ -135,5 +136,11 @@ export class AppComponent {
     if (!!!this.files || !!!this.files.length) res = false;
 
     return res;
+  }
+
+  ngOnInit() {
+    this.orderService.getOrder().subscribe((order) => {
+      this.order = order;
+    });
   }
 }

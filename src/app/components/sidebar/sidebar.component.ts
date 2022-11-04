@@ -14,12 +14,15 @@ export class SidebarComponent implements OnInit {
   constructor(
     private shopcartService: ShopcartService,
     private orderService: OrdersService
-  ) {
-    this.display = true;
-  }
+  ) {}
 
   getPrice(order: Order): number {
     return this.orderService.getPrecio(order);
+  }
+
+  edit(order) {
+    this.orderService.edit(order);
+    this.shopcartService.remove(order);
   }
 
   toggle() {
