@@ -20,17 +20,16 @@
       <div class="Item">Páginas por cara: {{order.pagesPerSide.name}}</div>
       <div class="Item">Orientación: {{order.orientation.name}}</div>
       <div class="Item">Tipo de acabado: {{order.finishType.name}}</div>
-      <div *ngIf="order.finishType.code === 'encuadernado'" class="Item">Encuadernado: {{order.boundType.name}}</div>
-      <div *ngIf="order.finishType.code === 'encuadernado'" class="Item">Anillas: {{order.boundColors.anillas.name}}
+      <div class="Item" *ngIf="order.finishType.code === 'encuadernado'">Encuadernado: {{order.boundType.name}}</div>
+      <div class="Item" *ngIf="order.finishType.code === 'encuadernado'">Anillas: {{order.boundColors.anillas.name}}
       </div>
-      <div *ngIf="order.finishType.code === 'encuadernado'" class="Item">Tapa delantera
-        : {{order.boundColors.delantera.name}}
+      <div class="Item" *ngIf="order.finishType.code === 'encuadernado'">Tapa delantera:
+        {{order.boundColors.delantera.name}}
       </div>
-      <div *ngIf="order.finishType.code === 'encuadernado'" class="Item">Tapa trasera:
+      <div class="Item" *ngIf="order.finishType.code === 'encuadernado'">Tapa trasera:
         {{order.boundColors.trasera.name}}
       </div>
-
-      <div class="Item">Copias {{order.copiesQuantity}}</div>
+      <div class="Item">Copias: {{order.copiesQuantity}}</div>
     </div>
     <div class="Price">
       <div class='Value'>{{this.getPrice(order).toFixed(2)}} €</div>

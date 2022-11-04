@@ -33,6 +33,8 @@ import { ConfirmBarComponent } from './components/confirm-bar/confirm-bar.compon
 import { MessageService } from 'primeng/api';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SidebarModule } from 'primeng/sidebar';
+import { IndexComponent } from './views/index/index.component';
+import { PaymentComponent } from './views/payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,8 @@ import { SidebarModule } from 'primeng/sidebar';
     AdditionalCommentComponent,
     ConfirmBarComponent,
     SidebarComponent,
+    IndexComponent,
+    PaymentComponent,
   ],
   imports: [
     BrowserModule,
