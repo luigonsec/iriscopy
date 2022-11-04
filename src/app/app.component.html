@@ -77,10 +77,10 @@
 
 
   <div class="col-12 sm:col-12 md:col-7 lg:col-8">
-    <app-uploader (emitChange)="getFile($event)"></app-uploader>
+    <app-uploader #uploader (emitChange)="getFile($event)"></app-uploader>
   </div>
 </div>
 
 
-<app-confirm-bar *ngIf="this.isReady()" [order]="this.order"></app-confirm-bar>
+<app-confirm-bar *ngIf="this.isReady()" [reset]="this.reset.bind(this)" [(order)]="this.order"></app-confirm-bar>
 <p-toast></p-toast>

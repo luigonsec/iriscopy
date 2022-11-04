@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 import Option from './interfaces/Option';
 import { Order } from './interfaces/Order';
 import options from 'src/config/options';
 import File from './interfaces/File';
+import { UploaderComponent } from './components/uploader/uploader.component';
 
 @Component({
   selector: 'app-root',
@@ -28,8 +29,10 @@ export class AppComponent {
 
   public copiesQuantity: number;
   public additionalComments: string;
-  public order: Order;
   public files: File[];
+  public order: Order;
+
+  @ViewChild('uploader') public uploader: UploaderComponent;
 
   constructor() {
     this.order = {
@@ -46,6 +49,10 @@ export class AppComponent {
       additionalComments: this.additionalComments,
       files: this.files,
     };
+  }
+
+  reset() {
+    this.uploader.clear();
   }
 
   getPaperGrammage(value) {
@@ -104,6 +111,7 @@ export class AppComponent {
   getFile(files) {
     this.files = files;
     this.order.files = this.files;
+    console.log('recibido', this.order);
   }
 
   isReady() {

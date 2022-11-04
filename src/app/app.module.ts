@@ -31,6 +31,8 @@ import { AdditionalCommentComponent } from './form/additional-comment/additional
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ConfirmBarComponent } from './components/confirm-bar/confirm-bar.component';
 import { MessageService } from 'primeng/api';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { SidebarModule } from 'primeng/sidebar';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import { MessageService } from 'primeng/api';
     QuantityCopiesComponent,
     AdditionalCommentComponent,
     ConfirmBarComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +70,7 @@ import { MessageService } from 'primeng/api';
     BadgeModule,
     ToastModule,
     BrowserAnimationsModule,
+    SidebarModule,
   ],
   providers: [MessageService],
   bootstrap: [AppComponent],

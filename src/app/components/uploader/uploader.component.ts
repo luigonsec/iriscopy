@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import * as async from 'async';
+import File from 'src/app/interfaces/File';
 import * as uuid from 'uuid';
 @Component({
   selector: 'app-uploader',
@@ -7,7 +8,7 @@ import * as uuid from 'uuid';
   styleUrls: ['./uploader.component.scss'],
 })
 export class UploaderComponent implements OnInit {
-  public uploadedFiles: any[] = [];
+  public uploadedFiles: File[] = [];
   public src: string;
   @Output() emitChange = new EventEmitter<any>();
 
@@ -16,8 +17,7 @@ export class UploaderComponent implements OnInit {
   onUpload($event) {
     const reader = new FileReader();
     const files = $event.currentFiles;
-    this.uploadedFiles = files;
-
+    const treatedFiles = [];
     if (files) {
       async.eachSeries(
         files,
@@ -27,13 +27,19 @@ export class UploaderComponent implements OnInit {
             const count = (reader.result as string).match(
               /\/Type[\s]*\/Page[^s]/g
             ).length;
-            file.id = uuid.v4();
-            file.pages = count;
+            const newFile: File = {
+              id: uuid.v4(),
+              pages: count,
+              name: file.name,
+              size: file.size,
+            };
+            treatedFiles.push(newFile);
             return done();
           };
         },
         () => {
-          this.emitChange.emit(files);
+          this.uploadedFiles = treatedFiles;
+          this.emitChange.emit(this.uploadedFiles);
         }
       );
     }
@@ -41,6 +47,11 @@ export class UploaderComponent implements OnInit {
 
   removeFile(id) {
     this.uploadedFiles = this.uploadedFiles.filter((x) => x.id !== id);
+    this.emitChange.emit(this.uploadedFiles);
+  }
+
+  clear() {
+    this.uploadedFiles = [];
     this.emitChange.emit(this.uploadedFiles);
   }
 

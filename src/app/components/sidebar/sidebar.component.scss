@@ -1,0 +1,60 @@
+@import "src/assets/scss/colors";
+
+.Title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.Shopcart__item {
+  border-bottom: 1px solid gray;
+  width: 100%;
+  padding-bottom: 15px;
+  padding-top: 15px;
+
+  .Title {
+    font-size: 16px;
+    font-weight: normal;
+  }
+
+  .File {
+    padding-left: 10px;
+    border-left: 5px solid $primary;
+    margin-bottom: 10px;
+  }
+
+  .Key {
+    font-weight: bold;
+    display: inline;
+  }
+  .Value {
+    display: inline;
+  }
+
+  .Price {
+    text-align: right;
+    margin-bottom: 10px;
+  }
+
+  .Buttons {
+    text-align: right;
+  }
+
+  .Description {
+    .Item {
+      color: gray;
+      font-size: 12px;
+    }
+  }
+}
+
+.TotalPrice {
+  text-align: right;
+  margin-top: 15px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.Next {
+  margin-top: 15px;
+  text-align: center;
+}

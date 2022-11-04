@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { Order } from 'src/app/interfaces/Order';
+import { ShopcartService } from 'src/app/services/shopcart.service';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'app-menu',
@@ -7,10 +10,29 @@ import { MenuItem } from 'primeng/api';
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit {
-  items: MenuItem[];
-  constructor() {}
+  public items: MenuItem[];
+  public orders: Order[];
+  public display: boolean = true;
+
+  @ViewChild('sidebar') public sidebar: SidebarComponent;
+
+  constructor(private shopcartService: ShopcartService) {
+    this.orders = [];
+  }
+
+  subscribeCart() {
+    this.shopcartService.getCart$().subscribe((orders: Order[]) => {
+      this.orders = orders;
+    });
+  }
+
+  toggleSidebar() {
+    this.sidebar.toggle();
+  }
 
   ngOnInit() {
+    this.orders = this.shopcartService.getCart();
+    this.subscribeCart();
     this.items = [
       {
         label: 'File',

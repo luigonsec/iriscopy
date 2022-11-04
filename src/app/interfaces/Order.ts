@@ -3,6 +3,7 @@ import File from './File';
 import Option from './Option';
 
 export interface Order {
+  id?: string;
   orientation: Option;
   finishType: Option;
   pagesPerSide: Option;

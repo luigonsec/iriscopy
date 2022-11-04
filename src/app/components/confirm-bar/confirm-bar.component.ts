@@ -2,52 +2,37 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Order } from 'src/app/interfaces/Order';
 import { OrdersService } from 'src/app/services/orders.service';
-import precios from 'src/config/prices';
+import { ShopcartService } from 'src/app/services/shopcart.service';
+import * as uuid from 'uuid';
+
 @Component({
   selector: 'app-confirm-bar',
   templateUrl: './confirm-bar.component.html',
   styleUrls: ['./confirm-bar.component.scss'],
 })
 export class ConfirmBarComponent implements OnInit {
-  private precios = precios;
-
   @Input('order') order: Order;
+  @Input('reset') reset: () => void = () => undefined;
   constructor(
     private orderService: OrdersService,
-    private messageService: MessageService
-  ) {}
+    private messageService: MessageService,
+    private shopcartService: ShopcartService
+  ) {
+    console.log(this.order);
+  }
 
   getPrecio() {
-    if (this.order && this.order.files) {
-      const twoSidesFactor = this.order.printForm.factor;
-      const totalPages = this.order.files
-        .map((x) => x.pages)
-        .reduce((a, b) => a + b, 0);
-      const pages = Math.ceil(
-        totalPages * twoSidesFactor * this.order.pagesPerSide.factor
-      );
+    return this.orderService.getPrecio(this.order);
+  }
 
-      const pricePerPage =
-        this.precios[this.order.printType.code][this.order.printForm.code][
-          this.order.paperSize.code
-        ](pages) + this.order.paperGrammage.factor;
+  addConfiguration() {
+    this.order.id = uuid.v4();
+    // TODO: Copy
 
-      let boundPrice = 0;
-      const totalBounds =
-        this.order.boundType.code === 'agrupados' ? 1 : this.order.files.length;
-
-      if (this.order.finishType.code === 'encuadernado') {
-        boundPrice += 1.2;
-        boundPrice += this.order.boundColors.anillas.factor || 0;
-        boundPrice += this.order.boundColors.trasera.factor || 0;
-        boundPrice += this.order.boundColors.delantera.factor || 0;
-      }
-
-      return (
-        this.order.copiesQuantity *
-        (pricePerPage * pages + boundPrice * totalBounds)
-      ).toFixed(2);
-    }
+    const order = JSON.parse(JSON.stringify(this.order));
+    console.log(order);
+    this.shopcartService.addToCart(order);
+    this.reset();
   }
 
   onClick() {
