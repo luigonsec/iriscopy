@@ -111,7 +111,6 @@ export class AppComponent {
   getFile(files) {
     this.files = files;
     this.order.files = this.files;
-    console.log('recibido', this.order);
   }
 
   isReady() {

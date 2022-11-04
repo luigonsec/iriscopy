@@ -17,9 +17,7 @@ export class ConfirmBarComponent implements OnInit {
     private orderService: OrdersService,
     private messageService: MessageService,
     private shopcartService: ShopcartService
-  ) {
-    console.log(this.order);
-  }
+  ) {}
 
   getPrecio() {
     return this.orderService.getPrecio(this.order);
@@ -28,9 +26,7 @@ export class ConfirmBarComponent implements OnInit {
   addConfiguration() {
     this.order.id = uuid.v4();
     // TODO: Copy
-
     const order = JSON.parse(JSON.stringify(this.order));
-    console.log(order);
     this.shopcartService.addToCart(order);
     this.reset();
   }
