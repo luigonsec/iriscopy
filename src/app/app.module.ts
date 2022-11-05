@@ -15,6 +15,7 @@ import { FinishTypeComponent } from './form/finish-type/finish-type.component';
 import { BoundTypeComponent } from './form/bound-type/bound-type.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import { MenubarModule } from 'primeng/menubar';
+import { InputTextModule } from 'primeng/inputtext';
 import { MenuComponent } from './components/menu/menu.component';
 import { UploaderComponent } from './components/uploader/uploader.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -35,6 +36,11 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SidebarModule } from 'primeng/sidebar';
 import { IndexComponent } from './views/index/index.component';
 import { PaymentComponent } from './views/payment/payment.component';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { DropdownModule } from 'primeng/dropdown';
+
+import { CheckboxModule } from 'primeng/checkbox';
+import { OrderComponent } from './components/order/order.component';
 
 @NgModule({
   declarations: [
@@ -58,18 +64,23 @@ import { PaymentComponent } from './views/payment/payment.component';
     SidebarComponent,
     IndexComponent,
     PaymentComponent,
+    OrderComponent,
   ],
   imports: [
     BrowserModule,
+    DropdownModule,
     AppRoutingModule,
     FormsModule,
     SelectButtonModule,
     FileUploadModule,
+    RadioButtonModule,
     MenubarModule,
     HttpClientModule,
+    InputTextModule,
     InputNumberModule,
     TabViewModule,
     CardModule,
+    CheckboxModule,
     InputTextareaModule,
     BadgeModule,
     ToastModule,

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Order } from 'src/app/interfaces/Order';
 import { OrdersService } from 'src/app/services/orders.service';
 import { ShopcartService } from 'src/app/services/shopcart.service';
@@ -13,11 +14,13 @@ export class SidebarComponent implements OnInit {
   public orders: Order[] = [];
   constructor(
     private shopcartService: ShopcartService,
-    private orderService: OrdersService
+    private orderService: OrdersService,
+    private router: Router
   ) {}
 
-  getPrice(order: Order): number {
-    return this.orderService.getPrecio(order);
+  continue() {
+    this.display = false;
+    this.router.navigate(['payment']);
   }
 
   edit(order) {
@@ -34,14 +37,5 @@ export class SidebarComponent implements OnInit {
     if (!!!this.orders.length) this.display = false;
   }
 
-  getTotalPrice() {
-    return this.orders.map((x) => this.getPrice(x)).reduce((a, b) => a + b, 0);
-  }
-
-  ngOnInit(): void {
-    this.orders = this.shopcartService.getCart();
-    this.shopcartService.getCart$().subscribe((orders) => {
-      this.orders = orders;
-    });
-  }
+  ngOnInit(): void {}
 }

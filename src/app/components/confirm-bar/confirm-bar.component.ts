@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Order } from 'src/app/interfaces/Order';
 import { OrdersService } from 'src/app/services/orders.service';
@@ -16,7 +17,8 @@ export class ConfirmBarComponent implements OnInit {
   constructor(
     private orderService: OrdersService,
     private messageService: MessageService,
-    private shopcartService: ShopcartService
+    private shopcartService: ShopcartService,
+    private router: Router
   ) {}
 
   getPrecio() {
@@ -29,6 +31,11 @@ export class ConfirmBarComponent implements OnInit {
     const order = JSON.parse(JSON.stringify(this.order));
     this.shopcartService.addToCart(order);
     this.reset();
+  }
+
+  finishAndPay() {
+    this.addConfiguration();
+    this.router.navigate(['payment']);
   }
 
   onClick() {
