@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Order } from 'src/app/interfaces/Order';
+import { OrderItem } from 'src/app/interfaces/OrderItem';
 import { OrdersService } from 'src/app/services/orders.service';
 import { ShopcartService } from 'src/app/services/shopcart.service';
 
@@ -11,7 +11,7 @@ import { ShopcartService } from 'src/app/services/shopcart.service';
 })
 export class SidebarComponent implements OnInit {
   @Input('display') display: boolean = false;
-  public orders: Order[] = [];
+  public orders: OrderItem[] = [];
   constructor(
     private shopcartService: ShopcartService,
     private orderService: OrdersService,
@@ -32,7 +32,7 @@ export class SidebarComponent implements OnInit {
     this.display = !!!this.display;
   }
 
-  remove(order: Order): void {
+  remove(order: OrderItem): void {
     this.shopcartService.remove(order);
     if (!!!this.orders.length) this.display = false;
   }

@@ -1,15 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Order } from '../interfaces/Order';
+import { OrderItem } from '../interfaces/OrderItem';
 import { environment } from 'src/environments/environment';
 import precios from 'src/config/prices';
 import { Subject } from 'rxjs';
+import Order from '../interfaces/Order';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrdersService {
-  private order$: Subject<Order>;
+  private order$: Subject<OrderItem>;
   constructor(private http: HttpClient) {
     this.order$ = new Subject();
   }
@@ -21,7 +22,7 @@ export class OrdersService {
     );
   }
 
-  edit(order: Order) {
+  edit(order: OrderItem) {
     this.order$.next(order);
   }
 
@@ -29,7 +30,7 @@ export class OrdersService {
     return this.order$;
   }
 
-  getPrecio(order: Order): number {
+  getPrecio(order: OrderItem): number {
     if (order && order.files) {
       const twoSidesFactor = order.printForm.factor;
       const totalPages = order.files

@@ -1,25 +1,13 @@
-import BoundColor from './BoundColor';
-import File from './File';
-import Option from './Option';
+import BillingDetails from './BillingDetails';
+import { OrderItem } from './OrderItem';
+import ShippingDetails from './ShippingDetails';
+import ShippingLine from './ShippingLine';
 
-export interface Order {
-  id?: string;
-  orientation: Option;
-  finishType: Option;
-  pagesPerSide: Option;
-  printForm: Option;
-  printType: Option;
-  paperGrammage: Option;
-  paperSize: Option;
-  boundType: Option;
-
-  boundColors: {
-    delantera: BoundColor;
-    anillas: BoundColor;
-    trasera: BoundColor;
-  };
-
-  copiesQuantity: number;
-  additionalComments: string;
-  files: File[];
+export default interface Order {
+  billing: BillingDetails;
+  shipping: ShippingDetails;
+  payment_method: string;
+  payment_method_title: string;
+  line_items: OrderItem[];
+  shipping_lines: ShippingLine[];
 }

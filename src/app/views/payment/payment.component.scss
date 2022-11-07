@@ -1,3 +1,5 @@
+@import "src/assets/scss/colors";
+
 .Option {
   margin-bottom: 10px;
 }
@@ -7,4 +9,46 @@
     font-size: 12px;
     color: gray;
   }
+}
+
+#Order__summary {
+  #Payment__method,
+  #Shipping,
+  #Privacy__policy {
+    border-bottom: 1px solid gray;
+    padding-bottom: 15px;
+  }
+  #Privacy__policy,
+  #Terms {
+    p {
+      font-size: 14px;
+    }
+  }
+
+  #Confirm {
+    margin-top: 20px;
+  }
+}
+
+#Warning {
+  text-align: center;
+  font-size: 60px;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.Total__Price {
+  text-align: right;
+  margin-top: 15px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.Extra {
+  font-weight: bold;
+  color: $primary;
 }

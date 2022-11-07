@@ -41,6 +41,7 @@ import { DropdownModule } from 'primeng/dropdown';
 
 import { CheckboxModule } from 'primeng/checkbox';
 import { OrderComponent } from './components/order/order.component';
+import { TermsComponent } from './views/terms/terms.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { OrderComponent } from './components/order/order.component';
     IndexComponent,
     PaymentComponent,
     OrderComponent,
+    TermsComponent,
   ],
   imports: [
     BrowserModule,

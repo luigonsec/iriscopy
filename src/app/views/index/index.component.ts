@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import Option from 'src/app/interfaces/Option';
-import { Order } from 'src/app/interfaces/Order';
+import { OrderItem } from 'src/app/interfaces/OrderItem';
 import options from 'src/config/options';
 import File from 'src/app/interfaces/File';
 import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
@@ -30,7 +30,7 @@ export class IndexComponent implements OnInit {
   public copiesQuantity: number;
   public additionalComments: string;
   public files: File[];
-  public order: Order;
+  public order: OrderItem;
 
   @ViewChild('uploader') public uploader: UploaderComponent;
 

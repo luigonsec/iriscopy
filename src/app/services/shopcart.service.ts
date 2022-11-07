@@ -1,32 +1,32 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { Order } from '../interfaces/Order';
+import { OrderItem } from '../interfaces/OrderItem';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ShopcartService {
-  private itemCart$: Subject<Order[]>;
+  private itemCart$: Subject<OrderItem[]>;
 
   constructor() {
     this.itemCart$ = new Subject();
   }
 
-  addToCart(order: Order) {
-    const cart: Order[] = this.getCart();
+  addToCart(order: OrderItem) {
+    const cart: OrderItem[] = this.getCart();
     cart.push(order);
     this.itemCart$.next(cart);
     localStorage.setItem('cart', JSON.stringify(cart));
   }
 
-  remove(order: Order) {
-    const cart: Order[] = this.getCart();
+  remove(order: OrderItem) {
+    const cart: OrderItem[] = this.getCart();
     const filteredCart = cart.filter((x) => x.id !== order.id);
     localStorage.setItem('cart', JSON.stringify(filteredCart));
     this.itemCart$.next(filteredCart);
   }
 
-  getCart(): Order[] {
+  getCart(): OrderItem[] {
     return JSON.parse(localStorage.getItem('cart')) || [];
   }
 
@@ -35,7 +35,7 @@ export class ShopcartService {
     this.itemCart$.next([]);
   }
 
-  public getCart$(): Observable<Order[]> {
+  public getCart$(): Observable<OrderItem[]> {
     return this.itemCart$.asObservable();
   }
 }

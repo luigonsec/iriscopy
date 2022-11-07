@@ -1,4 +1,4 @@
-<div class="grid">
+<div class="grid" *ngIf="!!!this.emptyCart">
   <div class="col-12 sm:col-6 sm:col-offset-2">
     <p-card>
       <h3>DETALLES DE FACTURACIÓN</h3>
@@ -6,14 +6,18 @@
         <div class="grid">
           <div class="field col-6">
             <div class="p-fluid">
-              <label for="name" class="block">Name</label>
-              <input [(ngModel)]="this.billingDetails.name" id="name" pInputText />
+              <label for="first_name" class="block">Name</label>
+              <input [(ngModel)]="this.billingDetails.first_name" id="first_name" pInputText />
+              <small *ngIf="this.billingDetailsErrors.first_name" id="first_name-help"
+                class="p-error">{{this.billingDetailsErrors.first_name}}</small>
             </div>
           </div>
           <div class="field col-6">
             <div class="p-fluid">
-              <label for="cif" class="block">CIF/ NIF</label>
-              <input [(ngModel)]="this.billingDetails.cif" id="cif" pInputText />
+              <label for="company" class="block">CIF/ NIF</label>
+              <input [(ngModel)]="this.billingDetails.company" id="company" pInputText />
+              <small *ngIf="this.billingDetailsErrors.company" id="company-help"
+                class="p-error">{{this.billingDetailsErrors.company}}</small>
             </div>
           </div>
         </div>
@@ -22,26 +26,31 @@
             <div class="p-fluid">
               <label for="responsible" class="block">Responsable (opcional)</label>
               <input [(ngModel)]="this.billingDetails.responsible" id="responsible" pInputText />
+
             </div>
           </div>
         </div>
         <div class="grid">
           <div class="field col-12">
             <div class="p-fluid">
-              <label for="address" class="block">Dirección de la calle</label>
-              <input [(ngModel)]="this.billingDetails.address" id="address" aria-describedby="address-help"
+              <label for="address_1" class="block">Dirección de la calle</label>
+              <input [(ngModel)]="this.billingDetails.address_1" id="address_1" aria-describedby="address_1-help"
                 pInputText />
-              <small id="address-help">Número de la casa y nombre de la
+              <small id="address_1-help">Número de la casa y nombre de la
                 calle</small>
+              <small *ngIf="this.billingDetailsErrors.address_1" id="address_1-help"
+                class="p-error">{{this.billingDetailsErrors.address_1}}</small>
             </div>
           </div>
         </div>
         <div class="grid">
           <div class="field col-12">
             <div class="p-fluid">
-              <input [(ngModel)]="this.billingDetails.address2" id="address-2" aria-describedby="address-2-help"
+              <input [(ngModel)]="this.billingDetails.address_2" id="address_2" aria-describedby="address_2-help"
                 pInputText />
-              <small id="address-2-help">Planta, departamento, puerta...</small>
+              <small id="address_2-help">Planta, departamento, puerta...</small>
+              <small *ngIf="this.billingDetailsErrors.address_2" id="address_2-help"
+                class="p-error">{{this.billingDetailsErrors.address_2}}</small>
             </div>
           </div>
         </div>
@@ -50,15 +59,18 @@
             <div class="p-fluid">
               <label for="city" class="block">Localidad / Ciudad</label>
               <input [(ngModel)]="this.billingDetails.city" id="city" aria-describedby="city-help" pInputText />
+              <small *ngIf="this.billingDetailsErrors.city" id="city-help"
+                class="p-error">{{this.billingDetailsErrors.city}}</small>
             </div>
           </div>
         </div>
         <div class="grid">
           <div class="field col-12">
             <div class="p-fluid">
-              <label for="postalcode" class="block">Código postal (opcional)</label>
-              <input [(ngModel)]="this.billingDetails.postalcode" id="postalcode" aria-describedby="postalcode-help"
+              <label for="postcode" class="block">Código postal (opcional)</label>
+              <input [(ngModel)]="this.billingDetails.postcode" id="postcode" aria-describedby="postcode-help"
                 pInputText />
+
             </div>
           </div>
         </div>
@@ -67,6 +79,8 @@
             <div class="p-fluid">
               <label for="phone" class="block">Teléfono</label>
               <input [(ngModel)]="this.billingDetails.phone" id="phone" aria-describedby="phone-help" pInputText />
+              <small *ngIf="this.billingDetailsErrors.phone" id="phone-help"
+                class="p-error">{{this.billingDetailsErrors.phone}}</small>
             </div>
           </div>
         </div>
@@ -75,6 +89,8 @@
             <div class="p-fluid">
               <label for="email" class="block">Dirección de correo electrónico</label>
               <input [(ngModel)]="this.billingDetails.email" id="email" aria-describedby="email-help" pInputText />
+              <small *ngIf="this.billingDetailsErrors.email" id="email-help"
+                class="p-error">{{this.billingDetailsErrors.email}}</small>
             </div>
           </div>
         </div>
@@ -83,21 +99,26 @@
       <div class="grid">
         <div class="col-12">
           <h3>
-            <p-checkbox binary="true" [(ngModel)]="this.sameAddress" (onChange)="this.copyAddress($event)"></p-checkbox>
+            <p-checkbox binary="true" [(ngModel)]="this.differentAddress" (onChange)="this.copyAddress($event)">
+            </p-checkbox>
             ENVIAR A UNA DIRECCIÓN DIFERENTE
           </h3>
-          <div *ngIf="this.sameAddress" class="Shipment">
+          <div *ngIf="this.differentAddress" class="Shipping">
             <div class="grid">
               <div class="field col-6">
                 <div class="p-fluid">
-                  <label for="name" class="block">Name</label>
-                  <input [(ngModel)]="this.shipmentDetails.name" id="name" pInputText />
+                  <label for="first_name" class="block">Name</label>
+                  <input [(ngModel)]="this.shippingDetails.first_name" id="first_name" pInputText />
+                  <small *ngIf="this.shippingDetailsErrors.first_name" id="first_name-help"
+                    class="p-error">{{this.shippingDetailsErrors.first_name}}</small>
                 </div>
               </div>
               <div class="field col-6">
                 <div class="p-fluid">
-                  <label for="cif" class="block">CIF/ NIF</label>
-                  <input [(ngModel)]="this.shipmentDetails.cif" id="cif" pInputText />
+                  <label for="company" class="block">CIF/ NIF</label>
+                  <input [(ngModel)]="this.shippingDetails.company" id="company" pInputText />
+                  <small *ngIf="this.shippingDetailsErrors.company" id="company-help"
+                    class="p-error">{{this.shippingDetailsErrors.company}}</small>
                 </div>
               </div>
             </div>
@@ -105,28 +126,32 @@
               <div class="field col-12">
                 <div class="p-fluid">
                   <label for="responsible" class="block">Responsable (opcional)</label>
-                  <input [(ngModel)]="this.shipmentDetails.responsible" id="responsible" pInputText />
+                  <input [(ngModel)]="this.shippingDetails.responsible" id="responsible" pInputText />
                 </div>
               </div>
             </div>
             <div class="grid">
               <div class="field col-12">
                 <div class="p-fluid">
-                  <label for="address" class="block">Dirección de la calle</label>
-                  <input [(ngModel)]="this.shipmentDetails.address" id="address" aria-describedby="address-help"
+                  <label for="address_1" class="block">Dirección de la calle</label>
+                  <input [(ngModel)]="this.shippingDetails.address_1" id="address_1" aria-describedby="address_1-help"
                     pInputText />
-                  <small id="address-help">Número de la casa y nombre de la
+                  <small id="address_1-help">Número de la casa y nombre de la
                     calle</small>
+                  <small *ngIf="this.shippingDetailsErrors.address_1" id="address_1-help"
+                    class="p-error">{{this.shippingDetailsErrors.address_1}}</small>
                 </div>
               </div>
             </div>
             <div class="grid">
               <div class="field col-12">
                 <div class="p-fluid">
-                  <input [(ngModel)]="this.shipmentDetails.address2" id="address-2" aria-describedby="address-2-help"
+                  <input [(ngModel)]="this.shippingDetails.address_2" id="address_2" aria-describedby="address_2-help"
                     pInputText />
-                  <small id="address-2-help">Planta, departamento,
+                  <small id="address_2-help">Planta, departamento,
                     puerta...</small>
+                  <small *ngIf="this.shippingDetailsErrors.address_2" id="address_2-help"
+                    class="p-error">{{this.shippingDetailsErrors.address_2}}</small>
                 </div>
               </div>
             </div>
@@ -134,32 +159,18 @@
               <div class="field col-12">
                 <div class="p-fluid">
                   <label for="city" class="block">Localidad / Ciudad</label>
-                  <input [(ngModel)]="this.shipmentDetails.city" id="city" aria-describedby="city-help" pInputText />
+                  <input [(ngModel)]="this.shippingDetails.city" id="city" aria-describedby="city-help" pInputText />
+                  <small *ngIf="this.shippingDetailsErrors.city" id="city-help"
+                    class="p-error">{{this.shippingDetailsErrors.city}}</small>
                 </div>
               </div>
             </div>
             <div class="grid">
               <div class="field col-12">
                 <div class="p-fluid">
-                  <label for="postalcode" class="block">Código postal (opcional)</label>
-                  <input [(ngModel)]="this.shipmentDetails.postalcode" id="postalcode"
-                    aria-describedby="postalcode-help" pInputText />
-                </div>
-              </div>
-            </div>
-            <div class="grid">
-              <div class="field col-12">
-                <div class="p-fluid">
-                  <label for="phone" class="block">Teléfono</label>
-                  <input [(ngModel)]="this.shipmentDetails.phone" id="phone" aria-describedby="phone-help" pInputText />
-                </div>
-              </div>
-            </div>
-            <div class="grid">
-              <div class="field col-12">
-                <div class="p-fluid">
-                  <label for="email" class="block">Dirección de correo electrónico</label>
-                  <input [(ngModel)]="this.shipmentDetails.email" id="email" aria-describedby="email-help" pInputText />
+                  <label for="postcode" class="block">Código postal (opcional)</label>
+                  <input [(ngModel)]="this.shippingDetails.postcode" id="postcode" aria-describedby="postcode-help"
+                    pInputText />
                 </div>
               </div>
             </div>
@@ -187,53 +198,90 @@
   </div>
 
   <div class="col-12 sm:col-4">
-    <p-card>
-      <app-order></app-order>
-      <h4>Método de pago</h4>
-      <div class="Option p-field-radiobutton">
-        <p-radioButton value="Card" [(ngModel)]="payment" inputId="card"></p-radioButton>
-        <label for="card"> Tarjeta de crédito o débito</label>
-      </div>
-      <div class="Option p-field-radiobutton">
-        <p-radioButton value="Paypal" [(ngModel)]="payment" inputId="paypal"></p-radioButton>
-        <label for="paypal"> PayPal</label>
-      </div>
-      <div class="Option p-field-radiobutton">
-        <p-radioButton value="Bizum" [(ngModel)]="payment" inputId="bizum"></p-radioButton>
-        <label for="bizum"> BIZUM</label>
+    <p-card id="Order__summary">
+      <app-order #order></app-order>
+      <div class="Total__Price">
+        Total: {{this.getTotal()}} €
       </div>
 
-      <h4>Envío / Recogida</h4>
-      <div class="Option p-field-radiobutton">
-        <p-radioButton value="Shipment" [(ngModel)]="deliver" inputId="shipment"></p-radioButton>
-        <label for="shipment"> Enviar a la dirección indicada</label>
-      </div>
-      <div class="Option p-field-radiobutton">
-        <p-radioButton value="Pickup" [(ngModel)]="deliver" inputId="pickup"></p-radioButton>
-        <label for="pickup"> Recogida en local</label>
-      </div>
-
-      <div class="p-fluid">
-        <p-dropdown *ngIf="this.deliver === 'Pickup'" [options]="locations" [(ngModel)]="selectedLocation"
-          optionLabel="name" [showClear]="true" placeholder="Local de recogida">
-          <ng-template pTemplate="selectedItem">
-            <div class="location-item location-item-value" *ngIf="selectedLocation">
-              <div>{{selectedLocation.name}}</div>
-            </div>
-          </ng-template>
-          <ng-template let-location pTemplate="item">
-            <div class="Location">
-              <div class="Name">{{location.name}}</div>
-              <div class="Address">{{location.address}}</div>
-            </div>
-          </ng-template>
-        </p-dropdown>
+      <div id="Payment__method">
+        <h4>Método de pago</h4>
+        <div class="Option p-field-radiobutton">
+          <p-radioButton value="Card" [(ngModel)]="payment" inputId="card"></p-radioButton>
+          <label for="card"> Tarjeta de crédito o débito</label>
+        </div>
+        <div class="Option p-field-radiobutton">
+          <p-radioButton value="Paypal" [(ngModel)]="payment" inputId="paypal"></p-radioButton>
+          <label for="paypal"> PayPal</label>
+        </div>
+        <div class="Option p-field-radiobutton">
+          <p-radioButton value="Bizum" [(ngModel)]="payment" inputId="bizum"></p-radioButton>
+          <label for="bizum"> BIZUM</label>
+        </div>
       </div>
 
-      <div class="p-fluid">
-        <p-button label="Realizar el pedido"></p-button>
+      <div id="Shipping">
+        <h4>Envío / Recogida</h4>
+        <div class="Option p-field-radiobutton">
+          <p-radioButton value="Shipping" [(ngModel)]="deliver" inputId="shipping"></p-radioButton>
+          <label for="shipping"> Envío en 48 horas <label class="Extra">5.00€</label></label>
+        </div>
+        <div class="Option p-field-radiobutton">
+          <p-radioButton value="Pickup" [(ngModel)]="deliver" inputId="pickup"></p-radioButton>
+          <label for="pickup"> Recogida en local</label>
+        </div>
+
+        <div class="p-fluid">
+          <p-dropdown *ngIf="this.deliver === 'Pickup'" [options]="locations" [(ngModel)]="selectedLocation"
+            optionLabel="name" [showClear]="true" placeholder="Local de recogida">
+            <ng-template pTemplate="selectedItem">
+              <div class="location-item location-item-value" *ngIf="selectedLocation">
+                <div>{{selectedLocation.name}}</div>
+              </div>
+            </ng-template>
+            <ng-template let-location pTemplate="item">
+              <div class="Location">
+                <div class="Name">{{location.name}}</div>
+                <div class="Address">{{location.address_1}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+      </div>
+
+      <div id="Privacy__policy">
+        <h4>Política de privacidad</h4>
+        <p>
+          Tus datos personales se utilizarán para procesar tu pedido, mejorar tu experiencia en esta web y otros
+          propósitos descritos en nuestra <a href="https://iriscopyshop.com/politica-de-privacidad/"
+            target="_blank">política de privacidad.</a>
+        </p>
+      </div>
+
+      <div id="Terms">
+        <h4>Términos y condiciones</h4>
+        <p>
+          <p-checkbox name="groupname" value="val1" [(ngModel)]="this.termsAccepted"></p-checkbox>
+          He leído y estoy de acuerdo con los <a href="/terms" target="_blank">términos y condiciones</a> de la web.
+        </p>
+      </div>
+
+      <div id="Confirm" class="p-fluid">
+        <p-button label="Realizar el pedido" (click)="this.validate()"></p-button>
       </div>
     </p-card>
 
+  </div>
+</div>
+
+<div class="grid" *ngIf="this.emptyCart">
+  <div class="col-12 sm:col-6 sm:col-offset-2">
+    <p-card>
+      <h4>CARRO DE LA COMPRA VACÍO</h4>
+      <p>Su carro de la compra está vacio, haz click <a href="/">aquí</a> para volver al configurador de pedidos</p>
+      <div id="Warning">
+        <i class="fas fa-exclamation-triangle"></i>
+      </div>
+    </p-card>
   </div>
 </div>

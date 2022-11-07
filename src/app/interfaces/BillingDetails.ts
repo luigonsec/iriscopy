@@ -1,12 +1,12 @@
 export default interface BillingDetails {
-  name: string;
-  cif: string;
+  first_name: string;
+  company: string;
   responsible: string;
-  address: string;
-  address2: string;
+  address_1: string;
+  address_2: string;
   city: string;
-  province: string;
-  postalcode: string;
+  state: string;
+  postcode: string;
   phone: string;
   email: string;
   others: string;

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { Order } from 'src/app/interfaces/Order';
+import { OrderItem } from 'src/app/interfaces/OrderItem';
 import { ShopcartService } from 'src/app/services/shopcart.service';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 
@@ -11,7 +11,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 })
 export class MenuComponent implements OnInit {
   public items: MenuItem[];
-  public orders: Order[];
+  public orders: OrderItem[];
   public display: boolean = true;
 
   @ViewChild('sidebar') public sidebar: SidebarComponent;
@@ -21,7 +21,7 @@ export class MenuComponent implements OnInit {
   }
 
   subscribeCart() {
-    this.shopcartService.getCart$().subscribe((orders: Order[]) => {
+    this.shopcartService.getCart$().subscribe((orders: OrderItem[]) => {
       this.orders = orders;
     });
   }
