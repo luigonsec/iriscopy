@@ -5,9 +5,11 @@ import BillingDetails from 'src/app/interfaces/BillingDetails';
 import Location from 'src/app/interfaces/Location';
 import Order from 'src/app/interfaces/Order';
 import { OrderItem } from 'src/app/interfaces/OrderItem';
+import RedsysData from 'src/app/interfaces/RedsysData';
 import ShippingDetails from 'src/app/interfaces/ShippingDetails';
 import { BillingService } from 'src/app/services/billing.service';
 import { OrdersService } from 'src/app/services/orders.service';
+import { RedsysService } from 'src/app/services/redsys.service';
 import { ShippingService } from 'src/app/services/shipping.service';
 import { ShopcartService } from 'src/app/services/shopcart.service';
 import locations from 'src/config/locations';
@@ -32,6 +34,7 @@ export class PaymentComponent implements OnInit {
   public locations = locations;
   public selectedLocation: Location;
   public termsAccepted: boolean;
+  public redsysData: RedsysData;
   @ViewChild('order') public order: OrderComponent;
 
   constructor(
@@ -39,6 +42,7 @@ export class PaymentComponent implements OnInit {
     private billingService: BillingService,
     private shippingService: ShippingService,
     private orderService: OrdersService,
+    private redsysService: RedsysService,
     private messageService: MessageService
   ) {
     this.resetBillingDetails();
@@ -110,6 +114,22 @@ export class PaymentComponent implements OnInit {
     }
 
     this.prepareOrder();
+  }
+
+  public redsys() {
+    const request = {
+      Ds_SignatureVersion: 'HMAC_SHA256_V1',
+      Ds_MerchantParameters:
+        'eyJEU19NRVJDSEFOVF9BTU9VTlQiOiAiMTQ1IiwiRFNfTUVSQ0hBTlRfQ1VSUkVOQ1kiOiAiOTc4IiwiRFNfTUVSQ0hBTlRfTUVSQ0hBTlRDT0RFIjogIjk5OTAwODg4MSIsIkRTX01FUkNIQU5UX01FUkNIQU5UVVJMIjogImh0dHA6Ly93d3cucHJ1ZWJhLmNvbS91cmxOb3RpZmljYWNpb24ucGhwIiwiRFNfTUVSQ0hBTlRfT1JERVIiOiAiMTQ0NjA2ODU4MSIsIkRTX01FUkNIQU5UX1RFUk1JTkFMIjogIjEiLCJEU19NRVJDSEFOVF9UUkFOU0FDVElPTlRZUEUiOiAiMCIsIkRTX01FUkNIQU5UX1VSTEtPIjogImh0dHA6Ly93d3cucHJ1ZWJhLmNvbS91cmxLTy5waHAiLCJEU19NRVJDSEFOVF9VUkxPSyI6ICJodHRwOi8vd3d3LnBydWViYS5jb20vdXJsT0sucGhwIn0=',
+      Ds_Signature: 'PqV2+SF6asdasMjXasKJRTh3UIYya1hmU/igHkzhC+R=',
+    };
+    this.redsysService
+      .sendPayment(request)
+      .subscribe((redsysData: RedsysData) => {
+        console.log(redsysData);
+
+        this.redsysData = redsysData;
+      });
   }
 
   public getTotal() {

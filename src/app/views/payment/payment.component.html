@@ -271,6 +271,18 @@
       </div>
     </p-card>
 
+
+    <button pButton (click)="this.redsys()">Enviar</button>
+    <form ngNoForm *ngIf="this.redsysData" name="from" action="https://sis.redsys.es/sis/rest/trataPeticionREST"
+      method="POST">
+      {{this.redsysData.Ds_SignatureVersion}}
+      <input type="hidden" name="Ds_SignatureVersion" [value]="this.redsysData.Ds_SignatureVersion" />
+      {{this.redsysData.Ds_MerchantParameters}}
+      <input type="hidden" name="Ds_MerchantParameters" [value]="this.redsysData.Ds_MerchantParameters" />
+      {{this.redsysData.Ds_Signature}}
+      <input type="hidden" name="Ds_Signature" [value]="this.redsysData.Ds_Signature" />
+      <button type="submit">Enviar</button>
+    </form>
   </div>
 </div>
 
