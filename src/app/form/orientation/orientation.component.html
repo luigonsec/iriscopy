@@ -1,8 +1,11 @@
 <p-selectButton [options]="options" [(ngModel)]="option" optionLabel="name" (onChange)="this.handleChange($event)">
   <ng-template let-item>
-    <div class="Button">
+    <div class="Button" *ngIf="!!!item.image">
       <div class="Button__label">{{item.name}}</div>
       <div class="Button__description">{{item.description}}</div>
+    </div>
+    <div class="Button" *ngIf="item.image">
+      <img class="Button__img" src="assets/images/buttons/{{item.image}}.png">
     </div>
   </ng-template>
 </p-selectButton>

@@ -207,7 +207,8 @@
       <div id="Payment__method">
         <h4>Método de pago</h4>
         <div class="Option p-field-radiobutton">
-          <p-radioButton value="Card" [(ngModel)]="payment" inputId="card"></p-radioButton>
+          <p-radioButton value="Card" [(ngModel)]="payment" inputId="card">
+          </p-radioButton>
           <label for="card"> Tarjeta de crédito o débito</label>
         </div>
         <div class="Option p-field-radiobutton">
@@ -267,22 +268,15 @@
       </div>
 
       <div id="Confirm" class="p-fluid">
-        <p-button label="Realizar el pedido" (click)="this.validate()"></p-button>
+        <p-button (click)="sent($event)" [label]="'Realizar el pedido'"></p-button>
+        <form #redsysForm ngNoForm *ngIf="this.redsysData" name="from" action="https://sis.redsys.es/sis/realizarPago"
+          method="POST">
+          <input type="hidden" name="Ds_SignatureVersion" [value]="this.redsysData.Ds_SignatureVersion" />
+          <input type="hidden" name="Ds_MerchantParameters" [value]="this.redsysData.Ds_MerchantParameters" />
+          <input type="hidden" name="Ds_Signature" [value]="this.redsysData.Ds_Signature" />
+        </form>
       </div>
     </p-card>
-
-
-    <button pButton (click)="this.redsys()">Enviar</button>
-    <form ngNoForm *ngIf="this.redsysData" name="from" action="https://sis.redsys.es/sis/rest/trataPeticionREST"
-      method="POST">
-      {{this.redsysData.Ds_SignatureVersion}}
-      <input type="hidden" name="Ds_SignatureVersion" [value]="this.redsysData.Ds_SignatureVersion" />
-      {{this.redsysData.Ds_MerchantParameters}}
-      <input type="hidden" name="Ds_MerchantParameters" [value]="this.redsysData.Ds_MerchantParameters" />
-      {{this.redsysData.Ds_Signature}}
-      <input type="hidden" name="Ds_Signature" [value]="this.redsysData.Ds_Signature" />
-      <button type="submit">Enviar</button>
-    </form>
   </div>
 </div>
 

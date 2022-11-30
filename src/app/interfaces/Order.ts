@@ -4,6 +4,7 @@ import ShippingDetails from './ShippingDetails';
 import ShippingLine from './ShippingLine';
 
 export default interface Order {
+  id?: number;
   billing: BillingDetails;
   shipping: ShippingDetails;
   payment_method: string;

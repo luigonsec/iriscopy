@@ -74,19 +74,23 @@ export default {
     {
       name: 'Vertical. Derecha-Izquierda',
       code: 'vertical-derecha-izquierda',
+      image: 'vdi',
       default: true,
     },
     {
       name: 'Horizontal. Abajo-Arriba',
       code: 'horizontal-abajo-arriba',
+      image: 'haa',
     },
     {
       name: 'Vertical. Abajo-Arriba',
       code: 'vertical-abajo-arriba',
+      image: 'vaa',
     },
     {
       name: 'Horizontal. Derecha-Izquierda',
       code: 'horizontal-derecha-izquierda',
+      image: 'hdi',
     },
   ],
 

@@ -28,14 +28,19 @@ export class PaymentComponent implements OnInit {
   public shippingDetailsErrors: ShippingDetails = {} as ShippingDetails;
 
   public differentAddress = false;
-  public payment: string = 'Card';
+  public payment: string;
   public deliver: string = 'Shipping';
   public orders: OrderItem[];
   public locations = locations;
   public selectedLocation: Location;
   public termsAccepted: boolean;
-  public redsysData: RedsysData;
+  public redsysData: RedsysData = {
+    Ds_MerchantParameters: undefined,
+    Ds_Signature: undefined,
+    Ds_SignatureVersion: undefined,
+  };
   @ViewChild('order') public order: OrderComponent;
+  @ViewChild('redsysForm') redsysForm;
 
   constructor(
     private shopcartService: ShopcartService,
@@ -60,17 +65,17 @@ export class PaymentComponent implements OnInit {
 
   public resetBillingDetails() {
     this.billingDetails = {
-      first_name: '',
-      company: '',
+      first_name: 'Luis',
+      company: '53769423T',
       responsible: '',
-      address_1: '',
-      address_2: '',
-      city: '',
-      email: '',
-      phone: '',
+      address_1: 'Calle la Niña',
+      address_2: '2F',
+      city: 'Mairena del Aljarafe',
+      email: 'luisgonzalezseco@gmail.com',
+      phone: '616466098',
       others: '',
-      postcode: '',
-      state: '',
+      postcode: '41927',
+      state: 'Sevilla',
     };
   }
 
@@ -112,23 +117,14 @@ export class PaymentComponent implements OnInit {
         summary: 'Error',
       });
     }
-
-    this.prepareOrder();
   }
 
-  public redsys() {
-    const request = {
-      Ds_SignatureVersion: 'HMAC_SHA256_V1',
-      Ds_MerchantParameters:
-        'eyJEU19NRVJDSEFOVF9BTU9VTlQiOiAiMTQ1IiwiRFNfTUVSQ0hBTlRfQ1VSUkVOQ1kiOiAiOTc4IiwiRFNfTUVSQ0hBTlRfTUVSQ0hBTlRDT0RFIjogIjk5OTAwODg4MSIsIkRTX01FUkNIQU5UX01FUkNIQU5UVVJMIjogImh0dHA6Ly93d3cucHJ1ZWJhLmNvbS91cmxOb3RpZmljYWNpb24ucGhwIiwiRFNfTUVSQ0hBTlRfT1JERVIiOiAiMTQ0NjA2ODU4MSIsIkRTX01FUkNIQU5UX1RFUk1JTkFMIjogIjEiLCJEU19NRVJDSEFOVF9UUkFOU0FDVElPTlRZUEUiOiAiMCIsIkRTX01FUkNIQU5UX1VSTEtPIjogImh0dHA6Ly93d3cucHJ1ZWJhLmNvbS91cmxLTy5waHAiLCJEU19NRVJDSEFOVF9VUkxPSyI6ICJodHRwOi8vd3d3LnBydWViYS5jb20vdXJsT0sucGhwIn0=',
-      Ds_Signature: 'PqV2+SF6asdasMjXasKJRTh3UIYya1hmU/igHkzhC+R=',
-    };
+  public loadRedsys(order, callback) {
     this.redsysService
-      .sendPayment(request)
+      .sendPayment(order)
       .subscribe((redsysData: RedsysData) => {
-        console.log(redsysData);
-
         this.redsysData = redsysData;
+        return callback();
       });
   }
 
@@ -140,24 +136,21 @@ export class PaymentComponent implements OnInit {
     );
   }
 
-  public prepareOrder() {
+  public sent($event) {
+    $event.preventDefault();
+    this.prepareOrder((err, order) => {
+      this.loadRedsys(order, () => {
+        this.redsysForm.nativeElement.submit();
+      });
+    });
+  }
+
+  public prepareOrder(callback) {
     let shippingLine = {} as any;
     if (this.deliver === 'Pickup') {
-      shippingLine.method_title = 'Local de Recogida';
-      shippingLine.method_id = 'local_pickup_plus';
-      shippingLine.total = '0.00';
-      shippingLine.meta_data = [
-        {
-          key: '_pickup_location_id',
-          value: this.selectedLocation.id,
-        },
-      ];
+      this.setPickupProperties(shippingLine);
     } else {
-      shippingLine.method_title = 'Envío en 48 horas';
-      shippingLine.method_id = 'flat_rate';
-      shippingLine.instance_id = '9';
-      shippingLine.total = '5.00';
-      shippingLine.total_tax = '0.00';
+      this.setShippingProperties(shippingLine);
     }
     const order: Order = {
       billing: this.billingDetails,
@@ -168,48 +161,32 @@ export class PaymentComponent implements OnInit {
       shipping_lines: [shippingLine],
     };
 
-    this.orderService.create(order).subscribe(() => {
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Se ha enviado tu pedido',
-        detail: 'Pedido recibido',
-      });
+    this.orderService.create(order).subscribe((response: any) => {
+      const orderID = response.order;
+      order.id = orderID;
+      callback(null, order);
     });
   }
-  //   "shipping_lines": [
-  //     {
-  //         "id": 2038,
-  //         "method_title": "Envío en 48 horas",
-  //         "method_id": "flat_rate",
-  //         "instance_id": "9",
-  //         "total": "5.00",
-  //         "total_tax": "0.00",
-  //         "taxes": [],
-  //         "meta_data": [
-  //             {
-  //                 "id": 40354,
-  //                 "key": "Artículos",
-  //                 "value": "CARPETA ANILLAS GRAFOPLAS 4 ANILLAS 25MM POLIPROPILENO CON CREMALLERA I LIKE A+ NEGRA &times; 1"
-  //             }
-  //         ]
-  //     }
-  // ],
 
-  //   "shipping_lines": [
-  //     {
-  //         "method_title": "Local de Recogida",
-  //         "method_id": "local_pickup_plus",
-  //         "total": "0.00",
-  //         "total_tax": "0.00",
-  //         "taxes": [],
-  //         "meta_data": [
-  //             {
-  //                 "key": "_pickup_location_id",
-  //                 "value": "5209"
-  //             }
-  //         ]
-  //     }
-  // ]
+  private setShippingProperties(shippingLine: any) {
+    shippingLine.method_title = 'Envío en 48 horas';
+    shippingLine.method_id = 'flat_rate';
+    shippingLine.instance_id = '9';
+    shippingLine.total = '5.00';
+    shippingLine.total_tax = '0.00';
+  }
+
+  private setPickupProperties(shippingLine: any) {
+    shippingLine.method_title = 'Local de Recogida';
+    shippingLine.method_id = 'local_pickup_plus';
+    shippingLine.total = '0.00';
+    shippingLine.meta_data = [
+      {
+        key: '_pickup_location_id',
+        value: this.selectedLocation.id,
+      },
+    ];
+  }
 
   public resetShippingDetails() {
     this.shippingDetails = {
