@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { OrderComponent } from 'src/app/components/order/order.component';
 import BillingDetails from 'src/app/interfaces/BillingDetails';
+import File from 'src/app/interfaces/File';
 import Location from 'src/app/interfaces/Location';
 import Order from 'src/app/interfaces/Order';
 import { OrderItem } from 'src/app/interfaces/OrderItem';
@@ -39,8 +40,12 @@ export class PaymentComponent implements OnInit {
     Ds_Signature: undefined,
     Ds_SignatureVersion: undefined,
   };
+
+  public OrderID;
   @ViewChild('order') public order: OrderComponent;
   @ViewChild('redsysForm') redsysForm;
+
+  public formGroup;
 
   constructor(
     private shopcartService: ShopcartService,
@@ -119,9 +124,18 @@ export class PaymentComponent implements OnInit {
     }
   }
 
-  public loadRedsys(order, callback) {
+  public startPayment__Card(order, callback) {
     this.redsysService
-      .sendPayment(order)
+      .sendPayment(order, false)
+      .subscribe((redsysData: RedsysData) => {
+        this.redsysData = redsysData;
+        return callback();
+      });
+  }
+
+  public startPayment__Bizum(order, callback) {
+    this.redsysService
+      .sendPayment(order, true)
       .subscribe((redsysData: RedsysData) => {
         this.redsysData = redsysData;
         return callback();
@@ -136,13 +150,25 @@ export class PaymentComponent implements OnInit {
     );
   }
 
-  public sent($event) {
-    $event.preventDefault();
-    this.prepareOrder((err, order) => {
-      this.loadRedsys(order, () => {
-        this.redsysForm.nativeElement.submit();
-      });
-    });
+  public sent() {
+    switch (this.payment) {
+      case 'Bizum': {
+        this.prepareOrder((err, order) => {
+          this.startPayment__Bizum(order, () => {
+            setTimeout((_) => this.redsysForm.nativeElement.submit());
+          });
+        });
+        break;
+      }
+      case 'Card': {
+        this.prepareOrder((err, order) => {
+          this.startPayment__Card(order, () => {
+            setTimeout((_) => this.redsysForm.nativeElement.submit());
+          });
+        });
+        break;
+      }
+    }
   }
 
   public prepareOrder(callback) {
@@ -152,6 +178,9 @@ export class PaymentComponent implements OnInit {
     } else {
       this.setShippingProperties(shippingLine);
     }
+    const flattenFiles = this.orders
+      .map((order) => order.files)
+      .reduce((acc, val) => acc.concat(val), []);
     const order: Order = {
       billing: this.billingDetails,
       shipping: this.shippingDetails,
@@ -159,10 +188,30 @@ export class PaymentComponent implements OnInit {
       payment_method: this.payment,
       payment_method_title: this.payment,
       shipping_lines: [shippingLine],
+      meta_data: [
+        {
+          key: '_wcuf_uploaded_files',
+          value: {
+            '0-37198-37595': {
+              id: '0-37198-37595',
+              quantity: flattenFiles.map((x) => '1'),
+              original_filename: flattenFiles.map(
+                (x: File) => x.original_filename
+              ),
+              url: flattenFiles.map((x: File) => x.url),
+              source: flattenFiles.map((x: File) => x.source),
+              num_uploaded_files: flattenFiles.length,
+              user_feedback: '',
+              is_multiple_file_upload: true,
+            },
+          },
+        },
+      ],
     };
 
     this.orderService.create(order).subscribe((response: any) => {
       const orderID = response.order;
+      this.OrderID = orderID;
       order.id = orderID;
       callback(null, order);
     });

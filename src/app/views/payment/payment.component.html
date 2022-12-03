@@ -268,12 +268,13 @@
       </div>
 
       <div id="Confirm" class="p-fluid">
-        <p-button (click)="sent($event)" [label]="'Realizar el pedido'"></p-button>
-        <form #redsysForm ngNoForm *ngIf="this.redsysData" name="from" action="https://sis.redsys.es/sis/realizarPago"
-          method="POST">
-          <input type="hidden" name="Ds_SignatureVersion" [value]="this.redsysData.Ds_SignatureVersion" />
-          <input type="hidden" name="Ds_MerchantParameters" [value]="this.redsysData.Ds_MerchantParameters" />
-          <input type="hidden" name="Ds_Signature" [value]="this.redsysData.Ds_Signature" />
+        <p-button (click)="sent()" [label]="'Realizar el pedido'"></p-button>
+        <form #redsysForm *ngIf="this.redsysData" [action]="'https://sis.redsys.es/sis/realizarPago'" method="POST">
+          <input type="hidden" name="Ds_SignatureVersion" [(ngModel)]="this.redsysData.Ds_SignatureVersion" />
+          <input type="hidden" name="Ds_MerchantParameters" [(ngModel)]="this.redsysData.Ds_MerchantParameters" />
+          <input type="hidden" name="Ds_Signature" [(ngModel)]="this.redsysData.Ds_Signature" />
+          <input type="hidden" name="Order_ID" [(ngModel)]="this.OrderID" />
+
         </form>
       </div>
     </p-card>

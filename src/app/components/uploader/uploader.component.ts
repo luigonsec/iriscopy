@@ -1,6 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import * as async from 'async';
 import File from 'src/app/interfaces/File';
+import UploadedFile from 'src/app/interfaces/UploadedFile';
+import { FilesService } from 'src/app/services/files.service';
 import * as uuid from 'uuid';
 @Component({
   selector: 'app-uploader',
@@ -12,29 +14,38 @@ export class UploaderComponent implements OnInit {
   public src: string;
   @Output() emitChange = new EventEmitter<any>();
 
-  constructor() {}
+  constructor(private filesService: FilesService) {}
 
   onUpload($event) {
-    const reader = new FileReader();
     const files = $event.currentFiles;
     const treatedFiles = [];
     if (files) {
-      async.eachSeries(
+      async.each(
         files,
         (file: any, done) => {
+          const reader = new FileReader();
           reader.readAsBinaryString(file);
           reader.onloadend = () => {
             const count = (reader.result as string).match(
               /\/Type[\s]*\/Page[^s]/g
             ).length;
-            const newFile: File = {
-              id: uuid.v4(),
-              pages: count,
-              name: file.name,
-              size: file.size,
-            };
-            treatedFiles.push(newFile);
-            return done();
+
+            this.filesService
+              .upload(file)
+              .subscribe((uploadedFile: UploadedFile) => {
+                const newFile: File = {
+                  id: uploadedFile.id,
+                  pages: count,
+                  name: file.name,
+                  size: file.size,
+                  url: uploadedFile.source_url,
+                  original_filename: uploadedFile.title.raw,
+                  source: 'local',
+                  image: uploadedFile.media_details.sizes.medium.source_url,
+                };
+                treatedFiles.push(newFile);
+                return done();
+              });
           };
         },
         () => {

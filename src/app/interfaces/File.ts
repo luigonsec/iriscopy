@@ -1,6 +1,10 @@
 export default interface File {
+  id: string | number;
   name: string;
   size: number;
   pages: number;
-  id: string;
+  url: string;
+  original_filename: string;
+  source: string;
+  image: string;
 }

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -42,6 +42,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CheckboxModule } from 'primeng/checkbox';
 import { OrderComponent } from './components/order/order.component';
 import { TermsComponent } from './views/terms/terms.component';
+import { SuccessComponent } from './views/success/success.component';
+import { ErrorComponent } from './views/error/error.component';
 
 @NgModule({
   declarations: [
@@ -67,10 +69,14 @@ import { TermsComponent } from './views/terms/terms.component';
     PaymentComponent,
     OrderComponent,
     TermsComponent,
+    SuccessComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
     DropdownModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     FormsModule,
     SelectButtonModule,

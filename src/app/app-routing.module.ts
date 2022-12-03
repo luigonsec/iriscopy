@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ErrorComponent } from './views/error/error.component';
 import { IndexComponent } from './views/index/index.component';
 import { PaymentComponent } from './views/payment/payment.component';
+import { SuccessComponent } from './views/success/success.component';
 import { TermsComponent } from './views/terms/terms.component';
 
 const routes: Routes = [
@@ -16,6 +18,14 @@ const routes: Routes = [
   {
     path: 'payment',
     component: PaymentComponent,
+  },
+  {
+    path: 'payment/success',
+    component: SuccessComponent,
+  },
+  {
+    path: 'payment/error',
+    component: ErrorComponent,
   },
 ];
 
