@@ -38,9 +38,8 @@ export class UploaderComponent implements OnInit {
               /\/Type[\s]*\/Page[^s]/g
             ).length;
 
-            this.filesService
-              .upload(file)
-              .subscribe((uploadedFile: UploadedFile) => {
+            this.filesService.upload(file).subscribe(
+              (uploadedFile: UploadedFile) => {
                 const newFile: File = {
                   id: uploadedFile.id,
                   pages: count,
@@ -53,7 +52,11 @@ export class UploaderComponent implements OnInit {
                 };
                 treatedFiles.push(newFile);
                 return done();
-              });
+              },
+              (err) => {
+                return done(err);
+              }
+            );
           };
         },
         () => {
