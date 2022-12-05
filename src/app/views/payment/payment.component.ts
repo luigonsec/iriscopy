@@ -9,6 +9,7 @@ import { OrderItem } from 'src/app/interfaces/OrderItem';
 import RedsysData from 'src/app/interfaces/RedsysData';
 import ShippingDetails from 'src/app/interfaces/ShippingDetails';
 import { BillingService } from 'src/app/services/billing.service';
+import { LoadingService } from 'src/app/services/loading.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { RedsysService } from 'src/app/services/redsys.service';
 import { ShippingService } from 'src/app/services/shipping.service';
@@ -53,6 +54,7 @@ export class PaymentComponent implements OnInit {
     private shippingService: ShippingService,
     private orderService: OrdersService,
     private redsysService: RedsysService,
+    private loadingService: LoadingService,
     private messageService: MessageService
   ) {
     this.resetBillingDetails();
@@ -125,21 +127,39 @@ export class PaymentComponent implements OnInit {
   }
 
   public startPayment__Card(order, callback) {
-    this.redsysService
-      .sendPayment(order, false)
-      .subscribe((redsysData: RedsysData) => {
+    this.loadingService.setLoading({
+      isLoading: true,
+      text: 'Redirigiendo a pasarela de pago',
+    });
+    this.redsysService.sendPayment(order, false).subscribe(
+      (redsysData: RedsysData) => {
         this.redsysData = redsysData;
         return callback();
-      });
+      },
+      (err) => {
+        this.loadingService.setLoading({
+          isLoading: false,
+        });
+      }
+    );
   }
 
   public startPayment__Bizum(order, callback) {
-    this.redsysService
-      .sendPayment(order, true)
-      .subscribe((redsysData: RedsysData) => {
+    this.loadingService.setLoading({
+      isLoading: true,
+      text: 'Redirigiendo a pasarela de pago',
+    });
+    this.redsysService.sendPayment(order, true).subscribe(
+      (redsysData: RedsysData) => {
         this.redsysData = redsysData;
         return callback();
-      });
+      },
+      (err) => {
+        this.loadingService.setLoading({
+          isLoading: false,
+        });
+      }
+    );
   }
 
   public getTotal() {
@@ -172,6 +192,10 @@ export class PaymentComponent implements OnInit {
   }
 
   public prepareOrder(callback) {
+    this.loadingService.setLoading({
+      isLoading: true,
+      text: 'Preparando pedido',
+    });
     let shippingLine = {} as any;
     if (this.deliver === 'Pickup') {
       this.setPickupProperties(shippingLine);
@@ -209,12 +233,19 @@ export class PaymentComponent implements OnInit {
       ],
     };
 
-    this.orderService.create(order).subscribe((response: any) => {
-      const orderID = response.order;
-      this.OrderID = orderID;
-      order.id = orderID;
-      callback(null, order);
-    });
+    this.orderService.create(order).subscribe(
+      (response: any) => {
+        const orderID = response.order;
+        this.OrderID = orderID;
+        order.id = orderID;
+        callback(null, order);
+      },
+      (err) => {
+        this.loadingService.setLoading({
+          isLoading: false,
+        });
+      }
+    );
   }
 
   private setShippingProperties(shippingLine: any) {

@@ -3,7 +3,8 @@ import * as async from 'async';
 import File from 'src/app/interfaces/File';
 import UploadedFile from 'src/app/interfaces/UploadedFile';
 import { FilesService } from 'src/app/services/files.service';
-import * as uuid from 'uuid';
+import { LoadingService } from 'src/app/services/loading.service';
+
 @Component({
   selector: 'app-uploader',
   templateUrl: './uploader.component.html',
@@ -14,11 +15,18 @@ export class UploaderComponent implements OnInit {
   public src: string;
   @Output() emitChange = new EventEmitter<any>();
 
-  constructor(private filesService: FilesService) {}
+  constructor(
+    private filesService: FilesService,
+    private loadingService: LoadingService
+  ) {}
 
-  onUpload($event) {
+  onUpload($event, fileUpload) {
     const files = $event.currentFiles;
-    const treatedFiles = [];
+    const treatedFiles = this.uploadedFiles;
+    this.loadingService.setLoading({
+      text: 'Procesando archivos',
+      isLoading: true,
+    });
     if (files) {
       async.each(
         files,
@@ -49,8 +57,12 @@ export class UploaderComponent implements OnInit {
           };
         },
         () => {
+          this.loadingService.setLoading({
+            isLoading: false,
+          });
           this.uploadedFiles = treatedFiles;
           this.emitChange.emit(this.uploadedFiles);
+          fileUpload.clear();
         }
       );
     }

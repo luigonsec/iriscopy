@@ -201,7 +201,7 @@
     <p-card id="Order__summary">
       <app-order #order></app-order>
       <div class="Total__Price">
-        Total: {{this.getTotal()}} €
+        Total: {{this.getTotal().toFixed(2)}} €
       </div>
 
       <div id="Payment__method">

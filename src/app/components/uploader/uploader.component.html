@@ -1,7 +1,13 @@
 <div id="Uploader" class="grid">
   <div class="col-12">
-    <p *ngIf="uploadedFiles.length === 0">Sube aquí tus documentos</p>
+    <p>Sube aquí tus documentos</p>
+    <p-fileUpload #fileUpload mode="basic" name="file[]" (onSelect)="onUpload($event, fileUpload)" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+    text/plain, application/pdf" maxFileSize="5000000" uploadLabel="Confirmar y subir"
+      [chooseLabel]="this.uploadedFiles.length === 0 ? 'Seleccionar archivos...' : 'Añadir más archivos...'"
+      cancelLabel="Cancelar" multiple="multiple" [auto]="true">
+    </p-fileUpload>
   </div>
+
 
   <div class="col-6 sm:col-6 md:col-4" *ngFor="let file of (uploadedFiles || [])">
     <div class="p-fluid">
@@ -18,10 +24,6 @@
   </div>
 
   <div class="col-12">
-    <p-fileUpload *ngIf="uploadedFiles.length === 0" mode="basic" name="file[]" (onSelect)="onUpload($event)" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
-        text/plain, application/pdf" maxFileSize="1000000" uploadLabel="Confirmar y subir"
-      chooseLabel="Seleccionar archivo..." cancelLabel="Cancelar" multiple="multiple">
 
-    </p-fileUpload>
   </div>
 </div>

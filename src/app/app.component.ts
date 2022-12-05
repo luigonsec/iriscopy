@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import Loading from './interfaces/Loading';
+import { LoadingService } from './services/loading.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+  loading: Loading;
+
+  constructor(private loadingService: LoadingService) {}
+
+  ngOnInit(): void {
+    this.loading = this.loadingService.isLoading();
+    this.loadingService.isLoading$().subscribe((payload: Loading) => {
+      this.loading = payload;
+    });
+  }
 }

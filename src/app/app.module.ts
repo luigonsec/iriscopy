@@ -44,6 +44,7 @@ import { OrderComponent } from './components/order/order.component';
 import { TermsComponent } from './views/terms/terms.component';
 import { SuccessComponent } from './views/success/success.component';
 import { ErrorComponent } from './views/error/error.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { ErrorComponent } from './views/error/error.component';
     TermsComponent,
     SuccessComponent,
     ErrorComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,
