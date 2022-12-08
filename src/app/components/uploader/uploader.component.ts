@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import * as async from 'async';
+import { MessageService } from 'primeng/api';
 import File from 'src/app/interfaces/File';
 import UploadedFile from 'src/app/interfaces/UploadedFile';
 import { FilesService } from 'src/app/services/files.service';
@@ -17,46 +18,55 @@ export class UploaderComponent implements OnInit {
 
   constructor(
     private filesService: FilesService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private messageService: MessageService
   ) {}
 
   onUpload($event, fileUpload) {
     const files = $event.currentFiles;
     const treatedFiles = this.uploadedFiles;
-    this.loadingService.setLoading({
-      text: 'Procesando archivos',
-      isLoading: true,
-    });
     if (files) {
+      this.loadingService.setLoading({
+        text: 'Procesando archivos',
+        isLoading: true,
+      });
       async.each(
         files,
         (file: any, done) => {
           const reader = new FileReader();
           reader.readAsBinaryString(file);
           reader.onloadend = () => {
-            const count = (reader.result as string).match(
-              /\/Type[\s]*\/Page[^s]/g
-            ).length;
-
-            this.filesService.upload(file).subscribe(
-              (uploadedFile: UploadedFile) => {
-                const newFile: File = {
-                  id: uploadedFile.id,
-                  pages: count,
-                  name: file.name,
-                  size: file.size,
-                  url: uploadedFile.source_url,
-                  original_filename: uploadedFile.title.raw,
-                  source: 'local',
-                  image: uploadedFile.media_details.sizes.medium.source_url,
-                };
-                treatedFiles.push(newFile);
-                return done();
-              },
-              (err) => {
-                return done(err);
-              }
-            );
+            try {
+              const count = (reader.result as string).match(
+                /\/Type[\s]*\/Page[^s]/g
+              ).length;
+              this.filesService.upload(file).subscribe(
+                (uploadedFile: UploadedFile) => {
+                  const newFile: File = {
+                    id: uploadedFile.id,
+                    pages: count,
+                    name: file.name,
+                    size: file.size,
+                    url: uploadedFile.source_url,
+                    original_filename: uploadedFile.title.raw,
+                    source: 'local',
+                    image: uploadedFile.media_details.sizes.medium.source_url,
+                  };
+                  treatedFiles.push(newFile);
+                  return done();
+                },
+                (err) => {
+                  return done(err);
+                }
+              );
+            } catch (err) {
+              this.messageService.add({
+                severity: 'error',
+                detail: 'El PDF adjunto no es válido.',
+                summary: 'Error',
+              });
+              return done(err);
+            }
           };
         },
         () => {
