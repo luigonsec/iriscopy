@@ -1,6 +1,7 @@
 export default interface UploadedFile {
   id: number;
   date: string;
+  pages: number;
   date_gmt: string;
   guid: {
     rendered: string;

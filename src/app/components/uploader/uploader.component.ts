@@ -37,14 +37,11 @@ export class UploaderComponent implements OnInit {
           reader.readAsBinaryString(file);
           reader.onloadend = () => {
             try {
-              const count = (reader.result as string).match(
-                /\/Type[\s]*\/Page[^s]/g
-              ).length;
               this.filesService.upload(file).subscribe(
                 (uploadedFile: UploadedFile) => {
                   const newFile: File = {
                     id: uploadedFile.id,
-                    pages: count,
+                    pages: uploadedFile.pages,
                     name: file.name,
                     size: file.size,
                     url: uploadedFile.source_url,
