@@ -75,46 +75,42 @@ export class PaymentComponent implements OnInit {
       first_name: 'Luis',
       company: '53769423T',
       responsible: '',
-      address_1: 'Calle la Niña',
+      address_1: 'Calle la Niña 47',
       address_2: '2F',
-      city: 'Mairena del Aljarafe',
+      city: 'Sevilla',
       email: 'luisgonzalezseco@gmail.com',
       phone: '616466098',
       others: '',
       postcode: '41927',
-      state: 'Sevilla',
+      state: '',
     };
   }
 
   public validate() {
-    this.billingDetailsErrors = this.billingService.validate(
-      this.billingDetails
-    );
-    const billingFine = Object.values(this.billingDetailsErrors).every(
-      (x) => !!!x
-    );
-    if (!!!billingFine) {
+    const validBilling = this.validBilling();
+    if (!!!validBilling)
       return this.messageService.add({
         severity: 'error',
         detail: 'Hay errores en los "DETALLES DE FACTURACIÓN"',
         summary: 'Error',
       });
-    }
 
     if (this.differentAddress) {
-      this.shippingDetailsErrors = this.shippingService.validate(
-        this.shippingDetails
-      );
-      const shippingFine = Object.values(this.shippingDetailsErrors).every(
-        (x) => !!!x
-      );
-      if (!!!shippingFine) {
+      const validShipping = this.validShipping();
+      if (!!!validShipping) {
         return this.messageService.add({
           severity: 'error',
           detail: 'Hay errores en los "DATOS DE ENVÍO"',
           summary: 'Error',
         });
       }
+    }
+    if (!!!['Bizum', 'Card'].includes(this.payment)) {
+      return this.messageService.add({
+        severity: 'error',
+        detail: 'Debes indicar un "Método de pago"',
+        summary: 'Error',
+      });
     }
 
     if (!!!this.termsAccepted) {
@@ -124,6 +120,28 @@ export class PaymentComponent implements OnInit {
         summary: 'Error',
       });
     }
+
+    this.processOrder();
+  }
+
+  private validShipping() {
+    this.shippingDetailsErrors = this.shippingService.validate(
+      this.shippingDetails
+    );
+    const shippingFine = Object.values(this.shippingDetailsErrors).every(
+      (x) => !!!x
+    );
+    return shippingFine;
+  }
+
+  private validBilling() {
+    this.billingDetailsErrors = this.billingService.validate(
+      this.billingDetails
+    );
+    const billingFine = Object.values(this.billingDetailsErrors).every(
+      (x) => !!!x
+    );
+    return billingFine;
   }
 
   public startPayment__Card(order, callback) {
@@ -170,25 +188,31 @@ export class PaymentComponent implements OnInit {
     );
   }
 
-  public sent() {
-    switch (this.payment) {
-      case 'Bizum': {
-        this.prepareOrder((err, order) => {
+  public processOrder() {
+    this.prepareOrder((err, order) => {
+      if (err) {
+        return this.messageService.add({
+          severity: 'error',
+          detail:
+            'No ha sido posible procesar el pedido. Por favor, vuelva a intentarlo.',
+          summary: 'Error',
+        });
+      }
+      switch (this.payment) {
+        case 'Bizum': {
           this.startPayment__Bizum(order, () => {
             setTimeout((_) => this.redsysForm.nativeElement.submit());
           });
-        });
-        break;
-      }
-      case 'Card': {
-        this.prepareOrder((err, order) => {
+          break;
+        }
+        case 'Card': {
           this.startPayment__Card(order, () => {
             setTimeout((_) => this.redsysForm.nativeElement.submit());
           });
-        });
-        break;
+          break;
+        }
       }
-    }
+    });
   }
 
   public prepareOrder(callback) {
@@ -238,12 +262,13 @@ export class PaymentComponent implements OnInit {
         const orderID = response.order;
         this.OrderID = orderID;
         order.id = orderID;
-        callback(null, order);
+        return callback(null, order);
       },
       (err) => {
         this.loadingService.setLoading({
           isLoading: false,
         });
+        return callback(err);
       }
     );
   }

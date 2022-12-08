@@ -268,7 +268,7 @@
       </div>
 
       <div id="Confirm" class="p-fluid">
-        <p-button (click)="sent()" [label]="'Realizar el pedido'"></p-button>
+        <p-button (click)="validate()" [label]="'Realizar el pedido'"></p-button>
         <form #redsysForm *ngIf="this.redsysData" [action]="'https://sis.redsys.es/sis/realizarPago'" method="POST">
           <input type="hidden" name="Ds_SignatureVersion" [(ngModel)]="this.redsysData.Ds_SignatureVersion" />
           <input type="hidden" name="Ds_MerchantParameters" [(ngModel)]="this.redsysData.Ds_MerchantParameters" />
