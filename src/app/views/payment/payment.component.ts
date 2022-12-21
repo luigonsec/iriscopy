@@ -72,16 +72,16 @@ export class PaymentComponent implements OnInit {
 
   public resetBillingDetails() {
     this.billingDetails = {
-      first_name: 'Luis',
-      company: '53769423T',
+      first_name: '',
+      company: '',
       responsible: '',
-      address_1: 'Calle la Niña 47',
-      address_2: '2F',
-      city: 'Sevilla',
-      email: 'luisgonzalezseco@gmail.com',
-      phone: '616466098',
+      address_1: '',
+      address_2: '',
+      city: '',
+      email: '',
+      phone: '',
       others: '',
-      postcode: '41927',
+      postcode: '',
       state: '',
     };
   }
