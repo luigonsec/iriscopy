@@ -2,7 +2,7 @@ export const environment = {
   production: true,
   api: {
     protocol: 'https',
-    host: 'iriscopy-api.herokuapp.com',
+    host: 'iriscopyshop.app',
     port: 443,
   },
 };

@@ -19,7 +19,7 @@ export default {
       factor: 0.1,
     },
     {
-      name: 'Fortográfico',
+      name: 'Fotográfico',
       description: '250 grs',
       code: 'fotografico',
       factor: 0.15,
