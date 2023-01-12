@@ -182,10 +182,13 @@ export class PaymentComponent implements OnInit {
 
   public getTotal() {
     let priceShipping = this.deliver === 'Shipping' ? 5 : 0;
-    return (
-      this.orders.map(this.orderService.getPrecio).reduce((a, b) => a + b, 0) +
-      priceShipping
-    );
+    return this.getSubtotal() + priceShipping;
+  }
+
+  private getSubtotal() {
+    return this.orders
+      .map(this.orderService.getPrecio)
+      .reduce((a, b) => a + b, 0);
   }
 
   public processOrder() {

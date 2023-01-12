@@ -214,8 +214,10 @@
           <label for="paypal"> PayPal</label>
         </div>
         <div class="Option p-field-radiobutton">
-          <p-radioButton value="Bizum" [(ngModel)]="payment" inputId="bizum"></p-radioButton>
-          <label for="bizum"> BIZUM</label>
+          <p-radioButton value="Bizum" [(ngModel)]="payment" inputId="bizum"
+            *ngIf="this.getSubtotal() >= 3"></p-radioButton>
+          <label for="bizum"> BIZUM</label> <label *ngIf="this.getSubtotal() < 3" for="">. No disponible para pedidos
+            inferiores a 3€</label>
         </div>
       </div>
 

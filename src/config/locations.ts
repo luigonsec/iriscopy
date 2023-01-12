@@ -14,7 +14,6 @@ const locations = [
     name: 'Facultad de Geografía e Historia',
     address: 'Calle Doña María de Padilla s/n',
   },
-  { id: 5210, name: 'Facultad de Enfermería', address: 'Calle Avenzoar 42 ' },
   {
     id: 5209,
     name: 'Facultad de Ingeniería de la Edificación',
