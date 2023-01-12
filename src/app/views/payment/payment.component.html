@@ -209,10 +209,10 @@
           </p-radioButton>
           <label for="card"> Tarjeta de crédito o débito</label>
         </div>
-        <div class="Option p-field-radiobutton">
+        <!-- <div class="Option p-field-radiobutton">
           <p-radioButton value="Paypal" [(ngModel)]="payment" inputId="paypal"></p-radioButton>
           <label for="paypal"> PayPal</label>
-        </div>
+        </div> -->
         <div class="Option p-field-radiobutton">
           <p-radioButton value="Bizum" [(ngModel)]="payment" inputId="bizum"
             *ngIf="this.getSubtotal() >= 3"></p-radioButton>
