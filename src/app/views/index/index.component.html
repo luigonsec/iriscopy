@@ -1,5 +1,5 @@
 <div class="grid">
-  <div class="col-12 sm:col-12 md:col-5 lg:col-4">
+  <div class="col-12 sm:col-12 md:col-5 lg:col-5">
     <div class="Form__Section p-field">
       <div class="p-fluid">
         <label class="Label">Tamaño del papel</label>
@@ -46,7 +46,7 @@
     <div class="Form__Section p-field">
       <div class="p-fluid">
         <label class="Label">Tipo de acabado</label>
-        <app-finish-type (emitChange)="getFinishType($event)"></app-finish-type>
+        <app-finish-type (emitChange)="getFinishType($event)" [(paperSize)]="this.paperSize"></app-finish-type>
       </div>
     </div>
     <div class="Form__Section p-field" *ngIf="this.finishType && this.finishType.code === 'encuadernado'">
@@ -73,10 +73,9 @@
   </div>
 
 
-  <div class="col-12 sm:col-12 md:col-7 lg:col-8">
+  <div class="col-12 sm:col-12 md:col-7 lg:col-7">
     <app-uploader #uploader (emitChange)="getFile($event)"></app-uploader>
   </div>
 
   <app-confirm-bar *ngIf="this.isReady()" [reset]="this.reset.bind(this)" [(order)]="this.order"></app-confirm-bar>
-  <p-toast></p-toast>
 </div>

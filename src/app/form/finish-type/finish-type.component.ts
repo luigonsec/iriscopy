@@ -1,4 +1,11 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  Input,
+  OnChanges,
+} from '@angular/core';
 import Option from 'src/app/interfaces/Option';
 import options from 'src/config/options';
 
@@ -10,8 +17,20 @@ import options from 'src/config/options';
 export class FinishTypeComponent implements OnInit {
   public options: Option[];
   public option: Option = undefined;
+  private _paperSize: any;
 
   @Output() emitChange = new EventEmitter<any>();
+  @Input() set paperSize(value: any) {
+    this._paperSize = value;
+    this.options = options.finishType.filter((x) => {
+      return !!!(x.code === 'encuadernado' && this._paperSize.code === 'A3');
+    });
+
+    if (this._paperSize.code === 'A3' && this.option.code === 'encuadernado') {
+      this.option = this.options.find((x) => x.default);
+      this.emitChange.emit(this.option);
+    }
+  }
 
   constructor() {}
 

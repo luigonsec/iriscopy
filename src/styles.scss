@@ -100,3 +100,7 @@ body {
 .p-button {
   border-radius: $borderRadius;
 }
+
+.p-fluid .p-buttonset .p-button {
+  padding: 8px;
+}

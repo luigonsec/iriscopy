@@ -117,6 +117,14 @@ export default {
       description: 'En esquina',
     },
     {
+      name: 'Dos Taladros',
+      code: 'dos-taladros',
+    },
+    {
+      name: 'Cuatro Taladros',
+      code: 'cuatro-taladros',
+    },
+    {
       name: 'Encuadernado',
       code: 'encuadernado',
       description: 'En espiral',
