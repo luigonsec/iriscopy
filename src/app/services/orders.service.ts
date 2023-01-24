@@ -30,36 +30,41 @@ export class OrdersService {
     return this.order$;
   }
 
+  /**
+   * Computes the total price for an order item, taking into account the print type, form, paper size and grammage, binding options, and number of copies.
+   * @param {OrderItem} order - The order item to calculate the price for.
+   * @returns {number} The total price of the order item.
+   */
   getPrecio(order: OrderItem): number {
-    if (order && order.files) {
-      const twoSidesFactor = order.printForm.factor;
-      const totalPages = order.files
-        .map((x) => x.pages)
-        .reduce((a, b) => a + b, 0);
+    if (!order || !order.files) {
+      return 0;
+    }
+
+    const twoSidesFactor = order.printForm.factor;
+    let boundPrice = 0;
+    let boundColors = 0;
+    if (order.finishType.code === 'encuadernado') {
+      boundPrice += 1.2;
+      boundColors += order.boundColors.anillas.factor || 0;
+      boundColors += order.boundColors.trasera.factor || 0;
+      boundColors += order.boundColors.delantera.factor || 0;
+    }
+    const totalBounds =
+      order.boundType.code === 'agrupados' ? 1 : order.files.length;
+    return order.files.reduce((total, file) => {
       const pages = Math.ceil(
-        totalPages * twoSidesFactor * order.pagesPerSide.factor
+        file.pages * twoSidesFactor * order.pagesPerSide.factor
       );
-
+      const printFormCode =
+        file.pages === 1 ? 'una-cara' : order.printForm.code;
       const pricePerPage =
-        precios[order.printType.code][order.printForm.code][
-          order.paperSize.code
-        ](pages) + order.paperGrammage.factor;
-
-      let boundPrice = 0;
-      const totalBounds =
-        order.boundType.code === 'agrupados' ? 1 : order.files.length;
-
-      if (order.finishType.code === 'encuadernado') {
-        boundPrice += 1.2;
-        boundPrice += order.boundColors.anillas.factor || 0;
-        boundPrice += order.boundColors.trasera.factor || 0;
-        boundPrice += order.boundColors.delantera.factor || 0;
-      }
-
+        precios[order.printType.code][printFormCode][order.paperSize.code](
+          pages
+        ) + order.paperGrammage.factor;
       const price =
         order.copiesQuantity *
-        (pricePerPage * pages + boundPrice * totalBounds);
-      return parseFloat(price.toFixed(2));
-    }
+        (pricePerPage * pages + boundPrice * totalBounds + boundColors);
+      return total + parseFloat(price.toFixed(2));
+    }, 0);
   }
 }
