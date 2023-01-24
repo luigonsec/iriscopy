@@ -13,18 +13,7 @@ import { LoadingService } from 'src/app/services/loading.service';
   styleUrls: ['./uploader.component.scss'],
 })
 export class UploaderComponent implements OnInit {
-  public uploadedFiles: File[] = [
-    {
-      id: 1,
-      image: 'not_found',
-      name: 'Name',
-      original_filename: 'Name',
-      pages: 1,
-      size: 30,
-      source: 'no_matter',
-      url: 'w',
-    },
-  ];
+  public uploadedFiles: File[] = [];
   public src: string;
   @Output() emitChange = new EventEmitter<any>();
 
