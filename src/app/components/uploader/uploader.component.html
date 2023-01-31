@@ -2,7 +2,7 @@
   <div class="col-12">
     <p>Sube aquí tus documentos</p>
     <p-fileUpload #fileUpload mode="basic" name="file[]" (onSelect)="onUpload($event, fileUpload)" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
-    text/plain, application/pdf" maxFileSize="20971520" uploadLabel="Confirmar y subir"
+    text/plain, application/pdf" maxFileSize="52428800" uploadLabel="Confirmar y subir"
       [chooseLabel]="this.uploadedFiles.length === 0 ? 'Seleccionar archivos...' : 'Añadir más archivos...'"
       cancelLabel="Cancelar" multiple="multiple" [auto]="true">
     </p-fileUpload>
