@@ -51,20 +51,24 @@ export class OrdersService {
     }
     const totalBounds =
       order.boundType.code === 'agrupados' ? 1 : order.files.length;
-    return order.files.reduce((total, file) => {
-      const pages = Math.ceil(
-        file.pages * twoSidesFactor * order.pagesPerSide.factor
-      );
-      const printFormCode =
-        file.pages === 1 ? 'una-cara' : order.printForm.code;
-      const pricePerPage =
-        precios[order.printType.code][printFormCode][order.paperSize.code](
-          pages
-        ) + order.paperGrammage.factor;
-      const price =
-        order.copiesQuantity *
-        (pricePerPage * pages + boundPrice * totalBounds + boundColors);
-      return total + parseFloat(price.toFixed(2));
-    }, 0);
+    return parseFloat(
+      order.files
+        .reduce((total, file) => {
+          const pages = Math.ceil(
+            file.pages * twoSidesFactor * order.pagesPerSide.factor
+          );
+          const printFormCode =
+            file.pages === 1 ? 'una-cara' : order.printForm.code;
+          const pricePerPage =
+            precios[order.printType.code][printFormCode][order.paperSize.code](
+              pages
+            ) + order.paperGrammage.factor;
+          const price =
+            order.copiesQuantity *
+            (pricePerPage * pages + boundPrice * totalBounds + boundColors);
+          return total + price;
+        }, 0)
+        .toFixed(2)
+    );
   }
 }
