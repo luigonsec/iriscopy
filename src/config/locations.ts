@@ -26,7 +26,7 @@ const locations = [
   },
   {
     id: 5210,
-    name: 'Facultad de comunicación',
+    name: 'Facultad de Comunicación',
     address: 'Calle Americo Vespuccio 27',
   },
 ];
