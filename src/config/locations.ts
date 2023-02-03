@@ -24,6 +24,11 @@ const locations = [
     name: 'Escuela de Ingeniería',
     address: 'Camino de los Descubrimientos s/n',
   },
+  {
+    id: 5210,
+    name: 'Facultad de comunicación',
+    address: 'Calle Americo Vespuccio 27',
+  },
 ];
 
 export default locations;
