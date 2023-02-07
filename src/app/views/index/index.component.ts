@@ -22,9 +22,13 @@ export class IndexComponent implements OnInit {
   public boundType: Option = options.boundTypes.find((x) => x.default);
 
   public boundColors = {
-    delantera: options.colorsCover.find((x) => x.default),
+    delantera: options.colorsCover
+      .filter((x) => x.sides.includes('delantera'))
+      .find((x) => x.default),
     anillas: options.colorsRings.find((x) => x.default),
-    trasera: options.colorsCover.find((x) => x.default),
+    trasera: options.colorsCover
+      .filter((x) => x.sides.includes('trasera'))
+      .find((x) => x.default),
   };
 
   public copiesQuantity: number;

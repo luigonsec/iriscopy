@@ -45,6 +45,7 @@ import { TermsComponent } from './views/terms/terms.component';
 import { SuccessComponent } from './views/success/success.component';
 import { ErrorComponent } from './views/error/error.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { FilterPipe } from './filters/FilterPipe';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { LoadingComponent } from './components/loading/loading.component';
     MenuComponent,
     UploaderComponent,
     BoundTypeComponent,
+    FilterPipe,
     BoundColorsComponent,
     ColorOptionComponent,
     QuantityCopiesComponent,

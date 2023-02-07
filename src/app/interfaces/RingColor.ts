@@ -1,6 +1,5 @@
-export default interface BoundColor {
+export default interface RingColor {
   id: number;
-  sides: string[];
   color: string;
   name: string;
   default?: boolean;

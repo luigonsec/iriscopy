@@ -13,8 +13,8 @@
   <div class="Colors">
     <app-color-option (eventEmitter)="this.colorDelantera($event)"
       [active]="this.colorActive.delantera && this.colorActive.delantera.id === color.id" [option]="color"
-      *ngFor="let color of this.colorsCover"></app-color-option>
-    <div class="Colors__title" *ngIf="this.colorActive.delantera">
+      *ngFor="let color of this.colorsCover | filter: 'delantera'"></app-color-option>
+    <div class="Colors__title" *ngIf="this.colorActive.delantera ">
       {{this.colorActive.delantera.name}}
     </div>
   </div>
@@ -23,7 +23,7 @@
   <div class="Colors">
     <app-color-option (eventEmitter)="this.colorTrasera($event)"
       [active]="this.colorActive.trasera && this.colorActive.trasera.id === color.id" [option]="color"
-      *ngFor="let color of this.colorsCover"></app-color-option>
+      *ngFor="let color of this.colorsCover | filter: 'trasera' "></app-color-option>
     <div class="Colors__title" *ngIf="this.colorActive.trasera">
       {{this.colorActive.trasera.name}}
     </div>

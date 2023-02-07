@@ -1,6 +1,7 @@
 import BoundColor from './BoundColor';
 import File from './File';
 import Option from './Option';
+import RingColor from './RingColor';
 
 export interface OrderItem {
   id?: string;
@@ -15,7 +16,7 @@ export interface OrderItem {
 
   boundColors: {
     delantera: BoundColor;
-    anillas: BoundColor;
+    anillas: RingColor;
     trasera: BoundColor;
   };
 

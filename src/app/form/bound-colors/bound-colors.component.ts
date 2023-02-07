@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import BoundColor from 'src/app/interfaces/BoundColor';
 import Option from 'src/app/interfaces/Option';
+import RingColor from 'src/app/interfaces/RingColor';
 import options from 'src/config/options';
 
 @Component({
@@ -14,12 +15,12 @@ export class BoundColorsComponent implements OnInit {
   @Output() emitChange = new EventEmitter<any>();
 
   public colorsCover: BoundColor[];
-  public colorsRings: BoundColor[];
+  public colorsRings: RingColor[];
 
   @Input() public colorActive: {
     delantera?: BoundColor;
     trasera?: BoundColor;
-    anillas?: BoundColor;
+    anillas?: RingColor;
   };
 
   constructor() {}
@@ -31,12 +32,19 @@ export class BoundColorsComponent implements OnInit {
     this.option = this.bounds.find((x) => x.default) || this.bounds[0];
 
     this.colorActive = this.colorActive || {
-      delantera: this.colorsCover.find((x) => x.default),
-      trasera: this.colorsCover.find((x) => x.default),
+      delantera: this.colorsCover
+        .filter((x) => x.sides.includes['delantera'])
+        .find((x) => x.default),
+      trasera: this.colorsCover
+        .filter((x) => x.sides.includes['trasera'])
+        .find((x) => x.default),
       anillas: this.colorsRings.find((x) => x.default),
     };
 
     this.emitChange.emit(this.colorActive);
+  }
+  filterSides(side: string) {
+    return (color) => color.sides.includes(side);
   }
 
   colorDelantera($event) {

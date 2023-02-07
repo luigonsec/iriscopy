@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import BoundColor from 'src/app/interfaces/BoundColor';
 import Option from 'src/app/interfaces/Option';
+import RingColor from 'src/app/interfaces/RingColor';
 import options from 'src/config/options';
 interface Bound {
   boundType: Option;
   boundColors: {
+    anillas: RingColor;
     delantera: BoundColor;
-    anillas: BoundColor;
     trasera: BoundColor;
   };
 }
@@ -18,8 +19,8 @@ interface Bound {
 })
 export class BoundComponent implements OnInit {
   @Input() public boundColors: {
+    anillas: RingColor;
     delantera: BoundColor;
-    anillas: BoundColor;
     trasera: BoundColor;
   };
   @Input() public boundType: Option;
@@ -28,8 +29,8 @@ export class BoundComponent implements OnInit {
     boundType: options.boundTypes.find((x) => x.default),
     boundColors: {
       anillas: options.colorsRings.find((x) => x.default),
-      trasera: options.colorsRings.find((x) => x.default),
-      delantera: options.colorsRings.find((x) => x.default),
+      trasera: options.colorsCover.find((x) => x.default),
+      delantera: options.colorsCover.find((x) => x.default),
     },
   };
 

@@ -133,8 +133,6 @@ export class UploaderComponent implements OnInit {
   }
 
   handleError(err) {
-    console.log(err);
-
     if (err && err.status && err.status === 413) {
       this.messageService.add({
         summary: 'Error',
