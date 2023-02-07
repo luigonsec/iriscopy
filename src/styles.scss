@@ -5,6 +5,7 @@
 @import "~primeng/resources/primeng.min.css";
 @import "assets/scss/colors.scss";
 @import "~@fortawesome/fontawesome-free/css/all.min.css";
+@import url("https://fonts.googleapis.com/css?family=Montserrat:500,700");
 
 $borderRadius: 100px;
 
@@ -13,7 +14,7 @@ html {
 }
 
 body {
-  font-family: "Arial";
+  font-family: "Montserrat" !important;
   padding-bottom: 100px;
 }
 
@@ -33,6 +34,10 @@ body {
   color: #ffffff;
   background: $primary;
   border: 1px solid $primary;
+
+  .p-button-label {
+    font-family: "Montserrat" !important;
+  }
 }
 
 .p-selectbutton .p-button:not(.p-disabled):not(.p-highlight):hover {
@@ -54,6 +59,7 @@ body {
   text-align: center;
   width: 100%;
   .Button__label {
+    font-family: "Montserrat" !important;
     font-weight: bold;
     font-size: 14px;
   }
@@ -103,4 +109,8 @@ body {
 
 .p-fluid .p-buttonset .p-button {
   padding: 8px;
+}
+
+.p-component {
+  font-family: "Montserrat" !important;
 }
