@@ -193,7 +193,7 @@ export default {
     {
       id: 3,
       sides: ['delantera', 'trasera'],
-      color: '#BDECB6',
+      color: '#b6ecda',
       name: 'Verde agua',
       factor: 0.25,
     },
