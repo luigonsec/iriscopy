@@ -46,6 +46,9 @@ import { SuccessComponent } from './views/success/success.component';
 import { ErrorComponent } from './views/error/error.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { FilterPipe } from './filters/FilterPipe';
+import { SubmenuComponent } from './components/submenu/submenu.component';
+import { LoginComponent } from './views/login/login.component';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -75,6 +78,8 @@ import { FilterPipe } from './filters/FilterPipe';
     SuccessComponent,
     ErrorComponent,
     LoadingComponent,
+    SubmenuComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -98,6 +103,7 @@ import { FilterPipe } from './filters/FilterPipe';
     ToastModule,
     BrowserAnimationsModule,
     SidebarModule,
+    StoreModule.forRoot({}, {}),
   ],
   providers: [MessageService],
   bootstrap: [AppComponent],

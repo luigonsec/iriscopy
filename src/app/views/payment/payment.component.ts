@@ -15,6 +15,7 @@ import { RedsysService } from 'src/app/services/redsys.service';
 import { ShippingService } from 'src/app/services/shipping.service';
 import { ShopcartService } from 'src/app/services/shopcart.service';
 import locations from 'src/config/locations';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.component.html',
@@ -71,19 +72,35 @@ export class PaymentComponent implements OnInit {
   }
 
   public resetBillingDetails() {
-    this.billingDetails = {
-      first_name: '',
-      company: '',
-      responsible: '',
-      address_1: '',
-      address_2: '',
-      city: '',
-      email: '',
-      phone: '',
-      others: '',
-      postcode: '',
-      state: '',
-    };
+    if (environment.production === false) {
+      this.billingDetails = {
+        first_name: 'Luis',
+        company: '53769423T',
+        responsible: '',
+        address_1: 'Calle la Niña 47',
+        address_2: '2F',
+        city: 'Sevilla',
+        email: 'luisgonzalezseco@gmail.com',
+        phone: '616466098',
+        others: '',
+        postcode: '41927',
+        state: '',
+      };
+    } else {
+      this.billingDetails = {
+        first_name: '',
+        company: '',
+        responsible: '',
+        address_1: '',
+        address_2: '',
+        city: '',
+        email: '',
+        phone: '',
+        others: '',
+        postcode: '',
+        state: '',
+      };
+    }
   }
 
   public validate() {

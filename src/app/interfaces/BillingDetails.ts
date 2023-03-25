@@ -1,5 +1,6 @@
 export default interface BillingDetails {
   first_name: string;
+  last_name?: string;
   company: string;
   responsible: string;
   address_1: string;

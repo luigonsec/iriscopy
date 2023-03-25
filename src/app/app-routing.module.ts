@@ -5,6 +5,7 @@ import { IndexComponent } from './views/index/index.component';
 import { PaymentComponent } from './views/payment/payment.component';
 import { SuccessComponent } from './views/success/success.component';
 import { TermsComponent } from './views/terms/terms.component';
+import { LoginComponent } from './views/login/login.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path: 'terms',
     component: TermsComponent,
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
   },
   {
     path: 'payment',

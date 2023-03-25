@@ -1,0 +1,27 @@
+<div class="grid">
+  <div class="col-12 md:col-6">
+    <p-card>
+      <div class="grid">
+        <div class="col-12 md:col-12">
+          <h2>Inicia sesión con tu cuenta de IrisCopy</h2>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="col-12 md:col-12">
+          <div class="field">
+            <label for="username">Nombre de usuario / Email</label>
+            <input [(ngModel)]="this.username" id="username" type="text"
+              class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+          </div>
+          <div class="field">
+            <label for="password">Contraseña</label>
+            <input [(ngModel)]="this.password" id="password" type="text"
+              class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+          </div>
+          <button pButton label="Acceder" class="p-button-sm" (click)="this.performLogin()"></button>
+        </div>
+
+      </div>
+    </p-card>
+  </div>
+</div>
