@@ -10,11 +10,17 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2020",
+    "target": "ES2022",
     "module": "es2020",
     "paths": {
-      "primeng/*": ["node_modules/primeng-lts/*"]
+      "primeng/*": [
+        "node_modules/primeng-lts/*"
+      ]
     },
-    "lib": ["es2018", "dom"]
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "useDefineForClassFields": false
   }
 }
