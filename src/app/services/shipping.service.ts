@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import ShippingDetails from '../interfaces/ShippingDetails';
 
 @Injectable({
@@ -23,7 +23,7 @@ export class ShippingService {
       others: undefined,
     };
 
-    const invalidName = new FormControl(
+    const invalidName = new UntypedFormControl(
       shipping.first_name.trim(),
       Validators.required
     );
@@ -31,7 +31,7 @@ export class ShippingService {
       errors.first_name = 'Este campo no puede estar vacío';
     }
 
-    const invalidCIF = new FormControl(
+    const invalidCIF = new UntypedFormControl(
       shipping.company.trim(),
       Validators.required
     );
@@ -39,7 +39,7 @@ export class ShippingService {
       errors.company = 'Este campo no puede estar vacío';
     }
 
-    const invalidAddress = new FormControl(
+    const invalidAddress = new UntypedFormControl(
       shipping.address_1.trim(),
       Validators.required
     );
@@ -47,7 +47,7 @@ export class ShippingService {
       errors.address_1 = 'Este campo no puede estar vacío';
     }
 
-    const invalidAddress2 = new FormControl(
+    const invalidAddress2 = new UntypedFormControl(
       shipping.address_1.trim(),
       Validators.required
     );
@@ -55,7 +55,7 @@ export class ShippingService {
       errors.address_2 = 'Este campo no puede estar vacío';
     }
 
-    const invalidCity = new FormControl(
+    const invalidCity = new UntypedFormControl(
       shipping.city.trim(),
       Validators.required
     );
@@ -63,7 +63,7 @@ export class ShippingService {
       errors.city = 'Este campo no puede estar vacío';
     }
 
-    const invalidPostalCode = new FormControl(
+    const invalidPostalCode = new UntypedFormControl(
       shipping.postcode.trim(),
       Validators.required
     );

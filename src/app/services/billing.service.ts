@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import BillingDetails from '../interfaces/BillingDetails';
 
 @Injectable({
@@ -23,7 +23,7 @@ export class BillingService {
       others: undefined,
     };
 
-    const invalidName = new FormControl(
+    const invalidName = new UntypedFormControl(
       billing.first_name.trim(),
       Validators.required
     );
@@ -31,7 +31,7 @@ export class BillingService {
       errors.first_name = 'Este campo no puede estar vacío';
     }
 
-    const invalidCIF = new FormControl(
+    const invalidCIF = new UntypedFormControl(
       billing.company.trim(),
       Validators.required
     );
@@ -39,7 +39,7 @@ export class BillingService {
       errors.company = 'Este campo no puede estar vacío';
     }
 
-    const invalidAddress = new FormControl(
+    const invalidAddress = new UntypedFormControl(
       billing.address_1.trim(),
       Validators.required
     );
@@ -47,7 +47,7 @@ export class BillingService {
       errors.address_1 = 'Este campo no puede estar vacío';
     }
 
-    const invalidAddress2 = new FormControl(
+    const invalidAddress2 = new UntypedFormControl(
       billing.address_2.trim(),
       Validators.required
     );
@@ -55,7 +55,7 @@ export class BillingService {
       errors.address_2 = 'Este campo no puede estar vacío';
     }
 
-    const invalidCity = new FormControl(
+    const invalidCity = new UntypedFormControl(
       billing.city.trim(),
       Validators.required
     );
@@ -63,7 +63,7 @@ export class BillingService {
       errors.city = 'Este campo no puede estar vacío';
     }
 
-    const invalidPostalCode = new FormControl(
+    const invalidPostalCode = new UntypedFormControl(
       billing.postcode.trim(),
       Validators.required
     );
@@ -71,7 +71,7 @@ export class BillingService {
       errors.postcode = 'Este campo no puede estar vacío';
     }
 
-    const invalidPhone = new FormControl(
+    const invalidPhone = new UntypedFormControl(
       billing.phone.trim(),
       Validators.required
     );
@@ -79,7 +79,7 @@ export class BillingService {
       errors.phone = 'Este campo no puede estar vacío';
     }
 
-    const emptyEmail = new FormControl(
+    const emptyEmail = new UntypedFormControl(
       billing.email.trim(),
       Validators.required
     );
@@ -87,7 +87,7 @@ export class BillingService {
       errors.email = 'Este campo no puede estar vacío';
     }
 
-    const invalidEmail = new FormControl(
+    const invalidEmail = new UntypedFormControl(
       billing.email.trim(),
       Validators.email
     );
