@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -49,6 +49,11 @@ import { FilterPipe } from './filters/FilterPipe';
 import { SubmenuComponent } from './components/submenu/submenu.component';
 import { LoginComponent } from './views/login/login.component';
 import { StoreModule } from '@ngrx/store';
+import { customerReducer } from './_reducer/customer.reducer';
+import { CustomerEffects } from './_effects/customer.effects';
+import { EffectsModule } from '@ngrx/effects';
+import { loadingReducer } from './_reducer/loading.reducer';
+import { couponsReducer } from './_reducer/coupons.reducer';
 
 @NgModule({
   declarations: [
@@ -103,7 +108,12 @@ import { StoreModule } from '@ngrx/store';
     ToastModule,
     BrowserAnimationsModule,
     SidebarModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot({
+      customer: customerReducer,
+      loading: loadingReducer,
+      coupon: couponsReducer,
+    }),
+    EffectsModule.forRoot([CustomerEffects]),
   ],
   providers: [MessageService],
   bootstrap: [AppComponent],

@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
+import { selectCustomer } from 'src/app/_selectors/customer.selectors';
 import { OrderComponent } from 'src/app/components/order/order.component';
 import BillingDetails from 'src/app/interfaces/BillingDetails';
+import Coupon from 'src/app/interfaces/Coupon';
 import File from 'src/app/interfaces/File';
 import Location from 'src/app/interfaces/Location';
 import Order from 'src/app/interfaces/Order';
@@ -9,6 +12,7 @@ import { OrderItem } from 'src/app/interfaces/OrderItem';
 import RedsysData from 'src/app/interfaces/RedsysData';
 import ShippingDetails from 'src/app/interfaces/ShippingDetails';
 import { BillingService } from 'src/app/services/billing.service';
+import { CouponsService } from 'src/app/services/coupons.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { RedsysService } from 'src/app/services/redsys.service';
@@ -16,6 +20,9 @@ import { ShippingService } from 'src/app/services/shipping.service';
 import { ShopcartService } from 'src/app/services/shopcart.service';
 import locations from 'src/config/locations';
 import { environment } from 'src/environments/environment';
+import { LoginComponent } from '../login/login.component';
+import { selectCoupon } from 'src/app/_selectors/coupons.selector';
+import { applyCoupon } from 'src/app/_actions/coupons.actions';
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.component.html',
@@ -29,6 +36,9 @@ export class PaymentComponent implements OnInit {
 
   public shippingDetails: ShippingDetails = {} as ShippingDetails;
   public shippingDetailsErrors: ShippingDetails = {} as ShippingDetails;
+
+  public inputCoupon: string;
+  public coupon: Coupon;
 
   public differentAddress = false;
   public payment: string;
@@ -56,10 +66,43 @@ export class PaymentComponent implements OnInit {
     private orderService: OrdersService,
     private redsysService: RedsysService,
     private loadingService: LoadingService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private couponsService: CouponsService,
+
+    private store: Store
   ) {
     this.resetBillingDetails();
     this.resetShippingDetails();
+    this.store.select(selectCustomer).subscribe((data) => {
+      if (data) {
+        this.billingDetails = Object.assign({}, data.billing);
+        this.shippingDetails = Object.assign({}, data.shipping);
+      }
+    });
+
+    this.store.select(selectCoupon).subscribe((coupon) => {
+      if (coupon) {
+        this.coupon = coupon;
+      }
+    });
+  }
+
+  public validateCoupon() {
+    this.couponsService
+      .validate(this.inputCoupon)
+      .subscribe((coupon: Coupon) => {
+        this.coupon = coupon;
+        this.store.dispatch(applyCoupon({ coupon: this.coupon }));
+        this.messageService.add({
+          severity: 'success',
+          detail: 'El código promocional se ha aplicado',
+          summary: 'Código aplicado',
+        });
+        const subtotal = this.getSubtotalWithDiscount();
+        if (subtotal < 3) {
+          this.payment = 'Card';
+        }
+      });
   }
 
   public copyAddress($event) {
@@ -72,35 +115,19 @@ export class PaymentComponent implements OnInit {
   }
 
   public resetBillingDetails() {
-    if (environment.production === false) {
-      this.billingDetails = {
-        first_name: 'Luis',
-        company: '53769423T',
-        responsible: '',
-        address_1: 'Calle la Niña 47',
-        address_2: '2F',
-        city: 'Sevilla',
-        email: 'luisgonzalezseco@gmail.com',
-        phone: '616466098',
-        others: '',
-        postcode: '41927',
-        state: '',
-      };
-    } else {
-      this.billingDetails = {
-        first_name: '',
-        company: '',
-        responsible: '',
-        address_1: '',
-        address_2: '',
-        city: '',
-        email: '',
-        phone: '',
-        others: '',
-        postcode: '',
-        state: '',
-      };
-    }
+    this.billingDetails = {
+      first_name: '',
+      company: '',
+      responsible: '',
+      address_1: '',
+      address_2: '',
+      city: '',
+      email: '',
+      phone: '',
+      others: '',
+      postcode: '',
+      state: '',
+    };
   }
 
   public validate() {
@@ -121,6 +148,14 @@ export class PaymentComponent implements OnInit {
           summary: 'Error',
         });
       }
+    }
+
+    if (this.deliver === 'Pickup' && !!!this.selectedLocation) {
+      return this.messageService.add({
+        severity: 'error',
+        detail: 'Debes seleccionar un local de recogida',
+        summary: 'Error',
+      });
     }
     if (!!!['Bizum', 'Card'].includes(this.payment)) {
       return this.messageService.add({
@@ -199,13 +234,39 @@ export class PaymentComponent implements OnInit {
 
   public getTotal() {
     let priceShipping = this.deliver === 'Shipping' ? 5 : 0;
-    return this.getSubtotal() + priceShipping;
+    return this.getSubtotalWithDiscount() + priceShipping;
+  }
+
+  public getSubtotalWithDiscount() {
+    return this.getSubtotal() - this.getDiscount();
   }
 
   private getSubtotal() {
     return this.orders
-      .map(this.orderService.getPrecio)
+      .map((order) => this.orderService.getPrecio(order))
       .reduce((a, b) => a + b, 0);
+  }
+
+  public getDiscount(): number {
+    // Obtener el subtotal usando la función getSubtotal
+    const subtotal = this.getSubtotal();
+
+    // Verificar si existe un cupón
+    if (this.coupon) {
+      let discountAmount;
+
+      // Calcular el monto del descuento en función del tipo de descuento
+      if (this.coupon.discountType === 'percentage') {
+        discountAmount = subtotal * (this.coupon.amount / 100);
+      } else {
+        discountAmount = this.coupon.amount;
+      }
+
+      return discountAmount;
+    }
+
+    // Si no hay cupón, el descuento es 0
+    return 0;
   }
 
   public processOrder() {
@@ -250,6 +311,7 @@ export class PaymentComponent implements OnInit {
       .map((order) => order.files)
       .reduce((acc, val) => acc.concat(val), []);
     const order: Order = {
+      coupon: this.coupon,
       billing: this.billingDetails,
       shipping: this.shippingDetails,
       line_items: this.orders,
@@ -314,7 +376,7 @@ export class PaymentComponent implements OnInit {
   }
 
   public resetShippingDetails() {
-    this.shippingDetails = {
+    this.shippingDetails = this.shippingDetails || {
       first_name: '',
       company: '',
       responsible: '',

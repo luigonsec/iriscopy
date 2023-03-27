@@ -2,6 +2,7 @@
 .Submenu {
   background-color: #1e1c20;
   a {
+    cursor: pointer;
     color: white;
     text-decoration: none;
     margin-right: 20px;
@@ -11,6 +12,9 @@
   }
 
   a.Back {
+    cursor: inherit;
+    color: white;
+    text-decoration: none;
     margin-right: 0;
     float: right;
   }

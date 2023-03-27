@@ -35,10 +35,6 @@
     margin-bottom: 10px;
   }
 
-  .Buttons {
-    text-align: right;
-  }
-
   .Description {
     .Item {
       color: gray;
@@ -47,9 +43,13 @@
   }
 }
 
+.Buttons {
+  text-align: right;
+}
+
 .Subtotal__Price {
   text-align: right;
   margin-top: 15px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
 }

@@ -1,7 +1,9 @@
 <div class="Submenu grid">
   <div class="col">
-    <a href="/">Configurador de pedidos</a>
-    <a href="/login">Acceso</a>
-    <a class="Back" href="https://iriscopyshop.com">Volver a la tienda</a>
+    <a href="https://iriscopyshop.com">Volver a la tienda</a>
+    <a href="/">Hacer pedido</a>
+    <a *ngIf="this.customer" (click)="this.logout()">Salir</a>
+    <a *ngIf="!!!this.customer" href="/login" (click)="this.logout()">Acceso</a>
+    <a class="Back" *ngIf="this.customer">Bienvenido {{this.customer.first_name}} </a>
   </div>
 </div>

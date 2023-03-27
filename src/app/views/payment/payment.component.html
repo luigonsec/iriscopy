@@ -189,17 +189,49 @@
           </div>
         </div>
       </div>
-
-
-
     </p-card>
   </div>
 
   <div class="col-12 sm:col-4">
     <p-card id="Order__summary">
-      <app-order #order></app-order>
-      <div class="Total__Price">
-        Total: {{this.getTotal().toFixed(2)}} €
+      <div class="grid">
+        <div class="col-12">
+          <app-order #order></app-order>
+
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="col-12">
+
+          <div class="Subtotal__Price" *ngIf="this.coupon">
+            Descuento: -{{this.getDiscount().toFixed(2)}} €
+          </div>
+          <div class="Subtotal__Price" *ngIf="this.deliver === 'Shipping'">
+            Envío: +5.00 €
+          </div>
+
+          <div class="Total__Price">
+            Total: {{this.getTotal().toFixed(2)}} €
+          </div>
+        </div>
+      </div>
+
+      <div class="Promotional grid" *ngIf="!!!this.coupon">
+        <div class="col-12">
+          ¿Tienes un código promocional?
+        </div>
+        <div class="col-8">
+          <div class="p-fluid">
+            <input pInputText class="p-inputtext-sm" type="text" [(ngModel)]="this.inputCoupon">
+          </div>
+        </div>
+        <div class=" col-4">
+          <div class="Buttons">
+            <p-button label="Aplicar" styleClass="p-button-sm" (click)="this.validateCoupon()"></p-button>
+
+          </div>
+        </div>
       </div>
 
       <div id="Payment__method">
@@ -215,8 +247,9 @@
         </div> -->
         <div class="Option p-field-radiobutton">
           <p-radioButton value="Bizum" [(ngModel)]="payment" inputId="bizum"
-            *ngIf="this.getSubtotal() >= 3"></p-radioButton>
-          <label for="bizum"> BIZUM</label> <label *ngIf="this.getSubtotal() < 3" for="">. No disponible para pedidos
+            *ngIf="(this.getSubtotalWithDiscount()) >= 3"></p-radioButton>
+          <label for="bizum"> BIZUM</label> <label *ngIf="(this.getSubtotalWithDiscount()) < 3" for="">. No
+            disponible para pedidos
             inferiores a 3€</label>
         </div>
       </div>
