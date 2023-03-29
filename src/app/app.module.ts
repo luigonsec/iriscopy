@@ -54,6 +54,8 @@ import { CustomerEffects } from './_effects/customer.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { loadingReducer } from './_reducer/loading.reducer';
 import { couponsReducer } from './_reducer/coupons.reducer';
+import { ShippingComponent } from './components/forms/shipping/shipping.component';
+import { BillingComponent } from './components/forms/billing/billing.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +87,8 @@ import { couponsReducer } from './_reducer/coupons.reducer';
     LoadingComponent,
     SubmenuComponent,
     LoginComponent,
+    ShippingComponent,
+    BillingComponent,
   ],
   imports: [
     BrowserModule,

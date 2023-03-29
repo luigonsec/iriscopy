@@ -11,7 +11,7 @@ export class ShippingService {
   validate(shipping: ShippingDetails) {
     const errors: ShippingDetails = {
       first_name: undefined,
-      company: undefined,
+      last_name: undefined,
       responsible: undefined,
       email: undefined,
       address_1: undefined,
@@ -32,11 +32,11 @@ export class ShippingService {
     }
 
     const invalidCIF = new UntypedFormControl(
-      shipping.company.trim(),
+      shipping.last_name.trim(),
       Validators.required
     );
     if (invalidCIF.errors) {
-      errors.company = 'Este campo no puede estar vacío';
+      errors.last_name = 'Este campo no puede estar vacío';
     }
 
     const invalidAddress = new UntypedFormControl(

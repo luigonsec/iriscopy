@@ -11,6 +11,7 @@ export class BillingService {
   validate(billing: BillingDetails) {
     const errors: BillingDetails = {
       first_name: undefined,
+      last_name: undefined,
       company: undefined,
       responsible: undefined,
       email: undefined,
@@ -32,11 +33,11 @@ export class BillingService {
     }
 
     const invalidCIF = new UntypedFormControl(
-      billing.company.trim(),
+      billing.last_name.trim(),
       Validators.required
     );
     if (invalidCIF.errors) {
-      errors.company = 'Este campo no puede estar vacío';
+      errors.last_name = 'Este campo no puede estar vacío';
     }
 
     const invalidAddress = new UntypedFormControl(

@@ -1,41 +1,33 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
-import { selectCustomer } from 'src/app/_selectors/customer.selectors';
 import { OrderComponent } from 'src/app/components/order/order.component';
-import BillingDetails from 'src/app/interfaces/BillingDetails';
 import Coupon from 'src/app/interfaces/Coupon';
 import File from 'src/app/interfaces/File';
 import Location from 'src/app/interfaces/Location';
 import Order from 'src/app/interfaces/Order';
 import { OrderItem } from 'src/app/interfaces/OrderItem';
 import RedsysData from 'src/app/interfaces/RedsysData';
-import ShippingDetails from 'src/app/interfaces/ShippingDetails';
-import { BillingService } from 'src/app/services/billing.service';
+
 import { CouponsService } from 'src/app/services/coupons.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { RedsysService } from 'src/app/services/redsys.service';
-import { ShippingService } from 'src/app/services/shipping.service';
 import { ShopcartService } from 'src/app/services/shopcart.service';
 import locations from 'src/config/locations';
-import { environment } from 'src/environments/environment';
-import { LoginComponent } from '../login/login.component';
 import { selectCoupon } from 'src/app/_selectors/coupons.selector';
 import { applyCoupon } from 'src/app/_actions/coupons.actions';
+import { BillingComponent } from 'src/app/components/forms/billing/billing.component';
+import { ShippingComponent } from 'src/app/components/forms/shipping/shipping.component';
+import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.scss'],
 })
-export class PaymentComponent implements OnInit {
+export class PaymentComponent implements OnInit, OnDestroy {
   public emptyCart: boolean = false;
-
-  public billingDetails: BillingDetails = {} as BillingDetails;
-  public billingDetailsErrors: BillingDetails = {} as BillingDetails;
-
-  public shippingDetails: ShippingDetails = {} as ShippingDetails;
-  public shippingDetailsErrors: ShippingDetails = {} as ShippingDetails;
 
   public inputCoupon: string;
   public coupon: Coupon;
@@ -57,12 +49,14 @@ export class PaymentComponent implements OnInit {
   @ViewChild('order') public order: OrderComponent;
   @ViewChild('redsysForm') redsysForm;
 
+  @ViewChild('billing') public billing: BillingComponent;
+  @ViewChild('shipping') public shipping: ShippingComponent;
+
   public formGroup;
+  public subscription: Subscription;
 
   constructor(
     private shopcartService: ShopcartService,
-    private billingService: BillingService,
-    private shippingService: ShippingService,
     private orderService: OrdersService,
     private redsysService: RedsysService,
     private loadingService: LoadingService,
@@ -71,15 +65,6 @@ export class PaymentComponent implements OnInit {
 
     private store: Store
   ) {
-    this.resetBillingDetails();
-    this.resetShippingDetails();
-    this.store.select(selectCustomer).subscribe((data) => {
-      if (data) {
-        this.billingDetails = Object.assign({}, data.billing);
-        this.shippingDetails = Object.assign({}, data.shipping);
-      }
-    });
-
     this.store.select(selectCoupon).subscribe((coupon) => {
       if (coupon) {
         this.coupon = coupon;
@@ -87,66 +72,64 @@ export class PaymentComponent implements OnInit {
     });
   }
 
-  public validateCoupon() {
-    this.couponsService
-      .validate(this.inputCoupon)
-      .subscribe((coupon: Coupon) => {
-        this.coupon = coupon;
-        this.store.dispatch(applyCoupon({ coupon: this.coupon }));
-        this.messageService.add({
-          severity: 'success',
-          detail: 'El código promocional se ha aplicado',
-          summary: 'Código aplicado',
-        });
-        const subtotal = this.getSubtotalWithDiscount();
-        if (subtotal < 3) {
-          this.payment = 'Card';
-        }
-      });
+  public ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
-  public copyAddress($event) {
-    const differentAddress = $event.checked;
-    if (!!!differentAddress) {
-      this.shippingDetails = Object.assign({}, this.billingDetails);
-    } else {
-      this.resetShippingDetails();
+  public getCoupon() {
+    this.couponsService.validate(this.inputCoupon).subscribe({
+      next: (coupon: Coupon) => {
+        this.coupon = coupon;
+        this.validateCoupon();
+      },
+      error: () => {
+        this.messageService.add({
+          severity: 'error',
+          detail: 'El código promocional no existe',
+          summary: 'Código erróneo',
+        });
+      },
+    });
+  }
+
+  private checkMinimumAmount() {
+    if (!!!this.coupon) return true;
+    if (this.coupon.minimum_amount > this.getSubtotal()) {
+      this.messageService.add({
+        severity: 'error',
+        detail: `El código promocional solo puede aplicarse a pedidos mayores de ${this.coupon.minimum_amount} €`,
+        summary: 'Código no aplicado',
+      });
+      this.coupon = undefined;
+      return false;
+    }
+    return true;
+  }
+
+  public validateCoupon() {
+    const isValidAmount = this.checkMinimumAmount();
+    if (!!!isValidAmount) return false;
+
+    this.store.dispatch(applyCoupon({ coupon: this.coupon }));
+    this.messageService.add({
+      severity: 'success',
+      detail: 'El código promocional se ha aplicado',
+      summary: 'Código aplicado',
+    });
+    const subtotal = this.getSubtotalWithDiscount();
+    if (subtotal < 3) {
+      this.payment = 'Card';
     }
   }
 
-  public resetBillingDetails() {
-    this.billingDetails = {
-      first_name: '',
-      company: '',
-      responsible: '',
-      address_1: '',
-      address_2: '',
-      city: '',
-      email: '',
-      phone: '',
-      others: '',
-      postcode: '',
-      state: '',
-    };
-  }
-
   public validate() {
-    const validBilling = this.validBilling();
-    if (!!!validBilling)
-      return this.messageService.add({
-        severity: 'error',
-        detail: 'Hay errores en los "DETALLES DE FACTURACIÓN"',
-        summary: 'Error',
-      });
+    const validBilling = this.billing.validate();
+    if (!!!validBilling) return;
 
     if (this.differentAddress) {
-      const validShipping = this.validShipping();
+      const validShipping = this.shipping.validate();
       if (!!!validShipping) {
-        return this.messageService.add({
-          severity: 'error',
-          detail: 'Hay errores en los "DATOS DE ENVÍO"',
-          summary: 'Error',
-        });
+        return;
       }
     }
 
@@ -174,26 +157,6 @@ export class PaymentComponent implements OnInit {
     }
 
     this.processOrder();
-  }
-
-  private validShipping() {
-    this.shippingDetailsErrors = this.shippingService.validate(
-      this.shippingDetails
-    );
-    const shippingFine = Object.values(this.shippingDetailsErrors).every(
-      (x) => !!!x
-    );
-    return shippingFine;
-  }
-
-  private validBilling() {
-    this.billingDetailsErrors = this.billingService.validate(
-      this.billingDetails
-    );
-    const billingFine = Object.values(this.billingDetailsErrors).every(
-      (x) => !!!x
-    );
-    return billingFine;
   }
 
   public startPayment__Card(order, callback) {
@@ -248,24 +211,18 @@ export class PaymentComponent implements OnInit {
   }
 
   public getDiscount(): number {
-    // Obtener el subtotal usando la función getSubtotal
     const subtotal = this.getSubtotal();
 
-    // Verificar si existe un cupón
     if (this.coupon) {
       let discountAmount;
 
-      // Calcular el monto del descuento en función del tipo de descuento
-      if (this.coupon.discountType === 'percentage') {
+      if (this.coupon.discount_type === 'percent') {
         discountAmount = subtotal * (this.coupon.amount / 100);
       } else {
         discountAmount = this.coupon.amount;
       }
-
       return discountAmount;
     }
-
-    // Si no hay cupón, el descuento es 0
     return 0;
   }
 
@@ -296,24 +253,63 @@ export class PaymentComponent implements OnInit {
     });
   }
 
-  public prepareOrder(callback) {
-    this.loadingService.setLoading({
-      isLoading: true,
-      text: 'Preparando pedido',
+  public async prepareOrder(callback): Promise<void> {
+    this.setLoadingState(true, 'Preparando pedido');
+
+    const shippingLine = this.getShippingLine();
+
+    const flattenFiles = this.getFlattenFiles();
+
+    const order: Order = this.buildOrderObject(shippingLine, flattenFiles);
+
+    this.orderService.create(order).subscribe({
+      next: (response: any) => {
+        const orderID = response.order;
+        this.OrderID = orderID;
+        order.id = orderID;
+        return callback(null, order);
+      },
+      error: (err) => {
+        this.loadingService.setLoading({
+          isLoading: false,
+        });
+        return callback(err);
+      },
     });
+  }
+
+  private setLoadingState(isLoading: boolean, text?: string): void {
+    this.loadingService.setLoading({
+      isLoading,
+      text: text || '',
+    });
+  }
+
+  private getShippingLine(): any {
     let shippingLine = {} as any;
+
     if (this.deliver === 'Pickup') {
       this.setPickupProperties(shippingLine);
     } else {
       this.setShippingProperties(shippingLine);
     }
-    const flattenFiles = this.orders
+
+    return shippingLine;
+  }
+
+  private getFlattenFiles(): File[] {
+    return this.orders
       .map((order) => order.files)
       .reduce((acc, val) => acc.concat(val), []);
-    const order: Order = {
+  }
+
+  private buildOrderObject(shippingLine: any, flattenFiles: File[]): Order {
+    return {
       coupon: this.coupon,
-      billing: this.billingDetails,
-      shipping: this.shippingDetails,
+      billing: this.billing.billingDetails,
+      shipping: this.differentAddress
+        ? this.shipping.shippingDetails
+        : this.billing.billingDetails,
       line_items: this.orders,
       payment_method: this.payment,
       payment_method_title: this.payment,
@@ -338,21 +334,6 @@ export class PaymentComponent implements OnInit {
         },
       ],
     };
-
-    this.orderService.create(order).subscribe(
-      (response: any) => {
-        const orderID = response.order;
-        this.OrderID = orderID;
-        order.id = orderID;
-        return callback(null, order);
-      },
-      (err) => {
-        this.loadingService.setLoading({
-          isLoading: false,
-        });
-        return callback(err);
-      }
-    );
   }
 
   private setShippingProperties(shippingLine: any) {
@@ -375,26 +356,12 @@ export class PaymentComponent implements OnInit {
     ];
   }
 
-  public resetShippingDetails() {
-    this.shippingDetails = this.shippingDetails || {
-      first_name: '',
-      company: '',
-      responsible: '',
-      address_1: '',
-      address_2: '',
-      city: '',
-      email: '',
-      phone: '',
-      others: '',
-      postcode: '',
-      state: '',
-    };
-  }
-
   ngOnInit(): void {
     this.orders = this.shopcartService.getCart();
     this.emptyCart = this.orders.length === 0;
-    this.shopcartService.getCart$().subscribe((orders) => {
+    this.subscription = this.shopcartService.getCart$().subscribe((orders) => {
+      this.orders = orders;
+      this.checkMinimumAmount();
       this.emptyCart = orders.length === 0;
     });
   }

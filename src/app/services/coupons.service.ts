@@ -10,7 +10,7 @@ export class CouponsService {
 
   validate(code: string) {
     return this.http.get(
-      `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/coupons/validate`,
+      `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/coupons`,
       {
         params: {
           code,
