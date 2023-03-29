@@ -20,6 +20,8 @@ import { applyCoupon } from 'src/app/_actions/coupons.actions';
 import { BillingComponent } from 'src/app/components/forms/billing/billing.component';
 import { ShippingComponent } from 'src/app/components/forms/shipping/shipping.component';
 import { Subscription } from 'rxjs';
+import { selectCustomer } from 'src/app/_selectors/customer.selectors';
+import Customer from 'src/app/interfaces/Customer';
 
 @Component({
   selector: 'app-payment',
@@ -53,7 +55,10 @@ export class PaymentComponent implements OnInit, OnDestroy {
   @ViewChild('shipping') public shipping: ShippingComponent;
 
   public formGroup;
-  public subscription: Subscription;
+  public customer: Customer;
+  public subcriptorCustomer: Subscription;
+  public subcriptorCoupon: Subscription;
+  public subscriptionCart: Subscription;
 
   constructor(
     private shopcartService: ShopcartService,
@@ -65,15 +70,25 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
     private store: Store
   ) {
-    this.store.select(selectCoupon).subscribe((coupon) => {
-      if (coupon) {
-        this.coupon = coupon;
-      }
-    });
+    this.subcriptorCustomer = this.store
+      .select(selectCustomer)
+      .subscribe((customer) => {
+        if (customer) {
+          this.customer = customer;
+        }
+      });
+    this.subcriptorCoupon = this.store
+      .select(selectCoupon)
+      .subscribe((coupon) => {
+        if (coupon) {
+          this.coupon = coupon;
+        }
+      });
   }
 
   public ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subcriptorCustomer.unsubscribe();
+    this.subcriptorCoupon.unsubscribe();
   }
 
   public getCoupon() {
@@ -214,11 +229,11 @@ export class PaymentComponent implements OnInit, OnDestroy {
     const subtotal = this.getSubtotal();
 
     if (this.coupon) {
-      let discountAmount;
+      let discountAmount = 0;
 
       if (this.coupon.discount_type === 'percent') {
         discountAmount = subtotal * (this.coupon.amount / 100);
-      } else {
+      } else if (this.coupon.discount_type === 'fixed_cart') {
         discountAmount = this.coupon.amount;
       }
       return discountAmount;
@@ -359,10 +374,12 @@ export class PaymentComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.orders = this.shopcartService.getCart();
     this.emptyCart = this.orders.length === 0;
-    this.subscription = this.shopcartService.getCart$().subscribe((orders) => {
-      this.orders = orders;
-      this.checkMinimumAmount();
-      this.emptyCart = orders.length === 0;
-    });
+    this.subscriptionCart = this.shopcartService
+      .getCart$()
+      .subscribe((orders) => {
+        this.orders = orders;
+        this.checkMinimumAmount();
+        this.emptyCart = orders.length === 0;
+      });
   }
 }

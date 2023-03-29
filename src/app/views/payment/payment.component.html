@@ -2,6 +2,12 @@
   <div class="col-12 sm:col-6 sm:col-offset-2">
     <p-card>
       <h3>DETALLES DE FACTURACIÓN</h3>
+      <p *ngIf="!!!this.customer" class="Login__warning">¿Tienes una cuenta? <a href="/login?backTo=payment">Accede a
+          ella</a> para
+        evitar
+        rellenar tus datos de
+        facturación.
+      </p>
       <app-billing #billing></app-billing>
       <div class="grid">
         <div class="col-12">

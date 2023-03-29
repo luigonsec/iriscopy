@@ -6,6 +6,7 @@ import { PaymentComponent } from './views/payment/payment.component';
 import { SuccessComponent } from './views/success/success.component';
 import { TermsComponent } from './views/terms/terms.component';
 import { LoginComponent } from './views/login/login.component';
+import { ProfileComponent } from './views/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: 'payment/success',
     component: SuccessComponent,
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
   },
   {
     path: 'payment/error',

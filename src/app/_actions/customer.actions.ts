@@ -9,6 +9,11 @@ export const login = createAction(
 
 export const loginSuccess = createAction(
   '[Customer] Login Success',
+  props<{ customer: Customer; jwt: string }>()
+);
+
+export const setCustomer = createAction(
+  '[Customer] Set customer',
   props<{ customer: Customer }>()
 );
 

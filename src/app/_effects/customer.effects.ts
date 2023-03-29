@@ -34,7 +34,11 @@ export class CustomerEffects {
         ),
         mergeMap(({ username, password }) =>
           this.authService.login({ username, password }).pipe(
-            map((customer: Customer) => loginSuccess({ customer })),
+            map((data: any) => {
+              console.log(data);
+
+              return loginSuccess({ customer: data.user, jwt: data.jwt });
+            }),
             catchError((error) => {
               this.loadingService.setLoading({ isLoading: false });
               return of(loginFailure({ error }));
@@ -50,6 +54,7 @@ export class CustomerEffects {
         this.actions$.pipe(
           ofType(logout),
           tap(() => {
+            localStorage.removeItem('jwt');
             localStorage.removeItem('customer');
           })
         ),

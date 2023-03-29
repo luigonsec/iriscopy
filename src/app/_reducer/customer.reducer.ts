@@ -5,6 +5,7 @@ import {
   loginFailure,
   loginSuccess,
   logout,
+  setCustomer,
   setLoading,
   unsetLoading,
 } from '../_actions/customer.actions';
@@ -18,9 +19,17 @@ export const initialState: CustomerState = {
 
 export const customerReducer = createReducer(
   initialState,
-  on(loginSuccess, (state, { customer }) => {
+  on(loginSuccess, (state, { customer, jwt }) => {
+    localStorage.setItem('jwt', jwt);
     localStorage.setItem('customer', JSON.stringify(customer));
     return { ...state, customer };
+  }),
+
+  on(setCustomer, (state, { customer }) => {
+    console.log(customer);
+
+    localStorage.setItem('customer', JSON.stringify(customer));
+    return { ...state, customer: customer };
   }),
 
   on(login, (state) => {

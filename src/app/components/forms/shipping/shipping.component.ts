@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
+import { Subscription } from 'rxjs';
 import { selectCustomer } from 'src/app/_selectors/customer.selectors';
+import Customer from 'src/app/interfaces/Customer';
 import ShippingDetails from 'src/app/interfaces/ShippingDetails';
 import { ShippingService } from 'src/app/services/shipping.service';
 
@@ -10,11 +12,10 @@ import { ShippingService } from 'src/app/services/shipping.service';
   templateUrl: './shipping.component.html',
   styleUrls: ['./shipping.component.scss'],
 })
-export class ShippingComponent {
+export class ShippingComponent implements OnDestroy {
   public shippingDetails: ShippingDetails = {} as ShippingDetails;
   public shippingDetailsErrors: ShippingDetails = {} as ShippingDetails;
-
-  public formGroup;
+  public subcription: Subscription;
 
   constructor(
     private shippingService: ShippingService,
@@ -22,11 +23,14 @@ export class ShippingComponent {
     private store: Store
   ) {
     this.resetShippingDetails();
-    this.store.select(selectCustomer).subscribe((data) => {
-      if (data) {
-        this.shippingDetails = Object.assign({}, data.shipping);
-      }
-    });
+    this.subcription = this.store
+      .select(selectCustomer)
+      .subscribe((customer: Customer) => {
+        this.resetShippingDetails();
+        if (customer) {
+          this.shippingDetails = Object.assign({}, customer.shipping);
+        }
+      });
   }
 
   public validate() {
@@ -65,6 +69,10 @@ export class ShippingComponent {
       postcode: '',
       state: '',
     };
+  }
+
+  ngOnDestroy(): void {
+    this.subcription.unsubscribe();
   }
 
   ngOnInit(): void {}

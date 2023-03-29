@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { login } from 'src/app/_actions/customer.actions';
 import {
   selectCustomer,
@@ -13,16 +14,30 @@ import { AppState } from 'src/app/app.state';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   public username;
   public password;
   public error: any;
+  public subscriptor: Subscription;
 
-  constructor(private router: Router, private store: Store<AppState>) {
-    this.store.select(selectCustomer).subscribe((customer) => {
-      if (customer) {
-        this.router.navigate(['/']);
-      }
+  constructor(
+    private router: Router,
+    private store: Store<AppState>,
+    private activatedRouter: ActivatedRoute
+  ) {
+    this.activatedRouter.queryParams.subscribe((data) => {
+      console.log(data);
+
+      const backTo = data.backTo;
+
+      this.subscriptor = this.store
+        .select(selectCustomer)
+        .subscribe((customer) => {
+          if (customer) {
+            if (backTo) return this.router.navigate([backTo]);
+            this.router.navigate(['/']);
+          }
+        });
     });
 
     this.store.select(selectLoginFailure).subscribe((error) => {
@@ -31,6 +46,10 @@ export class LoginComponent implements OnInit {
         this.error = 'Usuario o contraseña incorrecta';
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptor.unsubscribe();
   }
 
   performLogin() {

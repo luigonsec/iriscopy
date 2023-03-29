@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
+import { Subscription } from 'rxjs';
 import { selectCustomer } from 'src/app/_selectors/customer.selectors';
 import BillingDetails from 'src/app/interfaces/BillingDetails';
+import Customer from 'src/app/interfaces/Customer';
 import { BillingService } from 'src/app/services/billing.service';
 
 @Component({
@@ -10,11 +12,11 @@ import { BillingService } from 'src/app/services/billing.service';
   templateUrl: './billing.component.html',
   styleUrls: ['./billing.component.scss'],
 })
-export class BillingComponent {
+export class BillingComponent implements OnDestroy {
   public emptyCart: boolean = false;
   public billingDetails: BillingDetails = {} as BillingDetails;
   public billingDetailsErrors: BillingDetails = {} as BillingDetails;
-  public formGroup;
+  public subcription: Subscription;
 
   constructor(
     private billingService: BillingService,
@@ -22,11 +24,14 @@ export class BillingComponent {
     private store: Store
   ) {
     this.resetBillingDetails();
-    this.store.select(selectCustomer).subscribe((data) => {
-      if (data) {
-        this.billingDetails = Object.assign({}, data.billing);
-      }
-    });
+    this.subcription = this.store
+      .select(selectCustomer)
+      .subscribe((customer: Customer) => {
+        this.resetBillingDetails();
+        if (customer) {
+          this.billingDetails = Object.assign({}, customer.billing);
+        }
+      });
   }
 
   public resetBillingDetails() {
@@ -65,6 +70,10 @@ export class BillingComponent {
       (x) => !!!x
     );
     return billingFine;
+  }
+
+  ngOnDestroy(): void {
+    this.subcription.unsubscribe();
   }
 
   ngOnInit(): void {}

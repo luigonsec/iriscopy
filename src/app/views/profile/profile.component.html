@@ -1,0 +1,47 @@
+<div class="grid">
+  <div class="col-6">
+    <p-card>
+      <div class="grid">
+        <div class="col-12">
+          <h2>Datos de facturación</h2>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="col-12">
+          <app-billing #billing></app-billing>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="col-12">
+          <button pButton [label]="'Guardar datos de facturación'" class="p-button-sm"
+            (click)="this.manageBilling()"></button>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="col-6">
+    <p-card>
+      <div class="grid">
+        <div class="col-12">
+          <h2>Datos de envío</h2>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="col-12">
+          <app-shipping #shipping></app-shipping>
+
+        </div>
+      </div>
+      <div class="grid">
+        <div class="col-12">
+          <button pButton [label]="'Guardar datos de envío'" class="p-button-sm"
+            (click)="this.manageShipping()"></button>
+        </div>
+      </div>
+
+
+    </p-card>
+
+  </div>
+</div>

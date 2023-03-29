@@ -4,6 +4,6 @@
     <a href="/">Hacer pedido</a>
     <a *ngIf="this.customer" (click)="this.logout()">Salir</a>
     <a *ngIf="!!!this.customer" href="/login" (click)="this.logout()">Acceso</a>
-    <a class="Back" *ngIf="this.customer">Bienvenido {{this.customer.first_name}} </a>
+    <a class="Back" *ngIf="this.customer" [routerLink]="'/profile'">Tus datos</a>
   </div>
 </div>
