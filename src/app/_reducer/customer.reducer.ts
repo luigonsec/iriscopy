@@ -26,8 +26,6 @@ export const customerReducer = createReducer(
   }),
 
   on(setCustomer, (state, { customer }) => {
-    console.log(customer);
-
     localStorage.setItem('customer', JSON.stringify(customer));
     return { ...state, customer: customer };
   }),

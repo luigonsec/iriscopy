@@ -35,8 +35,6 @@ export class CustomerEffects {
         mergeMap(({ username, password }) =>
           this.authService.login({ username, password }).pipe(
             map((data: any) => {
-              console.log(data);
-
               return loginSuccess({ customer: data.user, jwt: data.jwt });
             }),
             catchError((error) => {
