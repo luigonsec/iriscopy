@@ -211,7 +211,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   public getTotal() {
-    let priceShipping = this.deliver === 'Shipping' ? 5 : 0;
+    let priceShipping = this.deliver === 'Shipping' ? 4.9 : 0;
     return this.getSubtotalWithDiscount() + priceShipping;
   }
 
@@ -355,7 +355,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     shippingLine.method_title = 'Envío en 48 horas';
     shippingLine.method_id = 'flat_rate';
     shippingLine.instance_id = '9';
-    shippingLine.total = '5.00';
+    shippingLine.total = '4.90';
     shippingLine.total_tax = '0.00';
   }
 
