@@ -16,7 +16,7 @@ import { RedsysService } from 'src/app/services/redsys.service';
 import { ShopcartService } from 'src/app/services/shopcart.service';
 import locations from 'src/config/locations';
 import { selectCoupon } from 'src/app/_selectors/coupons.selector';
-import { applyCoupon } from 'src/app/_actions/coupons.actions';
+import { applyCoupon, clearCoupon } from 'src/app/_actions/coupons.actions';
 import { BillingComponent } from 'src/app/components/forms/billing/billing.component';
 import { ShippingComponent } from 'src/app/components/forms/shipping/shipping.component';
 import { Subscription } from 'rxjs';
@@ -77,13 +77,16 @@ export class PaymentComponent implements OnInit, OnDestroy {
           this.customer = customer;
         }
       });
-    this.subcriptorCoupon = this.store
-      .select(selectCoupon)
-      .subscribe((coupon) => {
-        if (coupon) {
-          this.coupon = coupon;
-        }
-      });
+
+    // this.subcriptorCoupon = this.store
+    //   .select(selectCoupon)
+    //   .subscribe((coupon) => {
+    //     if (coupon) {
+    //       this.coupon = coupon;
+    //     }
+    //   });
+
+    this.store.dispatch(clearCoupon());
   }
 
   public ngOnDestroy(): void {
