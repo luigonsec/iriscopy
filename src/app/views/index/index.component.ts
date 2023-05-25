@@ -6,6 +6,8 @@ import options from 'src/config/options';
 import File from 'src/app/interfaces/File';
 import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
 import { OrdersService } from 'src/app/services/orders.service';
+import { Store } from '@ngrx/store';
+import { clearCoupon } from 'src/app/_actions/coupons.actions';
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
@@ -38,7 +40,9 @@ export class IndexComponent implements OnInit {
 
   @ViewChild('uploader') public uploader: UploaderComponent;
 
-  constructor(private orderService: OrdersService) {
+  constructor(private orderService: OrdersService, private store: Store) {
+    this.store.dispatch(clearCoupon());
+
     this.order = {
       orientation: this.orientation,
       finishType: this.finishType,
