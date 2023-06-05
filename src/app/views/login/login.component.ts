@@ -50,16 +50,18 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   performLogin() {
+    let username = this.username;
+
+    const atIndex = username.indexOf('@');
+    if (atIndex >= 0) {
+      username = username.slice(0, atIndex);
+    }
+
     const options = {
-      username: this.username,
+      username,
       password: this.password,
     };
-    this.store.dispatch(
-      login({
-        username: options.username,
-        password: options.password,
-      })
-    );
+    this.store.dispatch(login(options));
   }
 
   ngOnInit(): void {}
