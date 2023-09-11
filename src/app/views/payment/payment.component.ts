@@ -213,8 +213,13 @@ export class PaymentComponent implements OnInit, OnDestroy {
     );
   }
 
+  public getPrecioEnvio() {
+    if (this.getSubtotal() > 40) return 0;
+    else return 4.9;
+  }
+
   public getTotal() {
-    let priceShipping = this.deliver === 'Shipping' ? 4.9 : 0;
+    let priceShipping = this.deliver === 'Shipping' ? this.getPrecioEnvio() : 0;
     return this.getSubtotalWithDiscount() + priceShipping;
   }
 
@@ -358,7 +363,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     shippingLine.method_title = 'Envío en 48 horas';
     shippingLine.method_id = 'flat_rate';
     shippingLine.instance_id = '9';
-    shippingLine.total = '4.90';
+    // shippingLine.total = this.getPrecioEnvio().toFixed(2);
     shippingLine.total_tax = '0.00';
   }
 

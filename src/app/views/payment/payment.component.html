@@ -38,7 +38,7 @@
             Descuento: -{{this.getDiscount().toFixed(2)}} €
           </div>
           <div class="Subtotal__Price" *ngIf="this.deliver === 'Shipping'">
-            Envío: +5.00 €
+            Envío: +{{this.getPrecioEnvio().toFixed(2)}} €
           </div>
           <div class="Total__Price">
             Total: {{this.getTotal().toFixed(2)}} €
@@ -86,7 +86,8 @@
         <h4>Envío / Recogida</h4>
         <div class="Option p-field-radiobutton">
           <p-radioButton value="Shipping" [(ngModel)]="deliver" inputId="shipping"></p-radioButton>
-          <label for="shipping"> Envío en 48 horas <label class="Extra">5.00€</label></label>
+          <label for="shipping"> Envío en 48 horas <label
+              class="Extra">{{this.getPrecioEnvio().toFixed(2)}}€</label></label>
         </div>
         <div class="Option p-field-radiobutton">
           <p-radioButton value="Pickup" [(ngModel)]="deliver" inputId="pickup"></p-radioButton>
