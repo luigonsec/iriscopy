@@ -10,7 +10,7 @@ const locations = [
     address: 'Calle Camilo José Cela',
   },
   {
-    id: 5211,
+    id: 45836,
     name: 'Facultad de Geografía e Historia',
     address: 'Calle Doña María de Padilla s/n',
   },
