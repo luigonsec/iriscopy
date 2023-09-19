@@ -35,10 +35,24 @@ export class OrdersService {
    * @param {OrderItem} order - The order item to calculate the price for.
    * @returns {number} The total price of the order item.
    */
-  getPrecio(order: OrderItem): number {
+  getPrecio(order: OrderItem, completeOrder: OrderItem[]): number {
     if (!order || !order.files) {
       return 0;
     }
+
+    const totalPages = completeOrder.reduce((totalOrderPages, order) => {
+      const orderSidesFactor = order.printForm.factor;
+
+      const orderPages =
+        order.files.reduce((totalFilePages, file) => {
+          const filePages = Math.ceil(
+            file.pages * orderSidesFactor * order.pagesPerSide.factor
+          );
+          return totalFilePages + filePages;
+        }, 0) * order.copiesQuantity;
+
+      return totalOrderPages + orderPages;
+    }, 0);
 
     const twoSidesFactor = order.printForm.factor;
     let boundPrice = 0;
@@ -61,7 +75,7 @@ export class OrdersService {
             file.pages === 1 ? 'una-cara' : order.printForm.code;
           const pricePerPage =
             precios[order.printType.code][printFormCode][order.paperSize.code](
-              pages
+              totalPages
             ) + order.paperGrammage.factor;
           const price =
             order.copiesQuantity *

@@ -24,7 +24,7 @@ export class OrderComponent implements OnInit {
   }
 
   getPrice(order: OrderItem): number {
-    return this.orderService.getPrecio(order);
+    return this.orderService.getPrecio(order, this.orders);
   }
 
   remove(order: OrderItem): void {

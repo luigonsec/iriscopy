@@ -16,13 +16,14 @@ export class ConfirmBarComponent implements OnInit {
   @Input('reset') reset: () => void = () => undefined;
   constructor(
     private orderService: OrdersService,
-    private messageService: MessageService,
     private shopcartService: ShopcartService,
     private router: Router
   ) {}
 
   getPrecio() {
-    return this.orderService.getPrecio(this.order);
+    const others = this.shopcartService.getCart();
+    others.push(this.order);
+    return this.orderService.getPrecio(this.order, others);
   }
 
   addConfiguration() {

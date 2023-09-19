@@ -229,7 +229,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   private getSubtotal() {
     return this.orders
-      .map((order) => this.orderService.getPrecio(order))
+      .map((order) => this.orderService.getPrecio(order, this.orders))
       .reduce((a, b) => a + b, 0);
   }
 
