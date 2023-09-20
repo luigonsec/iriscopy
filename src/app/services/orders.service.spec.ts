@@ -19,6 +19,35 @@ fdescribe('OrdersService', () => {
   });
 
   describe('getPrecio', () => {
+    it('calcula el precio correctamente de una copias de 5 archivos de 5 y 10, 15, 20 y 30 páginas (80 páginas), a una cara, A4, blanco y negro, papel normal, encuadernado individual y anillas y tapas grofadas', () => {
+      const order = {
+        printForm: { factor: 1, code: 'una-cara' },
+        files: [
+          { pages: 5 },
+          { pages: 10 },
+          { pages: 15 },
+          { pages: 20 },
+          { pages: 30 },
+        ],
+        pagesPerSide: { factor: 1, code: '1_vertical' },
+        printType: { code: 'blanco-negro' },
+        paperSize: { code: 'A4' },
+        paperGrammage: { factor: 0 },
+        boundType: { code: 'individual' },
+        finishType: { code: 'encuadernado', factor: 1.2 },
+        boundColors: {
+          anillas: { factor: 0.25 },
+          trasera: { factor: 0.25 },
+          delantera: { factor: 0.25 },
+        },
+        copiesQuantity: 1,
+      } as OrderItem;
+      const expectedPrice = 12.79;
+      const outputPrice = service.getPrecio(order, [order]);
+
+      expect(outputPrice).toEqual(expectedPrice);
+    });
+
     it('calcula el precio correctamente de dos copias de dos archivos de 5 y 10 páginas (30 páginas), a una cara, A4, blanco y negro, papel normal, encuadernado individual y anillas y tapas grofadas', () => {
       const order = {
         printForm: { factor: 1, code: 'una-cara' },
