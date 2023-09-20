@@ -40,8 +40,12 @@ export class OrdersService {
       return 0;
     }
 
-    const totalPages = completeOrder.reduce((totalOrderPages, order) => {
+    const totalPages = {};
+
+    completeOrder.forEach((order) => {
       const orderSidesFactor = order.printForm.factor;
+      const printType = order.printType.code;
+      const paperSize = order.paperSize.code;
 
       const orderPages =
         order.files.reduce((totalFilePages, file) => {
@@ -51,7 +55,15 @@ export class OrdersService {
           return totalFilePages + filePages;
         }, 0) * order.copiesQuantity;
 
-      return totalOrderPages + orderPages;
+      const printFormCode =
+        orderPages === 1 ? 'una-cara' : order.printForm.code;
+
+      if (!!!(printType in totalPages)) totalPages[printType] = {};
+      if (!!!(printFormCode in totalPages[printType]))
+        totalPages[printType][printFormCode] = {};
+      if (!!!(paperSize in totalPages[printType][printFormCode]))
+        totalPages[printType][printFormCode][paperSize] = 0;
+      totalPages[printType][printFormCode][paperSize] += orderPages;
     }, 0);
 
     const twoSidesFactor = order.printForm.factor;
@@ -75,7 +87,9 @@ export class OrdersService {
             file.pages === 1 ? 'una-cara' : order.printForm.code;
           const pricePerPage =
             precios[order.printType.code][printFormCode][order.paperSize.code](
-              totalPages
+              totalPages[order.printType.code][printFormCode][
+                order.paperSize.code
+              ]
             ) + order.paperGrammage.factor;
           const price =
             order.copiesQuantity *
