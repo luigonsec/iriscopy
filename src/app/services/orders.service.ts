@@ -36,7 +36,7 @@ export class OrdersService {
    * @returns {number} The total price of the order item.
    */
   getPrecio(order: OrderItem, completeOrder: OrderItem[]): number {
-    if (!order || !order.files) {
+    if (!order || !order.files || !order.files.length) {
       return 0;
     }
 
@@ -76,27 +76,25 @@ export class OrdersService {
       boundColors += order.boundColors.delantera.factor || 0;
     }
     const totalBounds =
-      order.boundType.code === 'agrupados' ? 1 : order.files.length;
-    return parseFloat(
-      order.files
-        .reduce((total, file) => {
-          const pages = Math.ceil(
-            file.pages * twoSidesFactor * order.pagesPerSide.factor
-          );
-          const printFormCode =
-            file.pages === 1 ? 'una-cara' : order.printForm.code;
-          const pricePerPage =
-            precios[order.printType.code][printFormCode][order.paperSize.code](
-              totalPages[order.printType.code][printFormCode][
-                order.paperSize.code
-              ]
-            ) + order.paperGrammage.factor;
-          const price =
-            order.copiesQuantity *
-            (pricePerPage * pages + boundPrice * totalBounds + boundColors);
-          return total + price;
-        }, 0)
-        .toFixed(2)
-    );
+      order.boundType.code === 'agrupados'
+        ? 1
+        : order.files.length * order.copiesQuantity;
+    const totalPricePerOrder = order.files.reduce((total, file) => {
+      const pages = Math.ceil(
+        file.pages * twoSidesFactor * order.pagesPerSide.factor
+      );
+      const printFormCode =
+        file.pages === 1 ? 'una-cara' : order.printForm.code;
+
+      const pricePerPage =
+        precios[order.printType.code][printFormCode][order.paperSize.code](
+          totalPages[order.printType.code][printFormCode][order.paperSize.code]
+        ) + order.paperGrammage.factor;
+
+      const finalPrice = order.copiesQuantity * (pricePerPage * pages);
+      return total + finalPrice;
+    }, 0);
+    const boundPrices = totalBounds * (boundPrice + boundColors);
+    return parseFloat((totalPricePerOrder + boundPrices).toFixed(2));
   }
 }

@@ -34,6 +34,10 @@ export class ShippingComponent implements OnDestroy {
   }
 
   public validate() {
+    Object.keys(this.shippingDetails).forEach((key) => {
+      if (this.shippingDetails[key])
+        this.shippingDetails[key] = this.shippingDetails[key].trim();
+    });
     const validShipping = this.validShipping();
     if (!!!validShipping) {
       return this.messageService.add({

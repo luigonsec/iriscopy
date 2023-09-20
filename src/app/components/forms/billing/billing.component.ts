@@ -52,6 +52,11 @@ export class BillingComponent implements OnDestroy {
   }
 
   public validate() {
+    Object.keys(this.billingDetails).forEach((key) => {
+      if (this.billingDetails[key])
+        this.billingDetails[key] = this.billingDetails[key].trim();
+    });
+
     const validBilling = this.validBilling();
     if (!!!validBilling)
       return this.messageService.add({
