@@ -216,7 +216,7 @@ fdescribe('OrdersService', () => {
 
     it('calcula el precio correctamente de un pedido: 2 copias de 2 archivos de 500 y 100 páginas (1200 páginas), a cuatro páginas por cara, a doble cara, A3, color, papel fotográfico, sin encuadernado', () => {
       const order = {
-        printForm: { factor: 0.5, code: 'doble-cara' },
+        printForm: { factor: 1, code: 'doble-cara' },
         files: [{ pages: 500 }, { pages: 100 }],
         pagesPerSide: { factor: 0.25, code: '4_horizontal' },
         printType: { code: 'color' },
@@ -232,7 +232,7 @@ fdescribe('OrdersService', () => {
         copiesQuantity: 2,
       } as OrderItem;
 
-      const expectedPrice = 57.46;
+      const expectedPrice = 113.4;
       const outputPrice = service.getPrecio(order, [order]);
 
       expect(outputPrice).toEqual(expectedPrice);
