@@ -9,38 +9,38 @@ import { setCustomer } from '../_actions/customer.actions';
 import { tap } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: 'root',
 })
 export class CustomersService {
-  constructor(
+	constructor(
     private http: HttpClient,
     private auth: AuthService,
     private store: Store
-  ) {}
+	) {}
 
-  update(
-    id: number,
-    data: { shipping?: ShippingDetails; billing?: BillingDetails }
-  ) {
-    const jwt = localStorage.getItem('jwt');
-    return this.http
-      .patch(
-        `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/customers/${id}`,
-        {
-          shipping: data.shipping,
-          billing: data.billing,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${jwt}`,
-          },
-        }
-      )
-      .pipe(
-        tap((res: any) => {
-          const customer = res.user;
-          this.store.dispatch(setCustomer({ customer }));
-        })
-      );
-  }
+	update(
+		id: number,
+		data: { shipping?: ShippingDetails; billing?: BillingDetails }
+	) {
+		const jwt = localStorage.getItem('jwt');
+		return this.http
+			.patch(
+				`${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/customers/${id}`,
+				{
+					shipping: data.shipping,
+					billing: data.billing,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${jwt}`,
+					},
+				}
+			)
+			.pipe(
+				tap((res: any) => {
+					const customer = res.user;
+					this.store.dispatch(setCustomer({ customer }));
+				})
+			);
+	}
 }

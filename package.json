@@ -5,6 +5,9 @@
     "node": "16.16.1",
     "npm": "8.11.0"
   },
+  "browserslist": [
+    "Chrome 49"
+  ],
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
@@ -52,7 +55,11 @@
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@types/jasmine": "~4.3.0",
     "@types/node": "^12.20.46",
+    "@typescript-eslint/eslint-plugin": "^6.7.3",
+    "@typescript-eslint/parser": "^6.7.3",
     "codelyzer": "^6.0.0",
+    "eslint": "^8.50.0",
+    "eslint-plugin-compat": "^4.2.0",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",

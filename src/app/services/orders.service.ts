@@ -58,10 +58,10 @@ export class OrdersService {
       const printFormCode =
         orderPages === 1 ? 'una-cara' : order.printForm.code;
 
-      if (!!!(printType in totalPages)) totalPages[printType] = {};
-      if (!!!(printFormCode in totalPages[printType]))
+      if (!(printType in totalPages)) totalPages[printType] = {};
+      if (!(printFormCode in totalPages[printType]))
         totalPages[printType][printFormCode] = {};
-      if (!!!(paperSize in totalPages[printType][printFormCode]))
+      if (!(paperSize in totalPages[printType][printFormCode]))
         totalPages[printType][printFormCode][paperSize] = 0;
       totalPages[printType][printFormCode][paperSize] += orderPages;
     }, 0);

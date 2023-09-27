@@ -6,13 +6,13 @@ export const selectCustomerState =
   createFeatureSelector<CustomerState>('customer');
 
 export const selectCustomer = createSelector(
-  selectCustomerState,
-  (state: CustomerState) => state.customer
+	selectCustomerState,
+	(state: CustomerState) => state.customer
 );
 
 export const selectLoginFailure = createSelector(
-  selectCustomerState,
-  (state: CustomerState) => {
-    return state.error;
-  }
+	selectCustomerState,
+	(state: CustomerState) => {
+		return state.error;
+	}
 );

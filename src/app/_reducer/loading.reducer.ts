@@ -7,14 +7,14 @@ export interface State {
 }
 
 export const initialState: State = {
-  isLoading: false,
+	isLoading: false,
 };
 
 export const loadingReducer = createReducer(
-  initialState,
-  on(LoadingActions.setLoading, (state, { isLoading }) => ({
-    ...state,
-    isLoading,
-  })),
-  on(LoadingActions.unsetLoading, (state) => ({ ...state, isLoading: false }))
+	initialState,
+	on(LoadingActions.setLoading, (state, { isLoading }) => ({
+		...state,
+		isLoading,
+	})),
+	on(LoadingActions.unsetLoading, (state) => ({ ...state, isLoading: false }))
 );

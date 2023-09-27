@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
-import { EMPTY, of } from 'rxjs';
+import { of } from 'rxjs';
 import {
   login,
   loginFailure,
@@ -11,7 +11,6 @@ import {
 } from '../_actions/customer.actions';
 import { AuthService } from '../services/auth.service';
 import { LoadingService } from '../services/loading.service';
-import Customer from '../interfaces/Customer';
 
 @Injectable()
 export class CustomerEffects {

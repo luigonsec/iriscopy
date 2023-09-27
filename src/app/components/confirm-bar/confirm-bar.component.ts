@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
 import { OrderItem } from 'src/app/interfaces/OrderItem';
 import { OrdersService } from 'src/app/services/orders.service';
 import { ShopcartService } from 'src/app/services/shopcart.service';

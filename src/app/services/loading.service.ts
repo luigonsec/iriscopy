@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import Loading from '../interfaces/Loading';
 
 @Injectable({

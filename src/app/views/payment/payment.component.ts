@@ -15,7 +15,6 @@ import { OrdersService } from 'src/app/services/orders.service';
 import { RedsysService } from 'src/app/services/redsys.service';
 import { ShopcartService } from 'src/app/services/shopcart.service';
 import locations from 'src/config/locations';
-import { selectCoupon } from 'src/app/_selectors/coupons.selector';
 import { applyCoupon, clearCoupon } from 'src/app/_actions/coupons.actions';
 import { BillingComponent } from 'src/app/components/forms/billing/billing.component';
 import { ShippingComponent } from 'src/app/components/forms/shipping/shipping.component';
@@ -111,7 +110,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   private checkMinimumAmount() {
-    if (!!!this.coupon) return true;
+    if (!this.coupon) return true;
     if (this.coupon.minimum_amount > this.getSubtotal()) {
       this.messageService.add({
         severity: 'error',
@@ -126,7 +125,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   public validateCoupon() {
     const isValidAmount = this.checkMinimumAmount();
-    if (!!!isValidAmount) return false;
+    if (!isValidAmount) return false;
 
     this.store.dispatch(applyCoupon({ coupon: this.coupon }));
     this.messageService.add({
@@ -142,23 +141,23 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   public validate() {
     const validBilling = this.billing.validate();
-    if (!!!validBilling) return;
+    if (!validBilling) return;
 
     if (this.differentAddress) {
       const validShipping = this.shipping.validate();
-      if (!!!validShipping) {
+      if (!validShipping) {
         return;
       }
     }
 
-    if (this.deliver === 'Pickup' && !!!this.selectedLocation) {
+    if (this.deliver === 'Pickup' && !this.selectedLocation) {
       return this.messageService.add({
         severity: 'error',
         detail: 'Debes seleccionar un local de recogida',
         summary: 'Error',
       });
     }
-    if (!!!['Bizum', 'Card'].includes(this.payment)) {
+    if (!['Bizum', 'Card'].includes(this.payment)) {
       return this.messageService.add({
         severity: 'error',
         detail: 'Debes indicar un "Método de pago"',
@@ -166,7 +165,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
       });
     }
 
-    if (!!!this.termsAccepted) {
+    if (!this.termsAccepted) {
       return this.messageService.add({
         severity: 'error',
         detail: 'Debes aceptar los términos y condiciones',
@@ -187,7 +186,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
         this.redsysData = redsysData;
         return callback();
       },
-      (err) => {
+      () => {
         this.loadingService.setLoading({
           isLoading: false,
         });
@@ -205,7 +204,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
         this.redsysData = redsysData;
         return callback();
       },
-      (err) => {
+      () => {
         this.loadingService.setLoading({
           isLoading: false,
         });
@@ -219,7 +218,8 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   public getTotal() {
-    let priceShipping = this.deliver === 'Shipping' ? this.getPrecioEnvio() : 0;
+    const priceShipping =
+      this.deliver === 'Shipping' ? this.getPrecioEnvio() : 0;
     return this.getSubtotalWithDiscount() + priceShipping;
   }
 
@@ -262,13 +262,13 @@ export class PaymentComponent implements OnInit, OnDestroy {
       switch (this.payment) {
         case 'Bizum': {
           this.startPayment__Bizum(order, () => {
-            setTimeout((_) => this.redsysForm.nativeElement.submit());
+            setTimeout(() => this.redsysForm.nativeElement.submit());
           });
           break;
         }
         case 'Card': {
           this.startPayment__Card(order, () => {
-            setTimeout((_) => this.redsysForm.nativeElement.submit());
+            setTimeout(() => this.redsysForm.nativeElement.submit());
           });
           break;
         }
@@ -309,7 +309,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   private getShippingLine(): any {
-    let shippingLine = {} as any;
+    const shippingLine = {} as any;
 
     if (this.deliver === 'Pickup') {
       this.setPickupProperties(shippingLine);
@@ -343,7 +343,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
           value: {
             '0-37198-37595': {
               id: '0-37198-37595',
-              quantity: flattenFiles.map((x) => '1'),
+              quantity: flattenFiles.map(() => '1'),
               original_filename: flattenFiles.map(
                 (x: File) => x.original_filename
               ),

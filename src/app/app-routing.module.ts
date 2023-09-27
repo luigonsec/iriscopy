@@ -9,38 +9,38 @@ import { LoginComponent } from './views/login/login.component';
 import { ProfileComponent } from './views/profile/profile.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: IndexComponent,
-  },
-  {
-    path: 'terms',
-    component: TermsComponent,
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
-  },
-  {
-    path: 'payment',
-    component: PaymentComponent,
-  },
-  {
-    path: 'payment/success',
-    component: SuccessComponent,
-  },
-  {
-    path: 'profile',
-    component: ProfileComponent,
-  },
-  {
-    path: 'payment/error',
-    component: ErrorComponent,
-  },
+	{
+		path: '',
+		component: IndexComponent,
+	},
+	{
+		path: 'terms',
+		component: TermsComponent,
+	},
+	{
+		path: 'login',
+		component: LoginComponent,
+	},
+	{
+		path: 'payment',
+		component: PaymentComponent,
+	},
+	{
+		path: 'payment/success',
+		component: SuccessComponent,
+	},
+	{
+		path: 'profile',
+		component: ProfileComponent,
+	},
+	{
+		path: 'payment/error',
+		component: ErrorComponent,
+	},
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+	imports: [RouterModule.forRoot(routes)],
+	exports: [RouterModule],
 })
 export class AppRoutingModule {}

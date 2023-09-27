@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  Input,
-  OnChanges,
-} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import Option from 'src/app/interfaces/Option';
 import options from 'src/config/options';
 
@@ -23,7 +16,7 @@ export class FinishTypeComponent implements OnInit {
   @Input() set paperSize(value: any) {
     this._paperSize = value;
     this.options = options.finishType.filter((x) => {
-      return !!!(x.code === 'encuadernado' && this._paperSize.code === 'A3');
+      return !(x.code === 'encuadernado' && this._paperSize.code === 'A3');
     });
 
     if (this._paperSize.code === 'A3' && this.option.code === 'encuadernado') {

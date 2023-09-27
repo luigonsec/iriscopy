@@ -1,9 +1,6 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import * as async from 'async';
 import { MessageService } from 'primeng/api';
 import File from 'src/app/interfaces/File';
-import UploadedFile from 'src/app/interfaces/UploadedFile';
 import { FilesService } from 'src/app/services/files.service';
 import { LoadingService } from 'src/app/services/loading.service';
 

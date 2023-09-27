@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import Coupon from 'src/app/interfaces/Coupon';
 import { OrderItem } from 'src/app/interfaces/OrderItem';
-import { CouponsService } from 'src/app/services/coupons.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { ShopcartService } from 'src/app/services/shopcart.service';
 

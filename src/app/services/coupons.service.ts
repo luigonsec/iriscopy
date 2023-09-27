@@ -3,19 +3,19 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: 'root',
 })
 export class CouponsService {
-  constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) {}
 
-  validate(code: string) {
-    return this.http.get(
-      `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/coupons`,
-      {
-        params: {
-          code,
-        },
-      }
-    );
-  }
+	validate(code: string) {
+		return this.http.get(
+			`${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/coupons`,
+			{
+				params: {
+					code,
+				},
+			}
+		);
+	}
 }

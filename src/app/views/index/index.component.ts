@@ -124,23 +124,23 @@ export class IndexComponent implements OnInit {
   isReady() {
     let res = true;
 
-    if (!!!this.orientation) res = false;
-    if (!!!this.finishType) res = false;
-    if (!!!this.pagesPerSide) res = false;
-    if (!!!this.printForm) res = false;
-    if (!!!this.printType) res = false;
-    if (!!!this.paperGrammage) res = false;
-    if (!!!this.paperSize) res = false;
+    if (!this.orientation) res = false;
+    if (!this.finishType) res = false;
+    if (!this.pagesPerSide) res = false;
+    if (!this.printForm) res = false;
+    if (!this.printType) res = false;
+    if (!this.paperGrammage) res = false;
+    if (!this.paperSize) res = false;
 
     if (this.finishType.code === 'encuadernado') {
-      if (!!!this.boundType) res = false;
-      if (!!!this.boundColors || !!!this.boundColors.anillas) res = false;
-      if (!!!this.boundColors || !!!this.boundColors.delantera) res = false;
-      if (!!!this.boundColors || !!!this.boundColors.trasera) res = false;
+      if (!this.boundType) res = false;
+      if (!this.boundColors || !this.boundColors.anillas) res = false;
+      if (!this.boundColors || !this.boundColors.delantera) res = false;
+      if (!this.boundColors || !this.boundColors.trasera) res = false;
     }
 
-    if (!!!this.copiesQuantity) res = false;
-    if (!!!this.files || !!!this.files.length) res = false;
+    if (!this.copiesQuantity) res = false;
+    if (!this.files || !this.files.length) res = false;
 
     return res;
   }

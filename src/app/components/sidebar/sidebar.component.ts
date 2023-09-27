@@ -29,12 +29,12 @@ export class SidebarComponent implements OnInit {
   }
 
   toggle() {
-    this.display = !!!this.display;
+    this.display = !this.display;
   }
 
   remove(order: OrderItem): void {
     this.shopcartService.remove(order);
-    if (!!!this.orders.length) this.display = false;
+    if (!this.orders.length) this.display = false;
   }
 
   ngOnInit(): void {}
