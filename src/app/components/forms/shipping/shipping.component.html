@@ -2,7 +2,7 @@
   <div class="grid">
     <div class="field col-6">
       <div class="p-fluid">
-        <label for="first_name" class="block">Nombre y apellidos</label>
+        <label for="first_name" class="block">Nombre y apellidos <span class="Mandatory">*</span></label>
         <input [(ngModel)]="this.shippingDetails.first_name" id="first_name" pInputText />
         <small *ngIf="this.shippingDetailsErrors.first_name" id="first_name-help"
           class="p-error">{{this.shippingDetailsErrors.first_name}}</small>
@@ -10,7 +10,7 @@
     </div>
     <div class="field col-6">
       <div class="p-fluid">
-        <label for="last_name" class="block">CIF/ NIF</label>
+        <label for="last_name" class="block">CIF/ NIF <span class="Mandatory">*</span></label>
         <input [(ngModel)]="this.shippingDetails.last_name" id="last_name" pInputText />
         <small *ngIf="this.shippingDetailsErrors.last_name" id="last_name-help"
           class="p-error">{{this.shippingDetailsErrors.last_name}}</small>
@@ -20,7 +20,7 @@
   <div class="grid">
     <div class="field col-12">
       <div class="p-fluid">
-        <label for="responsible" class="block">Responsable (opcional)</label>
+        <label for="responsible" class="block">Responsable</label>
         <input [(ngModel)]="this.shippingDetails.responsible" id="responsible" pInputText />
       </div>
     </div>
@@ -28,11 +28,10 @@
   <div class="grid">
     <div class="field col-12">
       <div class="p-fluid">
-        <label for="address_1" class="block">Dirección de la calle</label>
+        <label for="address_1" class="block">Dirección <span class="Mandatory">*</span></label>
         <input [(ngModel)]="this.shippingDetails.address_1" id="address_1" aria-describedby="address_1-help"
           pInputText />
-        <small id="address_1-help">Número de la casa y nombre de la
-          calle</small>
+        <small id="address_1-help">Calle y número</small>
         <small *ngIf="this.shippingDetailsErrors.address_1" id="address_1-help"
           class="p-error">{{this.shippingDetailsErrors.address_1}}</small>
       </div>
@@ -43,8 +42,7 @@
       <div class="p-fluid">
         <input [(ngModel)]="this.shippingDetails.address_2" id="address_2" aria-describedby="address_2-help"
           pInputText />
-        <small id="address_2-help">Planta, departamento,
-          puerta...</small>
+        <small id="address_2-help">Planta, piso/puerta u otro *</small>
         <small *ngIf="this.shippingDetailsErrors.address_2" id="address_2-help"
           class="p-error">{{this.shippingDetailsErrors.address_2}}</small>
       </div>
@@ -53,7 +51,7 @@
   <div class="grid">
     <div class="field col-12">
       <div class="p-fluid">
-        <label for="city" class="block">Localidad / Ciudad</label>
+        <label for="city" class="block">Localidad / Ciudad <span class="Mandatory">*</span></label>
         <input [(ngModel)]="this.shippingDetails.city" id="city" aria-describedby="city-help" pInputText />
         <small *ngIf="this.shippingDetailsErrors.city" id="city-help"
           class="p-error">{{this.shippingDetailsErrors.city}}</small>
@@ -63,7 +61,7 @@
   <div class="grid">
     <div class="field col-12">
       <div class="p-fluid">
-        <label for="postcode" class="block">Código postal (opcional)</label>
+        <label for="postcode" class="block">Código postal <span class="Mandatory">*</span></label>
         <input [(ngModel)]="this.shippingDetails.postcode" id="postcode" aria-describedby="postcode-help" pInputText />
         <small *ngIf="this.shippingDetailsErrors.postcode" id="postcode-help"
         class="p-error">{{this.shippingDetailsErrors.postcode}}</small>

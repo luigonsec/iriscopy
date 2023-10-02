@@ -2,7 +2,7 @@
   <div class="grid">
     <div class="field col-6">
       <div class="p-fluid">
-        <label for="first_name" class="block">Nombre y apellidos</label>
+        <label for="first_name" class="block">Nombre y apellidos <span class="Mandatory">*</span></label>
         <input [(ngModel)]="this.billingDetails.first_name" id="first_name" pInputText />
         <small *ngIf="this.billingDetailsErrors.first_name" id="first_name-help"
           class="p-error">{{this.billingDetailsErrors.first_name}}</small>
@@ -10,7 +10,7 @@
     </div>
     <div class="field col-6">
       <div class="p-fluid">
-        <label for="last_name" class="block">CIF/ NIF</label>
+        <label for="last_name" class="block">CIF/ NIF <span class="Mandatory">*</span></label>
         <input [(ngModel)]="this.billingDetails.last_name" id="last_name" pInputText />
         <small *ngIf="this.billingDetailsErrors.last_name" id="last_name-help"
           class="p-error">{{this.billingDetailsErrors.last_name}}</small>
@@ -20,7 +20,7 @@
   <div class="grid">
     <div class="field col-12">
       <div class="p-fluid">
-        <label for="responsible" class="block">Responsable (opcional)</label>
+        <label for="responsible" class="block">Responsable</label>
         <input [(ngModel)]="this.billingDetails.responsible" id="responsible" pInputText />
 
       </div>
@@ -29,11 +29,10 @@
   <div class="grid">
     <div class="field col-12">
       <div class="p-fluid">
-        <label for="address_1" class="block">Dirección de la calle</label>
+        <label for="address_1" class="block">Dirección <span class="Mandatory">*</span></label>
         <input [(ngModel)]="this.billingDetails.address_1" id="address_1" aria-describedby="address_1-help"
           pInputText />
-        <small id="address_1-help">Número de la casa y nombre de la
-          calle</small>
+        <small id="address_1-help">Calle y número </small>
         <small *ngIf="this.billingDetailsErrors.address_1" id="address_1-help"
           class="p-error">{{this.billingDetailsErrors.address_1}}</small>
       </div>
@@ -44,7 +43,7 @@
       <div class="p-fluid">
         <input [(ngModel)]="this.billingDetails.address_2" id="address_2" aria-describedby="address_2-help"
           pInputText />
-        <small id="address_2-help">Planta, departamento, puerta...</small>
+        <small id="address_2-help">Planta, piso/puerta u otro </small>
         <small *ngIf="this.billingDetailsErrors.address_2" id="address_2-help"
           class="p-error">{{this.billingDetailsErrors.address_2}}</small>
       </div>
@@ -53,7 +52,7 @@
   <div class="grid">
     <div class="field col-12">
       <div class="p-fluid">
-        <label for="city" class="block">Localidad / Ciudad</label>
+        <label for="city" class="block">Localidad / Ciudad <span class="Mandatory">*</span></label>
         <input [(ngModel)]="this.billingDetails.city" id="city" aria-describedby="city-help" pInputText />
         <small *ngIf="this.billingDetailsErrors.city" id="city-help"
           class="p-error">{{this.billingDetailsErrors.city}}</small>
@@ -63,7 +62,7 @@
   <div class="grid">
     <div class="field col-12">
       <div class="p-fluid">
-        <label for="postcode" class="block">Código postal</label>
+        <label for="postcode" class="block">Código postal <span class="Mandatory">*</span></label>
         <input [(ngModel)]="this.billingDetails.postcode" id="postcode" aria-describedby="postcode-help" pInputText />
         <small *ngIf="this.billingDetailsErrors.postcode" id="postcode-help"
           class="p-error">{{this.billingDetailsErrors.postcode}}</small>
@@ -73,7 +72,7 @@
   <div class="grid">
     <div class="field col-12">
       <div class="p-fluid">
-        <label for="phone" class="block">Teléfono</label>
+        <label for="phone" class="block">Teléfono <span class="Mandatory">*</span></label>
         <input [(ngModel)]="this.billingDetails.phone" id="phone" aria-describedby="phone-help" pInputText />
         <small *ngIf="this.billingDetailsErrors.phone" id="phone-help"
           class="p-error">{{this.billingDetailsErrors.phone}}</small>
@@ -83,7 +82,7 @@
   <div class="grid">
     <div class="field col-12">
       <div class="p-fluid">
-        <label for="email" class="block">Dirección de correo electrónico</label>
+        <label for="email" class="block">Dirección de correo electrónico <span class="Mandatory">*</span></label>
         <input [(ngModel)]="this.billingDetails.email" id="email" aria-describedby="email-help" pInputText />
         <small *ngIf="this.billingDetailsErrors.email" id="email-help"
           class="p-error">{{this.billingDetailsErrors.email}}</small>
@@ -93,8 +92,7 @@
   <div class="grid">
     <div class="field col-12">
       <div class="p-fluid">
-        <label for="others" class="block">Observaciones
-          (opcional)</label>
+        <label for="others" class="block">Observaciones</label>
         <textarea [(ngModel)]="this.billingDetails.others" [rows]="5" aria-labelledby="others-help" [cols]="30"
           pInputTextarea autoResize="autoResize"></textarea>
         <small id="others-help">Observaciones de tu pedido</small>
