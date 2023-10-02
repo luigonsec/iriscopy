@@ -13,5 +13,5 @@ export default interface Order {
   payment_method_title: string;
   line_items: OrderItem[];
   shipping_lines: ShippingLine[];
-  meta_data?: any;
+  meta_data?;
 }

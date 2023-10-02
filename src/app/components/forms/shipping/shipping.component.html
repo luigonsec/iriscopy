@@ -2,7 +2,7 @@
   <div class="grid">
     <div class="field col-6">
       <div class="p-fluid">
-        <label for="first_name" class="block">Name</label>
+        <label for="first_name" class="block">Nombre y apellidos</label>
         <input [(ngModel)]="this.shippingDetails.first_name" id="first_name" pInputText />
         <small *ngIf="this.shippingDetailsErrors.first_name" id="first_name-help"
           class="p-error">{{this.shippingDetailsErrors.first_name}}</small>
@@ -65,6 +65,8 @@
       <div class="p-fluid">
         <label for="postcode" class="block">Código postal (opcional)</label>
         <input [(ngModel)]="this.shippingDetails.postcode" id="postcode" aria-describedby="postcode-help" pInputText />
+        <small *ngIf="this.shippingDetailsErrors.postcode" id="postcode-help"
+        class="p-error">{{this.shippingDetailsErrors.postcode}}</small>
       </div>
     </div>
   </div>

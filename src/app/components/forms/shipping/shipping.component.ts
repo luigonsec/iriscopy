@@ -18,9 +18,9 @@ export class ShippingComponent implements OnDestroy {
 	public subcription: Subscription;
 
 	constructor(
-    private shippingService: ShippingService,
-    private messageService: MessageService,
-    private store: Store
+		private shippingService: ShippingService,
+		private messageService: MessageService,
+		private store: Store
 	) {
 		this.resetShippingDetails();
 		this.subcription = this.store
@@ -53,7 +53,7 @@ export class ShippingComponent implements OnDestroy {
 		this.shippingDetailsErrors = this.shippingService.validate(
 			this.shippingDetails
 		);
-		const shippingFine = Object.values(this.shippingDetailsErrors).every(
+		const shippingFine = Object.keys(this.shippingDetailsErrors).map((x) => this.shippingDetails[x]).every(
 			(x) => !x
 		);
 		return shippingFine;
@@ -79,5 +79,5 @@ export class ShippingComponent implements OnDestroy {
 		this.subcription.unsubscribe();
 	}
 
-	ngOnInit(): void {}
+	ngOnInit(): void { }
 }

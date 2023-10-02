@@ -21,6 +21,9 @@ import { ShippingComponent } from 'src/app/components/forms/shipping/shipping.co
 import { Subscription } from 'rxjs';
 import { selectCustomer } from 'src/app/_selectors/customer.selectors';
 import Customer from 'src/app/interfaces/Customer';
+import aljarafe from "src/config/aljarafe";
+import sevilla from "src/config/sevilla";
+import ShippingDetails from 'src/app/interfaces/ShippingDetails';
 
 @Component({
   selector: 'app-payment',
@@ -213,14 +216,51 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   public getPrecioEnvio() {
-    if (this.getSubtotal() > 40) return 0;
-    else return 4.9;
+      let precioEnvio = 4.90;
+    
+      if (this.getSubtotal() >= 40) precioEnvio = 0;
+
+      if (this.billing) {
+          let code;
+          if (this.differentAddress && this.shipping) {
+              code = this.shipping.shippingDetails.postcode;
+          } else {
+              code = this.billing.billingDetails.postcode;
+          }
+
+          const numericCode = +code;
+        
+          if (aljarafe.includes(numericCode)) precioEnvio = this.getGastosEnvioAljarafe();
+          if (sevilla.includes(numericCode)) precioEnvio = this.getGastosEnvioSevilla();
+      }
+      return precioEnvio;
+  }
+
+
+  public getGastosEnvioAljarafe() {
+    
+    const precioPedido = this.getSubtotal();
+    if (precioPedido > 0 && precioPedido < 10) return 4.9
+    if (precioPedido >= 10 && precioPedido < 25) return 3.9
+    if (precioPedido >= 25 && precioPedido < 40) return 2.9
+    if (precioPedido >= 40 ) return 0
+    return 4.90
+  }
+
+  public getGastosEnvioSevilla() {
+    const precioPedido = this.getSubtotal();
+    if (precioPedido > 0 && precioPedido < 10) return 4.9
+    if (precioPedido >= 10 && precioPedido < 25) return 1.9
+    if (precioPedido >= 25 && precioPedido < 40) return 0.9
+    if (precioPedido >= 40 ) return 0
+    return 4.90
+
   }
 
   public getTotal() {
     const priceShipping =
       this.deliver === 'Shipping' ? this.getPrecioEnvio() : 0;
-    return this.getSubtotalWithDiscount() + priceShipping;
+    return (this.getSubtotalWithDiscount() + priceShipping);
   }
 
   public getSubtotalWithDiscount() {
@@ -286,7 +326,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     const order: Order = this.buildOrderObject(shippingLine, flattenFiles);
 
     this.orderService.create(order).subscribe({
-      next: (response: any) => {
+      next: (response: {order: number}) => {
         const orderID = response.order;
         this.OrderID = orderID;
         order.id = orderID;
@@ -308,8 +348,8 @@ export class PaymentComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getShippingLine(): any {
-    const shippingLine = {} as any;
+  private getShippingLine(): ShippingDetails {
+    const shippingLine = {} as ShippingDetails;
 
     if (this.deliver === 'Pickup') {
       this.setPickupProperties(shippingLine);
@@ -326,7 +366,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
       .reduce((acc, val) => acc.concat(val), []);
   }
 
-  private buildOrderObject(shippingLine: any, flattenFiles: File[]): Order {
+  private buildOrderObject(shippingLine, flattenFiles: File[]): Order {
     return {
       coupon: this.coupon,
       billing: this.billing.billingDetails,
@@ -359,7 +399,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     };
   }
 
-  private setShippingProperties(shippingLine: any) {
+  private setShippingProperties(shippingLine) {
     shippingLine.method_title = 'Envío en 48 horas';
     shippingLine.method_id = 'flat_rate';
     shippingLine.instance_id = '9';
@@ -367,7 +407,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     shippingLine.total_tax = '0.00';
   }
 
-  private setPickupProperties(shippingLine: any) {
+  private setPickupProperties(shippingLine) {
     shippingLine.method_title = 'Local de Recogida';
     shippingLine.method_id = 'local_pickup_plus';
     shippingLine.total = '0.00';

@@ -71,9 +71,9 @@ export class BillingComponent implements OnDestroy {
 		this.billingDetailsErrors = this.billingService.validate(
 			this.billingDetails
 		);
-		const billingFine = Object.values(this.billingDetailsErrors).every(
-			(x) => !x
-		);
+		const billingFine = Object.keys(this.billingDetailsErrors).map((key) => {
+			return this.billingDetailsErrors[key]
+		}).every((x) => !x)
 		return billingFine;
 	}
 

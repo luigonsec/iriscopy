@@ -70,7 +70,9 @@ export class ShippingService {
 		if (invalidPostalCode.errors) {
 			errors.postcode = 'Este campo no puede estar vacío';
 		}
-
+		if (isNaN(+shipping.postcode.trim())) {
+			errors.postcode = 'El código postal debe ser numérico';
+		} 
 		return errors;
 	}
 }
