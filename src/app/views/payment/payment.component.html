@@ -8,8 +8,8 @@
         rellenar tus datos de
         facturación.
       </p>
-      <app-billing #billing></app-billing>
-      <div class="grid">
+      <app-billing #billing [shipping]="this.deliver === 'Shipping' "></app-billing>
+      <div class="grid" *ngIf="this.deliver === 'Shipping'">
         <div class="col-12">
           <h3>
             <p-checkbox binary="true" [(ngModel)]="this.differentAddress">

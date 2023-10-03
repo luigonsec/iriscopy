@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
@@ -13,6 +13,7 @@ import { BillingService } from 'src/app/services/billing.service';
 	styleUrls: ['./billing.component.scss'],
 })
 export class BillingComponent implements OnDestroy {
+	@Input('shipping') shipping: boolean;
 	public emptyCart: boolean = false;
 	public billingDetails: BillingDetails = {} as BillingDetails;
 	public billingDetailsErrors: BillingDetails = {} as BillingDetails;
@@ -69,7 +70,7 @@ export class BillingComponent implements OnDestroy {
 
 	private validBilling() {
 		this.billingDetailsErrors = this.billingService.validate(
-			this.billingDetails
+			this.billingDetails, this.shipping
 		);
 		const billingFine = Object.keys(this.billingDetailsErrors).map((key) => {
 			return this.billingDetailsErrors[key]

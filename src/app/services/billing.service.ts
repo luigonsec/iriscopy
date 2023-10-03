@@ -8,7 +8,7 @@ import BillingDetails from '../interfaces/BillingDetails';
 export class BillingService {
 	constructor() {}
 
-	validate(billing: BillingDetails) {
+	validate(billing: BillingDetails, isShipping: boolean) {
 		const errors: BillingDetails = {
 			first_name: undefined,
 			last_name: undefined,
@@ -44,7 +44,7 @@ export class BillingService {
 			billing.address_1.trim(),
 			Validators.required
 		);
-		if (invalidAddress.errors) {
+		if (invalidAddress.errors && isShipping) {
 			errors.address_1 = 'Este campo no puede estar vacío';
 		}
 
@@ -52,7 +52,7 @@ export class BillingService {
 			billing.address_2.trim(),
 			Validators.required
 		);
-		if (invalidAddress2.errors) {
+		if (invalidAddress2.errors && isShipping) {
 			errors.address_2 = 'Este campo no puede estar vacío';
 		}
 
@@ -60,7 +60,7 @@ export class BillingService {
 			billing.city.trim(),
 			Validators.required
 		);
-		if (invalidCity.errors) {
+		if (invalidCity.errors && isShipping) {
 			errors.city = 'Este campo no puede estar vacío';
 		}
 
@@ -68,10 +68,10 @@ export class BillingService {
 			billing.postcode.trim(),
 			Validators.required
 		);
-		if (invalidPostalCode.errors) {
+		if (invalidPostalCode.errors && isShipping) {
 			errors.postcode = 'Este campo no puede estar vacío';
 		}
-		if (isNaN(+billing.postcode.trim())) {
+		if (isNaN(+billing.postcode.trim()) && isShipping) {
 			errors.postcode = 'El código postal debe ser numérico';
 		} 
 

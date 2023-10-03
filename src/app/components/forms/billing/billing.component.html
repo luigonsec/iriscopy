@@ -26,7 +26,7 @@
       </div>
     </div>
   </div>
-  <div class="grid">
+  <div class="grid" *ngIf="this.shipping">
     <div class="field col-12">
       <div class="p-fluid">
         <label for="address_1" class="block">Dirección <span class="Mandatory">*</span></label>
@@ -38,7 +38,7 @@
       </div>
     </div>
   </div>
-  <div class="grid">
+  <div class="grid" *ngIf="this.shipping">
     <div class="field col-12">
       <div class="p-fluid">
         <input [(ngModel)]="this.billingDetails.address_2" id="address_2" aria-describedby="address_2-help"
@@ -49,7 +49,7 @@
       </div>
     </div>
   </div>
-  <div class="grid">
+  <div class="grid" *ngIf="this.shipping">
     <div class="field col-12">
       <div class="p-fluid">
         <label for="city" class="block">Localidad / Ciudad <span class="Mandatory">*</span></label>
@@ -59,7 +59,7 @@
       </div>
     </div>
   </div>
-  <div class="grid">
+  <div class="grid" *ngIf="this.shipping">
     <div class="field col-12">
       <div class="p-fluid">
         <label for="postcode" class="block">Código postal <span class="Mandatory">*</span></label>

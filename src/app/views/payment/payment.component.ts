@@ -38,7 +38,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   public differentAddress = false;
   public payment: string;
-  public deliver: string = 'Shipping';
+  public deliver: string = 'Pickup';
   public orders: OrderItem[];
   public locations = locations;
   public selectedLocation: Location;
