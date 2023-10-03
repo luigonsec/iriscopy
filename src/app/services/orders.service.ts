@@ -69,8 +69,8 @@ export class OrdersService {
     const twoSidesFactor = order.printForm.factor;
     let boundPrice = 0;
     let boundColors = 0;
+    boundPrice += order.finishType.factor || 0;
     if (order.finishType.code === 'encuadernado') {
-      boundPrice += 1.2;
       boundColors += order.boundColors.anillas.factor || 0;
       boundColors += order.boundColors.trasera.factor || 0;
       boundColors += order.boundColors.delantera.factor || 0;

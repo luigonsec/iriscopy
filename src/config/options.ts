@@ -125,6 +125,11 @@ export default {
 			code: 'cuatro-taladros',
 		},
 		{
+			name: 'Funda plástico',
+			code: 'funda-plastico',
+			factor: 0.1,
+		},
+		{
 			name: 'Encuadernado',
 			code: 'encuadernado',
 			description: 'En espiral',
