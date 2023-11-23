@@ -1,45 +1,63 @@
-<div class="Title">
-  TU PEDIDO ({{this.orders.length}})
-</div>
-
-<div class="Shopcart__item" *ngFor="let order of this.orders">
-  <div class="File" *ngFor="let file of order.files">
+<div class="grid">
+  <div class="col-12">
     <div class="Title">
-      <div class='Value'>{{file.name}}</div>
+      TU PEDIDO ({{this.orders.length}})
     </div>
-    <div class="Info">
-      <div class='Value'>{{file.pages}} páginas</div>
-    </div>
-  </div>
-  <div class="Description">
-    <div class="Item">Tamaño de papel: {{order.paperSize.name}}</div>
-    <div class="Item">Tipo de papel: {{order.paperGrammage.name}}</div>
-    <div class="Item">Tipo de impresión: {{order.printType.name}}</div>
-    <div class="Item">Forma de impresión: {{order.printForm.name}}</div>
-    <div class="Item">Páginas por cara: {{order.pagesPerSide.name}}</div>
-    <div class="Item">Orientación: {{order.orientation.name}}</div>
-    <div class="Item">Tipo de acabado: {{order.finishType.name}}</div>
-    <div class="Item" *ngIf="order.finishType.code === 'encuadernado'">Encuadernado: {{order.boundType.name}}</div>
-    <div class="Item" *ngIf="order.finishType.code === 'encuadernado'">Anillas: {{order.boundColors.anillas.name}}
-    </div>
-    <div class="Item" *ngIf="order.finishType.code === 'encuadernado'">Tapa delantera:
-      {{order.boundColors.delantera.name}}
-    </div>
-    <div class="Item" *ngIf="order.finishType.code === 'encuadernado'">Tapa trasera:
-      {{order.boundColors.trasera.name}}
-    </div>
-    <div class="Item">Copias: {{order.copiesQuantity}}</div>
-  </div>
-  <div class="Price">
-    <div class='Value'>{{this.getPrice(order).toFixed(2)}} €</div>
-  </div>
+    <div class="Shopcart__item" *ngFor="let order of this.orders">
+      <div class="grid">
+        <div class="col-12">
 
-  <div class="Buttons">
-    <p-button label="Eliminar" styleClass="p-button-sm" (click)="this.remove(order)"></p-button>
+          <div class="File" *ngFor="let file of order.files">
+            <div class="grid">
+              <div class="col-10">
+                <div class="Title">
+                  <div class='Value'>{{file.name}}</div>
+                </div>
+                <div class="Info">
+                  <div class='Value'>{{file.pages}} páginas</div>
+                </div>
+              </div>
+              <div class="col-2">
+                <p-button icon="fas fa-trash" styleClass="p-button-sm"
+                  (click)="this.removeFile(order.id, file.id)"></p-button>
+              </div>
+            </div>
+          </div>
+          <div class="Description">
+            <div class="Item">Tamaño de papel: {{order.paperSize.name}}</div>
+            <div class="Item">Tipo de papel: {{order.paperGrammage.name}}</div>
+            <div class="Item">Tipo de impresión: {{order.printType.name}}</div>
+            <div class="Item">Forma de impresión: {{order.printForm.name}}</div>
+            <div class="Item">Páginas por cara: {{order.pagesPerSide.name}}</div>
+            <div class="Item">Orientación: {{order.orientation.name}}</div>
+            <div class="Item">Tipo de acabado: {{order.finishType.name}}</div>
+            <div class="Item" *ngIf="order.finishType.code === 'encuadernado'">Encuadernado: {{order.boundType.name}}
+            </div>
+            <div class="Item" *ngIf="order.finishType.code === 'encuadernado'">Anillas:
+              {{order.boundColors.anillas.name}}
+            </div>
+            <div class="Item" *ngIf="order.finishType.code === 'encuadernado'">Tapa delantera:
+              {{order.boundColors.delantera.name}}
+            </div>
+            <div class="Item" *ngIf="order.finishType.code === 'encuadernado'">Tapa trasera:
+              {{order.boundColors.trasera.name}}
+            </div>
+            <div class="Item">Copias: {{order.copiesQuantity}}</div>
+          </div>
+          <div class="Price">
+            <div class='Value'>{{this.getPrice(order).toFixed(2)}} €</div>
+          </div>
+
+          <div class="Buttons">
+            <p-button label="Eliminar" styleClass="p-button-sm" (click)="this.remove(order)"></p-button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="Subtotal__Price">
+      Subotal: {{this.getTotalPrice().toFixed(2)}} €
+    </div>
   </div>
-
-</div>
-
-<div class="Subtotal__Price">
-  Subotal: {{this.getTotalPrice().toFixed(2)}} €
 </div>

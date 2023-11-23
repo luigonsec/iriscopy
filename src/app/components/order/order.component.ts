@@ -29,6 +29,27 @@ export class OrderComponent implements OnInit {
     this.shopcartService.remove(order);
   }
 
+  removeFile(order_id: string, files_id: number) {
+    console.log(this.orders);
+
+    const orderIndex = this.orders.findIndex((order) => order.id === order_id);
+
+    if (orderIndex !== -1) {
+      const order = this.orders[orderIndex];
+      const files = order.files;
+      this.orders[orderIndex].files = files.filter(
+        (file) => file.id !== files_id
+      );
+
+      if (this.orders[orderIndex].files.length === 0) {
+        this.orders.splice(orderIndex, 1);
+      }
+
+      this.shopcartService.update(order);
+    }
+    console.log(this.orders);
+  }
+
   ngOnInit(): void {
     this.orders = this.shopcartService.getCart();
     this.shopcartService.getCart$().subscribe((orders) => {
