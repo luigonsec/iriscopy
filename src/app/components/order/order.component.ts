@@ -45,9 +45,8 @@ export class OrderComponent implements OnInit {
         this.orders.splice(orderIndex, 1);
       }
 
-      this.shopcartService.update(order);
+      this.shopcartService.update(this.orders);
     }
-    console.log(this.orders);
   }
 
   ngOnInit(): void {

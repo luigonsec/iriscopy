@@ -19,12 +19,8 @@ export class ShopcartService {
     localStorage.setItem('cart', JSON.stringify(cart));
   }
 
-  update(order: OrderItem) {
-    const cart: OrderItem[] = this.getCart();
-    const orderIndex = cart.findIndex((x) => x.id === order.id);
-    if (orderIndex !== -1) {
-      cart[orderIndex] = { ...cart[orderIndex], ...order };
-    }
+  update(orders: OrderItem[]) {
+    const cart: OrderItem[] = orders;
     localStorage.setItem('cart', JSON.stringify(cart));
     this.itemCart$.next(cart);
   }
