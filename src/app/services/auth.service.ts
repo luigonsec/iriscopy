@@ -61,7 +61,7 @@ export class AuthService {
 
   public startRefreshTokenTimer(expiresAt: number) {
     const diff = expiresAt - Date.now();
-    const millisencondsToRefresh = diff - 10 * 1000;
+    const millisencondsToRefresh = diff - 60 * 1000;
     this.refreshTokenTimeout = setTimeout(() => {
       this.refreshToken();
     }, millisencondsToRefresh);
