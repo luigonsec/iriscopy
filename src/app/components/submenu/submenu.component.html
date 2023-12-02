@@ -1,12 +1,13 @@
 <div class="Submenu grid">
-  <div class="col">
+  <div class="col-12 sm:col-6">
     <a href="https://iriscopyshop.com">Volver a la tienda</a>
     <a href="/">Hacer pedido</a>
-    <a href="https://iriscopyshop.com/preguntas-frecuentes/" target="_blank">Preguntas frecuentes</a>
+    <a href="https://iriscopyshop.com/preguntas-frecuentes/" target="_blank">FAQs</a>
 
-
-    <a *ngIf="this.customer" (click)="this.logout()">Salir</a>
-    <a *ngIf="!!!this.customer" href="/login" (click)="this.logout()">Acceso</a>
+  </div>
+  <div class="col-12 sm:col-6">
+    <a class="Back" *ngIf="this.customer" (click)="this.logout()">Salir</a>
+    <a class="Back" *ngIf="!!!this.customer" href="/login" (click)="this.logout()">Acceso</a>
     <a class="Back" *ngIf="this.customer" [routerLink]="'/profile'">Tus datos</a>
     <a class="Back" *ngIf="this.customer && this.customer.admin" [routerLink]="'/admin'">Administrar</a>
     <a class="Back" *ngIf="this.orders.length" href="/payment">Ir a pagar</a>
