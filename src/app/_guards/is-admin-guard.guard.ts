@@ -24,7 +24,7 @@ export class IsAdminGuardGuard implements CanActivate {
     | UrlTree {
     // TODO: Chequear que es admin del cliente en cuestion
 
-    const customer = JSON.parse(localStorage.getItem('customer'));
+    const customer = JSON.parse(localStorage.getItem('irisCopy_app_customer'));
     const isAdmin = customer.admin == 1;
     if (!!!isAdmin) this.route.navigate(['/']);
 

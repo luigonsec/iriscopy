@@ -52,17 +52,5 @@ export class CustomerEffects {
         )
       )
     );
-
-    this.logout$ = createEffect(
-      () =>
-        this.actions$.pipe(
-          ofType(logout),
-          tap(() => {
-            localStorage.removeItem('jwt');
-            localStorage.removeItem('customer');
-          })
-        ),
-      { dispatch: false }
-    );
   }
 }

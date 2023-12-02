@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { environment } from 'src/environments/environment';
+import { loginSuccess, logout } from '../_actions/customer.actions';
 
 interface SuccessAuthResponse {
   expiresAt: number;
@@ -14,10 +16,10 @@ interface SuccessAuthResponse {
 export class AuthService {
   public refreshTokenTimeout;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private store: Store) {}
 
   isLoggedIn() {
-    return !!localStorage.getItem('customer');
+    return !!localStorage.getItem('irisCopy_app_customer');
   }
 
   login(options: { username: string; password: string }) {
@@ -28,7 +30,7 @@ export class AuthService {
   }
 
   refreshToken() {
-    const refreshToken = localStorage.getItem('refreshToken');
+    const refreshToken = localStorage.getItem('irisCopy_app_refreshToken');
 
     if (!refreshToken) {
       return this.stopRefreshTokenTimer();
@@ -40,15 +42,18 @@ export class AuthService {
       )
       .subscribe(
         (response: SuccessAuthResponse) => {
-          localStorage.setItem('expiresAt', response.expiresAt.toString());
-          localStorage.setItem('accessToken', response.accessToken);
-          localStorage.setItem('refreshToken', response.refreshToken);
+          this.store.dispatch(
+            loginSuccess({
+              customer: undefined,
+              accessToken: response.accessToken,
+              refreshToken: response.refreshToken,
+              expiresAt: response.expiresAt.toString(),
+            })
+          );
           this.startRefreshTokenTimer(response.expiresAt);
         },
         (err) => {
-          localStorage.removeItem('expiresAt');
-          localStorage.removeItem('refreshToken');
-          localStorage.removeItem('accessToken');
+          this.store.dispatch(logout());
           this.stopRefreshTokenTimer();
         }
       );

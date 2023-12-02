@@ -64,7 +64,7 @@ export class AdminIndexComponent implements OnInit {
       () => {
         this.messageService.add({
           summary: 'Banner creado',
-          detail: 'El banner ha sido creado exitosamente',
+          detail: 'El banner ha sido creado con éxito',
           severity: 'success',
         });
         this.loadBanners();
@@ -84,7 +84,7 @@ export class AdminIndexComponent implements OnInit {
       () => {
         this.messageService.add({
           summary: 'Banner eliminado',
-          detail: 'El banner ha sido eliminado exitosamente',
+          detail: 'El banner ha sido eliminado con éxito',
           severity: 'success',
         });
         this.loadBanners();
@@ -104,7 +104,7 @@ export class AdminIndexComponent implements OnInit {
       () => {
         this.messageService.add({
           summary: 'Banner actualizado',
-          detail: 'El banner ha sido actualizado exitosamente',
+          detail: 'El banner ha sido actualizado con éxito',
           severity: 'success',
         });
         this.loadBanners();

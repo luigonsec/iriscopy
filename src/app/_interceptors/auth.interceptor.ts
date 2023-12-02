@@ -16,7 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
     req: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    const jwtToken = localStorage.getItem('accessToken');
+    const jwtToken = localStorage.getItem('irisCopy_app_accessToken');
     if (jwtToken) {
       const cloned = req.clone({
         headers: req.headers.set('Authorization', 'Bearer ' + jwtToken),
