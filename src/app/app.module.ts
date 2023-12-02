@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { AppRoutingModule } from './app-routing.module';
@@ -18,7 +18,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { InputTextModule } from 'primeng/inputtext';
 import { MenuComponent } from './components/menu/menu.component';
 import { UploaderComponent } from './components/uploader/uploader.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BoundComponent } from './components/bound/bound.component';
 import { BoundColorsComponent } from './form/bound-colors/bound-colors.component';
 import { TabViewModule } from 'primeng/tabview';
@@ -31,13 +31,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdditionalCommentComponent } from './form/additional-comment/additional-comment.component';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ConfirmBarComponent } from './components/confirm-bar/confirm-bar.component';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SidebarModule } from 'primeng/sidebar';
 import { IndexComponent } from './views/index/index.component';
 import { PaymentComponent } from './views/payment/payment.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { DropdownModule } from 'primeng/dropdown';
+import { GalleriaModule } from 'primeng/galleria';
+import { TableModule } from 'primeng/table';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { CheckboxModule } from 'primeng/checkbox';
 import { OrderComponent } from './components/order/order.component';
@@ -57,71 +60,102 @@ import { couponsReducer } from './_reducer/coupons.reducer';
 import { ShippingComponent } from './components/forms/shipping/shipping.component';
 import { BillingComponent } from './components/forms/billing/billing.component';
 import { ProfileComponent } from './views/profile/profile.component';
+import { AdminIndexComponent } from './views/admin/admin-index/admin-index.component';
+import { BannerComponent } from './components/banner/banner.component';
+import { AuthInterceptor } from './_interceptors/auth.interceptor';
+import { HttpErrorInterceptor } from './_interceptors/http-error.interceptor';
+import { AuthService } from './services/auth.service';
+import { initializeApp } from './_helpers/app.initializer';
 
 @NgModule({
-	declarations: [
-		AppComponent,
-		PaperSizeComponent,
-		PaperGrammageComponent,
-		PrintTypeComponent,
-		PrintFormComponent,
-		PagesPerSideComponent,
-		OrientationComponent,
-		FinishTypeComponent,
-		BoundComponent,
-		MenuComponent,
-		UploaderComponent,
-		BoundTypeComponent,
-		FilterPipe,
-		BoundColorsComponent,
-		ColorOptionComponent,
-		QuantityCopiesComponent,
-		AdditionalCommentComponent,
-		ConfirmBarComponent,
-		SidebarComponent,
-		IndexComponent,
-		PaymentComponent,
-		OrderComponent,
-		TermsComponent,
-		SuccessComponent,
-		ErrorComponent,
-		LoadingComponent,
-		SubmenuComponent,
-		LoginComponent,
-		ShippingComponent,
-		BillingComponent,
-		ProfileComponent,
-	],
-	imports: [
-		BrowserModule,
-		DropdownModule,
-		FormsModule,
-		ReactiveFormsModule,
-		AppRoutingModule,
-		FormsModule,
-		SelectButtonModule,
-		FileUploadModule,
-		RadioButtonModule,
-		MenubarModule,
-		HttpClientModule,
-		InputTextModule,
-		InputNumberModule,
-		TabViewModule,
-		CardModule,
-		CheckboxModule,
-		InputTextareaModule,
-		BadgeModule,
-		ToastModule,
-		BrowserAnimationsModule,
-		SidebarModule,
-		StoreModule.forRoot({
-			customer: customerReducer,
-			loading: loadingReducer,
-			coupon: couponsReducer,
-		}),
-		EffectsModule.forRoot([CustomerEffects]),
-	],
-	providers: [MessageService],
-	bootstrap: [AppComponent],
+  declarations: [
+    AppComponent,
+    PaperSizeComponent,
+    PaperGrammageComponent,
+    PrintTypeComponent,
+    PrintFormComponent,
+    PagesPerSideComponent,
+    OrientationComponent,
+    FinishTypeComponent,
+    BoundComponent,
+    MenuComponent,
+    UploaderComponent,
+    BoundTypeComponent,
+    FilterPipe,
+    BoundColorsComponent,
+    ColorOptionComponent,
+    QuantityCopiesComponent,
+    AdditionalCommentComponent,
+    ConfirmBarComponent,
+    SidebarComponent,
+    IndexComponent,
+    PaymentComponent,
+    OrderComponent,
+    TermsComponent,
+    SuccessComponent,
+    ErrorComponent,
+    LoadingComponent,
+    SubmenuComponent,
+    LoginComponent,
+    ShippingComponent,
+    BillingComponent,
+    ProfileComponent,
+    AdminIndexComponent,
+    BannerComponent,
+  ],
+  imports: [
+    BrowserModule,
+    DropdownModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    FormsModule,
+    TableModule,
+    SelectButtonModule,
+    FileUploadModule,
+    RadioButtonModule,
+    MenubarModule,
+    HttpClientModule,
+    InputTextModule,
+    InputNumberModule,
+    GalleriaModule,
+    TabViewModule,
+    CardModule,
+    ConfirmDialogModule,
+    CheckboxModule,
+    InputTextareaModule,
+    BadgeModule,
+    ToastModule,
+    BrowserAnimationsModule,
+    SidebarModule,
+    StoreModule.forRoot({
+      customer: customerReducer,
+      loading: loadingReducer,
+      coupon: couponsReducer,
+    }),
+    EffectsModule.forRoot([CustomerEffects]),
+  ],
+  providers: [
+    MessageService,
+    ConfirmationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true,
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (authService: AuthService) => initializeApp(authService),
+      multi: true,
+      deps: [AuthService],
+    },
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

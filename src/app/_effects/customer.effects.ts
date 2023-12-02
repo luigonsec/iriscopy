@@ -34,7 +34,14 @@ export class CustomerEffects {
         mergeMap(({ username, password }) =>
           this.authService.login({ username, password }).pipe(
             map((data: any) => {
-              return loginSuccess({ customer: data.user, jwt: data.jwt });
+              this.authService.startRefreshTokenTimer(data.expiresAt);
+
+              return loginSuccess({
+                customer: data.user,
+                accessToken: data.accessToken,
+                refreshToken: data.refreshToken,
+                expiresAt: data.expiresAt,
+              });
             }),
             catchError((error) => {
               this.loadingService.setLoading({ isLoading: false });

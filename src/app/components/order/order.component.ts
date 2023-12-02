@@ -30,8 +30,6 @@ export class OrderComponent implements OnInit {
   }
 
   removeFile(order_id: string, files_id: number) {
-    console.log(this.orders);
-
     const orderIndex = this.orders.findIndex((order) => order.id === order_id);
 
     if (orderIndex !== -1) {

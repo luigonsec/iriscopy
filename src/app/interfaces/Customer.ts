@@ -12,6 +12,7 @@ export default interface Customer {
   last_name: string;
   role: string;
   username: string;
+  admin: boolean;
   billing: BillingDetails;
   shipping: ShippingDetails;
   is_paying_customer: boolean;
@@ -25,7 +26,7 @@ export default interface Customer {
 interface MetaData {
   id: number;
   key: string;
-  value: any;
+  value;
 }
 
 interface Links {
