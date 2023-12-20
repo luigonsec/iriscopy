@@ -52,7 +52,7 @@ export class AuthService {
           );
           this.startRefreshTokenTimer(response.expiresAt);
         },
-        (err) => {
+        () => {
           this.store.dispatch(logout());
           this.stopRefreshTokenTimer();
         }

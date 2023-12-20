@@ -34,6 +34,7 @@ import { ConfirmBarComponent } from './components/confirm-bar/confirm-bar.compon
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SidebarModule } from 'primeng/sidebar';
+import { TabMenuModule } from 'primeng/tabmenu';
 import { IndexComponent } from './views/index/index.component';
 import { PaymentComponent } from './views/payment/payment.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
@@ -41,7 +42,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { GalleriaModule } from 'primeng/galleria';
 import { TableModule } from 'primeng/table';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-
+import { MenuModule } from 'primeng/menu';
 import { CheckboxModule } from 'primeng/checkbox';
 import { OrderComponent } from './components/order/order.component';
 import { TermsComponent } from './views/terms/terms.component';
@@ -66,6 +67,12 @@ import { AuthInterceptor } from './_interceptors/auth.interceptor';
 import { HttpErrorInterceptor } from './_interceptors/http-error.interceptor';
 import { AuthService } from './services/auth.service';
 import { initializeApp } from './_helpers/app.initializer';
+import { ShopIndexComponent } from './views/shop/shop-index/shop-index.component';
+import { DataViewModule } from 'primeng/dataview';
+import { ProductComponent } from './components/product/product.component';
+import { AdminShopComponent } from './views/admin/admin-shop/admin-shop.component';
+import { AdminBannerComponent } from './views/admin/admin-banner/admin-banner.component';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 @NgModule({
   declarations: [
@@ -102,15 +109,23 @@ import { initializeApp } from './_helpers/app.initializer';
     ProfileComponent,
     AdminIndexComponent,
     BannerComponent,
+    ShopIndexComponent,
+    ProductComponent,
+    AdminShopComponent,
+    AdminBannerComponent,
   ],
   imports: [
     BrowserModule,
     DropdownModule,
     FormsModule,
     ReactiveFormsModule,
+    TabMenuModule,
     AppRoutingModule,
     FormsModule,
     TableModule,
+    MenuModule,
+    DataViewModule,
+    InputSwitchModule,
     SelectButtonModule,
     FileUploadModule,
     RadioButtonModule,

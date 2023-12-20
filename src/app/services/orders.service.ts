@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { OrderItem } from '../interfaces/OrderItem';
+import { OrderCopy } from '../interfaces/OrderCopy';
 import { environment } from 'src/environments/environment';
 import precios from 'src/config/prices';
 import { Subject } from 'rxjs';
@@ -10,7 +10,7 @@ import Order from '../interfaces/Order';
   providedIn: 'root',
 })
 export class OrdersService {
-  private order$: Subject<OrderItem>;
+  private order$: Subject<OrderCopy>;
   constructor(private http: HttpClient) {
     this.order$ = new Subject();
   }
@@ -22,7 +22,7 @@ export class OrdersService {
     );
   }
 
-  edit(order: OrderItem) {
+  edit(order: OrderCopy) {
     this.order$.next(order);
   }
 
@@ -32,10 +32,10 @@ export class OrdersService {
 
   /**
    * Computes the total price for an order item, taking into account the print type, form, paper size and grammage, binding options, and number of copies.
-   * @param {OrderItem} order - The order item to calculate the price for.
+   * @param {OrderCopy} order - The order item to calculate the price for.
    * @returns {number} The total price of the order item.
    */
-  getPrecio(order: OrderItem, completeOrder: OrderItem[]): number {
+  getCopyPrice(order: OrderCopy, completeOrder: OrderCopy[]): number {
     if (!order || !order.files || !order.files.length) {
       return 0;
     }

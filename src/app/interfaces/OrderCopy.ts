@@ -3,7 +3,7 @@ import File from './File';
 import Option from './Option';
 import RingColor from './RingColor';
 
-export interface OrderItem {
+export interface OrderCopy {
   id?: string;
   orientation: Option;
   finishType: Option;

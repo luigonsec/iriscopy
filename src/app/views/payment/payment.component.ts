@@ -6,7 +6,6 @@ import Coupon from 'src/app/interfaces/Coupon';
 import File from 'src/app/interfaces/File';
 import Location from 'src/app/interfaces/Location';
 import Order from 'src/app/interfaces/Order';
-import { OrderItem } from 'src/app/interfaces/OrderItem';
 import RedsysData from 'src/app/interfaces/RedsysData';
 
 import { CouponsService } from 'src/app/services/coupons.service';
@@ -21,9 +20,11 @@ import { ShippingComponent } from 'src/app/components/forms/shipping/shipping.co
 import { Subscription } from 'rxjs';
 import { selectCustomer } from 'src/app/_selectors/customer.selectors';
 import Customer from 'src/app/interfaces/Customer';
-import aljarafe from "src/config/aljarafe";
-import sevilla from "src/config/sevilla";
+import aljarafe from 'src/config/aljarafe';
+import sevilla from 'src/config/sevilla';
 import ShippingDetails from 'src/app/interfaces/ShippingDetails';
+import { OrderCopy } from 'src/app/interfaces/OrderCopy';
+import OrderProduct from 'src/app/interfaces/OrderProduct';
 
 @Component({
   selector: 'app-payment',
@@ -39,7 +40,9 @@ export class PaymentComponent implements OnInit, OnDestroy {
   public differentAddress = false;
   public payment: string;
   public deliver: string = 'Pickup';
-  public orders: OrderItem[];
+  public copies: OrderCopy[];
+  public products: OrderProduct[];
+
   public locations = locations;
   public selectedLocation: Location;
   public termsAccepted: boolean;
@@ -216,51 +219,50 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   public getPrecioEnvio() {
-      let precioEnvio = 4.90;
-    
-      if (this.getSubtotal() >= 40) precioEnvio = 0;
+    let precioEnvio = 4.9;
 
-      if (this.billing) {
-          let code;
-          if (this.differentAddress && this.shipping) {
-              code = this.shipping.shippingDetails.postcode;
-          } else {
-              code = this.billing.billingDetails.postcode;
-          }
+    if (this.getSubtotal() >= 40) precioEnvio = 0;
 
-          const numericCode = +code;
-        
-          if (aljarafe.includes(numericCode)) precioEnvio = this.getGastosEnvioAljarafe();
-          if (sevilla.includes(numericCode)) precioEnvio = this.getGastosEnvioSevilla();
+    if (this.billing) {
+      let code;
+      if (this.differentAddress && this.shipping) {
+        code = this.shipping.shippingDetails.postcode;
+      } else {
+        code = this.billing.billingDetails.postcode;
       }
-      return precioEnvio;
+
+      const numericCode = +code;
+
+      if (aljarafe.includes(numericCode))
+        precioEnvio = this.getGastosEnvioAljarafe();
+      if (sevilla.includes(numericCode))
+        precioEnvio = this.getGastosEnvioSevilla();
+    }
+    return precioEnvio;
   }
 
-
   public getGastosEnvioAljarafe() {
-    
     const precioPedido = this.getSubtotal();
-    if (precioPedido > 0 && precioPedido < 10) return 4.9
-    if (precioPedido >= 10 && precioPedido < 25) return 3.9
-    if (precioPedido >= 25 && precioPedido < 40) return 2.9
-    if (precioPedido >= 40 ) return 0
-    return 4.90
+    if (precioPedido > 0 && precioPedido < 10) return 4.9;
+    if (precioPedido >= 10 && precioPedido < 25) return 3.9;
+    if (precioPedido >= 25 && precioPedido < 40) return 2.9;
+    if (precioPedido >= 40) return 0;
+    return 4.9;
   }
 
   public getGastosEnvioSevilla() {
     const precioPedido = this.getSubtotal();
-    if (precioPedido > 0 && precioPedido < 10) return 4.9
-    if (precioPedido >= 10 && precioPedido < 25) return 1.9
-    if (precioPedido >= 25 && precioPedido < 40) return 0.9
-    if (precioPedido >= 40 ) return 0
-    return 4.90
-
+    if (precioPedido > 0 && precioPedido < 10) return 4.9;
+    if (precioPedido >= 10 && precioPedido < 25) return 1.9;
+    if (precioPedido >= 25 && precioPedido < 40) return 0.9;
+    if (precioPedido >= 40) return 0;
+    return 4.9;
   }
 
   public getTotal() {
     const priceShipping =
       this.deliver === 'Shipping' ? this.getPrecioEnvio() : 0;
-    return (this.getSubtotalWithDiscount() + priceShipping);
+    return this.getSubtotalWithDiscount() + priceShipping;
   }
 
   public getSubtotalWithDiscount() {
@@ -268,9 +270,14 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   private getSubtotal() {
-    return this.orders
-      .map((order) => this.orderService.getPrecio(order, this.orders))
-      .reduce((a, b) => a + b, 0);
+    return (
+      this.copies
+        .map((order) => this.orderService.getCopyPrice(order, this.copies))
+        .reduce((a, b) => a + b, 0) +
+      this.products
+        .map((order) => +order.product.price * order.quantity)
+        .reduce((a, b) => a + b, 0)
+    );
   }
 
   public getDiscount(): number {
@@ -326,7 +333,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     const order: Order = this.buildOrderObject(shippingLine, flattenFiles);
 
     this.orderService.create(order).subscribe({
-      next: (response: {order: number}) => {
+      next: (response: { order: number }) => {
         const orderID = response.order;
         this.OrderID = orderID;
         order.id = orderID;
@@ -361,7 +368,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   private getFlattenFiles(): File[] {
-    return this.orders
+    return this.copies
       .map((order) => order.files)
       .reduce((acc, val) => acc.concat(val), []);
   }
@@ -373,7 +380,8 @@ export class PaymentComponent implements OnInit, OnDestroy {
       shipping: this.differentAddress
         ? this.shipping.shippingDetails
         : this.billing.billingDetails,
-      line_items: this.orders,
+      copies: this.copies,
+      products: this.products,
       payment_method: this.payment,
       payment_method_title: this.payment,
       shipping_lines: [shippingLine],
@@ -420,14 +428,16 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.orders = this.shopcartService.getCart();
-    this.emptyCart = this.orders.length === 0;
+    this.copies = this.shopcartService.getCart().copies;
+    this.products = this.shopcartService.getCart().products;
+    this.emptyCart = this.copies.length + this.products.length === 0;
     this.subscriptionCart = this.shopcartService
       .getCart$()
-      .subscribe((orders) => {
-        this.orders = orders;
+      .subscribe((order) => {
+        this.copies = order.copies;
+        this.products = order.products;
         this.checkMinimumAmount();
-        this.emptyCart = orders.length === 0;
+        this.emptyCart = this.copies.length + this.products.length === 0;
       });
   }
 }

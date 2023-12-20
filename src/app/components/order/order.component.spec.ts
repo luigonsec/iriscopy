@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OrderComponent } from './order.component';
-import { OrderItem } from 'src/app/interfaces/OrderItem';
+import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import { OrdersService } from 'src/app/services/orders.service';
 import File from 'src/app/interfaces/File';
 import { ShopcartService } from 'src/app/services/shopcart.service';
@@ -14,7 +14,7 @@ describe('OrderComponent', () => {
   let shopcartService;
 
   beforeEach(async () => {
-    orderService = jasmine.createSpyObj('OrdersService', ['getPrecio']);
+    orderService = jasmine.createSpyObj('OrdersService', ['getCopyPrice']);
     shopcartService = jasmine.createSpyObj('ShopcartService', [
       'update',
       'getCart',
@@ -43,8 +43,8 @@ describe('OrderComponent', () => {
 
   describe('getTotalPrice', () => {
     it('should calculate total price correctly', () => {
-      spyOn(component, 'getPrice').and.returnValue(10);
-      component.orders = [{} as OrderItem];
+      spyOn(component, 'getCopyPrice').and.returnValue(10);
+      component.copies = [{} as OrderCopy];
 
       const price = component.getTotalPrice();
 
@@ -52,8 +52,8 @@ describe('OrderComponent', () => {
     });
 
     it('should calculate total price correctly with more than one order', () => {
-      spyOn(component, 'getPrice').and.returnValue(10);
-      component.orders = [{} as OrderItem, {} as OrderItem, {} as OrderItem];
+      spyOn(component, 'getCopyPrice').and.returnValue(10);
+      component.copies = [{} as OrderCopy, {} as OrderCopy, {} as OrderCopy];
 
       const price = component.getTotalPrice();
 
@@ -61,11 +61,11 @@ describe('OrderComponent', () => {
     });
   });
 
-  describe('getPrice', () => {
+  describe('getCopyPrice', () => {
     it('should calculate total price correctly', () => {
-      orderService.getPrecio.and.returnValue(10);
+      orderService.getCopyPrice.and.returnValue(10);
 
-      const price = component.getPrice({} as OrderItem);
+      const price = component.getCopyPrice({} as OrderCopy);
 
       expect(price).toBe(10);
     });
@@ -74,7 +74,7 @@ describe('OrderComponent', () => {
   describe('removeFile', () => {
     it('should remove the file in the order', () => {
       shopcartService.update.and.returnValue(undefined);
-      component.orders = [
+      component.copies = [
         {
           id: 'id1',
           files: [{ id: 1 }, { id: 3 }],
@@ -83,11 +83,11 @@ describe('OrderComponent', () => {
           id: 'id2',
           files: [{ id: 2 }],
         },
-      ] as OrderItem[];
+      ] as OrderCopy[];
 
       component.removeFile('id1', 1);
 
-      expect(component.orders).toEqual([
+      expect(component.copies).toEqual([
         {
           id: 'id1',
           files: [{ id: 3 }],
@@ -96,12 +96,12 @@ describe('OrderComponent', () => {
           id: 'id2',
           files: [{ id: 2 } as File],
         },
-      ] as OrderItem[]);
+      ] as OrderCopy[]);
     });
 
     it('should remove the order when the last file in the order is removed', () => {
       shopcartService.update.and.returnValue(undefined);
-      component.orders = [
+      component.copies = [
         {
           id: 'id1',
           files: [{ id: 1 }],
@@ -110,16 +110,16 @@ describe('OrderComponent', () => {
           id: 'id2',
           files: [{ id: 2 }],
         },
-      ] as OrderItem[];
+      ] as OrderCopy[];
 
       component.removeFile('id1', 1);
 
-      expect(component.orders).toEqual([
+      expect(component.copies).toEqual([
         {
           id: 'id2',
           files: [{ id: 2 } as File],
         },
-      ] as OrderItem[]);
+      ] as OrderCopy[]);
     });
   });
 });

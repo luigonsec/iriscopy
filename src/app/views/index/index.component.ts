@@ -1,19 +1,20 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 import Option from 'src/app/interfaces/Option';
-import { OrderItem } from 'src/app/interfaces/OrderItem';
+import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import options from 'src/config/options';
 import File from 'src/app/interfaces/File';
 import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
 import { OrdersService } from 'src/app/services/orders.service';
 import { Store } from '@ngrx/store';
 import { clearCoupon } from 'src/app/_actions/coupons.actions';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss'],
 })
-export class IndexComponent implements OnInit {
+export class IndexComponent implements OnInit, OnDestroy {
   public orientation: Option;
   public finishType: Option;
   public pagesPerSide: Option;
@@ -36,9 +37,10 @@ export class IndexComponent implements OnInit {
   public copiesQuantity: number;
   public additionalComments: string;
   public files: File[];
-  public order: OrderItem;
+  public order: OrderCopy;
 
   @ViewChild('uploader') public uploader: UploaderComponent;
+  orderSubscription: Subscription;
 
   constructor(private orderService: OrdersService, private store: Store) {
     this.store.dispatch(clearCoupon());
@@ -57,6 +59,10 @@ export class IndexComponent implements OnInit {
       additionalComments: this.additionalComments,
       files: this.files,
     };
+  }
+
+  ngOnDestroy(): void {
+    this.orderSubscription.unsubscribe();
   }
 
   reset() {
@@ -146,7 +152,7 @@ export class IndexComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.orderService.getOrder().subscribe((order) => {
+    this.orderSubscription = this.orderService.getOrder().subscribe((order) => {
       this.order = order;
     });
   }

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { OrdersService } from './orders.service';
-import { OrderItem } from '../interfaces/OrderItem';
+import { OrderCopy } from '../interfaces/OrderCopy';
 import { HttpClient } from '@angular/common/http';
 
 describe('OrdersService', () => {
@@ -18,7 +18,7 @@ describe('OrdersService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('getPrecio', () => {
+  describe('getCopyPrice', () => {
     it('calcular el precio correctamente de un archivo de 2 páginas, impreso a doble cara, en blanco y negro', () => {
       const order = {
         printForm: { factor: 1, code: 'doble-cara' },
@@ -35,9 +35,9 @@ describe('OrdersService', () => {
           delantera: { factor: 0.25 },
         },
         copiesQuantity: 1,
-      } as OrderItem;
+      } as OrderCopy;
       const expectedPrice = 0.07;
-      const outputPrice = service.getPrecio(order, [order]);
+      const outputPrice = service.getCopyPrice(order, [order]);
 
       expect(outputPrice).toEqual(expectedPrice);
     });
@@ -64,9 +64,9 @@ describe('OrdersService', () => {
           delantera: { factor: 0.25 },
         },
         copiesQuantity: 1,
-      } as OrderItem;
+      } as OrderCopy;
       const expectedPrice = 12.79;
-      const outputPrice = service.getPrecio(order, [order]);
+      const outputPrice = service.getCopyPrice(order, [order]);
 
       expect(outputPrice).toEqual(expectedPrice);
     });
@@ -87,9 +87,9 @@ describe('OrdersService', () => {
           delantera: { factor: 0.25 },
         },
         copiesQuantity: 2,
-      } as OrderItem;
+      } as OrderCopy;
       const expectedPrice = 9;
-      const outputPrice = service.getPrecio(order, [order]);
+      const outputPrice = service.getCopyPrice(order, [order]);
 
       expect(outputPrice).toEqual(expectedPrice);
     });
@@ -110,9 +110,9 @@ describe('OrdersService', () => {
           delantera: { factor: 0.25 },
         },
         copiesQuantity: 4,
-      } as OrderItem;
+      } as OrderCopy;
       const expectedPrice = 18.15;
-      const outputPrice = service.getPrecio(order, [order]);
+      const outputPrice = service.getCopyPrice(order, [order]);
 
       expect(outputPrice).toEqual(expectedPrice);
     });
@@ -133,7 +133,7 @@ describe('OrdersService', () => {
           delantera: { factor: 0.25 },
         },
         copiesQuantity: 2,
-      } as OrderItem;
+      } as OrderCopy;
 
       const order_2 = {
         printForm: { factor: 1, code: 'una-cara' },
@@ -150,9 +150,9 @@ describe('OrdersService', () => {
           delantera: { factor: 0.25 },
         },
         copiesQuantity: 2,
-      } as OrderItem;
+      } as OrderCopy;
       const expectedPrice = 10.05;
-      const outputPrice = service.getPrecio(order_1, [order_1, order_2]);
+      const outputPrice = service.getCopyPrice(order_1, [order_1, order_2]);
 
       expect(outputPrice).toEqual(expectedPrice);
     });
@@ -173,7 +173,7 @@ describe('OrdersService', () => {
           delantera: { factor: 0.25 },
         },
         copiesQuantity: 2,
-      } as OrderItem;
+      } as OrderCopy;
 
       const order_2 = {
         printForm: { factor: 1, code: 'una-cara' },
@@ -190,9 +190,9 @@ describe('OrdersService', () => {
           delantera: { factor: 0.25 },
         },
         copiesQuantity: 5,
-      } as OrderItem;
+      } as OrderCopy;
       const expectedPrice = 7.65;
-      const outputPrice = service.getPrecio(order_1, [order_1, order_2]);
+      const outputPrice = service.getCopyPrice(order_1, [order_1, order_2]);
 
       expect(outputPrice).toEqual(expectedPrice);
     });
@@ -213,7 +213,7 @@ describe('OrdersService', () => {
           delantera: { factor: 0.25 },
         },
         copiesQuantity: 2,
-      } as OrderItem;
+      } as OrderCopy;
 
       const order_2 = {
         printForm: { factor: 1, code: 'una-cara' },
@@ -230,9 +230,9 @@ describe('OrdersService', () => {
           delantera: { factor: 0 },
         },
         copiesQuantity: 5,
-      } as OrderItem;
+      } as OrderCopy;
       const expectedPrice = 32;
-      const outputPrice = service.getPrecio(order_2, [order_1, order_2]);
+      const outputPrice = service.getCopyPrice(order_2, [order_1, order_2]);
 
       expect(outputPrice).toEqual(expectedPrice);
     });
@@ -253,20 +253,22 @@ describe('OrdersService', () => {
           delantera: { factor: 0.25 },
         },
         copiesQuantity: 2,
-      } as OrderItem;
+      } as OrderCopy;
 
       const expectedPrice = 113.4;
-      const outputPrice = service.getPrecio(order, [order]);
+      const outputPrice = service.getCopyPrice(order, [order]);
 
       expect(outputPrice).toEqual(expectedPrice);
     });
 
     it('devuelve 0 si no se pasan parámetros válidos', () => {
-      expect(service.getPrecio(null, [null])).toEqual(0);
-      expect(service.getPrecio({} as OrderItem, [{} as OrderItem])).toEqual(0);
+      expect(service.getCopyPrice(null, [null])).toEqual(0);
+      expect(service.getCopyPrice({} as OrderCopy, [{} as OrderCopy])).toEqual(
+        0
+      );
       expect(
-        service.getPrecio({ files: [] } as OrderItem, [
-          { files: [] } as OrderItem,
+        service.getCopyPrice({ files: [] } as OrderCopy, [
+          { files: [] } as OrderCopy,
         ])
       ).toEqual(0);
     });

@@ -9,8 +9,8 @@
 
   <div class="Shopcart col-6 sm:col-8 md:col-10">
 
-    <i *ngIf="this.orders.length" class="ShoppingCart__Icon fas fa-shopping-cart" (click)="toggleSidebar()" pBadge
-      [value]="this.orders.length"></i>
+    <i *ngIf="(this.copies.length + this.products.length)" class="ShoppingCart__Icon fas fa-shopping-cart"
+      (click)="toggleSidebar()" pBadge [value]="this.copies.length + this.products.length"></i>
   </div>
 </div>
 

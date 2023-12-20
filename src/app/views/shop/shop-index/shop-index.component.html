@@ -1,0 +1,23 @@
+<div class="grid">
+
+    <div class="col-3">
+        <div class="p-fluid">
+            <p-menu [model]="categories" [style]="{width: '100%'}"></p-menu>
+        </div>
+        <app-banner></app-banner>
+    </div>
+    <div class="col-9">
+
+        <div class="grid">
+
+            <div class="col-12">
+                <p-menubar class="Shop__menu" [model]="filters"></p-menubar>
+            </div>
+        </div>
+        <div class="grid">
+            <div class="col-4" *ngFor="let product of products">
+                <app-product [product]="product"></app-product>
+            </div>
+        </div>
+    </div>
+</div>

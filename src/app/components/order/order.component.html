@@ -1,13 +1,13 @@
 <div class="grid">
   <div class="col-12">
     <div class="Title">
-      TU PEDIDO ({{this.orders.length}})
+      TU PEDIDO ({{this.copies.length + this.products.length}})
     </div>
-    <div class="Shopcart__item" *ngFor="let order of this.orders">
+    <div class="Shopcart__item" *ngFor="let order of this.copies">
       <div class="grid">
         <div class="col-12">
 
-          <div class="File" *ngFor="let file of order.files">
+          <div class="OrderItem" *ngFor="let file of order.files">
             <div class="grid">
               <div class="col-10">
                 <div class="Title">
@@ -45,15 +45,38 @@
             <div class="Item">Copias: {{order.copiesQuantity}}</div>
           </div>
           <div class="Price">
-            <div class='Value'>{{this.getPrice(order).toFixed(2)}} €</div>
+            <div class='Value'>{{this.getCopyPrice(order).toFixed(2)}} €</div>
           </div>
 
           <div class="Buttons">
-            <p-button label="Eliminar" styleClass="p-button-sm" (click)="this.remove(order)"></p-button>
+            <p-button label="Eliminar" styleClass="p-button-sm" (click)="this.removeCopy(order)"></p-button>
           </div>
         </div>
       </div>
+    </div>
 
+    <div class="Shopcart__item" *ngFor="let product of this.products">
+      <div class="grid">
+        <div class="col-12">
+          <div class="OrderItem">
+            <div class="Title">
+              {{product.product.name}}
+            </div>
+          </div>
+          <div class="Description">
+            <div class="Item">Unidades: {{product.quantity}}</div>
+            <div class="Item">Precio unidad: {{product.product.price}} €</div>
+
+          </div>
+          <div class="Price">
+            <div class='Value'>{{this.getProductPrice(product).toFixed(2)}} €</div>
+          </div>
+
+          <div class="Buttons">
+            <p-button label="Eliminar" styleClass="p-button-sm" (click)="this.removeProduct(product)"></p-button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="Subtotal__Price">
