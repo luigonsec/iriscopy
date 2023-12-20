@@ -21,8 +21,13 @@ import { ShippingComponent } from 'src/app/components/forms/shipping/shipping.co
 import { Subscription } from 'rxjs';
 import { selectCustomer } from 'src/app/_selectors/customer.selectors';
 import Customer from 'src/app/interfaces/Customer';
-import aljarafe from "src/config/aljarafe";
-import sevilla from "src/config/sevilla";
+import aljarafe from 'src/config/aljarafe';
+import mallorca from 'src/config/mallorca';
+import menorca from 'src/config/menorca';
+import ibiza from 'src/config/ibiza';
+import formentera from 'src/config/formentera';
+
+import sevilla from 'src/config/sevilla';
 import ShippingDetails from 'src/app/interfaces/ShippingDetails';
 
 @Component({
@@ -216,51 +221,73 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   public getPrecioEnvio() {
-      let precioEnvio = 4.90;
-    
-      if (this.getSubtotal() >= 40) precioEnvio = 0;
+    let precioEnvio = 4.9;
 
-      if (this.billing) {
-          let code;
-          if (this.differentAddress && this.shipping) {
-              code = this.shipping.shippingDetails.postcode;
-          } else {
-              code = this.billing.billingDetails.postcode;
-          }
+    if (this.getSubtotal() >= 40) precioEnvio = 0;
 
-          const numericCode = +code;
-        
-          if (aljarafe.includes(numericCode)) precioEnvio = this.getGastosEnvioAljarafe();
-          if (sevilla.includes(numericCode)) precioEnvio = this.getGastosEnvioSevilla();
+    if (this.billing) {
+      let code;
+      if (this.differentAddress && this.shipping) {
+        code = this.shipping.shippingDetails.postcode;
+      } else {
+        code = this.billing.billingDetails.postcode;
       }
-      return precioEnvio;
+
+      const numericCode = +code;
+
+      if (aljarafe.includes(numericCode))
+        precioEnvio = this.getGastosEnvioAljarafe();
+      if (sevilla.includes(numericCode))
+        precioEnvio = this.getGastosEnvioSevilla();
+      if (mallorca.includes(numericCode))
+        precioEnvio = this.getGastosEnvioMallorca();
+      if (ibiza.includes(numericCode)) precioEnvio = this.getGastosEnvioIbiza();
+      if (menorca.includes(numericCode))
+        precioEnvio = this.getGastosEnvioMenorca();
+      if (formentera.includes(numericCode))
+        precioEnvio = this.getGastosEnvioFormentera();
+    }
+    return precioEnvio;
   }
 
-
   public getGastosEnvioAljarafe() {
-    
     const precioPedido = this.getSubtotal();
-    if (precioPedido > 0 && precioPedido < 10) return 4.9
-    if (precioPedido >= 10 && precioPedido < 25) return 3.9
-    if (precioPedido >= 25 && precioPedido < 40) return 2.9
-    if (precioPedido >= 40 ) return 0
-    return 4.90
+    if (precioPedido > 0 && precioPedido < 10) return 4.9;
+    if (precioPedido >= 10 && precioPedido < 25) return 3.9;
+    if (precioPedido >= 25 && precioPedido < 40) return 2.9;
+    if (precioPedido >= 40) return 0;
+    return 4.9;
   }
 
   public getGastosEnvioSevilla() {
     const precioPedido = this.getSubtotal();
-    if (precioPedido > 0 && precioPedido < 10) return 4.9
-    if (precioPedido >= 10 && precioPedido < 25) return 1.9
-    if (precioPedido >= 25 && precioPedido < 40) return 0.9
-    if (precioPedido >= 40 ) return 0
-    return 4.90
+    if (precioPedido > 0 && precioPedido < 10) return 4.9;
+    if (precioPedido >= 10 && precioPedido < 25) return 1.9;
+    if (precioPedido >= 25 && precioPedido < 40) return 0.9;
+    if (precioPedido >= 40) return 0;
+    return 4.9;
+  }
 
+  public getGastosEnvioMallorca() {
+    return 8.5;
+  }
+
+  public getGastosEnvioMenorca() {
+    return 9.9;
+  }
+
+  public getGastosEnvioIbiza() {
+    return 9.9;
+  }
+
+  public getGastosEnvioFormentera() {
+    return 11.9;
   }
 
   public getTotal() {
     const priceShipping =
       this.deliver === 'Shipping' ? this.getPrecioEnvio() : 0;
-    return (this.getSubtotalWithDiscount() + priceShipping);
+    return this.getSubtotalWithDiscount() + priceShipping;
   }
 
   public getSubtotalWithDiscount() {
@@ -326,7 +353,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     const order: Order = this.buildOrderObject(shippingLine, flattenFiles);
 
     this.orderService.create(order).subscribe({
-      next: (response: {order: number}) => {
+      next: (response: { order: number }) => {
         const orderID = response.order;
         this.OrderID = orderID;
         order.id = orderID;
