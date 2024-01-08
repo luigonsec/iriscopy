@@ -21,6 +21,11 @@ import { Subscription } from 'rxjs';
 import { selectCustomer } from 'src/app/_selectors/customer.selectors';
 import Customer from 'src/app/interfaces/Customer';
 import aljarafe from 'src/config/aljarafe';
+import mallorca from 'src/config/mallorca';
+import menorca from 'src/config/menorca';
+import ibiza from 'src/config/ibiza';
+import formentera from 'src/config/formentera';
+
 import sevilla from 'src/config/sevilla';
 import ShippingDetails from 'src/app/interfaces/ShippingDetails';
 import { OrderCopy } from 'src/app/interfaces/OrderCopy';
@@ -232,13 +237,30 @@ export class PaymentComponent implements OnInit, OnDestroy {
       }
 
       const numericCode = +code;
+      if (
+        (numericCode >= 35000 && numericCode < 36000) ||
+        (numericCode >= 38000 && numericCode < 39000)
+      ) {
+        precioEnvio = this.getGastosEnvioCanarias();
+      }
 
       if (aljarafe.includes(numericCode))
         precioEnvio = this.getGastosEnvioAljarafe();
       if (sevilla.includes(numericCode))
         precioEnvio = this.getGastosEnvioSevilla();
+      if (mallorca.includes(numericCode))
+        precioEnvio = this.getGastosEnvioMallorca();
+      if (ibiza.includes(numericCode)) precioEnvio = this.getGastosEnvioIbiza();
+      if (menorca.includes(numericCode))
+        precioEnvio = this.getGastosEnvioMenorca();
+      if (formentera.includes(numericCode))
+        precioEnvio = this.getGastosEnvioFormentera();
     }
     return precioEnvio;
+  }
+
+  public getGastosEnvioCanarias() {
+    return 35;
   }
 
   public getGastosEnvioAljarafe() {
@@ -257,6 +279,22 @@ export class PaymentComponent implements OnInit, OnDestroy {
     if (precioPedido >= 25 && precioPedido < 40) return 0.9;
     if (precioPedido >= 40) return 0;
     return 4.9;
+  }
+
+  public getGastosEnvioMallorca() {
+    return 10.3;
+  }
+
+  public getGastosEnvioMenorca() {
+    return 11.9;
+  }
+
+  public getGastosEnvioIbiza() {
+    return 11.9;
+  }
+
+  public getGastosEnvioFormentera() {
+    return 14.4;
   }
 
   public getTotal() {
