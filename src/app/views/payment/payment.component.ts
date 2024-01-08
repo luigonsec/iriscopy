@@ -234,6 +234,12 @@ export class PaymentComponent implements OnInit, OnDestroy {
       }
 
       const numericCode = +code;
+      if (
+        (numericCode >= 35000 && numericCode < 36000) ||
+        (numericCode >= 38000 && numericCode < 39000)
+      ) {
+        precioEnvio = this.getGastosEnvioCanarias();
+      }
 
       if (aljarafe.includes(numericCode))
         precioEnvio = this.getGastosEnvioAljarafe();
@@ -248,6 +254,10 @@ export class PaymentComponent implements OnInit, OnDestroy {
         precioEnvio = this.getGastosEnvioFormentera();
     }
     return precioEnvio;
+  }
+
+  public getGastosEnvioCanarias() {
+    return 35;
   }
 
   public getGastosEnvioAljarafe() {
@@ -269,19 +279,19 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   public getGastosEnvioMallorca() {
-    return 8.5;
+    return 10.3;
   }
 
   public getGastosEnvioMenorca() {
-    return 9.9;
+    return 11.9;
   }
 
   public getGastosEnvioIbiza() {
-    return 9.9;
+    return 11.9;
   }
 
   public getGastosEnvioFormentera() {
-    return 11.9;
+    return 14.4;
   }
 
   public getTotal() {
