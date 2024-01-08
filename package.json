@@ -11,7 +11,9 @@
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
+    "heroku-postbuild": "if [ \"$HEROKU_ENV\" = \"production\" ]; then npm run build; else npm run build:test; fi",
     "build": "ng build --configuration production",
+    "build:test": "ng build --configuration testing",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
