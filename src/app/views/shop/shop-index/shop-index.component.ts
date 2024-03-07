@@ -33,6 +33,16 @@ export class ShopIndexComponent implements OnInit {
     );
   }
 
+  public loadAllProducts() {
+    this.products = [];
+    return this.productsService.getAll().pipe(
+      tap((products: Product[][]) => {
+        this.products = products.reduce((a, b) => [...a, ...b], []);
+        console.log(this.products);
+      })
+    );
+  }
+
   public sortByPriceMenor() {
     this.products = this.products.sort((a, b) => {
       return parseFloat(a.price) - parseFloat(b.price);
@@ -60,10 +70,28 @@ export class ShopIndexComponent implements OnInit {
   loadCategories() {
     return this.categoriesService.getAll().pipe(
       map((categories: ProductCategory[]) => {
-        this.categories = categories
-          .filter((c) => c.active)
-          .map((category) => {
-            return {
+        // Agregar categoría "Todos" al principio del array
+        const allCategoriesOption = {
+          label: 'Todos',
+          id: 'ALL', // Usar un valor especial para indicar "todos los productos"
+          command: () => {
+            this.loading.setLoading({
+              isLoading: true,
+              text: 'Cargando...',
+            });
+            this.loadAllProducts().subscribe(() => {
+              console.log('all loaded');
+
+              this.loading.setLoading({ isLoading: false });
+            });
+          },
+        };
+
+        this.categories = [
+          allCategoriesOption,
+          ...categories
+            .filter((c) => c.active)
+            .map((category) => ({
               label: category.name,
               id: category.id.toString(),
               command: () => {
@@ -75,8 +103,8 @@ export class ShopIndexComponent implements OnInit {
                   this.loading.setLoading({ isLoading: false });
                 });
               },
-            };
-          });
+            })),
+        ];
       })
     );
   }
@@ -84,7 +112,7 @@ export class ShopIndexComponent implements OnInit {
   public ngOnInit(): void {
     this.loading.setLoading({ isLoading: true, text: 'Cargando...' });
     this.loadCategories().subscribe(() => {
-      this.loadProducts(this.categories[0].id).subscribe(() => {
+      this.loadAllProducts().subscribe(() => {
         this.loading.setLoading({ isLoading: false });
       });
     });

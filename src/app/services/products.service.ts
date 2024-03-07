@@ -9,12 +9,13 @@ export class ProductsService {
   constructor(private http: HttpClient) {}
   getByCategory(category) {
     return this.http.get(
-      `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/products`,
-      {
-        params: {
-          category,
-        },
-      }
+      `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/products/category/${category}`
+    );
+  }
+
+  getAll() {
+    return this.http.get(
+      `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/products`
     );
   }
 }
