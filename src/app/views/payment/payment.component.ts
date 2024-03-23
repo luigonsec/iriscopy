@@ -28,7 +28,10 @@ import ibiza from 'src/config/ibiza';
 import formentera from 'src/config/formentera';
 
 import sevilla from 'src/config/sevilla';
+import generalConfig from 'src/config/general';
+
 import ShippingDetails from 'src/app/interfaces/ShippingDetails';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-payment',
@@ -36,11 +39,13 @@ import ShippingDetails from 'src/app/interfaces/ShippingDetails';
   styleUrls: ['./payment.component.scss'],
 })
 export class PaymentComponent implements OnInit, OnDestroy {
+  public SHIPPING_MINIMUM_PRICE_BIZUM =
+    generalConfig.SHIPPING_MINIMUM_PRICE_BIZUM;
+  public SHIPPING_MINIMUM_PRICE_CARD =
+    generalConfig.SHIPPING_MINIMUM_PRICE_CARD;
   public emptyCart: boolean = false;
-
   public inputCoupon: string;
   public coupon: Coupon;
-
   public differentAddress = false;
   public payment: string;
   public deliver: string = 'Pickup';
@@ -142,8 +147,11 @@ export class PaymentComponent implements OnInit, OnDestroy {
       summary: 'Código aplicado',
     });
     const subtotal = this.getSubtotalWithDiscount();
-    if (subtotal < 3) {
+    if (subtotal < this.SHIPPING_MINIMUM_PRICE_BIZUM) {
       this.payment = 'Card';
+    }
+    if (subtotal < this.SHIPPING_MINIMUM_PRICE_CARD) {
+      this.payment = null;
     }
   }
 
@@ -184,40 +192,27 @@ export class PaymentComponent implements OnInit, OnDestroy {
     this.processOrder();
   }
 
-  public startPayment__Card(order, callback) {
+  public startPayment(order, callback) {
     this.loadingService.setLoading({
       isLoading: true,
       text: 'Redirigiendo a pasarela de pago',
     });
-    this.redsysService.sendPayment(order, false).subscribe(
-      (redsysData: RedsysData) => {
+    this.redsysService.sendPayment(order, this.payment).subscribe({
+      next: (redsysData: RedsysData) => {
         this.redsysData = redsysData;
         return callback();
       },
-      () => {
+      error: (err: HttpErrorResponse) => {
         this.loadingService.setLoading({
           isLoading: false,
         });
-      }
-    );
-  }
-
-  public startPayment__Bizum(order, callback) {
-    this.loadingService.setLoading({
-      isLoading: true,
-      text: 'Redirigiendo a pasarela de pago',
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error en el pago',
+          detail: err.error.message,
+        });
+      },
     });
-    this.redsysService.sendPayment(order, true).subscribe(
-      (redsysData: RedsysData) => {
-        this.redsysData = redsysData;
-        return callback();
-      },
-      () => {
-        this.loadingService.setLoading({
-          isLoading: false,
-        });
-      }
-    );
   }
 
   public getPrecioEnvio() {
@@ -336,20 +331,9 @@ export class PaymentComponent implements OnInit, OnDestroy {
           summary: 'Error',
         });
       }
-      switch (this.payment) {
-        case 'Bizum': {
-          this.startPayment__Bizum(order, () => {
-            setTimeout(() => this.redsysForm.nativeElement.submit());
-          });
-          break;
-        }
-        case 'Card': {
-          this.startPayment__Card(order, () => {
-            setTimeout(() => this.redsysForm.nativeElement.submit());
-          });
-          break;
-        }
-      }
+      this.startPayment(order, () => {
+        setTimeout(() => this.redsysForm.nativeElement.submit());
+      });
     });
   }
 
@@ -357,9 +341,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     this.setLoadingState(true, 'Preparando pedido');
 
     const shippingLine = this.getShippingLine();
-
     const flattenFiles = this.getFlattenFiles();
-
     const order: Order = this.buildOrderObject(shippingLine, flattenFiles);
 
     this.orderService.create(order).subscribe({
