@@ -17,6 +17,8 @@ export class ShopIndexComponent implements OnInit {
   filters: MenuItem[] = [];
   categories: MenuItem[];
   products: Product[] = [];
+  filteredProducts: Product[] = [];
+
   searchText: string = undefined;
 
   constructor(
@@ -30,6 +32,7 @@ export class ShopIndexComponent implements OnInit {
     return this.productsService.getByCategory(id).pipe(
       tap((products: Product[]) => {
         this.products = products;
+        this.filteredProducts = this.products;
       })
     );
   }
@@ -39,6 +42,7 @@ export class ShopIndexComponent implements OnInit {
     return this.productsService.getAll().pipe(
       tap((products: Product[][]) => {
         this.products = products.reduce((a, b) => [...a, ...b], []);
+        this.filteredProducts = this.products;
       })
     );
   }
@@ -67,6 +71,20 @@ export class ShopIndexComponent implements OnInit {
     });
   }
 
+  filter() {
+    this.filteredProducts = this.products.filter((product: Product) => {
+      return (
+        product.name
+          .toLocaleLowerCase()
+          .includes(this.searchText.toLocaleLowerCase()) ||
+        product.categories.some((category) => {
+          return category.name
+            .toLocaleLowerCase()
+            .includes(this.searchText.toLocaleLowerCase());
+        })
+      );
+    });
+  }
   loadCategories() {
     return this.categoriesService.getAll().pipe(
       map((categories: ProductCategory[]) => {

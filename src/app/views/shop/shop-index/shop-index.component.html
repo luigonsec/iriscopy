@@ -4,7 +4,8 @@
 
             <span class="p-input-icon-right">
                 <i class="pi pi-search"></i>
-                <input type="text" pInputText [(ngModel)]="searchText" placeholder="Carpeta, Bolígrafo, Edding,..." />
+                <input type="text" pInputText [(ngModel)]="searchText" placeholder="Carpeta, Bolígrafo, Edding,..."
+                    (ngModelChange)="this.filter()" />
             </span>
         </div>
     </div>
@@ -16,7 +17,7 @@
     </div>
     <div class="col-12 md:col-12">
         <div class="grid">
-            <div class="col-6 md:col-4" *ngFor="let product of products">
+            <div class="col-6 md:col-4" *ngFor="let product of filteredProducts">
                 <app-product [product]="product"></app-product>
             </div>
         </div>

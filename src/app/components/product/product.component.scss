@@ -1,6 +1,26 @@
+@import "src/assets/scss/colors.scss";
+
 .Product {
   background-color: white;
   padding: 10px;
+
+  .Categories {
+    word-break: keep-all;
+    .Category {
+      width: fit-content;
+      float: left;
+      font-size: 12px;
+      margin-right: 5px;
+      margin-bottom: 5px;
+      background-color: #d8d8d8;
+      padding: 5px;
+    }
+  }
+
+  .Price {
+    text-align: right;
+    color: $primary;
+  }
 
   .Name {
     display: block;

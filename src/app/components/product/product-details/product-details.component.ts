@@ -28,9 +28,10 @@ export class ProductDetailsComponent {
   }
 
   addToCart() {
-    if (this.quantity == 0) return;
+    if (this.quantity <= 0) return;
     this.shopCart.addProductToCart({
       product: this.product,
+      variation: this.selectedVariation,
       quantity: this.quantity,
     });
     this.quantity = 0;

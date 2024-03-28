@@ -14,17 +14,14 @@
                 {{product.name}}
             </span>
         </div>
-        <div class="col-6">
-            {{(+product.price).toFixed(2)}}€
-        </div>
-        <div class="col-3">
-            <div class="p-fluid">
-                <input pInputText type="number" class="p-inputtext-sm" [(ngModel)]="this.quantity">
+        <div class="Categories col-12">
+            <div class="Category" *ngFor="let category of product.categories">
+                {{ category.name}}
             </div>
+
         </div>
-        <div class="col-3">
-            <button pButton class="p-button-sm" [icon]="'fas fa-shopping-cart'" (click)="this.addToCart()"
-                [disabled]="this.quantity == 0"></button>
+        <div class="Price col-12" [innerHTML]="product.price_html">
+
         </div>
     </div>
 </div>

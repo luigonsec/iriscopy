@@ -12,7 +12,8 @@
                 <div class="col-9">
                     <div class="p-fluid">
                         <p-dropdown [options]="product.attributes[0].options" [(ngModel)]="selectedAttribute"
-                            placeholder="Selecciona una opción" (onChange)="this.findVariation()"></p-dropdown>
+                            appendTo="body" placeholder="Selecciona una opción"
+                            (onChange)="this.findVariation()"></p-dropdown>
 
                     </div>
 
@@ -26,7 +27,8 @@
                         {{(+this.selectedVariation.price).toFixed(2)}}€
                     </div>
 
-                    <div *ngIf="this.product.attributes.length == 0">
+                    <div
+                        *ngIf="this.product.attributes.length == 0 || (this.product.attributes.length > 0 && this.product.variations.length == 0 && selectedAttribute)">
                         {{(+this.product.price).toFixed(2)}}€
                     </div>
                 </div>
@@ -37,7 +39,7 @@
                 </div>
                 <div class="col-6">
                     <button pButton class="addToCart" [icon]="'fas fa-shopping-cart'" [label]="'Añadir al carro'"
-                        (click)="this.addToCart()" [disabled]="this.quantity == 0"></button>
+                        (click)="this.addToCart()" [disabled]="!!! this.quantity"></button>
                 </div>
             </div>
 

@@ -31,7 +31,7 @@ export class ProductComponent implements OnInit {
 
   openDetails() {
     const isMobile = window.innerWidth < 768; // Considera móvil si el ancho es menor a 768px
-    const dialogWidth = isMobile ? '90%' : '50%'; // Ancho del 90% para móviles, 50% para PC
+    const dialogWidth = isMobile ? '90%' : '60%'; // Ancho del 90% para móviles, 50% para PC
 
     this.dialogService.open(ProductDetailsComponent, {
       width: dialogWidth,
