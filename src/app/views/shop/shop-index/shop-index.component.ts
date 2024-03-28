@@ -80,8 +80,6 @@ export class ShopIndexComponent implements OnInit {
               text: 'Cargando...',
             });
             this.loadAllProducts().subscribe(() => {
-              console.log('all loaded');
-
               this.loading.setLoading({ isLoading: false });
             });
           },

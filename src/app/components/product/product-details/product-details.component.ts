@@ -54,8 +54,6 @@ export class ProductDetailsComponent {
       this.productService
         .getVariations(this.product.id)
         .subscribe((variations: ProductVariation[]) => {
-          console.log(variations);
-
           this.variations = variations;
         });
     }
