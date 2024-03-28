@@ -18,4 +18,10 @@ export class ProductsService {
       `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/products`
     );
   }
+
+  getVariations(id: number) {
+    return this.http.get(
+      `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/products/${id}/variations`
+    );
+  }
 }

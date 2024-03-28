@@ -73,6 +73,8 @@ import { ProductComponent } from './components/product/product.component';
 import { AdminShopComponent } from './views/admin/admin-shop/admin-shop.component';
 import { AdminBannerComponent } from './views/admin/admin-banner/admin-banner.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { ProductDetailsComponent } from './components/product/product-details/product-details.component';
+import { DividerModule } from 'primeng/divider';
 
 @NgModule({
   declarations: [
@@ -113,6 +115,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     ProductComponent,
     AdminShopComponent,
     AdminBannerComponent,
+    ProductDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -124,6 +127,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     FormsModule,
     TableModule,
     MenuModule,
+    DividerModule,
     DataViewModule,
     InputSwitchModule,
     SelectButtonModule,

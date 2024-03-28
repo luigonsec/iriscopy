@@ -1,3 +1,8 @@
+import ProductDimension from './ProductDimenstion';
+import ProductImage from './ProductImage';
+import ProductLinks from './ProductLinks';
+import ProductMetaData from './ProductMetaData';
+
 export default interface Product {
   id: number;
   name: string;
@@ -27,7 +32,7 @@ export default interface Product {
   total_sales: number;
   virtual: boolean;
   downloadable: boolean;
-  downloads: unknown[]; // Definir una interfaz adecuada si es necesario
+  downloads: unknown[];
   download_limit: number;
   download_expiry: number;
   external_url: string;
@@ -42,11 +47,7 @@ export default interface Product {
   backordered: boolean;
   sold_individually: boolean;
   weight: string;
-  dimensions: {
-    length: string;
-    width: string;
-    height: string;
-  };
+  dimensions: ProductDimension;
   shipping_required: boolean;
   shipping_taxable: boolean;
   shipping_class: string;
@@ -64,35 +65,22 @@ export default interface Product {
     name: string;
     slug: string;
   }[];
-  tags: unknown[]; // Definir una interfaz adecuada si es necesario
-  images: {
+  tags: unknown[];
+  images: ProductImage[];
+  attributes: {
     id: number;
-    date_created: string;
-    date_created_gmt: string;
-    date_modified: string;
-    date_modified_gmt: string;
-    src: string;
     name: string;
-    alt: string;
+    options: string[];
+    position: number;
+    variation: boolean;
+    visible: boolean;
   }[];
-  attributes: unknown[]; // Definir una interfaz adecuada si es necesario
-  default_attributes: unknown[]; // Definir una interfaz adecuada si es necesario
-  variations: unknown[]; // Definir una interfaz adecuada si es necesario
-  grouped_products: unknown[]; // Definir una interfaz adecuada si es necesario
+  default_attributes: unknown[];
+  variations: unknown[];
+  grouped_products: unknown[];
   menu_order: number;
-  meta_data: {
-    id: number;
-    key: string;
-    value: unknown; // Definir un tipo más específico si es necesario
-  }[];
+  meta_data: ProductMetaData[];
   yoast_head: string;
-  yoast_head_json: unknown; // Definir una interfaz adecuada si es necesario
-  _links: {
-    self: {
-      href: string;
-    }[];
-    collection: {
-      href: string;
-    }[];
-  };
+  yoast_head_json: unknown;
+  _links: ProductLinks;
 }

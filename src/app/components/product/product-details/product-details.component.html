@@ -1,0 +1,48 @@
+<div class="col-12 ProductDetails">
+    <div class="grid">
+        <div class="col-offset-3 col-6 md:col-3 md:col-offset-0">
+            <div class="Image" [style]="{'background-image': 'url(' +this.picture+ ')'}"></div>
+        </div>
+
+        <div class="col-12 md:col-9 Details">
+            <div class="grid Options" *ngIf="this.product.attributes.length">
+                <div class="col-3 Name">
+                    {{product.attributes[0].name}}
+                </div>
+                <div class="col-9">
+                    <div class="p-fluid">
+                        <p-dropdown [options]="product.attributes[0].options" [(ngModel)]="selectedAttribute"
+                            placeholder="Selecciona una opción" (onChange)="this.findVariation()"></p-dropdown>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="grid">
+
+                <div class="Price col-3">
+                    <div *ngIf="this.product.attributes.length > 0 && this.selectedVariation">
+                        {{(+this.selectedVariation.price).toFixed(2)}}€
+                    </div>
+
+                    <div *ngIf="this.product.attributes.length == 0">
+                        {{(+this.product.price).toFixed(2)}}€
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="p-fluid">
+                        <input pInputText type="number" class="p-inputtext-sm" [(ngModel)]="this.quantity">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <button pButton class="addToCart" [icon]="'fas fa-shopping-cart'" [label]="'Añadir al carro'"
+                        (click)="this.addToCart()" [disabled]="this.quantity == 0"></button>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>

@@ -17,6 +17,7 @@ export class ShopIndexComponent implements OnInit {
   filters: MenuItem[] = [];
   categories: MenuItem[];
   products: Product[] = [];
+  searchText: string = undefined;
 
   constructor(
     private productsService: ProductsService,
@@ -38,7 +39,6 @@ export class ShopIndexComponent implements OnInit {
     return this.productsService.getAll().pipe(
       tap((products: Product[][]) => {
         this.products = products.reduce((a, b) => [...a, ...b], []);
-        console.log(this.products);
       })
     );
   }

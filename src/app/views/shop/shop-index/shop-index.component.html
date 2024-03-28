@@ -1,5 +1,13 @@
 <div class="grid">
+    <div class="col-12 md:col-6">
+        <div class="p-fluid">
 
+            <span class="p-input-icon-right">
+                <i class="pi pi-search"></i>
+                <input type="text" pInputText [(ngModel)]="searchText" placeholder="Carpeta, Bolígrafo, Edding,..." />
+            </span>
+        </div>
+    </div>
     <div class="col-12 md:col-12">
         <div class="p-fluid">
             <p-tabMenu [model]="categories" [scrollable]="true"></p-tabMenu>
