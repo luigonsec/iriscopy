@@ -39,10 +39,9 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./payment.component.scss'],
 })
 export class PaymentComponent implements OnInit, OnDestroy {
-  public SHIPPING_MINIMUM_PRICE_BIZUM =
-    generalConfig.SHIPPING_MINIMUM_PRICE_BIZUM;
-  public SHIPPING_MINIMUM_PRICE_CARD =
-    generalConfig.SHIPPING_MINIMUM_PRICE_CARD;
+  public PAYMENT_MINIMUM_PRICE_BIZUM =
+    generalConfig.PAYMENT_MINIMUM_PRICE_BIZUM;
+  public PAYMENT_MINIMUM_PRICE_CARD = generalConfig.PAYMENT_MINIMUM_PRICE_CARD;
   public emptyCart: boolean = false;
   public inputCoupon: string;
   public coupon: Coupon;
@@ -147,10 +146,10 @@ export class PaymentComponent implements OnInit, OnDestroy {
       summary: 'Código aplicado',
     });
     const subtotal = this.getSubtotalWithDiscount();
-    if (subtotal < this.SHIPPING_MINIMUM_PRICE_BIZUM) {
+    if (subtotal < this.PAYMENT_MINIMUM_PRICE_BIZUM) {
       this.payment = 'Card';
     }
-    if (subtotal < this.SHIPPING_MINIMUM_PRICE_CARD) {
+    if (subtotal < this.PAYMENT_MINIMUM_PRICE_CARD) {
       this.payment = null;
     }
   }
@@ -177,6 +176,28 @@ export class PaymentComponent implements OnInit, OnDestroy {
       return this.messageService.add({
         severity: 'error',
         detail: 'Debes indicar un "Método de pago"',
+        summary: 'Error',
+      });
+    }
+
+    if (
+      this.payment == 'Bizum' &&
+      this.getSubtotalWithDiscount() < this.PAYMENT_MINIMUM_PRICE_BIZUM
+    ) {
+      return this.messageService.add({
+        severity: 'error',
+        detail: `El pago por bizum no es posible para pedidos inferiores a ${this.PAYMENT_MINIMUM_PRICE_BIZUM}€`,
+        summary: 'Error',
+      });
+    }
+
+    if (
+      this.payment == 'Card' &&
+      this.getSubtotalWithDiscount() < this.PAYMENT_MINIMUM_PRICE_CARD
+    ) {
+      return this.messageService.add({
+        severity: 'error',
+        detail: `El pago con tarjeta no es posible para pedidos inferiores a ${this.PAYMENT_MINIMUM_PRICE_CARD}€`,
         summary: 'Error',
       });
     }
