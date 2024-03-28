@@ -67,18 +67,15 @@
         <div class="Option p-field-radiobutton">
           <p-radioButton value="Card" [(ngModel)]="payment" inputId="card">
           </p-radioButton>
-          <label for="card"> Tarjeta de crédito o débito</label>
+          <label for="card"> Tarjeta de
+            crédito o débito</label>
+          <label for="">. No disponible para
+            pedidos inferiores a {{this.PAYMENT_MINIMUM_PRICE_CARD}}€</label>
         </div>
-        <!-- <div class="Option p-field-radiobutton">
-          <p-radioButton value="Paypal" [(ngModel)]="payment" inputId="paypal"></p-radioButton>
-          <label for="paypal"> PayPal</label>
-        </div> -->
         <div class="Option p-field-radiobutton">
-          <p-radioButton value="Bizum" [(ngModel)]="payment" inputId="bizum"
-            *ngIf="(this.getSubtotalWithDiscount()) >= 3"></p-radioButton>
-          <label for="bizum"> BIZUM</label> <label *ngIf="(this.getSubtotalWithDiscount()) < 3" for="">. No
-            disponible para pedidos
-            inferiores a 3€</label>
+          <p-radioButton value="Bizum" [(ngModel)]="payment" inputId="bizum"></p-radioButton>
+          <label for="bizum"> BIZUM</label> <label for="">. No disponible para
+            pedidos inferiores a {{this.PAYMENT_MINIMUM_PRICE_BIZUM || true}}€</label>
         </div>
       </div>
 
