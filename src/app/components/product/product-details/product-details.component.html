@@ -6,13 +6,13 @@
 
         <div class="col-12 md:col-9 Details">
             <div class="grid Options" *ngIf="this.product.attributes.length">
-                <div class="col-3 Name">
+                <div class="col-3 md:col-4 Name">
                     {{product.attributes[0].name}}
                 </div>
-                <div class="col-9">
+                <div class="col-9 md:col-8">
                     <div class="p-fluid">
                         <p-dropdown [options]="product.attributes[0].options" [(ngModel)]="selectedAttribute"
-                            appendTo="body" placeholder="Selecciona una opción"
+                            class="p-inputtext-sm" appendTo="body" placeholder="Selecciona una opción"
                             (onChange)="this.findVariation()"></p-dropdown>
 
                     </div>
@@ -22,7 +22,7 @@
 
             <div class="grid">
 
-                <div class="Price col-3">
+                <div class="Price col-3 md:col-4">
                     <div *ngIf="this.product.attributes.length > 0 && this.selectedVariation">
                         {{(+this.selectedVariation.price).toFixed(2)}}€
                     </div>
@@ -32,14 +32,16 @@
                         {{(+this.product.price).toFixed(2)}}€
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-9 md:col-4">
                     <div class="p-fluid">
                         <input pInputText type="number" class="p-inputtext-sm" [(ngModel)]="this.quantity">
                     </div>
                 </div>
-                <div class="col-6">
-                    <button pButton class="addToCart" [icon]="'fas fa-shopping-cart'" [label]="'Añadir al carro'"
-                        (click)="this.addToCart()" [disabled]="!!! this.quantity"></button>
+                <div class="col-12 md:col-4">
+                    <div class="p-fluid">
+                        <button pButton class="addToCart" [icon]="'fas fa-shopping-cart'" [label]="'Añadir al carro'"
+                            (click)="this.addToCart()" [disabled]="!!! this.quantity"></button>
+                    </div>
                 </div>
             </div>
 

@@ -10,11 +10,15 @@
       margin-bottom: 15px;
       .Name {
         color: $primary;
+        align-content: center;
+        text-align: right;
       }
     }
   }
   .Price {
     color: $primary;
+    align-content: center;
+    text-align: right;
   }
 
   .Name {
