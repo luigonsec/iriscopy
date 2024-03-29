@@ -13,8 +13,6 @@ import { ProductsService } from 'src/app/services/products.service';
   styleUrls: ['./shop-index.component.scss'],
 })
 export class ShopIndexComponent implements OnInit {
-  items: MenuItem[] = [];
-  filters: MenuItem[] = [];
   categories: MenuItem[];
   products: Product[] = [];
   filteredProducts: Product[] = [];
@@ -132,29 +130,5 @@ export class ShopIndexComponent implements OnInit {
         this.loading.setLoading({ isLoading: false });
       });
     });
-    this.filters = [
-      {
-        label: 'Orden',
-        items: [
-          {
-            label: 'Nombre A-Z',
-            command: this.sortByNameAZ.bind(this),
-          },
-
-          {
-            label: 'Nombre Z-A',
-            command: this.sortByNameZA.bind(this),
-          },
-          {
-            label: 'Menor precio',
-            command: this.sortByPriceMenor.bind(this),
-          },
-          {
-            label: 'Mayor precio',
-            command: this.sortByPriceMayor.bind(this),
-          },
-        ],
-      },
-    ];
   }
 }

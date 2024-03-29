@@ -41,7 +41,7 @@
                     <div class="p-fluid">
                         <button pButton class="addToCart p-button p-button-sm" [icon]="'fas fa-shopping-cart'"
                             [label]="'Añadir al carro'" (click)="this.addToCart()"
-                            [disabled]="!!! this.quantity"></button>
+                            [disabled]="!this.quantity || this. buttonDisabled()"></button>
                     </div>
                 </div>
             </div>

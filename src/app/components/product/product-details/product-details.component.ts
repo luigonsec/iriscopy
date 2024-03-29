@@ -37,10 +37,40 @@ export class ProductDetailsComponent {
     this.quantity = 0;
   }
 
+  hasAttributes() {
+    return this.product.attributes.length > 0;
+  }
+
+  hasVariations() {
+    return this.product.variations.length > 0;
+  }
+
+  buttonDisabled() {
+    if (
+      this.hasAttributes() &&
+      this.hasVariations() &&
+      !this.selectedVariation
+    ) {
+      return true;
+    }
+
+    if (
+      this.hasAttributes() &&
+      !this.hasVariations() &&
+      !this.selectedAttribute
+    ) {
+      return true;
+    }
+
+    return false;
+  }
+
   findVariation() {
-    const variation = this.variations.find((variation: ProductVariation) => {
-      return variation.attributes[0].option == this.selectedAttribute;
-    });
+    const variation = (this.variations || []).find(
+      (variation: ProductVariation) => {
+        return variation.attributes[0].option == this.selectedAttribute;
+      }
+    );
 
     if (variation) {
       this.selectedVariation = variation;
@@ -55,8 +85,10 @@ export class ProductDetailsComponent {
       this.productService
         .getVariations(this.product.id)
         .subscribe((variations: ProductVariation[]) => {
+          console.log(variations);
+
           this.variations = variations;
-        });
+        }, console.log);
     }
   }
 }
