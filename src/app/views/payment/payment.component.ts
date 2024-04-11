@@ -21,13 +21,11 @@ import { ShippingComponent } from 'src/app/components/forms/shipping/shipping.co
 import { Subscription } from 'rxjs';
 import { selectCustomer } from 'src/app/_selectors/customer.selectors';
 import Customer from 'src/app/interfaces/Customer';
-import aljarafe from 'src/config/aljarafe';
 import mallorca from 'src/config/mallorca';
 import menorca from 'src/config/menorca';
 import ibiza from 'src/config/ibiza';
 import formentera from 'src/config/formentera';
 
-import sevilla from 'src/config/sevilla';
 import generalConfig from 'src/config/general';
 
 import ShippingDetails from 'src/app/interfaces/ShippingDetails';
@@ -255,19 +253,15 @@ export class PaymentComponent implements OnInit, OnDestroy {
         (numericCode >= 38000 && numericCode < 39000)
       ) {
         precioEnvio = this.getGastosEnvioCanarias();
-      }
-
-      if (aljarafe.includes(numericCode))
-        precioEnvio = this.getGastosEnvioAljarafe();
-      if (sevilla.includes(numericCode))
-        precioEnvio = this.getGastosEnvioSevilla();
-      if (mallorca.includes(numericCode))
+      } else if (mallorca.includes(numericCode))
         precioEnvio = this.getGastosEnvioMallorca();
-      if (ibiza.includes(numericCode)) precioEnvio = this.getGastosEnvioIbiza();
-      if (menorca.includes(numericCode))
+      else if (ibiza.includes(numericCode))
+        precioEnvio = this.getGastosEnvioIbiza();
+      else if (menorca.includes(numericCode))
         precioEnvio = this.getGastosEnvioMenorca();
-      if (formentera.includes(numericCode))
+      else if (formentera.includes(numericCode))
         precioEnvio = this.getGastosEnvioFormentera();
+      else precioEnvio = this.getGastosEnvioPeninsula();
     }
     return precioEnvio;
   }
@@ -276,21 +270,12 @@ export class PaymentComponent implements OnInit, OnDestroy {
     return 35;
   }
 
-  public getGastosEnvioAljarafe() {
+  public getGastosEnvioPeninsula() {
     const precioPedido = this.getSubtotal();
-    if (precioPedido > 0 && precioPedido < 10) return 4.9;
-    if (precioPedido >= 10 && precioPedido < 25) return 3.9;
-    if (precioPedido >= 25 && precioPedido < 40) return 2.9;
-    if (precioPedido >= 40) return 0;
-    return 4.9;
-  }
-
-  public getGastosEnvioSevilla() {
-    const precioPedido = this.getSubtotal();
-    if (precioPedido > 0 && precioPedido < 10) return 4.9;
-    if (precioPedido >= 10 && precioPedido < 25) return 1.9;
-    if (precioPedido >= 25 && precioPedido < 40) return 0.9;
-    if (precioPedido >= 40) return 0;
+    if (precioPedido > 0 && precioPedido < 15) return 4.9;
+    if (precioPedido >= 15 && precioPedido < 25) return 3.9;
+    if (precioPedido >= 25 && precioPedido < 35) return 2.9;
+    if (precioPedido >= 35) return 0;
     return 4.9;
   }
 
