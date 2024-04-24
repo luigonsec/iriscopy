@@ -75,6 +75,7 @@ import { AdminBannerComponent } from './views/admin/admin-banner/admin-banner.co
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ProductDetailsComponent } from './components/product/product-details/product-details.component';
 import { DividerModule } from 'primeng/divider';
+import { PillsComponent } from './components/pills/pills.component';
 
 @NgModule({
   declarations: [
@@ -116,6 +117,7 @@ import { DividerModule } from 'primeng/divider';
     AdminShopComponent,
     AdminBannerComponent,
     ProductDetailsComponent,
+    PillsComponent,
   ],
   imports: [
     BrowserModule,

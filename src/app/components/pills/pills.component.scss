@@ -1,0 +1,26 @@
+@import "src/assets/scss/colors.scss";
+
+.Pills {
+  cursor: pointer;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  width: 100%;
+  white-space: nowrap;
+
+  .Pill {
+    border-radius: 5px;
+    color: #555;
+    background-color: #dcdcdc;
+    margin-right: 10px;
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    box-sizing: border-box;
+
+    &.active {
+      color: white;
+      background-color: $primary;
+    }
+  }
+}

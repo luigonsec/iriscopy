@@ -90,6 +90,7 @@ export class ShopIndexComponent implements OnInit {
         const allCategoriesOption = {
           label: 'Todos',
           id: 'ALL', // Usar un valor especial para indicar "todos los productos"
+          styleClass: 'active',
           command: () => {
             this.loading.setLoading({
               isLoading: true,
@@ -126,9 +127,9 @@ export class ShopIndexComponent implements OnInit {
   public ngOnInit(): void {
     this.loading.setLoading({ isLoading: true, text: 'Cargando...' });
     this.loadCategories().subscribe(() => {
-      this.loadAllProducts().subscribe(() => {
-        this.loading.setLoading({ isLoading: false });
-      });
+      //this.loadAllProducts().subscribe(() => {
+      this.loading.setLoading({ isLoading: false });
+      //});
     });
   }
 }
