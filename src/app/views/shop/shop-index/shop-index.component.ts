@@ -127,9 +127,9 @@ export class ShopIndexComponent implements OnInit {
   public ngOnInit(): void {
     this.loading.setLoading({ isLoading: true, text: 'Cargando...' });
     this.loadCategories().subscribe(() => {
-      //this.loadAllProducts().subscribe(() => {
-      this.loading.setLoading({ isLoading: false });
-      //});
+      this.loadAllProducts().subscribe(() => {
+        this.loading.setLoading({ isLoading: false });
+      });
     });
   }
 }
