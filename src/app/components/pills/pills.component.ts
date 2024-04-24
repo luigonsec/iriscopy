@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
 @Component({
@@ -6,7 +6,7 @@ import { MenuItem } from 'primeng/api';
   templateUrl: './pills.component.html',
   styleUrls: ['./pills.component.scss'],
 })
-export class PillsComponent implements OnInit {
+export class PillsComponent {
   @Input('pills')
   pills: MenuItem[] = [];
   isDragging = false;
@@ -40,9 +40,5 @@ export class PillsComponent implements OnInit {
     });
     item.styleClass = 'active';
     item.command();
-  }
-
-  ngOnInit() {
-    console.log(this.pills);
   }
 }
