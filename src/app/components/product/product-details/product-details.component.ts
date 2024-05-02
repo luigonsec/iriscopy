@@ -66,6 +66,8 @@ export class ProductDetailsComponent {
   }
 
   selectVariation(variation) {
+    console.log(variation);
+
     this.selectedVariation = variation;
     this.picture = variation.image.src;
   }

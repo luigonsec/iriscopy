@@ -51,8 +51,9 @@
     border-radius: 2px;
     cursor: pointer;
 
-    &:hover {
-      border: 1px solid $primary;
+    &:hover,
+    &.active {
+      border: 2px solid $primary;
     }
     .Variation {
       width: 100%;
