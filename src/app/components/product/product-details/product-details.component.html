@@ -17,7 +17,7 @@
                                 {{this.selectedVariation.attributes[0].option}}
                             </span>
                         </div>
-                        <div class="col-2" *ngFor="let variation of variations">
+                        <div class="col-4 md:col-2" *ngFor="let variation of variations">
                             <div
                                 [class]="'Variation__wrapper' + (this.selectedVariation && this.selectedVariation.id == variation.id ? ' active' : '')">
                                 <div class="Variation" [style]="{'background-image': 'url(' +variation.image.src+ ')'}"
