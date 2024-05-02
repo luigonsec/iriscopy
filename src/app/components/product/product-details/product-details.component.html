@@ -6,16 +6,31 @@
 
         <div class="col-12 md:col-9 Details">
             <div class="grid Options" *ngIf="this.product.attributes.length">
-                <div class="col-3 md:col-4 Name">
-                    {{product.attributes[0].name}}
-                </div>
-                <div class="col-9 md:col-8">
-                    <div class="p-fluid">
+                <div class="col-9 md:col-8 md:col-offset-4">
+                    <span class="Title">
+                        Opciones disponibles
+                    </span>
+                    <div class="grid">
+                        <div class='col-12' *ngIf="this.selectedVariation">
+                            <span class="Option__selected">
+
+                                {{this.selectedVariation.attributes[0].option}}
+                            </span>
+                        </div>
+                        <div class="col-2" *ngFor="let variation of variations">
+                            <div class="Variation__wrapper">
+                                <div class="Variation" [style]="{'background-image': 'url(' +variation.image.src+ ')'}"
+                                    (click)="this.selectVariation(variation)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="p-fluid">
                         <p-dropdown [options]="product.attributes[0].options" [(ngModel)]="selectedAttribute"
                             class="p-inputtext-sm" appendTo="body" placeholder="Selecciona una opción"
                             (onChange)="this.findVariation()"></p-dropdown>
 
-                    </div>
+                    </div> -->
 
                 </div>
             </div>

@@ -65,17 +65,9 @@ export class ProductDetailsComponent {
     return false;
   }
 
-  findVariation() {
-    const variation = (this.variations || []).find(
-      (variation: ProductVariation) => {
-        return variation.attributes[0].option == this.selectedAttribute;
-      }
-    );
-
-    if (variation) {
-      this.selectedVariation = variation;
-      this.picture = variation.image.src;
-    }
+  selectVariation(variation) {
+    this.selectedVariation = variation;
+    this.picture = variation.image.src;
   }
 
   ngOnInit() {

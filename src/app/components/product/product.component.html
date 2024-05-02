@@ -1,4 +1,4 @@
-<div class="Product shadow-3" (click)="this.openDetails()">
+<div class="Product" (click)="this.openDetails()">
     <div class="grid">
 
         <div class="col-12">
@@ -14,13 +14,13 @@
                 {{product.name}}
             </span>
         </div>
-        <div class="Categories col-12">
+        <div class="Categories col-10">
             <div class="Category" *ngFor="let category of product.categories">
                 {{ category.name}}
             </div>
 
         </div>
-        <div class="Price col-12" [innerHTML]="product.price_html">
+        <div class="Price col-2" [innerHTML]="product.price_html">
 
         </div>
     </div>

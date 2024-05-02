@@ -8,6 +8,17 @@
 
     .Options {
       margin-bottom: 15px;
+
+      .Title {
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .Option__selected {
+        font-size: 12px;
+      }
+
       .Name {
         color: $primary;
         align-content: center;
@@ -32,5 +43,22 @@
     padding-bottom: 100%;
     background-size: cover;
     background-position: center;
+  }
+
+  .Variation__wrapper {
+    background-color: #dcdcdc;
+    padding: 2px;
+    border-radius: 2px;
+    cursor: pointer;
+
+    &:hover {
+      border: 1px solid $primary;
+    }
+    .Variation {
+      width: 100%;
+      padding-bottom: 100%;
+      background-size: cover;
+      background-position: center;
+    }
   }
 }
