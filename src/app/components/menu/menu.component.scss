@@ -1,9 +1,18 @@
 @import "src/assets/scss/colors.scss";
 
 #Menu {
-  background-color: white;
-  border-bottom: 2px solid black;
-  padding: 20px 0px 20px 0px;
+  padding: 20px 0px 0px 0px;
+
+  .Link {
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    margin-left: 20px;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
 
   .Shopcart {
     text-align: right;

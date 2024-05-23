@@ -1,8 +1,23 @@
-<p-selectButton [options]="options" [(ngModel)]="option" optionLabel="name" (onChange)="this.onSelect($event)">
-  <ng-template let-item>
-    <div class="Button">
-      <div class="Button__label">{{item.name}}</div>
-      <div class="Button__description">{{item.description}}</div>
-    </div>
-  </ng-template>
-</p-selectButton>
+<div class="mb-2">
+
+  <p-selectButton [options]="optionsGroup1" [(ngModel)]="option" optionLabel="name" (onChange)="onSelect($event)">
+    <ng-template let-item>
+      <div class="Button">
+        <div class="Button__label">{{item.name}}</div>
+        <div class="Button__description">{{item.description}}</div>
+      </div>
+    </ng-template>
+  </p-selectButton>
+
+</div>
+<div>
+
+  <p-selectButton [options]="optionsGroup2" [(ngModel)]="option" optionLabel="name" (onChange)="onSelect($event)">
+    <ng-template let-item>
+      <div class="Button">
+        <div class="Button__label">{{item.name}}</div>
+        <div class="Button__description">{{item.description}}</div>
+      </div>
+    </ng-template>
+  </p-selectButton>
+</div>

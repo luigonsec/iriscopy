@@ -8,6 +8,25 @@
   </div>
 
   <div class="Shopcart col-6 sm:col-8 md:col-10">
+    <a class="Link" href="/">
+      <i class="fas fa-print"></i> imprimir
+    </a>
+    <a class="Link" href="/shop">
+      <i class="fas fa-highlighter"></i> tienda
+    </a>
+    <a class="Link" href="https://iriscopyshop.com/preguntas-frecuentes/" target="_blank">
+      <i class="far fa-question-circle"></i> FAQs
+    </a>
+    <a class="Link" href="/login" *ngIf="!!!this.customer">
+      <i class="fas fa-user-circle"></i> acceso
+    </a>
+
+    <a class="Link" *ngIf="this.customer" [routerLink]="'/profile'"><i class="fas fa-user-circle"></i> tus datos</a>
+    <a class="Link" *ngIf="this.customer && this.customer.admin" [routerLink]="'/admin/banner'"> <i
+        class="fas fa-user-cog"></i> administrar</a>
+    <a class="Link" *ngIf="this.customer" (click)="this.logout()"><i class="fas fa-power-off"></i> salir</a>
+    <!-- <a class="Back" *ngIf="this.orders.length" href="/payment">Ir a pagar</a> -->
+
 
     <i *ngIf="(this.copies.length + this.products.length)" class="ShoppingCart__Icon fas fa-shopping-cart"
       (click)="toggleSidebar()" pBadge [value]="this.copies.length + this.products.length"></i>

@@ -4,8 +4,13 @@ import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import { ShopcartService } from 'src/app/services/shopcart.service';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import Cart from 'src/app/interfaces/Cart';
+import { Store } from '@ngrx/store';
 import OrderProduct from 'src/app/interfaces/OrderProduct';
 import { Subscription } from 'rxjs';
+import { selectCustomer } from 'src/app/_selectors/customer.selectors';
+import Customer from 'src/app/interfaces/Customer';
+import { logout } from 'src/app/_actions/customer.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -21,12 +26,29 @@ export class MenuComponent implements OnInit, OnDestroy {
   @ViewChild('sidebar') public sidebar: SidebarComponent;
   cartSubscription: Subscription;
   shop_active: boolean;
+  customer$: Subscription;
+  customer: Customer;
 
-  constructor(private shopcartService: ShopcartService) {
+  constructor(
+    private shopcartService: ShopcartService,
+    private store: Store,
+    private router: Router
+  ) {
     this.copies = [];
+    this.customer$ = this.store
+      .select(selectCustomer)
+      .subscribe((customer: Customer) => {
+        this.customer = customer;
+      });
   }
   ngOnDestroy(): void {
+    this.customer$.unsubscribe();
     this.cartSubscription.unsubscribe();
+  }
+
+  logout() {
+    this.store.dispatch(logout());
+    this.router.navigate(['/login']);
   }
 
   subscribeCart() {

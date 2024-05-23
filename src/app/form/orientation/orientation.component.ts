@@ -8,14 +8,17 @@ import options from 'src/config/options';
   styleUrls: ['./orientation.component.scss'],
 })
 export class OrientationComponent implements OnInit {
-  public options: Option[];
+  public optionsGroup1: Option[];
+  public optionsGroup2: Option[];
+
   public option: Option = undefined;
   @Output() emitChange = new EventEmitter<Option>();
 
   constructor() {}
 
   ngOnInit(): void {
-    this.options = options.orientation;
+    this.optionsGroup1 = options.orientation.slice(0, 2);
+    this.optionsGroup2 = options.orientation.slice(2, 4);
     this.option = options.orientation.find((x) => x.default);
     this.emitChange.emit(this.option);
   }
