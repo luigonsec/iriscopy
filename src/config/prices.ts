@@ -51,8 +51,8 @@ export default {
         if (paginas <= 50) return 0.03;
         if (paginas <= 100) return 0.026;
         if (paginas <= 250) return 0.023;
-        if (paginas <= 500) return 0.027;
-        return 0.025;
+        if (paginas <= 500) return 0.021;
+        return 0.019;
       },
       A3: (paginas) => {
         if (paginas <= 50) return 0.068;
