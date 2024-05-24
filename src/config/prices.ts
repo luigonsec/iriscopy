@@ -66,10 +66,10 @@ export default {
   color: {
     'una-cara': {
       A4: (paginas) => {
-        if (paginas <= 50) return 0.075;
-        if (paginas <= 100) return 0.072;
-        if (paginas <= 250) return 0.07;
-        if (paginas <= 500) return 0.065;
+        if (paginas <= 25) return 0.075;
+        if (paginas <= 75) return 0.072;
+        if (paginas <= 150) return 0.07;
+        if (paginas <= 300) return 0.065;
         return 0.06;
       },
       A3: (paginas) => {
@@ -82,10 +82,10 @@ export default {
     },
     'doble-cara': {
       A4: (paginas) => {
-        if (paginas <= 50) return 0.065;
-        if (paginas <= 100) return 0.058;
-        if (paginas <= 250) return 0.055;
-        if (paginas <= 500) return 0.052;
+        if (paginas <= 25) return 0.065;
+        if (paginas <= 75) return 0.058;
+        if (paginas <= 150) return 0.055;
+        if (paginas <= 300) return 0.052;
         return 0.049;
       },
       A3: (paginas) => {
