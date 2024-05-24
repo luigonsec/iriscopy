@@ -1,8 +1,8 @@
 .p-selectbutton .p-button.p-highlight,
 .p-selectbutton .p-button.p-highlight:hover,
 .p-selectbutton .p-button.p-highlight:focus {
-  background: $primary;
-  border-color: $primary;
+  background: $darkGray;
+  border-color: $darkGray;
   color: #ffffff;
   box-shadow: none;
 }
@@ -26,8 +26,9 @@
 }
 
 .p-selectbutton .p-button:not(.p-disabled):not(.p-highlight):hover {
-  background: $lightPrimary;
+  background: $lightGray;
   border-color: black;
+  color: $primary;
 }
 
 .Button {

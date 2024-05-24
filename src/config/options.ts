@@ -128,7 +128,6 @@ export default {
       name: 'Sin acabado',
       code: 'sin-acabado',
       description: 'Folios sueltos',
-      default: true,
     },
     {
       name: 'Grapado',
@@ -150,6 +149,7 @@ export default {
       code: 'encuadernado',
       description: 'En espiral',
       factor: 1.2,
+      default: true,
     },
     {
       name: 'Cuatro Taladros',
@@ -176,6 +176,7 @@ export default {
       color:
         'radial-gradient(circle at 10% 20%, rgb(0, 0, 0) 0%, rgb(64, 64, 64) 90.2%)',
       name: 'Metálica negra',
+      image: 'assets/images/rings/negra.png',
       factor: 0,
       default: true,
     },
@@ -183,16 +184,73 @@ export default {
       id: 2,
       color: '#000080',
       name: 'Azul oscuro',
+      image: 'assets/images/rings/azul.png',
       factor: 0.25,
     },
-    { id: 3, color: '#9fd8e6', name: 'Azul pastel', factor: 0.25 },
-    { id: 4, color: '#BDECB6', name: 'Verde agua', factor: 0.25 },
-    { id: 5, color: '#008F39', name: 'Verde oscuro', factor: 0.25 },
-    { id: 6, color: '#800080', name: 'Morado', factor: 0.25 },
-    { id: 7, color: '#d29bfd', name: 'Lila', factor: 0.25 },
-    { id: 8, color: '#FF0080', name: 'Rosa fuscia', factor: 0.25 },
-    { id: 9, color: 'yellow', name: 'Amarillo', factor: 0.25 },
-    { id: 10, color: 'red', name: 'Rojo', factor: 0.25 },
+    {
+      id: 3,
+      color: '#9fd8e6',
+      name: 'Azul pastel',
+      factor: 0.25,
+      image: 'assets/images/rings/azul-pastel.png',
+    },
+    {
+      id: 4,
+      color: '#BDECB6',
+      name: 'Verde agua',
+      factor: 0.25,
+      image: 'assets/images/rings/verde-pastel.png',
+    },
+    {
+      id: 5,
+      color: '#008F39',
+      name: 'Verde oscuro',
+      factor: 0.25,
+      image: 'assets/images/rings/verde-oscuro.png',
+    },
+    {
+      id: 6,
+      color: '#800080',
+      name: 'Morado',
+      factor: 0.25,
+      image: 'assets/images/rings/morado.png',
+    },
+    {
+      id: 7,
+      color: '#d29bfd',
+      name: 'Lila',
+      factor: 0.25,
+      image: 'assets/images/rings/lila.png',
+    },
+    {
+      id: 8,
+      color: '#FF0080',
+      name: 'Rosa fuscia',
+      factor: 0.25,
+      image: 'assets/images/rings/rosa.png',
+    },
+
+    {
+      id: 9,
+      color: 'yellow',
+      name: 'Amarillo',
+      factor: 0.25,
+      image: 'assets/images/rings/amarillo.png',
+    },
+    {
+      id: 10,
+      color: 'red',
+      name: 'Rojo',
+      factor: 0.25,
+      image: 'assets/images/rings/rojo.png',
+    },
+    {
+      id: 11,
+      color: '#FF0080',
+      name: 'Rosa pastel',
+      factor: 0.25,
+      image: 'assets/images/rings/rosa-pastel.png',
+    },
   ],
 
   colorsCover: [
@@ -205,6 +263,7 @@ export default {
       name: 'Acetato transparente',
       default: true,
       factor: 0,
+      image: 'assets/images/bounds/transparente.png',
     },
 
     {
@@ -214,6 +273,7 @@ export default {
       name: 'Negra gofrada',
       factor: 0,
       default: true,
+      image: 'assets/images/bounds/negra.png',
     },
     {
       id: 3,
@@ -221,6 +281,7 @@ export default {
       color: '#b6ecda',
       name: 'Verde agua',
       factor: 0.25,
+      image: 'assets/images/bounds/verde-pastel.png',
     },
     {
       id: 4,
@@ -228,20 +289,22 @@ export default {
       color: '#39ff14',
       name: 'Verde flúor',
       factor: 0.25,
+      image: 'assets/images/bounds/verde-neon.png',
     },
-    {
-      id: 5,
-      sides: ['delantera', 'trasera'],
-      color: '#008F39',
-      name: 'Verde oscuro',
-      factor: 0.25,
-    },
+    // {
+    //   id: 5,
+    //   sides: ['delantera', 'trasera'],
+    //   color: '#008F39',
+    //   name: 'Verde oscuro',
+    //   factor: 0.25,
+    // },
     {
       id: 6,
       sides: ['delantera', 'trasera'],
       color: '#FF0080',
       name: 'Rosa fucsia',
       factor: 0.25,
+      image: 'assets/images/bounds/rosa.png',
     },
     {
       id: 7,
@@ -249,6 +312,7 @@ export default {
       color: '#FDFD96',
       name: 'Amarillo pastel',
       factor: 0.25,
+      image: 'assets/images/bounds/amarillo-pastel.png',
     },
     {
       id: 8,
@@ -256,20 +320,23 @@ export default {
       color: '#ff8000',
       name: 'Naranja',
       factor: 0.25,
+      image: 'assets/images/bounds/melocoton.png',
     },
-    {
-      id: 9,
-      sides: ['delantera', 'trasera'],
-      color: '#000080',
-      name: 'Azul oscuro',
-      factor: 0.25,
-    },
+    // {
+    //   id: 9,
+    //   sides: ['delantera', 'trasera'],
+    //   color: '#000080',
+    //   name: 'Azul oscuro',
+    //   factor: 0.25,
+
+    // },
     {
       id: 10,
       sides: ['delantera', 'trasera'],
       color: '#9fd8e6',
       name: 'Azul pastel',
       factor: 0.25,
+      image: 'assets/images/bounds/azul-pastel.png',
     },
     {
       id: 11,
@@ -277,6 +344,7 @@ export default {
       color: '#ff91a4',
       name: 'Rosa salmón',
       factor: 0.25,
+      image: 'assets/images/bounds/rosa-salmon.png',
     },
     {
       id: 12,
@@ -284,6 +352,7 @@ export default {
       name: 'Morado',
       sides: ['delantera', 'trasera'],
       factor: 0.25,
+      image: 'assets/images/bounds/morado.png',
     },
   ],
 

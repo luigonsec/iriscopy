@@ -13,8 +13,8 @@
 
 .p-button {
   color: #ffffff;
-  background: $primary;
-  border: 1px solid $primary;
+  background: $darkGray;
+  border: 1px solid $darkGray;
 
   .p-button-label {
     font-family: "Montserrat" !important;
@@ -25,7 +25,7 @@
 }
 
 .p-button:enabled:hover {
-  background: $primary;
+  background: $darkGray;
   color: #ffffff;
-  border-color: $primary;
+  border-color: $darkGray;
 }

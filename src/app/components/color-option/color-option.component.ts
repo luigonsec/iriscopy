@@ -12,7 +12,7 @@ export class ColorOptionComponent implements OnInit {
   }>();
 
   @Input() public active: boolean;
-  @Input() public option: { color: string; name: string };
+  @Input() public option: { color: string; name: string; image: string };
 
   constructor() {}
 
