@@ -1,5 +1,5 @@
 <div class="grid">
-  <div class="col-12 sm:col-12 md:col-5 lg:col-5">
+  <div id='Form' class="col-12 sm:col-12 md:col-5 lg:col-5 order-2">
     <div class="Form__Section p-field">
       <div class="p-fluid">
         <div class="Label">Tamaño del papel</div>
@@ -80,7 +80,7 @@
   </div>
 
 
-  <div class="col-12 sm:col-12 md:col-7 lg:col-7">
+  <div id="Uploader" class="col-12 sm:col-12 md:col-7 lg:col-7 order-1">
     <app-banner></app-banner>
     <app-uploader #uploader (emitChange)="getFile($event)"></app-uploader>
   </div>

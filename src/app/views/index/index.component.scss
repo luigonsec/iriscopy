@@ -1,0 +1,17 @@
+#Form {
+  order: 1;
+}
+
+#Uploader {
+  order: 2;
+}
+
+@media (max-width: 768px) {
+  #Form {
+    order: 2;
+  }
+
+  #Uploader {
+    order: 1;
+  }
+}
