@@ -12,12 +12,28 @@ export class AdminBannerComponent implements OnInit {
   banners: Banner[];
   banner: Banner = {
     url: undefined,
+    visible_pc: false,
+    visible_phone: false,
+    visible_shop: false,
+    visible_print: false,
   };
   constructor(
     private messageService: MessageService,
     private bannerService: BannersService,
     private confirm: ConfirmationService
-  ) {}
+  ) {
+    this.clear();
+  }
+
+  clear() {
+    this.banner = {
+      url: undefined,
+      visible_pc: false,
+      visible_phone: false,
+      visible_shop: false,
+      visible_print: false,
+    };
+  }
 
   ngOnInit(): void {
     this.loadBanners();
@@ -62,6 +78,7 @@ export class AdminBannerComponent implements OnInit {
   performCreate() {
     this.bannerService.create(this.banner).subscribe(
       () => {
+        this.clear();
         this.messageService.add({
           summary: 'Banner creado',
           detail: 'El banner ha sido creado con éxito',

@@ -11,6 +11,7 @@ import { selectCustomer } from 'src/app/_selectors/customer.selectors';
 import Customer from 'src/app/interfaces/Customer';
 import { logout } from 'src/app/_actions/customer.actions';
 import { Router } from '@angular/router';
+import { ConfigService } from 'src/app/services/config.service';
 
 @Component({
   selector: 'app-header',
@@ -22,17 +23,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public copies: OrderCopy[] = [];
   public products: OrderProduct[] = [];
   public display: boolean = true;
+  public shop_active: boolean = false;
 
   @ViewChild('sidebar') public sidebar: SidebarComponent;
   cartSubscription: Subscription;
-  shop_active: boolean;
   customer$: Subscription;
   customer: Customer;
+  configSubscription: Subscription;
 
   constructor(
     private shopcartService: ShopcartService,
     private store: Store,
-    private router: Router
+    private router: Router,
+    private config: ConfigService
   ) {
     this.copies = [];
     this.customer$ = this.store
@@ -44,6 +47,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.customer$.unsubscribe();
     this.cartSubscription.unsubscribe();
+    this.configSubscription.unsubscribe();
   }
 
   logout() {
@@ -64,7 +68,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.sidebar.toggle();
   }
 
+  getConfig() {
+    this.config.getConfig().subscribe((conf: { shop_active: boolean }) => {
+      this.shop_active = conf.shop_active;
+    });
+  }
+
   ngOnInit() {
+    this.getConfig();
+    this.configSubscription = this.config.config$.subscribe(
+      (conf: { shop_active: boolean }) => {
+        this.shop_active = conf.shop_active;
+      }
+    );
     this.copies = this.shopcartService.getCart().copies;
     this.products = this.shopcartService.getCart().products;
     this.subscribeCart();

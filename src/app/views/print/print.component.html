@@ -80,9 +80,10 @@
   </div>
 
 
-  <div id="Uploader" class="col-12 sm:col-12 md:col-7 lg:col-7 order-1">
-    <app-banner></app-banner>
+  <div id="Uploader" class="col-12 sm:col-12 md:col-7 lg:col-7 order-1 sm:pt-8">
     <app-uploader #uploader (emitChange)="getFile($event)"></app-uploader>
+    <app-banner class="hidden sm:block" [options]="{visible_pc: true, visible_print: true}"></app-banner>
+    <app-banner class="block sm:hidden" [options]="{visible_phone: true, visible_print: true}"></app-banner>
   </div>
 
   <app-confirm-bar *ngIf="this.isReady()" [reset]="this.reset.bind(this)" [(order)]="this.order"></app-confirm-bar>

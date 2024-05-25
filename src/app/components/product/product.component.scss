@@ -18,13 +18,16 @@
   }
 
   .Price {
-    text-align: center;
+    text-align: right;
     color: $primary;
+    font-weight: 600;
+    padding-right: 30px;
   }
 
   .Name {
+    padding-left: 30px;
     display: block;
-    font-weight: bold;
+    font-weight: 500;
     font-size: 14px;
     min-height: 40px;
   }
