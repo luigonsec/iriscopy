@@ -16,7 +16,7 @@ import { BoundTypeComponent } from './form/bound-type/bound-type.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import { MenubarModule } from 'primeng/menubar';
 import { InputTextModule } from 'primeng/inputtext';
-import { MenuComponent } from './components/menu/menu.component';
+import { HeaderComponent } from './components/header/header.component';
 import { UploaderComponent } from './components/uploader/uploader.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BoundComponent } from './components/bound/bound.component';
@@ -35,7 +35,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SidebarModule } from 'primeng/sidebar';
 import { TabMenuModule } from 'primeng/tabmenu';
-import { IndexComponent } from './views/index/index.component';
+import { PrintComponent } from './views/print/print.component';
 import { PaymentComponent } from './views/payment/payment.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { DropdownModule } from 'primeng/dropdown';
@@ -88,7 +88,7 @@ import { PillsComponent } from './components/pills/pills.component';
     OrientationComponent,
     FinishTypeComponent,
     BoundComponent,
-    MenuComponent,
+    HeaderComponent,
     UploaderComponent,
     BoundTypeComponent,
     FilterPipe,
@@ -98,7 +98,7 @@ import { PillsComponent } from './components/pills/pills.component';
     AdditionalCommentComponent,
     ConfirmBarComponent,
     SidebarComponent,
-    IndexComponent,
+    PrintComponent,
     PaymentComponent,
     OrderComponent,
     TermsComponent,

@@ -10,11 +10,11 @@ import { Store } from '@ngrx/store';
 import { clearCoupon } from 'src/app/_actions/coupons.actions';
 import { Subscription } from 'rxjs';
 @Component({
-  selector: 'app-index',
-  templateUrl: './index.component.html',
-  styleUrls: ['./index.component.scss'],
+  selector: 'app-print',
+  templateUrl: './print.component.html',
+  styleUrls: ['./print.component.scss'],
 })
-export class IndexComponent implements OnInit, OnDestroy {
+export class PrintComponent implements OnInit, OnDestroy {
   public orientation: Option;
   public finishType: Option;
   public pagesPerSide: Option;

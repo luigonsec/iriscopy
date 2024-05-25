@@ -13,11 +13,11 @@ import { logout } from 'src/app/_actions/customer.actions';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss'],
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
 })
-export class MenuComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit, OnDestroy {
   public items: MenuItem[];
   public copies: OrderCopy[] = [];
   public products: OrderProduct[] = [];

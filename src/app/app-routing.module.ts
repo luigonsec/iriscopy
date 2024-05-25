@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ErrorComponent } from './views/error/error.component';
-import { IndexComponent } from './views/index/index.component';
+import { PrintComponent } from './views/print/print.component';
 import { PaymentComponent } from './views/payment/payment.component';
 import { SuccessComponent } from './views/success/success.component';
 import { TermsComponent } from './views/terms/terms.component';
@@ -17,7 +17,12 @@ import { AdminShopComponent } from './views/admin/admin-shop/admin-shop.componen
 const routes: Routes = [
   {
     path: '',
-    component: IndexComponent,
+    redirectTo: 'print',
+    pathMatch: 'full',
+  },
+  {
+    path: 'print',
+    component: PrintComponent,
   },
   {
     path: 'terms',

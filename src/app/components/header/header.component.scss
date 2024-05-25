@@ -1,6 +1,6 @@
 @import "src/assets/scss/colors.scss";
 
-#Menu {
+#Header {
   padding: 20px 0px 0px 0px;
 
   .Link {
@@ -14,10 +14,19 @@
     }
   }
 
-  .Shopcart {
+  #Menu {
     text-align: right;
     padding-top: 20px;
     padding-right: 30px;
+
+    #Toggle {
+      cursor: pointer;
+      font-size: 30px;
+    }
+  }
+
+  .Shopcart {
+    text-align: right;
 
     .ShoppingCart__Icon {
       cursor: pointer;
