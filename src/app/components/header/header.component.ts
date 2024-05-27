@@ -24,6 +24,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public products: OrderProduct[] = [];
   public display: boolean = true;
   public shop_active: boolean = false;
+  public sidebarVisible = true;
 
   @ViewChild('sidebar') public sidebar: SidebarComponent;
   cartSubscription: Subscription;
@@ -73,6 +74,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.shop_active = conf.shop_active;
     });
   }
+
+  openSidebar() {}
 
   ngOnInit() {
     this.getConfig();

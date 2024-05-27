@@ -38,3 +38,20 @@
     }
   }
 }
+
+/* Añade esta regla a tu archivo CSS global */
+::ng-deep .p-sidebar {
+  background-color: $darkGray;
+  color: white; /* Para cambiar el color del texto a blanco */
+
+  .Item {
+    padding: 15px;
+    border-bottom: 1px solid white;
+    width: 100%;
+
+    .Link {
+      text-decoration: none;
+      color: white;
+    }
+  }
+}

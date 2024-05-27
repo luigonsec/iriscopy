@@ -33,11 +33,58 @@
         (click)="toggleSidebar()" pBadge [value]="this.copies.length + this.products.length"></i>
     </div>
     <div id="Toggle" class="block sm:hidden">
-      <i class="fas fa-bars"></i>
+      <i class="fas fa-bars" (click)="sidebarVisible = true"></i>
 
     </div>
   </div>
 </div>
 
+<p-sidebar [(visible)]="sidebarVisible" [position]="'right'" class="Sidebar">
+  <div class="grid">
+    <div class="col-8 col-offset-2">
+      <img src="assets/images/logo.png" style="width: 100%;" alt="">
+    </div>
+  </div>
+  <div class="grid">
+    <div class="col-12">
+      <div class="Item">
+        <a class="Link" (click)="this.sidebarVisible = false; " [routerLink]="'/print'">
+          <i class="fas fa-print"></i> imprimir
+        </a>
+      </div>
+      <div class="Item" *ngIf="this.shop_active">
+        <a class="Link" (click)="this.sidebarVisible = false; " [routerLink]="'/shop'">
+          <i class="fas fa-highlighter"></i> tienda
+        </a>
+      </div>
+      <div class="Item">
+        <a class="Link" href="https://iriscopyshop.com/preguntas-frecuentes/" target="_blank">
+          <i class="far fa-question-circle"></i> FAQs
+        </a>
+      </div>
+      <div class="Item" *ngIf="!!!this.customer">
+        <a class="Link" href="/login" (click)="this.sidebarVisible = false; ">
+          <i class="fas fa-user-circle"></i> acceso
+        </a>
+      </div>
+      <div class="Item" *ngIf="this.customer">
+        <a class="Link" (click)="this.sidebarVisible = false; " [routerLink]="'/profile'">
+          <i class="fas fa-user-circle"></i> tus datos
+        </a>
+      </div>
+      <div class="Item" *ngIf="this.customer && this.customer.admin">
+        <a class="Link" (click)="this.sidebarVisible = false; " [routerLink]="'/admin/banner'">
+          <i class="fas fa-user-cog"></i> administrar
+        </a>
+      </div>
+      <div class="Item" *ngIf="this.customer">
+        <a class="Link" (click)="this.sidebarVisible = false; this.logout()">
+          <i class="fas fa-power-off"></i> salir
+        </a>
+      </div>
+
+    </div>
+  </div>
+</p-sidebar>
 
 <app-sidebar #sidebar></app-sidebar>
