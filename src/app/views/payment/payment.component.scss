@@ -23,12 +23,28 @@
   }
 }
 
-#Order__summary {
-  #Payment__method,
+#Order__options {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 10px 20px;
+  #Payment_methods,
   #Shipping,
   #Privacy__policy {
-    border-bottom: 1px solid gray;
+    .Title {
+      color: $primary;
+      font-size: 16px;
+      margin-bottom: 20px;
+      margin-top: 10px;
+      font-weight: 600;
+    }
     padding-bottom: 15px;
+  }
+
+  .Payment_method__img {
+    height: 14px;
+    margin-left: 5px;
+    padding-top: 0px;
   }
   #Privacy__policy,
   #Terms {
@@ -63,6 +79,7 @@ a {
 .Extra {
   font-weight: bold;
   color: $primary;
+  font-size: 14px;
 }
 
 .Subtotal__Price {

@@ -1,5 +1,129 @@
 <div class="grid" *ngIf="!!!this.emptyCart">
-  <div class="col-12 sm:col-6 sm:col-offset-2">
+  <div class="col-12 sm:col-5">
+    <div id="Order">
+      <div id="Order__details" class="grid">
+        <div class="col-12">
+          <app-order #order></app-order>
+        </div>
+      </div>
+      <div id="Order__options">
+
+        <div id="Shipping">
+          <div class="Title">Envío / Recogida</div>
+          <div class="Option p-field-radiobutton">
+            <p-radioButton value="Shipping" [(ngModel)]="deliver" inputId="shipping"></p-radioButton>
+            <label for="shipping"> Envío en 48 horas <label
+                class="Extra">{{this.getPrecioEnvio().toFixed(2)}}€</label></label>
+          </div>
+          <div class="Option p-field-radiobutton">
+            <p-radioButton value="Pickup" [(ngModel)]="deliver" inputId="pickup"></p-radioButton>
+            <label for="pickup"> Recogida en local</label> <label class="Extra"> Gratuita</label>
+          </div>
+
+          <div class="p-fluid">
+            <p-dropdown *ngIf="this.deliver === 'Pickup'" [options]="locations" [(ngModel)]="selectedLocation"
+              optionLabel="name" [showClear]="true" placeholder="Local de recogida">
+              <ng-template pTemplate="selectedItem">
+                <div class="location-item location-item-value" *ngIf="selectedLocation">
+                  <div>{{selectedLocation.name}}</div>
+                </div>
+              </ng-template>
+              <ng-template let-location pTemplate="item">
+                <div class="Location">
+                  <div class="Name">{{location.name}}</div>
+                  <div class="Address">{{location.address_1}}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+        </div>
+
+        <div id="Payment_methods">
+          <div class="Title">Método de pago</div>
+          <div class="Option p-field-radiobutton">
+            <p-radioButton value="Card" [(ngModel)]="payment" inputId="card">
+            </p-radioButton>
+            <label for="card"> Tarjeta de
+              crédito/débito</label>
+            <img class='Payment_method__img' src="assets/images/payment_methods/visa.png" alt="">
+            <img class='Payment_method__img' src="assets/images/payment_methods/mastercard.png" alt="">
+            <img class='Payment_method__img' src="assets/images/payment_methods/amex.png" alt="">
+            <img class='Payment_method__img' src="assets/images/payment_methods/discover.png" alt="">
+            <img class='Payment_method__img' src="assets/images/payment_methods/ucb.png" alt="">
+            <img class='Payment_method__img' src="assets/images/payment_methods/diners.png" alt="">
+
+
+
+          </div>
+          <div class="Option p-field-radiobutton">
+            <p-radioButton value="Bizum" [(ngModel)]="payment" inputId="bizum"></p-radioButton>
+            <label for="bizum"> BIZUM</label>
+
+            <img class='Payment_method__img' src="assets/images/payment_methods/bizum.png" alt="">
+          </div>
+        </div>
+
+        <div id="Terms">
+
+          <p>
+            <p-checkbox name="groupname" value="val1" [(ngModel)]="this.termsAccepted"></p-checkbox>
+            He leído y acepto la <a href="https://iriscopyshop.com/politica-de-privacidad/" target="_blank">política de
+              privacidad</a> y los <a href="/terms" target="_blank">términos y condiciones</a> de la web.
+          </p>
+        </div>
+
+        <div class="grid">
+          <div class="col-12">
+            <div class="Subtotal__Price" *ngIf="this.coupon">
+              Descuento: -{{this.getDiscount().toFixed(2)}} €
+            </div>
+            <div class="Subtotal__Price" *ngIf="this.deliver === 'Shipping'">
+              Envío: +{{this.getPrecioEnvio().toFixed(2)}} €
+            </div>
+            <div class="Total__Price">
+              Total: {{this.getTotal().toFixed(2)}} €
+            </div>
+          </div>
+        </div>
+
+        <div class="Promotional grid" *ngIf="!!!this.coupon">
+          <div class="col-12">
+            ¿Tienes un código promocional?
+          </div>
+          <div class="col-8">
+            <div class="p-fluid">
+              <input pInputText class="p-inputtext-sm" type="text" [(ngModel)]="this.inputCoupon">
+            </div>
+          </div>
+          <div class=" col-4">
+            <div class="Buttons">
+              <p-button label="Aplicar" styleClass="p-button-sm" (click)="this.getCoupon()"></p-button>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+        <div id="Confirm" class="p-fluid">
+          <p-button (click)="validate()" [label]="'Realizar el pedido'"></p-button>
+          <form #redsysForm *ngIf="this.redsysData" [action]="'https://sis.redsys.es/sis/realizarPago'" method="POST">
+            <input type="hidden" name="Ds_SignatureVersion" [(ngModel)]="this.redsysData.Ds_SignatureVersion" />
+            <input type="hidden" name="Ds_MerchantParameters" [(ngModel)]="this.redsysData.Ds_MerchantParameters" />
+            <input type="hidden" name="Ds_Signature" [(ngModel)]="this.redsysData.Ds_Signature" />
+            <input type="hidden" name="Order_ID" [(ngModel)]="this.OrderID" />
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="col-12 sm:col-6 sm:col-offset-1">
     <p-card>
       <h3>DETALLES DE FACTURACIÓN</h3>
       <p *ngIf="!!!this.customer" class="Login__warning">¿Tienes una cuenta? <a href="/login?backTo=payment">Accede a
@@ -24,120 +148,7 @@
     </p-card>
   </div>
 
-  <div class="col-12 sm:col-4">
-    <p-card id="Order__summary">
-      <div class="grid">
-        <div class="col-12">
-          <app-order #order></app-order>
-        </div>
-      </div>
 
-      <div class="grid">
-        <div class="col-12">
-          <div class="Subtotal__Price" *ngIf="this.coupon">
-            Descuento: -{{this.getDiscount().toFixed(2)}} €
-          </div>
-          <div class="Subtotal__Price" *ngIf="this.deliver === 'Shipping'">
-            Envío: +{{this.getPrecioEnvio().toFixed(2)}} €
-          </div>
-          <div class="Total__Price">
-            Total: {{this.getTotal().toFixed(2)}} €
-          </div>
-        </div>
-      </div>
-
-      <div class="Promotional grid" *ngIf="!!!this.coupon">
-        <div class="col-12">
-          ¿Tienes un código promocional?
-        </div>
-        <div class="col-8">
-          <div class="p-fluid">
-            <input pInputText class="p-inputtext-sm" type="text" [(ngModel)]="this.inputCoupon">
-          </div>
-        </div>
-        <div class=" col-4">
-          <div class="Buttons">
-            <p-button label="Aplicar" styleClass="p-button-sm" (click)="this.getCoupon()"></p-button>
-          </div>
-        </div>
-      </div>
-
-      <div id="Payment__method">
-        <h4>Método de pago</h4>
-        <div class="Option p-field-radiobutton">
-          <p-radioButton value="Card" [(ngModel)]="payment" inputId="card">
-          </p-radioButton>
-          <label for="card"> Tarjeta de
-            crédito o débito</label>
-          <label for="">. No disponible para
-            pedidos inferiores a {{this.PAYMENT_MINIMUM_PRICE_CARD}}€</label>
-        </div>
-        <div class="Option p-field-radiobutton">
-          <p-radioButton value="Bizum" [(ngModel)]="payment" inputId="bizum"></p-radioButton>
-          <label for="bizum"> BIZUM</label> <label for="">. No disponible para
-            pedidos inferiores a {{this.PAYMENT_MINIMUM_PRICE_BIZUM || true}}€</label>
-        </div>
-      </div>
-
-      <div id="Shipping">
-        <h4>Envío / Recogida</h4>
-        <div class="Option p-field-radiobutton">
-          <p-radioButton value="Shipping" [(ngModel)]="deliver" inputId="shipping"></p-radioButton>
-          <label for="shipping"> Envío en 48 horas <label
-              class="Extra">{{this.getPrecioEnvio().toFixed(2)}}€</label></label>
-        </div>
-        <div class="Option p-field-radiobutton">
-          <p-radioButton value="Pickup" [(ngModel)]="deliver" inputId="pickup"></p-radioButton>
-          <label for="pickup"> Recogida en local</label>
-        </div>
-
-        <div class="p-fluid">
-          <p-dropdown *ngIf="this.deliver === 'Pickup'" [options]="locations" [(ngModel)]="selectedLocation"
-            optionLabel="name" [showClear]="true" placeholder="Local de recogida">
-            <ng-template pTemplate="selectedItem">
-              <div class="location-item location-item-value" *ngIf="selectedLocation">
-                <div>{{selectedLocation.name}}</div>
-              </div>
-            </ng-template>
-            <ng-template let-location pTemplate="item">
-              <div class="Location">
-                <div class="Name">{{location.name}}</div>
-                <div class="Address">{{location.address_1}}</div>
-              </div>
-            </ng-template>
-          </p-dropdown>
-        </div>
-      </div>
-
-      <div id="Privacy__policy">
-        <h4>Política de privacidad</h4>
-        <p>
-          Tus datos personales se utilizarán para procesar tu pedido, mejorar tu experiencia en esta web y otros
-          propósitos descritos en nuestra <a href="https://iriscopyshop.com/politica-de-privacidad/"
-            target="_blank">política de privacidad.</a>
-        </p>
-      </div>
-
-      <div id="Terms">
-        <h4>Términos y condiciones</h4>
-        <p>
-          <p-checkbox name="groupname" value="val1" [(ngModel)]="this.termsAccepted"></p-checkbox>
-          He leído y estoy de acuerdo con los <a href="/terms" target="_blank">términos y condiciones</a> de la web.
-        </p>
-      </div>
-
-      <div id="Confirm" class="p-fluid">
-        <p-button (click)="validate()" [label]="'Realizar el pedido'"></p-button>
-        <form #redsysForm *ngIf="this.redsysData" [action]="'https://sis.redsys.es/sis/realizarPago'" method="POST">
-          <input type="hidden" name="Ds_SignatureVersion" [(ngModel)]="this.redsysData.Ds_SignatureVersion" />
-          <input type="hidden" name="Ds_MerchantParameters" [(ngModel)]="this.redsysData.Ds_MerchantParameters" />
-          <input type="hidden" name="Ds_Signature" [(ngModel)]="this.redsysData.Ds_Signature" />
-          <input type="hidden" name="Order_ID" [(ngModel)]="this.OrderID" />
-
-        </form>
-      </div>
-    </p-card>
-  </div>
 </div>
 
 <div class="grid" *ngIf="this.emptyCart">

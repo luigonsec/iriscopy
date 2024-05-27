@@ -1,61 +1,76 @@
 <div class="grid">
   <div class="col-12">
-    <div class="Title">
-      TU PEDIDO ({{this.copies.length + this.products.length}})
-    </div>
-    <div class="Shopcart__item" *ngFor="let order of this.copies">
+    <div class="Title">Tu pedido</div>
+    <div class="Order__item" *ngFor="let order of this.copies">
       <div class="grid">
         <div class="col-12">
 
           <div class="OrderItem" *ngFor="let file of order.files">
             <div class="grid">
-              <div class="col-10">
+              <div class="col-12">
                 <div class="Title">
-                  <div class='Value'>{{file.name}}</div>
+                  <div class='Value'>{{file.name}} ({{file.pages}} páginas)</div>
                 </div>
-                <div class="Info">
-                  <div class='Value'>{{file.pages}} páginas</div>
-                </div>
+
               </div>
-              <div class="col-2">
-                <p-button icon="fas fa-trash" styleClass="p-button-sm"
-                  (click)="this.removeFile(order.id, file.id)"></p-button>
-              </div>
+
             </div>
           </div>
-          <div class="Description">
-            <div class="Item">Tamaño de papel: {{order.paperSize.name}}</div>
-            <div class="Item">Tipo de papel: {{order.paperGrammage.name}}</div>
-            <div class="Item">Tipo de impresión: {{order.printType.name}}</div>
-            <div class="Item">Forma de impresión: {{order.printForm.name}}</div>
-            <div class="Item">Páginas por cara: {{order.pagesPerSide.name}}</div>
-            <div class="Item">Orientación: {{order.orientation.name}}</div>
-            <div class="Item">Tipo de acabado: {{order.finishType.name}}</div>
-            <div class="Item" *ngIf="order.finishType.code === 'encuadernado'">Encuadernado: {{order.boundType.name}}
+          <div class="Description ">
+            <div class="Item">{{order.paperSize.name}}</div>
+            <div class="Item">{{order.paperGrammage.description}}</div>
+            <div class="Item">{{order.printForm.name}}</div>
+            <div class="Item">
+              <img [src]="'assets/images/buttons/' + order.pagesPerSide.image + '.png'" alt="">
             </div>
-            <div class="Item" *ngIf="order.finishType.code === 'encuadernado'">Anillas:
-              {{order.boundColors.anillas.name}}
+            <div class="Item">
+              <img [src]="'assets/images/buttons/' + order.orientation.image + '.png'" alt="">
             </div>
-            <div class="Item" *ngIf="order.finishType.code === 'encuadernado'">Tapa delantera:
-              {{order.boundColors.delantera.name}}
+            <div class="Item">{{order.copiesQuantity}} {{order.copiesQuantity == 1 ? 'copia':'copias'}}</div>
+
+            <div class="Item" *ngIf="order.finishType.code !== 'encuadernado'">{{order.finishType.name}}</div>
+            <div class="Item" *ngIf="order.finishType.code === 'encuadernado'">
+              Encuadernado<br>
+              {{order.boundType.name}}
             </div>
-            <div class="Item" *ngIf="order.finishType.code === 'encuadernado'">Tapa trasera:
-              {{order.boundColors.trasera.name}}
-            </div>
-            <div class="Item">Copias: {{order.copiesQuantity}}</div>
-          </div>
-          <div class="Price">
-            <div class='Value'>{{this.getCopyPrice(order).toFixed(2)}} €</div>
           </div>
 
-          <div class="Buttons">
-            <p-button label="Eliminar" styleClass="p-button-sm" (click)="this.removeCopy(order)"></p-button>
+          <div class="grid">
+            <div class="col-8">
+              <div class="Bound__details">
+                <div class="Bound__detail" *ngIf="order.finishType.code === 'encuadernado'">
+                  <img [src]="order.boundColors.anillas.image " alt="">
+                  <div class="Text">
+                    Anilla: {{order.boundColors.anillas.name}}
+                  </div>
+                </div>
+                <div class="Bound__detail" *ngIf="order.finishType.code === 'encuadernado'">
+                  <img [src]="order.boundColors.delantera.image " alt="">
+                  <div class="Text">
+                    Tapa delantera: {{order.boundColors.delantera.name}}
+                  </div>
+
+                </div>
+                <div class="Bound__detail" *ngIf="order.finishType.code === 'encuadernado'">
+                  <img [src]="order.boundColors.trasera.image " alt="">
+                  <div class="Text">
+                    Tapa trasera: {{order.boundColors.trasera.name}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="Price">
+                <div class='Value'>{{this.getCopyPrice(order).toFixed(2)}}€</div>
+              </div>
+            </div>
           </div>
+
         </div>
       </div>
     </div>
 
-    <div class="Shopcart__item" *ngFor="let product of this.products">
+    <div class="Order__item" *ngFor="let product of this.products">
       <div class="grid">
         <div class="col-12">
           <div class="OrderItem">
@@ -70,13 +85,16 @@
             <div class="Item">Precio unidad: {{product.product.price}} €</div>
 
           </div>
-          <div class="Price">
-            <div class='Value'>{{this.getProductPrice(product).toFixed(2)}} €</div>
+          <div class="grid">
+            <div class="col-12">
+              <div class="Price">
+                <div class='Value'>{{this.getProductPrice(product).toFixed(2)}} €</div>
+              </div>
+
+            </div>
           </div>
 
-          <div class="Buttons">
-            <p-button label="Eliminar" styleClass="p-button-sm" (click)="this.removeProduct(product)"></p-button>
-          </div>
+
         </div>
       </div>
     </div>

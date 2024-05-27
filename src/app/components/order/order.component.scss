@@ -2,23 +2,29 @@
 
 .Title {
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 600;
+  color: $primary;
+  margin-bottom: 10px;
 }
 
-.Shopcart__item {
-  border-bottom: 1px solid gray;
+.Order__item {
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 10px 20px;
+
+  background-color: white;
   width: 100%;
-  padding-bottom: 15px;
-  padding-top: 15px;
+  margin-bottom: 10px;
 
   .Title {
+    color: black;
     font-size: 16px;
-    font-weight: normal;
+    font-weight: 500;
+    margin-bottom: 0px;
   }
 
   .OrderItem {
     padding-left: 10px;
-    border-left: 5px solid $primary;
     margin-bottom: 10px;
   }
 
@@ -31,14 +37,71 @@
   }
 
   .Price {
+    color: $primary;
+    display: flex;
+    align-items: end;
+    width: 100%;
     text-align: right;
-    margin-bottom: 10px;
+    margin-top: 20px;
+    height: 100%;
+    .Value {
+      font-weight: 500;
+      font-size: 20px;
+      width: 100%;
+    }
+  }
+
+  .Bound__details {
+    display: block;
+    width: 100%;
   }
 
   .Description {
-    .Item {
-      color: gray;
-      font-size: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .Description .Item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: $darkGray;
+    color: white;
+    font-size: 14px;
+    min-width: 50px;
+    height: 40px;
+    box-sizing: border-box;
+  }
+
+  .Description .Item img {
+    height: 100%;
+    width: auto;
+    margin: 0;
+    padding: 0;
+  }
+
+  .Bound__details {
+    .Bound__detail {
+      display: flex;
+      align-items: center;
+      justify-content: left;
+      margin-top: 10px;
+      font-size: 14px;
+      .Text {
+        font-weight: 500;
+        height: auto;
+      }
+      img {
+        display: inline-block;
+        transform: rotate(90deg);
+        background-position: center;
+        width: 25px;
+        margin-right: 20px;
+      }
     }
   }
 }
