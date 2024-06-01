@@ -41,11 +41,18 @@ export default {
       code: 'blanco-negro',
       default: true,
       description: 'Escala de grises',
+      image: 'assets/images/colors/bn.png',
     },
-    { name: 'Color', code: 'color', description: 'Color CMYK' },
+    {
+      name: 'Color',
+      code: 'color',
+      description: 'Color CMYK',
+      image: 'assets/images/colors/color.png',
+    },
     {
       name: 'Color PRO',
-      code: 'color-eco',
+      code: 'color-pro',
+      image: 'assets/images/colors/color_pro.png',
       description: 'Full color',
     },
   ],
@@ -128,6 +135,7 @@ export default {
       name: 'Sin acabado',
       code: 'sin-acabado',
       description: 'Folios sueltos',
+      default: true,
     },
     {
       name: 'Grapado',
@@ -149,7 +157,6 @@ export default {
       code: 'encuadernado',
       description: 'En espiral',
       factor: 1.2,
-      default: true,
     },
     {
       name: 'Cuatro Taladros',

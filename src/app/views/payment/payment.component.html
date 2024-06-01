@@ -43,8 +43,11 @@
           <div class="Option p-field-radiobutton">
             <p-radioButton value="Card" [(ngModel)]="payment" inputId="card">
             </p-radioButton>
-            <label for="card"> Tarjeta de
+            <label class="Payment__type" for="card">Tarjeta de
               crédito/débito</label>
+            <label class="Payment__type_minimum" for="card">
+              (Pedido mínimo {{PAYMENT_MINIMUM_PRICE_CARD}}€)
+            </label>
             <img class='Payment_method__img' src="assets/images/payment_methods/visa.png" alt="">
             <img class='Payment_method__img' src="assets/images/payment_methods/mastercard.png" alt="">
             <img class='Payment_method__img' src="assets/images/payment_methods/amex.png" alt="">
@@ -57,8 +60,8 @@
           </div>
           <div class="Option p-field-radiobutton">
             <p-radioButton value="Bizum" [(ngModel)]="payment" inputId="bizum"></p-radioButton>
-            <label for="bizum"> BIZUM</label>
-
+            <label class="Payment__type" for="bizum">BIZUM</label>
+            <label class="Payment__type_minimum" for="bizum">(Pedido mínimo {{PAYMENT_MINIMUM_PRICE_BIZUM}}€)</label>
             <img class='Payment_method__img' src="assets/images/payment_methods/bizum.png" alt="">
           </div>
         </div>

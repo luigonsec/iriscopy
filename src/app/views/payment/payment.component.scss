@@ -41,8 +41,19 @@
     padding-bottom: 15px;
   }
 
+  #Payment_methods {
+    .Payment__type {
+      margin-left: 5px;
+    }
+
+    .Payment__type_minimum {
+      font-size: 10px;
+      margin-left: 3px;
+    }
+  }
+
   .Payment_method__img {
-    height: 14px;
+    height: 12px;
     margin-left: 5px;
     padding-top: 0px;
   }

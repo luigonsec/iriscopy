@@ -5,7 +5,8 @@
       <div class="Button__description">{{item.description}}</div>
     </div>
     <div class="Button" *ngIf="item.image">
-      <img class="Button__img" src="assets/images/buttons/{{item.image}}.png">
+      <img class="Button__img"
+        src="assets/images/buttons/{{item.image}}{{item.code === this.option.code ? '_active' : ''}}.png">
     </div>
   </ng-template>
 </p-selectButton>

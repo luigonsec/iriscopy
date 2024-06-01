@@ -17,14 +17,18 @@
             </div>
           </div>
           <div class="Description ">
+            <div class="Item white">
+              <img [src]="order.printType.image" alt="">
+            </div>
+
             <div class="Item">{{order.paperSize.name}}</div>
             <div class="Item">{{order.paperGrammage.description}}</div>
             <div class="Item">{{order.printForm.name}}</div>
             <div class="Item">
-              <img [src]="'assets/images/buttons/' + order.pagesPerSide.image + '.png'" alt="">
+              <img [src]="'assets/images/buttons/' + order.pagesPerSide.image + '_pink.png'" alt="">
             </div>
             <div class="Item">
-              <img [src]="'assets/images/buttons/' + order.orientation.image + '.png'" alt="">
+              <img [src]="'assets/images/buttons/' + order.orientation.image + '_pink.png'" alt="">
             </div>
             <div class="Item">{{order.copiesQuantity}} {{order.copiesQuantity == 1 ? 'copia':'copias'}}</div>
 
@@ -59,7 +63,10 @@
                 </div>
               </div>
             </div>
-            <div class="col-4">
+            <div class="Order__options col-4">
+              <div class="Remove">
+                <i class="far fa-trash-alt" (click)="this.removeCopy(order)"></i>
+              </div>
               <div class="Price">
                 <div class='Value'>{{this.getCopyPrice(order).toFixed(2)}}€</div>
               </div>
@@ -93,14 +100,8 @@
 
             </div>
           </div>
-
-
         </div>
       </div>
-    </div>
-
-    <div class="Subtotal__Price">
-      Subotal: {{this.getTotalPrice().toFixed(2)}} €
     </div>
   </div>
 </div>
