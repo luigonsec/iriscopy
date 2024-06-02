@@ -26,6 +26,5 @@ export class OrientationComponent implements OnInit {
   handleChange($event) {
     const orientation = $event.value;
     this.emitChange.emit(orientation);
-    console.log(this.option, orientation);
   }
 }
