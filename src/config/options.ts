@@ -69,7 +69,7 @@ export default {
       name: 'Doble cara',
       code: 'doble-cara',
       factor: 1,
-      description: 'Por delante y por detrás del papel',
+      description: 'Por ambas caras del papel',
     },
   ],
 
