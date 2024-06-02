@@ -29,8 +29,9 @@
       <!-- <a class="Back" *ngIf="this.orders.length" href="/payment">Ir a pagar</a> -->
 
 
-      <i *ngIf="(this.copies.length + this.products.length)" class="ShoppingCart__Icon fas fa-shopping-cart"
-        (click)="toggleSidebar()" pBadge [value]="this.copies.length + this.products.length"></i>
+      <a class="Link" *ngIf="(this.copies.length + this.products.length)" (click)="toggleSidebar()">
+        <i class="ShoppingCart__Icon fas fa-shopping-cart"></i> ver el carro
+      </a>
     </div>
     <div id="Toggle" class="block sm:hidden">
       <i class="fas fa-bars" (click)="sidebarVisible = true"></i>

@@ -1,16 +1,3 @@
-.p-button.p-fileupload-choose,
-.p-button.p-fileupload-choose:hover,
-.p-fileupload-choose:not(.p-disabled):hover {
-  color: black;
-  background: $yellow;
-  border: 2px solid $green;
-  font-weight: bold;
-
-  .p-button-label {
-    font-family: "Montserrat" !important;
-  }
-}
-
 .p-button {
   color: #ffffff;
   background: $darkGray;
@@ -28,4 +15,20 @@
   background: $darkGray;
   color: #ffffff;
   border-color: $darkGray;
+}
+
+.p-button.p-fileupload-choose,
+.p-button.p-fileupload-choose:hover,
+.p-fileupload-choose:not(.p-disabled):hover,
+.p-button.Secondary,
+.p-button.Secondary:hover,
+.Secondary:not(.p-disabled):hover {
+  color: black;
+  background: $yellow;
+  border: 2px solid $green;
+  font-weight: bold;
+
+  .p-button-label {
+    font-family: "Montserrat" !important;
+  }
 }

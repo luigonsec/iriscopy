@@ -68,7 +68,7 @@ export default {
     {
       name: 'Doble cara',
       code: 'doble-cara',
-      factor: 1,
+      factor: 0.5,
       description: 'Por ambas caras del papel',
     },
   ],

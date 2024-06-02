@@ -1,6 +1,5 @@
 <div class="grid">
   <div class="col-12">
-    <div class="Title">Tu pedido</div>
     <div class="Order__item" *ngFor="let order of this.copies">
       <div class="grid">
         <div class="col-12">
@@ -64,6 +63,9 @@
               </div>
             </div>
             <div class="Order__options col-4">
+              <div class="Edit">
+                <i class="fas fa-pencil-alt" (click)="this.editCopy(order)"></i>
+              </div>
               <div class="Remove">
                 <i class="far fa-trash-alt" (click)="this.removeCopy(order)"></i>
               </div>

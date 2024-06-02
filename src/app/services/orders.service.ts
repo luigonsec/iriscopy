@@ -11,6 +11,8 @@ import Order from '../interfaces/Order';
 })
 export class OrdersService {
   private order$: Subject<OrderCopy>;
+  private orderToEdit: OrderCopy;
+
   constructor(private http: HttpClient) {
     this.order$ = new Subject();
   }
@@ -20,6 +22,16 @@ export class OrdersService {
       `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/orders`,
       { order }
     );
+  }
+
+  setOrderToEdit(order: OrderCopy) {
+    this.orderToEdit = order;
+  }
+
+  getOrderToEdit() {
+    const orderToEdit = this.orderToEdit;
+    //this.orderToEdit = undefined;
+    return orderToEdit;
   }
 
   edit(order: OrderCopy) {
@@ -43,30 +55,26 @@ export class OrdersService {
     const totalPages = {};
 
     completeOrder.forEach((order) => {
-      const orderSidesFactor = order.printForm.factor;
       const printType = order.printType.code;
       const paperSize = order.paperSize.code;
 
-      const orderPages =
+      const orderSides =
         order.files.reduce((totalFilePages, file) => {
-          const filePages = Math.ceil(
-            file.pages * orderSidesFactor * order.pagesPerSide.factor
-          );
+          const filePages = Math.ceil(file.pages * order.pagesPerSide.factor);
           return totalFilePages + filePages;
         }, 0) * order.copiesQuantity;
 
       const printFormCode =
-        orderPages === 1 ? 'una-cara' : order.printForm.code;
+        orderSides === 1 ? 'una-cara' : order.printForm.code;
 
       if (!(printType in totalPages)) totalPages[printType] = {};
       if (!(printFormCode in totalPages[printType]))
         totalPages[printType][printFormCode] = {};
       if (!(paperSize in totalPages[printType][printFormCode]))
         totalPages[printType][printFormCode][paperSize] = 0;
-      totalPages[printType][printFormCode][paperSize] += orderPages;
+      totalPages[printType][printFormCode][paperSize] += orderSides;
     }, 0);
 
-    const twoSidesFactor = order.printForm.factor;
     let boundPrice = 0;
     let boundColors = 0;
     boundPrice += order.finishType.factor || 0;
@@ -80,18 +88,20 @@ export class OrdersService {
         ? 1
         : order.files.length * order.copiesQuantity;
     const totalPricePerOrder = order.files.reduce((total, file) => {
+      const sides = Math.ceil(file.pages * order.pagesPerSide.factor);
       const pages = Math.ceil(
-        file.pages * twoSidesFactor * order.pagesPerSide.factor
+        file.pages * order.pagesPerSide.factor * order.printForm.factor
       );
-      const printFormCode =
-        file.pages === 1 ? 'una-cara' : order.printForm.code;
 
-      const pricePerPage =
-        precios[order.printType.code][printFormCode][order.paperSize.code](
-          totalPages[order.printType.code][printFormCode][order.paperSize.code]
-        ) + order.paperGrammage.factor;
+      const printFormCode = sides === 1 ? 'una-cara' : order.printForm.code;
 
-      const finalPrice = order.copiesQuantity * (pricePerPage * pages);
+      const pricePerPage = precios[order.printType.code][printFormCode][
+        order.paperSize.code
+      ](totalPages[order.printType.code][printFormCode][order.paperSize.code]);
+
+      const finalPrice =
+        order.copiesQuantity *
+        (pricePerPage * sides + order.paperGrammage.factor * pages);
       return total + finalPrice;
     }, 0);
     const boundPrices = totalBounds * (boundPrice + boundColors);

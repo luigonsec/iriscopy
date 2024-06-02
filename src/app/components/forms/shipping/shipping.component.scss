@@ -1,3 +1,41 @@
-.Mandatory {
-    color: red
+input,
+textarea {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding-bottom: 15px;
+}
+
+.input-container {
+  position: relative;
+}
+
+.custom-placeholder,
+.custom-textarea {
+  position: absolute;
+  top: 20px;
+  left: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: black;
+  font-weight: 500;
+}
+
+.required {
+  color: red;
+  font-weight: bold;
+}
+
+.small {
+  color: gray;
+  font-size: 12px;
+}
+
+.input-container input:focus + .custom-placeholder,
+.input-container input:not(:placeholder-shown) + .custom-placeholder {
+  display: none;
+}
+
+.input-container textarea:focus + .custom-textarea,
+.input-container textarea:not(:placeholder-shown) + .custom-textarea {
+  display: none;
 }

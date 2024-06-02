@@ -1,13 +1,11 @@
 <div class="grid" *ngIf="!!!this.emptyCart">
   <div class="col-12 sm:col-5">
     <div id="Order">
-      <div id="Order__details" class="grid">
-        <div class="col-12">
-          <app-order #order></app-order>
-        </div>
-      </div>
-      <div id="Order__options">
+      <div class="Title">Tu pedido</div>
 
+      <app-order #order></app-order>
+
+      <div id="Checkout">
         <div id="Shipping">
           <div class="Title">Envío / Recogida</div>
           <div class="Option p-field-radiobutton">
@@ -75,45 +73,59 @@
           </p>
         </div>
 
-        <div class="grid">
+        <div id="Promotional" class="grid" *ngIf="!!!this.coupon">
           <div class="col-12">
-            <div class="Subtotal__Price" *ngIf="this.coupon">
-              Descuento: -{{this.getDiscount().toFixed(2)}} €
-            </div>
-            <div class="Subtotal__Price" *ngIf="this.deliver === 'Shipping'">
-              Envío: +{{this.getPrecioEnvio().toFixed(2)}} €
-            </div>
-            <div class="Total__Price">
-              Total: {{this.getTotal().toFixed(2)}} €
-            </div>
-          </div>
-        </div>
-
-        <div class="Promotional grid" *ngIf="!!!this.coupon">
-          <div class="col-12">
-            ¿Tienes un código promocional?
           </div>
           <div class="col-8">
             <div class="p-fluid">
-              <input pInputText class="p-inputtext-sm" type="text" [(ngModel)]="this.inputCoupon">
+              <input pInputText class="p-inputtext-sm" type="text" [(ngModel)]="this.inputCoupon"
+                placeholder="¿Tienes un código promocional?">
             </div>
           </div>
-          <div class=" col-4">
-            <div class="Buttons">
-              <p-button label="Aplicar" styleClass="p-button-sm" (click)="this.getCoupon()"></p-button>
+          <div class="Buttons col-4">
+            <button pButton class='Secondary p-button-sm' (click)="this.getCoupon()">Aplicar mi cupón</button>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="col-12">
+            <div class="Cost Subtotal">
+              <div class="Title">
+                Subtotal
+              </div>
+              <div class="Amount">
+                {{this.getSubtotal().toFixed(2)}} €
+              </div>
+            </div>
+            <div class="Cost Shipping" *ngIf="this.deliver === 'Shipping'">
+              <div class="Title">
+                Envío
+              </div>
+              <div class="Amount">
+                {{this.getPrecioEnvio().toFixed(2)}} €
+              </div>
+            </div>
+            <div class="Cost Discount" *ngIf="this.coupon">
+              <div class="Title">
+                Descuento
+              </div>
+              <div class="Amount">
+                -{{this.getDiscount().toFixed(2)}} €
+              </div>
+            </div>
+            <div class="Cost Total">
+              <div class="Title">
+                Total
+              </div>
+              <div class="Amount">
+                {{this.getTotal().toFixed(2)}} €
+              </div>
             </div>
           </div>
         </div>
 
-
-
-
-
-
-
-
-        <div id="Confirm" class="p-fluid">
-          <p-button (click)="validate()" [label]="'Realizar el pedido'"></p-button>
+        <div id="Confirm">
+          <button pButton (click)="validate()" class="p-button-lg">Realizar el pedido</button>
           <form #redsysForm *ngIf="this.redsysData" [action]="'https://sis.redsys.es/sis/realizarPago'" method="POST">
             <input type="hidden" name="Ds_SignatureVersion" [(ngModel)]="this.redsysData.Ds_SignatureVersion" />
             <input type="hidden" name="Ds_MerchantParameters" [(ngModel)]="this.redsysData.Ds_MerchantParameters" />
@@ -126,32 +138,35 @@
 
     </div>
   </div>
-  <div class="col-12 sm:col-6 sm:col-offset-1">
-    <p-card>
-      <h3>DETALLES DE FACTURACIÓN</h3>
-      <p *ngIf="!!!this.customer" class="Login__warning">¿Tienes una cuenta? <a href="/login?backTo=payment">Accede a
-          ella</a> para
-        evitar
-        rellenar tus datos de
-        facturación.
-      </p>
+  <div id='CustomerDetails' class="col-12 sm:col-6 sm:col-offset-1">
+    <div class="Title">Datos de envío y facturación</div>
+    <div class="p-fluid">
+
+      <button pButton id='LoginButton' class="Secondary" [routerLink]="'/login'" [queryParams]="{ backTo: 'payment' }"
+        *ngIf="!!!this.customer">
+        <p>
+          ¿Tienes una cuenta? <span>Accede a ella</span> para evitar rellenar tus datos de facturación.
+        </p>
+      </button>
+    </div>
+
+
+    <div id="Forms">
       <app-billing #billing [shipping]="this.deliver === 'Shipping' "></app-billing>
       <div class="grid" *ngIf="this.deliver === 'Shipping'">
         <div class="col-12">
-          <h3>
-            <p-checkbox binary="true" [(ngModel)]="this.differentAddress">
-            </p-checkbox>
-            ENVIAR A UNA DIRECCIÓN DIFERENTE
-          </h3>
+          <p-checkbox binary="true" [(ngModel)]="this.differentAddress">
+          </p-checkbox>
+          <strong> ENVIAR A UNA DIRECCIÓN DIFERENTE</strong>
           <ng-container *ngIf="this.differentAddress">
-            <app-shipping #shipping></app-shipping>
+            <div id="Shipping_address__form">
+              <app-shipping #shipping></app-shipping>
+            </div>
           </ng-container>
         </div>
       </div>
-    </p-card>
+    </div>
   </div>
-
-
 </div>
 
 <div class="grid" *ngIf="this.emptyCart">

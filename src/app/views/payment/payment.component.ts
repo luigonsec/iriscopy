@@ -103,7 +103,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.subcriptorCustomer.unsubscribe();
-    this.subcriptorCoupon.unsubscribe();
   }
 
   public getCoupon() {

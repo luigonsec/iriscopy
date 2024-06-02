@@ -151,8 +151,29 @@ export class PrintComponent implements OnInit, OnDestroy {
     return res;
   }
 
+  prepareOrderToEdit(order: OrderCopy) {
+    console.log(order);
+
+    this.order = order;
+    this.paperSize = order.paperSize;
+    this.paperGrammage = order.paperGrammage;
+    this.printType = order.printType;
+    this.printForm = order.printForm;
+    this.orientation = order.orientation;
+    this.pagesPerSide = order.pagesPerSide;
+  }
+
   ngOnInit() {
+    const orderToEdit = this.orderService.getOrderToEdit();
+    console.log(orderToEdit);
+
+    if (orderToEdit) {
+      this.prepareOrderToEdit(orderToEdit);
+    }
+
     this.orderSubscription = this.orderService.getOrder().subscribe((order) => {
+      console.log('--->');
+
       this.order = order;
     });
   }

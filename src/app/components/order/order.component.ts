@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import OrderProduct from 'src/app/interfaces/OrderProduct';
@@ -17,6 +18,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   public total_price: number;
   cartSubscription: Subscription;
   constructor(
+    private router: Router,
     private orderService: OrdersService,
     private shopcartService: ShopcartService
   ) {}
@@ -47,6 +49,13 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   removeCopy(order: OrderCopy): void {
     this.shopcartService.removeCopy(order);
+  }
+
+  editCopy(order: OrderCopy): void {
+    console.log('--->', order.paperSize.code);
+    this.orderService.setOrderToEdit(order);
+
+    this.router.navigate(['/print']);
   }
 
   removeProduct(product: OrderProduct): void {
