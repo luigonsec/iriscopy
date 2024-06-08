@@ -43,6 +43,8 @@ export class PrintComponent implements OnInit, OnDestroy {
   orderSubscription: Subscription;
 
   constructor(private orderService: OrdersService, private store: Store) {
+    this.reset = this.reset.bind(this);
+
     this.store.dispatch(clearCoupon());
 
     this.order = {
@@ -72,41 +74,49 @@ export class PrintComponent implements OnInit, OnDestroy {
   getPaperGrammage(value) {
     this.paperGrammage = value;
     this.order.paperGrammage = this.paperGrammage;
+    this.order = Object.assign({}, this.order);
   }
 
   getPaperSize(value) {
     this.paperSize = value;
     this.order.paperSize = this.paperSize;
+    this.order = Object.assign({}, this.order);
   }
 
   getPagesPerSide(value) {
     this.pagesPerSide = value;
     this.order.pagesPerSide = this.pagesPerSide;
+    this.order = Object.assign({}, this.order);
   }
 
   getPrintType(value) {
     this.printType = value;
     this.order.printType = this.printType;
+    this.order = Object.assign({}, this.order);
   }
 
   getPrintForm(value) {
     this.printForm = value;
     this.order.printForm = this.printForm;
+    this.order = Object.assign({}, this.order);
   }
 
   getFinishType(value) {
     this.finishType = value;
     this.order.finishType = this.finishType;
+    this.order = Object.assign({}, this.order);
   }
 
   getOrientation(value) {
     this.orientation = value;
     this.order.orientation = this.orientation;
+    this.order = Object.assign({}, this.order);
   }
 
   getCopiesQuantity(value) {
     this.copiesQuantity = value;
     this.order.copiesQuantity = this.copiesQuantity;
+    this.order = Object.assign({}, this.order);
   }
 
   getBound(value) {
@@ -115,16 +125,19 @@ export class PrintComponent implements OnInit, OnDestroy {
 
     this.order.boundType = this.boundType;
     this.order.boundColors = this.boundColors;
+    this.order = Object.assign({}, this.order);
   }
 
   getAdditionalComments(value) {
     this.additionalComments = value;
     this.order.additionalComments = this.additionalComments;
+    this.order = Object.assign({}, this.order);
   }
 
   getFile(files) {
     this.files = files;
     this.order.files = this.files;
+    this.order = Object.assign({}, this.order);
   }
 
   isReady() {
@@ -169,6 +182,7 @@ export class PrintComponent implements OnInit, OnDestroy {
 
     this.orderSubscription = this.orderService.getOrder().subscribe((order) => {
       this.order = order;
+      this.order = Object.assign({}, this.order);
     });
   }
 }

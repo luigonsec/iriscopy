@@ -9,12 +9,14 @@
         <div id="Shipping">
           <div class="Title">Envío / Recogida</div>
           <div class="Option p-field-radiobutton">
-            <p-radioButton value="Shipping" [(ngModel)]="deliver" inputId="shipping"></p-radioButton>
+            <p-radioButton value="Shipping" [(ngModel)]="deliver" inputId="shipping"
+              (onClick)="this.calculatePrices()"></p-radioButton>
             <label for="shipping"> Envío en 48 horas <label
-                class="Extra">{{this.getPrecioEnvio().toFixed(2)}}€</label></label>
+                class="Extra">{{this.precioEnvio.toFixed(2)}}€</label></label>
           </div>
           <div class="Option p-field-radiobutton">
-            <p-radioButton value="Pickup" [(ngModel)]="deliver" inputId="pickup"></p-radioButton>
+            <p-radioButton value="Pickup" [(ngModel)]="deliver" inputId="pickup"
+              (onClick)="this.calculatePrices()"></p-radioButton>
             <label for="pickup"> Recogida en local</label> <label class="Extra"> Gratuita</label>
           </div>
 
@@ -94,7 +96,7 @@
                 Subtotal
               </div>
               <div class="Amount">
-                {{this.getSubtotal().toFixed(2)}} €
+                {{this.subtotal.toFixed(2)}} €
               </div>
             </div>
             <div class="Cost Shipping" *ngIf="this.deliver === 'Shipping'">
@@ -102,7 +104,7 @@
                 Envío
               </div>
               <div class="Amount">
-                {{this.getPrecioEnvio().toFixed(2)}} €
+                {{this.precioEnvio.toFixed(2)}} €
               </div>
             </div>
             <div class="Cost Discount" *ngIf="this.coupon">
@@ -110,7 +112,7 @@
                 Descuento
               </div>
               <div class="Amount">
-                -{{this.getDiscount().toFixed(2)}} €
+                -{{this.discount.toFixed(2)}} €
               </div>
             </div>
             <div class="Cost Total">
@@ -118,7 +120,7 @@
                 Total
               </div>
               <div class="Amount">
-                {{this.getTotal().toFixed(2)}} €
+                {{this.total.toFixed(2)}} €
               </div>
             </div>
           </div>

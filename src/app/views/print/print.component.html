@@ -86,5 +86,5 @@
     <app-banner class="block sm:hidden" [options]="{visible_phone: true, visible_print: true}"></app-banner>
   </div>
 
-  <app-confirm-bar *ngIf="this.isReady()" [reset]="this.reset.bind(this)" [(order)]="this.order"></app-confirm-bar>
+  <app-confirm-bar *ngIf="this.isReady()" [reset]="this.reset" [(order)]="this.order"></app-confirm-bar>
 </div>

@@ -15,7 +15,8 @@ export class OrderComponent implements OnInit, OnDestroy {
   public copies: OrderCopy[] = [];
   public products: OrderProduct[] = [];
 
-  public total_price: number;
+  public copiesPrice = {};
+
   cartSubscription: Subscription;
   constructor(
     private router: Router,
@@ -29,7 +30,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   getTotalPrice() {
     const priceCopies = this.copies
-      .map((x) => this.getCopyPrice(x))
+      .map((x) => this.copiesPrice[x.id])
       .reduce((a, b) => a + b, 0);
 
     const priceProducts = this.products
@@ -39,8 +40,17 @@ export class OrderComponent implements OnInit, OnDestroy {
     return priceCopies + priceProducts;
   }
 
-  getCopyPrice(order: OrderCopy): number {
-    return this.orderService.getCopyPrice(order, this.copies);
+  getCopiesPrice() {
+    this.copies.forEach((copy) => {
+      this.getCopyPrice(copy);
+    });
+  }
+
+  getCopyPrice(order: OrderCopy) {
+    this.orderService.getCopyPrice(order, this.copies).subscribe((price) => {
+      this.copiesPrice[order.id] = price;
+      this.copiesPrice = Object.assign({}, this.copiesPrice);
+    });
   }
 
   getProductPrice(order: OrderProduct): number {
@@ -82,11 +92,15 @@ export class OrderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.copies = this.shopcartService.getCart().copies;
     this.products = this.shopcartService.getCart().products;
+
+    this.getCopiesPrice();
+
     this.cartSubscription = this.shopcartService
       .getCart$()
       .subscribe((orders) => {
         this.copies = orders.copies;
         this.products = orders.products;
+        this.getCopiesPrice();
       });
   }
 }

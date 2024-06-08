@@ -1,4 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import { OrdersService } from 'src/app/services/orders.service';
@@ -11,9 +17,11 @@ import JSONfn from 'json-fn';
   templateUrl: './confirm-bar.component.html',
   styleUrls: ['./confirm-bar.component.scss'],
 })
-export class ConfirmBarComponent implements OnInit {
+export class ConfirmBarComponent implements OnInit, OnChanges {
   @Input('order') order: OrderCopy;
   @Input('reset') reset: () => void = () => undefined;
+
+  precio: number;
   constructor(
     private orderService: OrdersService,
     private shopcartService: ShopcartService,
@@ -23,7 +31,13 @@ export class ConfirmBarComponent implements OnInit {
   getPrecio() {
     const others = this.shopcartService.getCart().copies;
     others.push(this.order);
-    return this.orderService.getCopyPrice(this.order, others);
+    this.orderService.getCopyPrice(this.order, others).subscribe((precio) => {
+      this.precio = precio;
+    });
+  }
+
+  ngOnChanges(): void {
+    this.getPrecio();
   }
 
   addConfiguration() {
@@ -39,5 +53,7 @@ export class ConfirmBarComponent implements OnInit {
     this.router.navigate(['payment']);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getPrecio();
+  }
 }

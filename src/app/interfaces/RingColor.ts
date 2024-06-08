@@ -3,5 +3,4 @@ export default interface RingColor {
   color: string;
   name: string;
   default?: boolean;
-  factor: number;
 }

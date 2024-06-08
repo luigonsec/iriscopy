@@ -70,7 +70,7 @@
                 <i class="far fa-trash-alt" (click)="this.removeCopy(order)"></i>
               </div>
               <div class="Price">
-                <div class='Value'>{{this.getCopyPrice(order).toFixed(2)}}€</div>
+                <div class='Value'>{{(this.copiesPrice[order.id] || 0).toFixed(2)}}€</div>
               </div>
             </div>
           </div>

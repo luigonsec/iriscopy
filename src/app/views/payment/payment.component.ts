@@ -71,6 +71,10 @@ export class PaymentComponent implements OnInit, OnDestroy {
   public subcriptorCustomer: Subscription;
   public subcriptorCoupon: Subscription;
   public subscriptionCart: Subscription;
+  subtotal: number = 0;
+  precioEnvio: number = 0;
+  total: number = 0;
+  discount: number = 0;
 
   constructor(
     private shopcartService: ShopcartService,
@@ -123,7 +127,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   private checkMinimumAmount() {
     if (!this.coupon) return true;
-    if (this.coupon.minimum_amount > this.getSubtotal()) {
+    if (this.coupon.minimum_amount > this.subtotal) {
       this.messageService.add({
         severity: 'error',
         detail: `El código promocional solo puede aplicarse a pedidos mayores de ${this.coupon.minimum_amount} €`,
@@ -239,7 +243,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   public getPrecioEnvio() {
     let precioEnvio = 4.9;
 
-    if (this.getSubtotal() >= 40) precioEnvio = 0;
+    if (this.subtotal >= 40) precioEnvio = 0;
 
     if (this.billing) {
       let code;
@@ -265,7 +269,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
         precioEnvio = this.getGastosEnvioFormentera();
       else precioEnvio = this.getGastosEnvioPeninsula();
     }
-    return precioEnvio;
+    this.precioEnvio = precioEnvio;
   }
 
   public getGastosEnvioCanarias() {
@@ -273,7 +277,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   public getGastosEnvioPeninsula() {
-    const precioPedido = this.getSubtotal();
+    const precioPedido = this.subtotal;
     if (precioPedido > 0 && precioPedido < 15) return 4.9;
     if (precioPedido >= 15 && precioPedido < 25) return 3.9;
     if (precioPedido >= 25 && precioPedido < 35) return 2.9;
@@ -298,29 +302,23 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   public getTotal() {
-    const priceShipping =
-      this.deliver === 'Shipping' ? this.getPrecioEnvio() : 0;
-    return this.getSubtotalWithDiscount() + priceShipping;
+    const priceShipping = this.deliver === 'Shipping' ? this.precioEnvio : 0;
+    this.total = this.getSubtotalWithDiscount() + priceShipping;
   }
 
   public getSubtotalWithDiscount() {
-    return this.getSubtotal() - this.getDiscount();
+    return this.subtotal - this.discount;
   }
 
   private getSubtotal() {
-    return (
-      this.copies
-        .map((order) => this.orderService.getCopyPrice(order, this.copies))
-        .reduce((a, b) => a + b, 0) +
-      this.products
-        .map((order) => +order.product.price * order.quantity)
-        .reduce((a, b) => a + b, 0)
-    );
+    this.subtotal = 0;
+
+    return this.orderService.getOrderPrice(this.copies);
   }
 
-  public getDiscount(): number {
-    const subtotal = this.getSubtotal();
-
+  public getDiscount() {
+    const subtotal = this.subtotal;
+    this.discount = 0;
     if (this.coupon) {
       let discountAmount = 0;
 
@@ -329,9 +327,8 @@ export class PaymentComponent implements OnInit, OnDestroy {
       } else if (this.coupon.discount_type === 'fixed_cart') {
         discountAmount = this.coupon.amount;
       }
-      return discountAmount;
+      this.discount = discountAmount;
     }
-    return 0;
   }
 
   public processOrder() {
@@ -452,15 +449,30 @@ export class PaymentComponent implements OnInit, OnDestroy {
     ];
   }
 
+  calculatePrices() {
+    this.getSubtotal().subscribe((price) => {
+      this.subtotal =
+        price +
+        this.products
+          .map((order) => +order.product.price * order.quantity)
+          .reduce((a, b) => a + b, 0);
+
+      this.getPrecioEnvio();
+      this.getTotal();
+    });
+  }
+
   ngOnInit(): void {
     this.copies = this.shopcartService.getCart().copies;
     this.products = this.shopcartService.getCart().products;
     this.emptyCart = this.copies.length + this.products.length === 0;
+    this.calculatePrices();
     this.subscriptionCart = this.shopcartService
       .getCart$()
       .subscribe((order) => {
         this.copies = order.copies;
         this.products = order.products;
+        this.calculatePrices();
         this.checkMinimumAmount();
         this.emptyCart = this.copies.length + this.products.length === 0;
       });
