@@ -5,6 +5,7 @@
   border-color: $darkGray;
   color: #ffffff;
   box-shadow: none;
+  z-index: 0;
 }
 
 .p-selectbutton .p-button,
@@ -15,6 +16,7 @@
   border-bottom: 2px solid $black;
   color: $primary;
   box-shadow: none;
+  z-index: 0;
 }
 
 .p-selectbutton .p-button:not(.p-highlight):last-of-type {
