@@ -3,6 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { OrderCopy } from '../interfaces/OrderCopy';
 import Cart from '../interfaces/Cart';
 import OrderProduct from '../interfaces/OrderProduct';
+import JSONfn from 'json-fn';
 
 @Injectable({
   providedIn: 'root',
@@ -18,27 +19,27 @@ export class ShopcartService {
     const cart: Cart = this.getCart();
     cart.copies.push(order);
     this.itemCart$.next(cart);
-    localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem('cart', JSONfn.stringify(cart));
   }
 
   addProductToCart(order: OrderProduct) {
     const cart: Cart = this.getCart();
     cart.products.push(order);
     this.itemCart$.next(cart);
-    localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem('cart', JSONfn.stringify(cart));
   }
 
   updateCopies(orders: OrderCopy[]) {
     const cart = this.getCart();
     cart.copies = orders;
-    localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem('cart', JSONfn.stringify(cart));
     this.itemCart$.next(cart);
   }
 
   removeCopy(order: OrderCopy) {
     const cart: Cart = this.getCart();
     cart.copies = cart.copies.filter((x) => x.id !== order.id);
-    localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem('cart', JSONfn.stringify(cart));
     this.itemCart$.next(cart);
   }
 
@@ -47,7 +48,7 @@ export class ShopcartService {
     cart.products = cart.products.filter(
       (x) => x.product.id !== product.product.id
     );
-    localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem('cart', JSONfn.stringify(cart));
     this.itemCart$.next(cart);
   }
 
@@ -57,7 +58,7 @@ export class ShopcartService {
 
   getCart(): Cart {
     return (
-      JSON.parse(localStorage.getItem('cart')) || {
+      JSONfn.parse(localStorage.getItem('cart')) || {
         copies: [],
         products: [],
       }
@@ -69,7 +70,7 @@ export class ShopcartService {
       copies: [],
       products: [],
     };
-    localStorage.setItem('cart', JSON.stringify(empty));
+    localStorage.setItem('cart', JSONfn.stringify(empty));
     this.itemCart$.next(empty);
   }
 

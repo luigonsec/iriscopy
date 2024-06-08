@@ -152,8 +152,6 @@ export class PrintComponent implements OnInit, OnDestroy {
   }
 
   prepareOrderToEdit(order: OrderCopy) {
-    console.log(order);
-
     this.order = order;
     this.paperSize = order.paperSize;
     this.paperGrammage = order.paperGrammage;
@@ -165,15 +163,11 @@ export class PrintComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const orderToEdit = this.orderService.getOrderToEdit();
-    console.log(orderToEdit);
-
     if (orderToEdit) {
       this.prepareOrderToEdit(orderToEdit);
     }
 
     this.orderSubscription = this.orderService.getOrder().subscribe((order) => {
-      console.log('--->');
-
       this.order = order;
     });
   }

@@ -52,7 +52,6 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   editCopy(order: OrderCopy): void {
-    console.log('--->', order.paperSize.code);
     this.orderService.setOrderToEdit(order);
 
     this.router.navigate(['/print']);

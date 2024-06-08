@@ -17,7 +17,8 @@ export default {
     {
       name: 'Normal',
       code: 'normal',
-      factor: 0,
+      factor_A3: 0,
+      factor_A4: 0,
       description: '80 grs',
       default: true,
     },
@@ -25,13 +26,15 @@ export default {
       name: 'Cartulina',
       code: 'cartulina',
       description: '180 grs',
-      factor: 0.1,
+      factor_A3: 0.2,
+      factor_A4: 0.1,
     },
     {
       name: 'Fotográfico',
       description: '250 grs',
       code: 'fotografico',
-      factor: 0.15,
+      factor_A3: 0.2,
+      factor_A4: 0.2,
     },
   ],
 
@@ -79,28 +82,28 @@ export default {
       factor: 1,
       code: '1_vertical',
       description: 'Por cara',
-      image: 'ppc_v_1',
+      image: 'assets/images/buttons/ppc_v_1',
       default: true,
     },
     {
       name: '2 páginas',
       factor: 0.5,
       code: '2_horizontal',
-      image: 'ppc_h_2',
+      image: 'assets/images/buttons/ppc_h_2',
       description: 'Por cara',
     },
     {
       name: '2 páginas',
       factor: 0.5,
       code: '2_vertical',
-      image: 'ppc_v_2',
+      image: 'assets/images/buttons/ppc_v_2',
       description: 'Por cara',
     },
     {
       name: '4 páginas',
       factor: 0.25,
       code: '4_horizontal',
-      image: 'ppc_h_4',
+      image: 'assets/images/buttons/ppc_h_4',
       description: 'Por cara',
     },
   ],
@@ -109,24 +112,24 @@ export default {
     {
       name: 'Vertical. Derecha-Izquierda',
       code: 'vertical-derecha-izquierda',
-      image: 'o_vdi',
+      image: 'assets/images/buttons/o_vdi',
       default: true,
     },
     {
       name: 'Vertical. Abajo-Arriba',
       code: 'vertical-abajo-arriba',
-      image: 'o_vaa',
+      image: 'assets/images/buttons/o_vaa',
     },
     {
       name: 'Horizontal. Abajo-Arriba',
       code: 'horizontal-abajo-arriba',
-      image: 'o_haa',
+      image: 'assets/images/buttons/o_haa',
     },
 
     {
       name: 'Horizontal. Derecha-Izquierda',
       code: 'horizontal-derecha-izquierda',
-      image: 'o_hdi',
+      image: 'assets/images/buttons/o_hdi',
     },
   ],
 
@@ -136,21 +139,25 @@ export default {
       code: 'sin-acabado',
       description: 'Folios sueltos',
       default: true,
+      factor: 0,
     },
     {
       name: 'Grapado',
       code: 'grapado',
       description: 'En esquina',
+      factor: 0,
     },
     {
       name: 'Dos Taladros',
       code: 'dos-taladros',
+      factor: 0,
     },
 
     {
       name: 'Plastificado',
-      code: 'funda-plastico',
-      factor: 0.1,
+      code: 'plastificado',
+      factor_A3: 1.8,
+      factor_A4: 0.8,
     },
     {
       name: 'Encuadernado',
@@ -161,6 +168,7 @@ export default {
     {
       name: 'Cuatro Taladros',
       code: 'cuatro-taladros',
+      factor: 0,
     },
   ],
 
@@ -298,13 +306,6 @@ export default {
       factor: 0.25,
       image: 'assets/images/bounds/verde-neon.png',
     },
-    // {
-    //   id: 5,
-    //   sides: ['delantera', 'trasera'],
-    //   color: '#008F39',
-    //   name: 'Verde oscuro',
-    //   factor: 0.25,
-    // },
     {
       id: 6,
       sides: ['delantera', 'trasera'],
@@ -329,14 +330,6 @@ export default {
       factor: 0.25,
       image: 'assets/images/bounds/melocoton.png',
     },
-    // {
-    //   id: 9,
-    //   sides: ['delantera', 'trasera'],
-    //   color: '#000080',
-    //   name: 'Azul oscuro',
-    //   factor: 0.25,
-
-    // },
     {
       id: 10,
       sides: ['delantera', 'trasera'],

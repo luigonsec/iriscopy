@@ -4,6 +4,7 @@ import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import { OrdersService } from 'src/app/services/orders.service';
 import { ShopcartService } from 'src/app/services/shopcart.service';
 import * as uuid from 'uuid';
+import JSONfn from 'json-fn';
 
 @Component({
   selector: 'app-confirm-bar',
@@ -28,7 +29,7 @@ export class ConfirmBarComponent implements OnInit {
   addConfiguration() {
     this.order.id = uuid.v4();
     // TODO: Copy
-    const order = JSON.parse(JSON.stringify(this.order));
+    const order = JSONfn.parse(JSONfn.stringify(this.order));
     this.shopcartService.addCopyToCart(order);
     this.reset();
   }

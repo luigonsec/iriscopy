@@ -10,21 +10,21 @@
     <div class="Form__Section p-field">
       <div class="p-fluid">
         <div class="Label">Tipo de papel</div>
-        <app-paper-grammage (emitChange)="getPaperGrammage($event)"></app-paper-grammage>
+        <app-paper-grammage (emitChange)="getPaperGrammage($event)" [(paperSize)]="this.paperSize"></app-paper-grammage>
       </div>
     </div>
 
     <div class="Form__Section p-field">
       <div class="p-fluid">
         <div class="Label">Tipo de impresión</div>
-        <app-print-type (emitChange)="getPrintType($event)"></app-print-type>
+        <app-print-type (emitChange)="getPrintType($event)" [(paperGrammage)]="this.paperGrammage"></app-print-type>
       </div>
     </div>
 
     <div class="Form__Section p-field">
       <div class="p-fluid">
         <div class="Label">Forma de impresión</div>
-        <app-print-form (emitChange)="getPrintForm($event)"></app-print-form>
+        <app-print-form (emitChange)="getPrintForm($event)" [(paperGrammage)]="this.paperGrammage"></app-print-form>
       </div>
     </div>
 

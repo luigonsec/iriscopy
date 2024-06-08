@@ -6,8 +6,8 @@
       <ng-template let-item>
 
         <div class="Button">
-          <img class="Button__img"
-            src="assets/images/buttons/{{item.image}}{{item.code === this.option.code ? '_active' : '' }}.png">
+          <img class="Button__img" src="{{item.image}}{{item.code === this.option.code ? '_pink':'_active'}}.png">
+
         </div>
       </ng-template>
     </p-selectButton>
@@ -19,8 +19,7 @@
       <ng-template let-item>
 
         <div class="Button">
-          <img class="Button__img"
-            src="assets/images/buttons/{{item.image}}{{item.code === this.option.code ? '_active' : '' }}.png">
+          <img class="Button__img" src="{{item.image}}{{item.code === this.option.code ? '_pink':'_active'}}.png">
         </div>
       </ng-template>
     </p-selectButton>
