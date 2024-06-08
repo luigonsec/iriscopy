@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import { OrdersService } from 'src/app/services/orders.service';
@@ -21,7 +15,7 @@ export class ConfirmBarComponent implements OnInit, OnChanges {
   @Input('order') order: OrderCopy;
   @Input('reset') reset: () => void = () => undefined;
 
-  precio: number;
+  precio: number = 0;
   constructor(
     private orderService: OrdersService,
     private shopcartService: ShopcartService,

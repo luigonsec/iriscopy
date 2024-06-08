@@ -17,6 +17,8 @@ export default {
     {
       name: 'Normal',
       code: 'normal',
+      factor_A3: 0,
+      factor_A4: 0,
       description: '80 grs',
       default: true,
     },
@@ -24,11 +26,15 @@ export default {
       name: 'Cartulina',
       code: 'cartulina',
       description: '180 grs',
+      factor_A3: 0.2,
+      factor_A4: 0.1,
     },
     {
       name: 'Fotográfico',
       description: '250 grs',
       code: 'fotografico',
+      factor_A3: 0.2,
+      factor_A4: 0.2,
     },
   ],
 
@@ -59,11 +65,13 @@ export default {
       default: true,
       name: 'Una cara',
       code: 'una-cara',
+      factor: 1,
       description: 'Por una cara del papel',
     },
     {
       name: 'Doble cara',
       code: 'doble-cara',
+      factor: 0.5,
       description: 'Por ambas caras del papel',
     },
   ],
@@ -71,6 +79,7 @@ export default {
   pagesPerSide: [
     {
       name: '1 página',
+      factor: 1,
       code: '1_vertical',
       description: 'Por cara',
       image: 'assets/images/buttons/ppc_v_1',
@@ -78,18 +87,21 @@ export default {
     },
     {
       name: '2 páginas',
+      factor: 0.5,
       code: '2_horizontal',
       image: 'assets/images/buttons/ppc_h_2',
       description: 'Por cara',
     },
     {
       name: '2 páginas',
+      factor: 0.5,
       code: '2_vertical',
       image: 'assets/images/buttons/ppc_v_2',
       description: 'Por cara',
     },
     {
       name: '4 páginas',
+      factor: 0.25,
       code: '4_horizontal',
       image: 'assets/images/buttons/ppc_h_4',
       description: 'Por cara',
@@ -127,29 +139,36 @@ export default {
       code: 'sin-acabado',
       description: 'Folios sueltos',
       default: true,
+      factor: 0,
     },
     {
       name: 'Grapado',
       code: 'grapado',
       description: 'En esquina',
+      factor: 0,
     },
     {
       name: 'Dos Taladros',
       code: 'dos-taladros',
+      factor: 0,
     },
 
     {
       name: 'Plastificado',
       code: 'plastificado',
+      factor_A3: 1.8,
+      factor_A4: 0.8,
     },
     {
       name: 'Encuadernado',
       code: 'encuadernado',
       description: 'En espiral',
+      factor: 1.2,
     },
     {
       name: 'Cuatro Taladros',
       code: 'cuatro-taladros',
+      factor: 0,
     },
   ],
 
@@ -173,6 +192,7 @@ export default {
         'radial-gradient(circle at 10% 20%, rgb(0, 0, 0) 0%, rgb(64, 64, 64) 90.2%)',
       name: 'Metálica negra',
       image: 'assets/images/rings/negra.png',
+      factor: 0,
       default: true,
     },
     {
@@ -180,41 +200,48 @@ export default {
       color: '#000080',
       name: 'Azul oscuro',
       image: 'assets/images/rings/azul.png',
+      factor: 0.25,
     },
     {
       id: 3,
       color: '#9fd8e6',
       name: 'Azul pastel',
+      factor: 0.25,
       image: 'assets/images/rings/azul-pastel.png',
     },
     {
       id: 4,
       color: '#BDECB6',
       name: 'Verde agua',
+      factor: 0.25,
       image: 'assets/images/rings/verde-pastel.png',
     },
     {
       id: 5,
       color: '#008F39',
       name: 'Verde oscuro',
+      factor: 0.25,
       image: 'assets/images/rings/verde-oscuro.png',
     },
     {
       id: 6,
       color: '#800080',
       name: 'Morado',
+      factor: 0.25,
       image: 'assets/images/rings/morado.png',
     },
     {
       id: 7,
       color: '#d29bfd',
       name: 'Lila',
+      factor: 0.25,
       image: 'assets/images/rings/lila.png',
     },
     {
       id: 8,
       color: '#FF0080',
       name: 'Rosa fuscia',
+      factor: 0.25,
       image: 'assets/images/rings/rosa.png',
     },
 
@@ -222,18 +249,21 @@ export default {
       id: 9,
       color: 'yellow',
       name: 'Amarillo',
+      factor: 0.25,
       image: 'assets/images/rings/amarillo.png',
     },
     {
       id: 10,
       color: 'red',
       name: 'Rojo',
+      factor: 0.25,
       image: 'assets/images/rings/rojo.png',
     },
     {
       id: 11,
       color: '#FF0080',
       name: 'Rosa pastel',
+      factor: 0.25,
       image: 'assets/images/rings/rosa-pastel.png',
     },
   ],
@@ -242,10 +272,12 @@ export default {
     {
       id: 1,
       sides: ['delantera'],
+
       color:
         'repeating-linear-gradient(-45deg,white,white 4px,rgba(0,0,0,.1) 4px,rgba(0,0,0,.1) 9px)',
       name: 'Acetato transparente',
       default: true,
+      factor: 0,
       image: 'assets/images/bounds/transparente.png',
     },
 
@@ -254,6 +286,7 @@ export default {
       sides: ['trasera'],
       color: '#1c1c1c',
       name: 'Negra gofrada',
+      factor: 0,
       default: true,
       image: 'assets/images/bounds/negra.png',
     },
@@ -262,6 +295,7 @@ export default {
       sides: ['delantera', 'trasera'],
       color: '#b6ecda',
       name: 'Verde agua',
+      factor: 0.25,
       image: 'assets/images/bounds/verde-pastel.png',
     },
     {
@@ -269,6 +303,7 @@ export default {
       sides: ['delantera', 'trasera'],
       color: '#39ff14',
       name: 'Verde flúor',
+      factor: 0.25,
       image: 'assets/images/bounds/verde-neon.png',
     },
     {
@@ -276,6 +311,7 @@ export default {
       sides: ['delantera', 'trasera'],
       color: '#FF0080',
       name: 'Rosa fucsia',
+      factor: 0.25,
       image: 'assets/images/bounds/rosa.png',
     },
     {
@@ -283,6 +319,7 @@ export default {
       sides: ['delantera', 'trasera'],
       color: '#FDFD96',
       name: 'Amarillo pastel',
+      factor: 0.25,
       image: 'assets/images/bounds/amarillo-pastel.png',
     },
     {
@@ -290,6 +327,7 @@ export default {
       sides: ['delantera', 'trasera'],
       color: '#ff8000',
       name: 'Naranja',
+      factor: 0.25,
       image: 'assets/images/bounds/melocoton.png',
     },
     {
@@ -297,6 +335,7 @@ export default {
       sides: ['delantera', 'trasera'],
       color: '#9fd8e6',
       name: 'Azul pastel',
+      factor: 0.25,
       image: 'assets/images/bounds/azul-pastel.png',
     },
     {
@@ -304,6 +343,7 @@ export default {
       sides: ['delantera', 'trasera'],
       color: '#ff91a4',
       name: 'Rosa salmón',
+      factor: 0.25,
       image: 'assets/images/bounds/rosa-salmon.png',
     },
     {
@@ -311,6 +351,7 @@ export default {
       color: '#800080',
       name: 'Morado',
       sides: ['delantera', 'trasera'],
+      factor: 0.25,
       image: 'assets/images/bounds/morado.png',
     },
   ],
