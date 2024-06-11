@@ -13,7 +13,11 @@
     color: black;
     font-size: 16px;
     font-weight: 500;
-    margin-bottom: 0px;
+    margin-bottom: 15px;
+
+    .Value {
+      display: block;
+    }
   }
 
   .OrderItem {
@@ -88,25 +92,18 @@
   }
 
   .Order__options {
-    display: flex;
+    text-align: right;
     margin-top: 20px;
+    width: 100%;
     .Remove {
+      display: inline;
       cursor: pointer;
-      width: 50%;
-      display: flex;
-      text-align: right;
-      align-items: center;
-      justify-content: right;
-      padding-right: 15px;
-      height: 100%;
+      padding-right: 5px;
+      color: $darkGray;
     }
     .Price {
-      width: 50%;
+      display: inline;
       color: $primary;
-      display: flex;
-      align-items: end;
-      width: auto;
-      justify-content: right;
       height: 100%;
       .Value {
         font-weight: 500;

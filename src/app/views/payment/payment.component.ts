@@ -20,10 +20,6 @@ import { ShippingComponent } from 'src/app/components/forms/shipping/shipping.co
 import { Subscription } from 'rxjs';
 import { selectCustomer } from 'src/app/_selectors/customer.selectors';
 import Customer from 'src/app/interfaces/Customer';
-import mallorca from 'src/config/mallorca';
-import menorca from 'src/config/menorca';
-import ibiza from 'src/config/ibiza';
-import formentera from 'src/config/formentera';
 
 import generalConfig from 'src/config/general';
 
@@ -31,6 +27,9 @@ import ShippingDetails from 'src/app/interfaces/ShippingDetails';
 import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import OrderProduct from 'src/app/interfaces/OrderProduct';
 import { HttpErrorResponse } from '@angular/common/http';
+import { selectCoupon } from 'src/app/_selectors/coupons.selector';
+import { ShippingCostsService } from 'src/app/services/shipping-costs.service';
+import moment from 'moment';
 
 @Component({
   selector: 'app-payment',
@@ -49,6 +48,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   public deliver: string = 'Pickup';
   public copies: OrderCopy[];
   public products: OrderProduct[];
+  public first_time_coupon_applied = false;
 
   public locations = locations;
   public selectedLocation: Location;
@@ -66,7 +66,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
   @ViewChild('billing') public billing: BillingComponent;
   @ViewChild('shipping') public shipping: ShippingComponent;
 
-  public formGroup;
   public customer: Customer;
   public subcriptorCustomer: Subscription;
   public subcriptorCoupon: Subscription;
@@ -76,6 +75,9 @@ export class PaymentComponent implements OnInit, OnDestroy {
   total: number = 0;
   discount: number = 0;
 
+  apply_cupon_text = 'Aplicar mi cupón';
+  searching_coupon = false;
+
   constructor(
     private shopcartService: ShopcartService,
     private orderService: OrdersService,
@@ -83,6 +85,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     private loadingService: LoadingService,
     private messageService: MessageService,
     private couponsService: CouponsService,
+    private shippingCostService: ShippingCostsService,
 
     private store: Store
   ) {
@@ -93,68 +96,77 @@ export class PaymentComponent implements OnInit, OnDestroy {
           this.customer = customer;
         }
       });
-
-    // this.subcriptorCoupon = this.store
-    //   .select(selectCoupon)
-    //   .subscribe((coupon) => {
-    //     if (coupon) {
-    //       this.coupon = coupon;
-    //     }
-    //   });
-
-    this.store.dispatch(clearCoupon());
   }
 
   public ngOnDestroy(): void {
     this.subcriptorCustomer.unsubscribe();
+    this.subcriptorCoupon.unsubscribe();
   }
 
   public getCoupon() {
-    this.couponsService.validate(this.inputCoupon).subscribe({
-      next: (coupon: Coupon) => {
-        this.coupon = coupon;
-        this.validateCoupon();
-      },
-      error: () => {
-        this.messageService.add({
-          severity: 'error',
-          detail: 'El código promocional no existe',
-          summary: 'Código erróneo',
-        });
-      },
-    });
+    this.first_time_coupon_applied = true;
+    this.searching_coupon = true;
+    this.apply_cupon_text = 'Buscando cupón...';
+    this.couponsService
+      .validate(this.inputCoupon)
+      .subscribe({
+        next: (coupon: Coupon) => {
+          coupon.valid_until = moment().valueOf() + 15 * 60 * 1000;
+
+          this.store.dispatch(applyCoupon({ coupon: coupon }));
+        },
+        error: () => {
+          return this.messageService.add({
+            severity: 'error',
+            detail: 'El código promocional no existe',
+            summary: 'Código erróneo',
+          });
+        },
+      })
+      .add(() => {
+        this.searching_coupon = false;
+        this.apply_cupon_text = 'Aplicar mi cupón';
+      });
   }
 
-  private checkMinimumAmount() {
-    if (!this.coupon) return true;
-    if (this.coupon.minimum_amount > this.subtotal) {
-      this.messageService.add({
-        severity: 'error',
-        detail: `El código promocional solo puede aplicarse a pedidos mayores de ${this.coupon.minimum_amount} €`,
-        summary: 'Código no aplicado',
-      });
-      this.coupon = undefined;
+  private comprobarCantidadMinima(coupon: Coupon) {
+    if (coupon.minimum_amount > this.subtotal) {
       return false;
     }
     return true;
   }
 
-  public validateCoupon() {
-    const isValidAmount = this.checkMinimumAmount();
-    if (!isValidAmount) return false;
+  public clearCoupon() {
+    this.store.dispatch(clearCoupon());
+    this.coupon = undefined;
+  }
 
-    this.store.dispatch(applyCoupon({ coupon: this.coupon }));
-    this.messageService.add({
-      severity: 'success',
-      detail: 'El código promocional se ha aplicado',
-      summary: 'Código aplicado',
-    });
-    const subtotal = this.getSubtotalWithDiscount();
-    if (subtotal < this.PAYMENT_MINIMUM_PRICE_BIZUM) {
-      this.payment = 'Card';
+  public validateCoupon(coupon) {
+    if (!coupon) return false;
+
+    if (!this.comprobarCantidadMinima(coupon)) {
+      this.messageService.add({
+        severity: 'error',
+        detail: `El código promocional solo puede aplicarse a pedidos mayores de ${coupon.minimum_amount} €`,
+        summary: 'Código no aplicado',
+      });
+      return this.clearCoupon();
+    } else if (coupon.valid_until < moment().valueOf()) {
+      return this.clearCoupon();
     }
-    if (subtotal < this.PAYMENT_MINIMUM_PRICE_CARD) {
-      this.payment = null;
+
+    this.coupon = coupon;
+    this.discount = this.coupon.amount;
+
+    this.store.dispatch(applyCoupon({ coupon: coupon }));
+    this.calcularPrecios();
+
+    if (this.first_time_coupon_applied) {
+      this.messageService.add({
+        severity: 'success',
+        detail: 'El código promocional se ha aplicado',
+        summary: 'Código aplicado',
+      });
     }
   }
 
@@ -240,65 +252,23 @@ export class PaymentComponent implements OnInit, OnDestroy {
     });
   }
 
-  public getPrecioEnvio() {
-    let precioEnvio = 4.9;
-
-    if (this.subtotal >= 40) precioEnvio = 0;
-
+  // FIXME
+  public getGastosDeEnvio() {
     if (this.billing) {
-      let code;
-      if (this.differentAddress && this.shipping) {
-        code = this.shipping.shippingDetails.postcode;
-      } else {
-        code = this.billing.billingDetails.postcode;
-      }
+      const postcode =
+        this.differentAddress && this.shipping
+          ? this.shipping.shippingDetails.postcode
+          : this.billing.billingDetails.postcode;
 
-      const numericCode = +code;
-      if (
-        (numericCode >= 35000 && numericCode < 36000) ||
-        (numericCode >= 38000 && numericCode < 39000)
-      ) {
-        precioEnvio = this.getGastosEnvioCanarias();
-      } else if (mallorca.includes(numericCode))
-        precioEnvio = this.getGastosEnvioMallorca();
-      else if (ibiza.includes(numericCode))
-        precioEnvio = this.getGastosEnvioIbiza();
-      else if (menorca.includes(numericCode))
-        precioEnvio = this.getGastosEnvioMenorca();
-      else if (formentera.includes(numericCode))
-        precioEnvio = this.getGastosEnvioFormentera();
-      else precioEnvio = this.getGastosEnvioPeninsula();
+      this.precioEnvio = this.shippingCostService.getGastosDeEnvio(
+        this.subtotal - this.discount,
+        postcode
+      );
+    } else {
+      this.precioEnvio = 4.9;
     }
-    this.precioEnvio = precioEnvio;
-  }
-
-  public getGastosEnvioCanarias() {
-    return 35;
-  }
-
-  public getGastosEnvioPeninsula() {
-    const precioPedido = this.subtotal;
-    if (precioPedido > 0 && precioPedido < 15) return 4.9;
-    if (precioPedido >= 15 && precioPedido < 25) return 3.9;
-    if (precioPedido >= 25 && precioPedido < 35) return 2.9;
-    if (precioPedido >= 35) return 0;
-    return 4.9;
-  }
-
-  public getGastosEnvioMallorca() {
-    return 10.3;
-  }
-
-  public getGastosEnvioMenorca() {
-    return 11.9;
-  }
-
-  public getGastosEnvioIbiza() {
-    return 11.9;
-  }
-
-  public getGastosEnvioFormentera() {
-    return 14.4;
+    this.getTotal();
+    return this.precioEnvio;
   }
 
   public getTotal() {
@@ -433,7 +403,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     shippingLine.method_title = 'Envío en 48 horas';
     shippingLine.method_id = 'flat_rate';
     shippingLine.instance_id = '9';
-    // shippingLine.total = this.getPrecioEnvio().toFixed(2);
+    // shippingLine.total = this.getGastosDeEnvio().toFixed(2);
     shippingLine.total_tax = '0.00';
   }
 
@@ -449,31 +419,53 @@ export class PaymentComponent implements OnInit, OnDestroy {
     ];
   }
 
-  calculatePrices() {
+  calcularPrecios(callback = undefined) {
     this.getSubtotal().subscribe((price) => {
       this.subtotal =
         price +
         this.products
           .map((order) => +order.product.price * order.quantity)
           .reduce((a, b) => a + b, 0);
-
-      this.getPrecioEnvio();
+      this.getDiscount();
+      this.comprobarMetodoDePago();
+      this.getGastosDeEnvio();
       this.getTotal();
+      if (callback) {
+        callback();
+      }
     });
+  }
+
+  comprobarMetodoDePago() {
+    const subtotalMasDescuento = this.subtotal + this.discount;
+    if (subtotalMasDescuento < this.PAYMENT_MINIMUM_PRICE_BIZUM) {
+      this.payment = 'Card';
+    }
+    if (subtotalMasDescuento < this.PAYMENT_MINIMUM_PRICE_CARD) {
+      this.payment = null;
+    }
+  }
+
+  subscribeCoupon() {
+    this.subcriptorCoupon = this.store
+      .select(selectCoupon)
+      .subscribe((coupon) => {
+        this.validateCoupon(coupon);
+      });
   }
 
   ngOnInit(): void {
     this.copies = this.shopcartService.getCart().copies;
     this.products = this.shopcartService.getCart().products;
     this.emptyCart = this.copies.length + this.products.length === 0;
-    this.calculatePrices();
+    this.calcularPrecios(this.subscribeCoupon.bind(this));
+
     this.subscriptionCart = this.shopcartService
       .getCart$()
       .subscribe((order) => {
         this.copies = order.copies;
         this.products = order.products;
-        this.calculatePrices();
-        this.checkMinimumAmount();
+        this.calcularPrecios(this.validateCoupon.bind(this, this.coupon));
         this.emptyCart = this.copies.length + this.products.length === 0;
       });
   }

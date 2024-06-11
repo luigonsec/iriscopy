@@ -10,20 +10,18 @@ import options from 'src/config/options';
 export class PrintTypeComponent implements OnInit {
   public options: Option[];
   public option: Option = undefined;
-  private _paperGrammage: any;
+  private _paperType: any;
 
   @Output() emitChange = new EventEmitter<Option>();
 
-  @Input() set paperGrammage(value: any) {
-    this._paperGrammage = value;
+  @Input() set paperType(value: any) {
+    this._paperType = value;
     const filteredOptions = options.printType.filter((x) => {
-      return !(
-        x.code === 'color' && this._paperGrammage.code === 'fotografico'
-      );
+      return !(x.code === 'color' && this._paperType.code === 'fotografico');
     });
 
     if (
-      this._paperGrammage.code === 'fotografico' &&
+      this._paperType.code === 'fotografico' &&
       this.option.code === 'color'
     ) {
       this.option = filteredOptions.find((x) => x.default);

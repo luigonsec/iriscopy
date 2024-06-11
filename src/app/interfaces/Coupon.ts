@@ -5,4 +5,5 @@ export default interface Coupon {
   amount: number;
   minimum_amount: number;
   maximum_amount: number;
+  valid_until?: number;
 }

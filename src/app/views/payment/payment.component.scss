@@ -34,18 +34,17 @@ a {
     margin-bottom: 10px;
     border-bottom: 1px solid black;
 
-    &.Total {
-      font-size: 20px;
-    }
-
-    &.Subtotal {
-      font-size: 18px;
-    }
-
     .Title {
       display: inline-block;
       width: 50%;
       text-align: left;
+      font-size: 14px;
+    }
+
+    &.Total {
+      .Title {
+        font-size: 20px;
+      }
     }
 
     .Amount {

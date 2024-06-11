@@ -10,13 +10,13 @@
           <div class="Title">Envío / Recogida</div>
           <div class="Option p-field-radiobutton">
             <p-radioButton value="Shipping" [(ngModel)]="deliver" inputId="shipping"
-              (onClick)="this.calculatePrices()"></p-radioButton>
+              (onClick)="this.calcularPrecios()"></p-radioButton>
             <label for="shipping"> Envío en 48 horas <label
-                class="Extra">{{this.precioEnvio.toFixed(2)}}€</label></label>
+                class="Extra">{{this.getGastosDeEnvio().toFixed(2)}}€</label></label>
           </div>
           <div class="Option p-field-radiobutton">
             <p-radioButton value="Pickup" [(ngModel)]="deliver" inputId="pickup"
-              (onClick)="this.calculatePrices()"></p-radioButton>
+              (onClick)="this.calcularPrecios()"></p-radioButton>
             <label for="pickup"> Recogida en local</label> <label class="Extra"> Gratuita</label>
           </div>
 
@@ -85,7 +85,8 @@
             </div>
           </div>
           <div class="Buttons col-4">
-            <button pButton class='Secondary p-button-sm' (click)="this.getCoupon()">Aplicar mi cupón</button>
+            <button pButton class='Secondary p-button-sm' (click)="this.getCoupon()"
+              [disabled]="this.searching_coupon">{{this.apply_cupon_text}}</button>
           </div>
         </div>
 
@@ -104,12 +105,12 @@
                 Envío
               </div>
               <div class="Amount">
-                {{this.precioEnvio.toFixed(2)}} €
+                {{this.getGastosDeEnvio().toFixed(2)}} €
               </div>
             </div>
             <div class="Cost Discount" *ngIf="this.coupon">
               <div class="Title">
-                Descuento
+                Descuento ({{this.coupon.code}})
               </div>
               <div class="Amount">
                 -{{this.discount.toFixed(2)}} €

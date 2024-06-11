@@ -40,7 +40,7 @@
   </div>
 </div>
 
-<p-sidebar [(visible)]="sidebarVisible" [position]="'right'" class="Sidebar">
+<p-sidebar [(visible)]="sidebarVisible" [position]="'right'" class="Menu">
   <div class="grid">
     <div class="col-8 col-offset-2">
       <img src="assets/images/logo.png" style="width: 100%;" alt="">
@@ -48,6 +48,11 @@
   </div>
   <div class="grid">
     <div class="col-12">
+      <div class="Item" *ngIf="(this.copies.length + this.products.length)">
+        <a class="Link" (click)="toggleSidebar()">
+          <i class="ShoppingCart__Icon fas fa-shopping-cart"></i> ver el carro
+        </a>
+      </div>
       <div class="Item">
         <a class="Link" (click)="this.sidebarVisible = false; " [routerLink]="'/print'">
           <i class="fas fa-print"></i> imprimir
@@ -88,4 +93,4 @@
   </div>
 </p-sidebar>
 
-<app-sidebar #sidebar></app-sidebar>
+<app-sidebar class="" #sidebar></app-sidebar>

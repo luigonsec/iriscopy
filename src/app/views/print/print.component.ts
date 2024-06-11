@@ -7,7 +7,6 @@ import File from 'src/app/interfaces/File';
 import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
 import { OrdersService } from 'src/app/services/orders.service';
 import { Store } from '@ngrx/store';
-import { clearCoupon } from 'src/app/_actions/coupons.actions';
 import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-print',
@@ -20,7 +19,7 @@ export class PrintComponent implements OnInit, OnDestroy {
   public pagesPerSide: Option;
   public printForm: Option;
   public printType: Option;
-  public paperGrammage: Option;
+  public paperType: Option;
   public paperSize: Option;
   public boundType: Option = options.boundTypes.find((x) => x.default);
 
@@ -44,16 +43,13 @@ export class PrintComponent implements OnInit, OnDestroy {
 
   constructor(private orderService: OrdersService, private store: Store) {
     this.reset = this.reset.bind(this);
-
-    this.store.dispatch(clearCoupon());
-
     this.order = {
       orientation: this.orientation,
       finishType: this.finishType,
       pagesPerSide: this.pagesPerSide,
       printForm: this.printForm,
       printType: this.printType,
-      paperGrammage: this.paperGrammage,
+      paperType: this.paperType,
       paperSize: this.paperSize,
       boundType: this.boundType,
       boundColors: this.boundColors,
@@ -72,8 +68,8 @@ export class PrintComponent implements OnInit, OnDestroy {
   }
 
   getPaperGrammage(value) {
-    this.paperGrammage = value;
-    this.order.paperGrammage = this.paperGrammage;
+    this.paperType = value;
+    this.order.paperType = this.paperType;
     this.order = Object.assign({}, this.order);
   }
 
@@ -148,7 +144,7 @@ export class PrintComponent implements OnInit, OnDestroy {
     if (!this.pagesPerSide) res = false;
     if (!this.printForm) res = false;
     if (!this.printType) res = false;
-    if (!this.paperGrammage) res = false;
+    if (!this.paperType) res = false;
     if (!this.paperSize) res = false;
 
     if (this.finishType.code === 'encuadernado') {
@@ -167,7 +163,7 @@ export class PrintComponent implements OnInit, OnDestroy {
   prepareOrderToEdit(order: OrderCopy) {
     this.order = order;
     this.paperSize = order.paperSize;
-    this.paperGrammage = order.paperGrammage;
+    this.paperType = order.paperType;
     this.printType = order.printType;
     this.printForm = order.printForm;
     this.orientation = order.orientation;
@@ -175,11 +171,6 @@ export class PrintComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const orderToEdit = this.orderService.getOrderToEdit();
-    if (orderToEdit) {
-      this.prepareOrderToEdit(orderToEdit);
-    }
-
     this.orderSubscription = this.orderService.getOrder().subscribe((order) => {
       this.order = order;
       this.order = Object.assign({}, this.order);

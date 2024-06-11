@@ -4,30 +4,24 @@
       <div class="grid">
         <div class="col-12">
 
-          <div class="OrderItem" *ngFor="let file of order.files">
-            <div class="grid">
-              <div class="col-12">
-                <div class="Title">
-                  <div class='Value'>{{file.name}} ({{file.pages}} páginas)</div>
-                </div>
 
-              </div>
-
-            </div>
+          <div class="Title">
+            <div class='Value' *ngFor="let file of order.files">{{file.name}} ({{file.pages}} páginas)</div>
           </div>
+
           <div class="Description ">
             <div class="Item white">
               <img [src]="order.printType.image" alt="">
             </div>
 
             <div class="Item">{{order.paperSize.name}}</div>
-            <div class="Item">{{order.paperGrammage.description}}</div>
+            <div class="Item">{{order.paperType.description}}</div>
             <div class="Item">{{order.printForm.name}}</div>
             <div class="Item">
-              <img [src]="'assets/images/buttons/' + order.pagesPerSide.image + '_pink.png'" alt="">
+              <img [src]=" order.pagesPerSide.image + '_pink.png'" alt="">
             </div>
             <div class="Item">
-              <img [src]="'assets/images/buttons/' + order.orientation.image + '_pink.png'" alt="">
+              <img [src]=" order.orientation.image + '_pink.png'" alt="">
             </div>
             <div class="Item">{{order.copiesQuantity}} {{order.copiesQuantity == 1 ? 'copia':'copias'}}</div>
 
@@ -39,7 +33,7 @@
           </div>
 
           <div class="grid">
-            <div class="col-8">
+            <div class="col-12 md:col-12">
               <div class="Bound__details">
                 <div class="Bound__detail" *ngIf="order.finishType.code === 'encuadernado'">
                   <img [src]="order.boundColors.anillas.image " alt="">
@@ -62,14 +56,14 @@
                 </div>
               </div>
             </div>
-            <div class="Order__options col-4">
-              <div class="Edit">
+            <div class="Order__options col:12 md:col-12">
+              <!-- <div class="Edit">
                 <i class="fas fa-pencil-alt" (click)="this.editCopy(order)"></i>
-              </div>
-              <div class="Remove">
-                <i class="far fa-trash-alt" (click)="this.removeCopy(order)"></i>
-              </div>
+              </div> -->
               <div class="Price">
+                <div class="Remove">
+                  <i class="far fa-trash-alt" (click)="this.removeCopy(order)"></i>
+                </div>
                 <div class='Value'>{{(this.copiesPrice[order.id] || 0).toFixed(2)}}€</div>
               </div>
             </div>

@@ -10,19 +10,19 @@ import options from 'src/config/options';
 export class PrintFormComponent implements OnInit {
   public options: Option[];
   public option: Option = undefined;
-  private _paperGrammage: any;
+  private _paperType: any;
   @Output() emitChange = new EventEmitter<Option>();
 
-  @Input() set paperGrammage(value: any) {
-    this._paperGrammage = value;
+  @Input() set paperType(value: any) {
+    this._paperType = value;
     const filteredOptions = options.printForm.filter((x) => {
       return !(
-        x.code === 'doble-cara' && this._paperGrammage.code === 'fotografico'
+        x.code === 'doble-cara' && this._paperType.code === 'fotografico'
       );
     });
 
     if (
-      this._paperGrammage.code === 'fotografico' &&
+      this._paperType.code === 'fotografico' &&
       this.option.code === 'doble-cara'
     ) {
       this.option = filteredOptions.find((x) => x.default);

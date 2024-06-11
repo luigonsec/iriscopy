@@ -10,10 +10,10 @@ import options from 'src/config/options';
 export class PaperGrammageComponent implements OnInit {
   public options: Option[];
   public option: Option = undefined;
-  private _paperSize: any;
+  private _paperSize;
 
   @Output() emitChange = new EventEmitter<Option>();
-  @Input() set paperSize(value: any) {
+  @Input() set paperSize(value) {
     this._paperSize = value;
     const filteredOptions = options.paperType.filter((x) => {
       return !(x.code === 'fotografico' && this._paperSize.code === 'A3');
@@ -30,9 +30,10 @@ export class PaperGrammageComponent implements OnInit {
   constructor() {}
 
   handleChange($event) {
-    const paperGrammage = $event.value;
-    this.emitChange.emit(paperGrammage);
+    const paperType = $event.value;
+    this.emitChange.emit(paperType);
   }
+
   ngOnInit(): void {
     this.options = options.paperType;
     this.option = options.paperType.find((x) => x.default);

@@ -10,7 +10,7 @@ export interface OrderCopy {
   pagesPerSide: Option;
   printForm: Option;
   printType: Option;
-  paperGrammage: Option;
+  paperType: Option;
   paperSize: Option;
   boundType: Option;
 

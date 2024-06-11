@@ -14,8 +14,8 @@ export class PaperSizeComponent implements OnInit {
   constructor() {}
 
   handleChange($event) {
-    const printForm = $event.value;
-    this.emitChange.emit(printForm);
+    const paperSize = $event.value;
+    this.emitChange.emit(paperSize);
   }
 
   ngOnInit(): void {
