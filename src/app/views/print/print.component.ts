@@ -67,7 +67,7 @@ export class PrintComponent implements OnInit, OnDestroy {
     this.uploader.clear();
   }
 
-  getPaperGrammage(value) {
+  getPaperType(value) {
     this.paperType = value;
     this.order.paperType = this.paperType;
     this.order = Object.assign({}, this.order);
