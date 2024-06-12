@@ -10,8 +10,8 @@
     <div class="Form__Section p-field">
       <div class="p-fluid">
         <div class="Label">Tipo de papel</div>
-        <app-paper-grammage #paperTypeComponent (emitChange)="getPaperGrammage($event)"
-          [(paperSize)]="this.paperSize"></app-paper-grammage>
+        <app-paper-type #paperTypeComponent (emitChange)="getPaperGrammage($event)"
+          [(paperSize)]="this.paperSize"></app-paper-type>
       </div>
     </div>
 

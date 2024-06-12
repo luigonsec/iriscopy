@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { PaperSizeComponent } from './form/paper-size/paper-size.component';
-import { PaperGrammageComponent } from './form/paper-grammage/paper-grammage.component';
+import { PaperTypeComponent } from './form/paper-type/paper-type.component';
 import { PrintTypeComponent } from './form/print-type/print-type.component';
 import { PrintFormComponent } from './form/print-form/print-form.component';
 import { PagesPerSideComponent } from './form/pages-per-side/pages-per-side.component';
@@ -81,7 +81,7 @@ import { PillsComponent } from './components/pills/pills.component';
   declarations: [
     AppComponent,
     PaperSizeComponent,
-    PaperGrammageComponent,
+    PaperTypeComponent,
     PrintTypeComponent,
     PrintFormComponent,
     PagesPerSideComponent,

@@ -3,11 +3,11 @@ import Option from 'src/app/interfaces/Option';
 import options from 'src/config/options';
 
 @Component({
-  selector: 'app-paper-grammage',
-  templateUrl: './paper-grammage.component.html',
-  styleUrls: ['./paper-grammage.component.scss'],
+  selector: 'app-paper-type',
+  templateUrl: './paper-type.component.html',
+  styleUrls: ['./paper-type.component.scss'],
 })
-export class PaperGrammageComponent implements OnInit {
+export class PaperTypeComponent implements OnInit {
   public options: Option[];
   public option: Option = undefined;
   private _paperSize;
