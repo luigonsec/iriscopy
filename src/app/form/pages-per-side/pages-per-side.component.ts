@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import Option from 'src/app/interfaces/Option';
 import options from 'src/config/options';
 
@@ -12,6 +12,12 @@ export class PagesPerSideComponent implements OnInit {
   public option: Option = undefined;
   @Output() emitChange = new EventEmitter<Option>();
 
+  public _orientation: Option;
+  @Input() set orientation(value) {
+    this._orientation = value;
+    this.setValues();
+  }
+
   constructor() {}
 
   handleChange($event) {
@@ -19,9 +25,21 @@ export class PagesPerSideComponent implements OnInit {
     this.emitChange.emit(pagesPerSide);
   }
 
+  setValues() {
+    const orientationCode = this._orientation.code.includes('vertical')
+      ? 'vertical'
+      : 'horizontal';
+    const filteredOptions = options.pagesPerSide.filter((x) => {
+      return x.code.includes(orientationCode);
+    });
+
+    this.option = filteredOptions.find((x) => x.default);
+    this.emitChange.emit(this.option);
+    this.options = filteredOptions;
+  }
+
   ngOnInit(): void {
-    this.options = options.pagesPerSide;
-    this.option = this.options.find((x) => x.default);
+    this.setValues();
     this.emitChange.emit(this.option);
   }
 }
