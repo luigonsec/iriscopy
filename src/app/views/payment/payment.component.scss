@@ -65,7 +65,9 @@ a {
   #Privacy__policy,
   #Terms {
     padding-bottom: 15px;
-
+    .Mandatory {
+      color: red;
+    }
     .Title {
       color: $primary;
       font-size: 16px;
