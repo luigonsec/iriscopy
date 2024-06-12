@@ -25,3 +25,10 @@ body {
   padding: 0px 30px;
   flex: 1;
 }
+
+/* Media Query para pantallas de móviles */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 0px 5px;
+  }
+}

@@ -68,3 +68,10 @@
 ::ng-deep .p-badge {
   background-color: $primary;
 }
+
+/* Media Query para pantallas de móviles */
+@media (max-width: 768px) {
+  #Header {
+    padding: 10px 5px;
+  }
+}
