@@ -76,6 +76,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { ProductDetailsComponent } from './components/product/product-details/product-details.component';
 import { DividerModule } from 'primeng/divider';
 import { PillsComponent } from './components/pills/pills.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -118,6 +119,7 @@ import { PillsComponent } from './components/pills/pills.component';
     AdminBannerComponent,
     ProductDetailsComponent,
     PillsComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
