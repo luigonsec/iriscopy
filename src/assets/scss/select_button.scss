@@ -51,3 +51,15 @@
     width: 50px;
   }
 }
+
+@media (max-width: 768px) {
+  .Button {
+    .Button__label {
+      font-size: 14px;
+    }
+
+    .Button__description {
+      font-size: 9px;
+    }
+  }
+}
