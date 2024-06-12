@@ -53,7 +53,7 @@ export class ShopcartService {
   }
 
   getCopies(): OrderCopy[] {
-    return this.getCart().copies;
+    return this.getCart().copies || [];
   }
 
   getCart(): Cart {
@@ -76,5 +76,61 @@ export class ShopcartService {
 
   public getCart$(): Observable<Cart> {
     return this.itemCart$.asObservable();
+  }
+
+  validate() {
+    const cart = this.getCart();
+    const copies = cart.copies;
+    if (!Array.isArray(copies)) {
+      return false;
+    }
+
+    const results = copies.map((copy) => {
+      if (!copy.paperSize || !['A3', 'A4'].includes(copy.paperSize.code)) {
+        return false;
+      }
+      if (
+        !copy.paperType ||
+        !['normal', 'cartulina', 'fotografico'].includes(copy.paperType.code)
+      ) {
+        return false;
+      }
+      if (
+        !copy.printType ||
+        !['blanco-negro', 'color', 'color-pro'].includes(copy.printType.code)
+      ) {
+        return false;
+      }
+
+      if (
+        !copy.printForm ||
+        !['una-cara', 'doble-cara'].includes(copy.printForm.code)
+      ) {
+        return false;
+      }
+
+      if (
+        !copy.orientation ||
+        ![
+          'vertical-derecha-izquierda',
+          'vertical-abajo-arriba',
+          'horizontal-abajo-arriba',
+          'horizontal-derecha-izquierda',
+        ].includes(copy.orientation.code)
+      ) {
+        return false;
+      }
+
+      if (
+        !copy.pagesPerSide ||
+        !['1_vertical', '2_vertical', '2_horizontal', '4_horizontal'].includes(
+          copy.pagesPerSide.code
+        )
+      ) {
+        return false;
+      }
+    });
+
+    return !results.includes(false);
   }
 }

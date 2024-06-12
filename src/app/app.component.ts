@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ShopcartService } from './services/shopcart.service';
 
 @Component({
   selector: 'app-root',
@@ -6,7 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+  constructor(private shopCart: ShopcartService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const cartIsValid = this.shopCart.validate();
+    if (!cartIsValid) {
+      this.shopCart.clearCart();
+    }
+  }
 }
