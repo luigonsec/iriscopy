@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import { ShopcartService } from 'src/app/services/shopcart.service';
-import { SidebarComponent } from '../sidebar/sidebar.component';
+import { ShopcartComponent } from '../shopcart/shopcart.component';
 import Cart from 'src/app/interfaces/Cart';
 import { Store } from '@ngrx/store';
 import OrderProduct from 'src/app/interfaces/OrderProduct';
@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public shop_active: boolean = false;
   public sidebarVisible = false;
 
-  @ViewChild('sidebar') public sidebar: SidebarComponent;
+  @ViewChild('shopcart') public shopcart: ShopcartComponent;
   cartSubscription: Subscription;
   customer$: Subscription;
   customer: Customer;
@@ -66,7 +66,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   toggleSidebar() {
-    this.sidebar.toggle();
+    this.shopcart.toggle();
   }
 
   getConfig() {

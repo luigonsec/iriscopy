@@ -5,11 +5,11 @@ import { OrdersService } from 'src/app/services/orders.service';
 import { ShopcartService } from 'src/app/services/shopcart.service';
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss'],
+  selector: 'app-shopcart',
+  templateUrl: './shopcart.component.html',
+  styleUrls: ['./shopcart.component.scss'],
 })
-export class SidebarComponent implements OnInit {
+export class ShopcartComponent implements OnInit {
   @Input('display') display: boolean = false;
   public orders: OrderCopy[] = [];
   constructor(

@@ -3,38 +3,46 @@
 #Header {
   padding: 20px 0px 0px 0px;
 
-  .Link {
-    cursor: pointer;
-    text-decoration: none;
-    color: black;
-    margin-left: 20px;
-
-    &:hover {
-      text-decoration: none;
-    }
-  }
-
   #Menu {
     text-align: right;
     padding-top: 20px;
     padding-right: 30px;
 
-    #Toggle {
-      cursor: pointer;
-      font-size: 30px;
-    }
-  }
-
-  .Shopcart {
-    text-align: right;
-
-    .ShoppingCart__Icon {
-      cursor: pointer;
-      font-size: 30px;
+    div {
+      display: inline-block;
     }
 
-    span.p-badge {
-      background: $primary !important;
+    #Links__mobile {
+      cursor: pointer;
+      font-size: 30px;
+      i {
+        margin-left: 30px;
+      }
+    }
+
+    #Links {
+      .ShoppingCart__Icon {
+        font-size: 20px;
+        ::ng-deep .p-badge {
+          font-size: 0.6rem;
+          font-weight: 700;
+          min-width: 1.2rem;
+          height: 1.2rem;
+          line-height: 1.2rem;
+          transform: translate(80%, -50%) !important;
+        }
+      }
+    }
+
+    .Link {
+      cursor: pointer;
+      text-decoration: none;
+      color: black;
+      margin-left: 20px;
+
+      &:hover {
+        text-decoration: none;
+      }
     }
   }
 }
@@ -56,4 +64,8 @@
       }
     }
   }
+}
+
+::ng-deep .p-badge {
+  background-color: $primary;
 }

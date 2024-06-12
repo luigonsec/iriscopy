@@ -32,7 +32,7 @@ import { AdditionalCommentComponent } from './form/additional-comment/additional
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ConfirmBarComponent } from './components/confirm-bar/confirm-bar.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { ShopcartComponent } from './components/shopcart/shopcart.component';
 import { SidebarModule } from 'primeng/sidebar';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { PrintComponent } from './views/print/print.component';
@@ -97,7 +97,7 @@ import { PillsComponent } from './components/pills/pills.component';
     QuantityCopiesComponent,
     AdditionalCommentComponent,
     ConfirmBarComponent,
-    SidebarComponent,
+    ShopcartComponent,
     PrintComponent,
     PaymentComponent,
     OrderComponent,

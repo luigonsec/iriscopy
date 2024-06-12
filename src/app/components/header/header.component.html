@@ -8,7 +8,9 @@
   </div>
 
   <div id="Menu" class="col-6 sm:col-8 md:col-10">
-    <div id="Links" class="hidden sm:block ">
+
+    <div id="Links" class="hidden sm:inline-block ">
+
       <a class="Link" href="/">
         <i class="fas fa-print"></i> imprimir
       </a>
@@ -25,15 +27,17 @@
       <a class="Link" *ngIf="this.customer" [routerLink]="'/profile'"><i class="fas fa-user-circle"></i> tus datos</a>
       <a class="Link" *ngIf="this.customer && this.customer.admin" [routerLink]="'/admin/banner'"> <i
           class="fas fa-user-cog"></i> administrar</a>
+
       <a class="Link" *ngIf="this.customer" (click)="this.logout()"><i class="fas fa-power-off"></i> salir</a>
-      <!-- <a class="Back" *ngIf="this.orders.length" href="/payment">Ir a pagar</a> -->
-
-
       <a class="Link" *ngIf="(this.copies.length + this.products.length)" (click)="toggleSidebar()">
-        <i class="ShoppingCart__Icon fas fa-shopping-cart"></i> ver el carro
+        <i pBadge class="ShoppingCart__Icon fas fa-shopping-cart"
+          [value]="this.copies.length + this.products.length"></i>
       </a>
+
     </div>
-    <div id="Toggle" class="block sm:hidden">
+    <div id="Links__mobile" class=" sm:hidden">
+      <i *ngIf="this.copies.length + this.products.length" pBadge class="fas fa-shopping-cart"
+        [value]="this.copies.length + this.products.length" (click)="toggleSidebar()"></i>
       <i class="fas fa-bars" (click)="sidebarVisible = true"></i>
 
     </div>
@@ -48,11 +52,7 @@
   </div>
   <div class="grid">
     <div class="col-12">
-      <div class="Item" *ngIf="(this.copies.length + this.products.length)">
-        <a class="Link" (click)="toggleSidebar()">
-          <i class="ShoppingCart__Icon fas fa-shopping-cart"></i> ver el carro
-        </a>
-      </div>
+
       <div class="Item">
         <a class="Link" (click)="this.sidebarVisible = false; " [routerLink]="'/print'">
           <i class="fas fa-print"></i> imprimir
@@ -93,4 +93,4 @@
   </div>
 </p-sidebar>
 
-<app-sidebar class="" #sidebar></app-sidebar>
+<app-shopcart class="" #shopcart></app-shopcart>

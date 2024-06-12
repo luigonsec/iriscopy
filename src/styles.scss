@@ -55,3 +55,7 @@ body {
 .p-component {
   font-family: "Montserrat" !important;
 }
+
+::ng-deep .p-badge {
+  background-color: $primary;
+}
