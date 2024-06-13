@@ -7,7 +7,6 @@ import {
   login,
   loginFailure,
   loginSuccess,
-  logout,
 } from '../_actions/customer.actions';
 import { AuthService } from '../services/auth.service';
 import { LoadingService } from '../services/loading.service';

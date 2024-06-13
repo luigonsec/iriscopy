@@ -1,18 +1,21 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { OrderItem } from 'src/app/interfaces/OrderItem';
+import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import { OrdersService } from 'src/app/services/orders.service';
 import { ShopcartService } from 'src/app/services/shopcart.service';
 import * as uuid from 'uuid';
+import JSONfn from 'json-fn';
 
 @Component({
   selector: 'app-confirm-bar',
   templateUrl: './confirm-bar.component.html',
   styleUrls: ['./confirm-bar.component.scss'],
 })
-export class ConfirmBarComponent implements OnInit {
-  @Input('order') order: OrderItem;
+export class ConfirmBarComponent implements OnInit, OnChanges {
+  @Input('order') order: OrderCopy;
   @Input('reset') reset: () => void = () => undefined;
+
+  precio: number = 0;
   constructor(
     private orderService: OrdersService,
     private shopcartService: ShopcartService,
@@ -20,16 +23,22 @@ export class ConfirmBarComponent implements OnInit {
   ) {}
 
   getPrecio() {
-    const others = this.shopcartService.getCart();
+    const others = this.shopcartService.getCart().copies;
     others.push(this.order);
-    return this.orderService.getPrecio(this.order, others);
+    this.orderService.getCopyPrice(this.order, others).subscribe((precio) => {
+      this.precio = precio;
+    });
+  }
+
+  ngOnChanges(): void {
+    this.getPrecio();
   }
 
   addConfiguration() {
     this.order.id = uuid.v4();
     // TODO: Copy
-    const order = JSON.parse(JSON.stringify(this.order));
-    this.shopcartService.addToCart(order);
+    const order = JSONfn.parse(JSONfn.stringify(this.order));
+    this.shopcartService.addCopyToCart(order);
     this.reset();
   }
 
@@ -38,5 +47,7 @@ export class ConfirmBarComponent implements OnInit {
     this.router.navigate(['payment']);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getPrecio();
+  }
 }

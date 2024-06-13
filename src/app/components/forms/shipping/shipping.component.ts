@@ -63,8 +63,9 @@ export class ShippingComponent implements OnDestroy {
   }
 
   public resetShippingDetails() {
-    this.shippingDetails = this.shippingDetails || {
+    this.shippingDetails = {
       first_name: '',
+      last_name: '',
       company: '',
       responsible: '',
       address_1: '',

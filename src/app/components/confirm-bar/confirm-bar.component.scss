@@ -1,7 +1,7 @@
-@import "../../../assets/scss/colors.scss";
+@import "src/assets/scss/colors.scss";
 
 #ConfirmBar {
-  background-color: $primary;
+  background-color: $darkGray;
   width: 100%;
   position: fixed;
   bottom: 0;
@@ -12,8 +12,11 @@
   #Botones {
     text-align: center;
     .Boton {
-      color: black;
-      font-weight: bold;
+      border-color: $primary;
+
+      background-color: $primary;
+      color: white;
+      font-weight: 500;
       text-align: center !important;
     }
   }
@@ -21,13 +24,13 @@
   #Precio {
     color: white;
     text-align: center;
+    font-weight: 500;
 
     #Texto {
       font-size: 20px;
     }
 
     #Cantidad {
-      font-weight: bold;
       font-size: 30px;
     }
   }

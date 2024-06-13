@@ -1,21 +1,18 @@
 import { Component } from '@angular/core';
-import Loading from './interfaces/Loading';
-import { LoadingService } from './services/loading.service';
+import { ShopcartService } from './services/shopcart.service';
 
 @Component({
-	selector: 'app-root',
-	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.scss'],
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-	loading: Loading;
+  constructor(private shopCart: ShopcartService) {}
 
-	constructor(private loadingService: LoadingService) {}
-
-	ngOnInit(): void {
-		this.loading = this.loadingService.isLoading();
-		this.loadingService.isLoading$().subscribe((payload: Loading) => {
-			this.loading = payload;
-		});
-	}
+  ngOnInit(): void {
+    const cartIsValid = this.shopCart.validate();
+    if (!cartIsValid) {
+      this.shopCart.clearCart();
+    }
+  }
 }

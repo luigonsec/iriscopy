@@ -1,0 +1,71 @@
+<div id="Footer" class="grid">
+    <div class="col-12 sm:col-3">
+        <div id="Description">
+            <p>Iris Copy es una Entidad colaboradora con la Universidad de Sevilla por Acuerdo de Colaboración.</p>
+        </div>
+        <div id="Info">
+            <div class="Item">
+                <i class="fas fa-location-arrow"></i> Calle Desarrollo, 7, 41927 Mairena del Aljarafe, Sevilla
+            </div>
+            <div class="Item">
+                <i class="fas fa-mobile-alt"></i> Teléfono: 691 041 834
+            </div>
+            <div class="Item">
+                <i class="far fa-envelope"></i> e-mail: pedidos@iris-copy.es
+            </div>
+
+        </div>
+    </div>
+    <div class="col-12 sm:col-4">
+        <div class="Title">
+            COPISTERÍAS EN SEVILLA (LOCALES DE RECOGIDA)
+        </div>
+        <div class="Item" *ngFor="let location of locations">
+            {{location.name}}
+        </div>
+
+    </div>
+    <div class="col-12 sm:col-3">
+        <div class="Title">
+            POLÍTICAS Y CONDICIONES
+        </div>
+        <div class="Item">
+            <a href="https://iriscopyshop.com/aviso-legal/" target="_blank">
+                Aviso Legal
+            </a>
+        </div>
+        <div class="Item">
+            <a href="https://iriscopyshop.com/politica-de-privacidad/" target="_blank">
+                Política de Privacidad
+            </a>
+        </div>
+        <div class="Item">
+            <a href="https://iriscopyshop.com/politica-de-cookies/" target="_blank">
+                Política de Cookies
+            </a>
+        </div>
+        <div class="Item">
+            <a href="https://iriscopyshop.com/politica-de-compras-y-devoluciones/" target="_blank">
+                Política de compras y devoluciones
+            </a>
+        </div>
+    </div>
+    <div class="col-12 sm:col-2">
+        <div class="Title">
+            IRIS GROUP
+        </div>
+        <div class="Item">
+            <a href="http://iris-print.es/" target="_blank">
+                Iris Print
+            </a>
+        </div>
+        <div class="Item">
+            <a href="https://iriscopyshop.com/" target="_blank">
+                Iris Copy
+            </a>
+        </div>
+        <div class="Item">
+            Iris Reform
+        </div>
+    </div>
+</div>

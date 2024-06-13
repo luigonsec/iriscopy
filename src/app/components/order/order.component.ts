@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { OrderItem } from 'src/app/interfaces/OrderItem';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { OrderCopy } from 'src/app/interfaces/OrderCopy';
+import OrderProduct from 'src/app/interfaces/OrderProduct';
 import { OrdersService } from 'src/app/services/orders.service';
 import { ShopcartService } from 'src/app/services/shopcart.service';
 
@@ -8,49 +11,96 @@ import { ShopcartService } from 'src/app/services/shopcart.service';
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.scss'],
 })
-export class OrderComponent implements OnInit {
-  public orders: OrderItem[] = [];
+export class OrderComponent implements OnInit, OnDestroy {
+  public copies: OrderCopy[] = [];
+  public products: OrderProduct[] = [];
 
-  public total_price: number;
+  public copiesPrice = {};
+
+  cartSubscription: Subscription;
   constructor(
+    private router: Router,
     private orderService: OrdersService,
     private shopcartService: ShopcartService
   ) {}
 
+  ngOnDestroy(): void {
+    this.cartSubscription.unsubscribe();
+  }
+
   getTotalPrice() {
-    return this.orders.map((x) => this.getPrice(x)).reduce((a, b) => a + b, 0);
+    const priceCopies = this.copies
+      .map((x) => this.copiesPrice[x.id])
+      .reduce((a, b) => a + b, 0);
+
+    const priceProducts = this.products
+      .map((x) => this.getProductPrice(x))
+      .reduce((a, b) => a + b, 0);
+
+    return priceCopies + priceProducts;
   }
 
-  getPrice(order: OrderItem): number {
-    return this.orderService.getPrecio(order, this.orders);
+  getCopiesPrice() {
+    this.copies.forEach((copy) => {
+      this.getCopyPrice(copy);
+    });
   }
 
-  remove(order: OrderItem): void {
-    this.shopcartService.remove(order);
+  getCopyPrice(order: OrderCopy) {
+    this.orderService.getCopyPrice(order, this.copies).subscribe((price) => {
+      this.copiesPrice[order.id] = price;
+      this.copiesPrice = Object.assign({}, this.copiesPrice);
+    });
+  }
+
+  getProductPrice(order: OrderProduct): number {
+    return parseFloat(order.product.price) * order.quantity;
+  }
+
+  removeCopy(order: OrderCopy): void {
+    this.shopcartService.removeCopy(order);
+  }
+
+  editCopy(order: OrderCopy): void {
+    this.orderService.setOrderToEdit(order);
+
+    this.router.navigate(['/print']);
+  }
+
+  removeProduct(product: OrderProduct): void {
+    this.shopcartService.removeProduct(product);
   }
 
   removeFile(order_id: string, files_id: number) {
-    const orderIndex = this.orders.findIndex((order) => order.id === order_id);
+    const orderIndex = this.copies.findIndex((order) => order.id === order_id);
 
     if (orderIndex !== -1) {
-      const order = this.orders[orderIndex];
+      const order = this.copies[orderIndex];
       const files = order.files;
-      this.orders[orderIndex].files = files.filter(
+      this.copies[orderIndex].files = files.filter(
         (file) => file.id !== files_id
       );
 
-      if (this.orders[orderIndex].files.length === 0) {
-        this.orders.splice(orderIndex, 1);
+      if (this.copies[orderIndex].files.length === 0) {
+        this.copies.splice(orderIndex, 1);
       }
 
-      this.shopcartService.update(this.orders);
+      this.shopcartService.updateCopies(this.copies);
     }
   }
 
   ngOnInit(): void {
-    this.orders = this.shopcartService.getCart();
-    this.shopcartService.getCart$().subscribe((orders) => {
-      this.orders = orders;
-    });
+    this.copies = this.shopcartService.getCart().copies;
+    this.products = this.shopcartService.getCart().products;
+
+    this.getCopiesPrice();
+
+    this.cartSubscription = this.shopcartService
+      .getCart$()
+      .subscribe((orders) => {
+        this.copies = orders.copies;
+        this.products = orders.products;
+        this.getCopiesPrice();
+      });
   }
 }

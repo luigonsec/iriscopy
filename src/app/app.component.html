@@ -1,12 +1,17 @@
-<div class="grid">
-  <div class="col-12 md:col-12">
-    <app-menu></app-menu>
-    <app-submenu></app-submenu>
-  </div>
+<div class="container">
+  <div class="content">
+    <div class="header">
+      <app-header></app-header>
+    </div>
 
-  <div class="col-12">
-    <router-outlet></router-outlet>
-    <p-toast position="bottom-right"></p-toast>
+    <div class="main-content">
+      <router-outlet></router-outlet>
+      <p-toast position="bottom-right"></p-toast>
+    </div>
+
+    <div class="footer">
+      <app-footer></app-footer>
+    </div>
   </div>
-  <app-loading *ngIf="this.loading.isLoading" [(payload)]="this.loading"></app-loading>
 </div>
+<app-loading></app-loading>

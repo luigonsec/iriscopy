@@ -1,0 +1,40 @@
+@import "src/assets/scss/colors.scss";
+
+.Product {
+  padding: 10px;
+
+  .Categories {
+    word-break: keep-all;
+    .Category {
+      width: fit-content;
+      float: left;
+      font-size: 12px;
+      margin-right: 5px;
+      margin-bottom: 5px;
+      border-radius: 5px;
+      padding: 5px;
+      background-color: #dcdcdc;
+    }
+  }
+
+  .Price {
+    text-align: right;
+    color: $primary;
+    font-weight: 600;
+    padding-right: 30px;
+  }
+
+  .Name {
+    padding-left: 30px;
+    display: block;
+    font-weight: 500;
+    font-size: 14px;
+    min-height: 40px;
+  }
+  .Image {
+    width: 100%;
+    padding-bottom: 100%;
+    background-size: cover;
+    background-position: center;
+  }
+}

@@ -1,0 +1,13 @@
+@import "src/assets/scss/colors.scss";
+
+.Next {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Añade esta regla a tu archivo CSS global */
+::ng-deep .Shopcart {
+  .p-sidebar {
+    background-color: white;
+  }
+}

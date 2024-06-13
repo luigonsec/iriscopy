@@ -1,0 +1,92 @@
+<div class="grid">
+  <div id='Form' class="col-12 sm:col-12 md:col-5 lg:col-5 order-2">
+    <div class="Form__Section p-field">
+      <div class="p-fluid">
+        <div class="Label">Tamaño del papel</div>
+        <app-paper-size (emitChange)="getPaperSize($event)"></app-paper-size>
+      </div>
+    </div>
+
+    <div class="Form__Section p-field">
+      <div class="p-fluid">
+        <div class="Label">Tipo de papel</div>
+        <app-paper-type #paperTypeComponent (emitChange)="getPaperType($event)"
+          [(paperSize)]="this.paperSize"></app-paper-type>
+      </div>
+    </div>
+
+    <div class="Form__Section p-field">
+      <div class="p-fluid">
+        <div class="Label">Tipo de impresión</div>
+        <app-print-type (emitChange)="getPrintType($event)" [(paperType)]="this.paperType"></app-print-type>
+      </div>
+    </div>
+
+    <div class="Form__Section p-field">
+      <div class="p-fluid">
+        <div class="Label">Forma de impresión</div>
+        <app-print-form (emitChange)="getPrintForm($event)" [(paperType)]="this.paperType"></app-print-form>
+      </div>
+    </div>
+
+    <div class="Form__Section p-field">
+      <div class="p-fluid">
+        <app-orientation (emitChange)="getOrientation($event)"></app-orientation>
+      </div>
+    </div>
+
+    <div class="Form__Section p-field">
+      <div class="p-fluid">
+        <div class="Label">Páginas por cara</div>
+        <app-pages-per-side (emitChange)="getPagesPerSide($event)"
+          [(orientation)]="this.orientation"></app-pages-per-side>
+      </div>
+    </div>
+
+
+
+
+    <div class="Form__Section p-field">
+      <div class="p-fluid">
+        <div class="Label">Tipo de acabado</div>
+        <app-finish-type (emitChange)="getFinishType($event)" [(paperSize)]="this.paperSize"></app-finish-type>
+      </div>
+    </div>
+    <div class="Form__Section p-field" *ngIf="this.finishType && this.finishType.code === 'encuadernado'">
+      <div class="p-fluid">
+        <div class="Label">Encuadernar los documentos</div>
+        <app-bound (emitChangeBound)="getBound($event)" [boundType]="this.boundType" [boundColors]="this.boundColors">
+        </app-bound>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="col-3 sm:col-2">
+        <div class="Form__Section p-field">
+          <div class="p-fluid">
+            <div class="Label">Copias</div>
+            <app-quantity-copies (emitChange)="getCopiesQuantity($event)"></app-quantity-copies>
+          </div>
+        </div>
+      </div>
+      <div class="col-9 sm:col-10">
+        <div class="Form__Section p-field">
+          <div class="p-fluid">
+            <div class="Label">Comentarios adicionales</div>
+            <app-additional-comment (emitChange)="getAdditionalComments($event)"></app-additional-comment>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div id="Uploader" class="col-12 sm:col-12 md:col-7 lg:col-7 order-1 sm:pt-8">
+    <app-uploader #uploader (emitChange)="getFile($event)"></app-uploader>
+    <app-banner class="hidden sm:block" [options]="{visible_pc: true, visible_print: true}"></app-banner>
+    <app-banner class="block sm:hidden" [options]="{visible_phone: true, visible_print: true}"></app-banner>
+  </div>
+
+  <app-confirm-bar *ngIf="this.isReady()" [reset]="this.reset" [(order)]="this.order"></app-confirm-bar>
+</div>

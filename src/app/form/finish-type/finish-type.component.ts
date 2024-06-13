@@ -8,21 +8,27 @@ import options from 'src/config/options';
   styleUrls: ['./finish-type.component.scss'],
 })
 export class FinishTypeComponent implements OnInit {
-  public options: Option[];
+  public optionsGroup1: Option[];
+  public optionsGroup2: Option[];
   public option: Option = undefined;
   private _paperSize: any;
 
   @Output() emitChange = new EventEmitter<any>();
   @Input() set paperSize(value: any) {
     this._paperSize = value;
-    this.options = options.finishType.filter((x) => {
+    const filteredOptions = options.finishType.filter((x) => {
       return !(x.code === 'encuadernado' && this._paperSize.code === 'A3');
     });
 
     if (this._paperSize.code === 'A3' && this.option.code === 'encuadernado') {
-      this.option = this.options.find((x) => x.default);
+      this.option = filteredOptions.find((x) => x.default);
       this.emitChange.emit(this.option);
     }
+
+    // Dividir en dos grupos
+    const half = Math.ceil(filteredOptions.length / 2);
+    this.optionsGroup1 = filteredOptions.slice(0, half);
+    this.optionsGroup2 = filteredOptions.slice(half);
   }
 
   constructor() {}
@@ -32,8 +38,11 @@ export class FinishTypeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.options = options.finishType;
-    this.option = this.options.find((x) => x.default);
+    const filteredOptions = options.finishType;
+    const half = Math.ceil(filteredOptions.length / 2);
+    this.optionsGroup1 = filteredOptions.slice(0, half);
+    this.optionsGroup2 = filteredOptions.slice(half);
+    this.option = filteredOptions.find((x) => x.default);
     this.emitChange.emit(this.option);
   }
 }

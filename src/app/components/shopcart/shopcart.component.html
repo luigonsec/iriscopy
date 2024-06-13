@@ -1,0 +1,8 @@
+<p-sidebar class="Shopcart" [(visible)]="display" [position]="'right'">
+  <div class="Next">
+    <div class="p-fluid">
+      <p-button label="Continuar con el pago" styleClass="p-button-sm" (click)="this.continue()"></p-button>
+    </div>
+  </div>
+  <app-order></app-order>
+</p-sidebar>

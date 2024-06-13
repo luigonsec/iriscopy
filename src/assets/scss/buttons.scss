@@ -1,0 +1,34 @@
+.p-button {
+  color: #ffffff;
+  background: $darkGray;
+  border: 1px solid $darkGray;
+
+  .p-button-label {
+    font-family: "Montserrat" !important;
+  }
+}
+.p-button {
+  border-radius: $borderRadius;
+}
+
+.p-button:enabled:hover {
+  background: $darkGray;
+  color: #ffffff;
+  border-color: $darkGray;
+}
+
+.p-button.p-fileupload-choose,
+.p-button.p-fileupload-choose:hover,
+.p-fileupload-choose:not(.p-disabled):hover,
+.p-button.Secondary,
+.p-button.Secondary:hover,
+.Secondary:not(.p-disabled):hover {
+  color: black;
+  background: $yellow;
+  border: 2px solid $green;
+  font-weight: bold;
+
+  .p-button-label {
+    font-family: "Montserrat" !important;
+  }
+}

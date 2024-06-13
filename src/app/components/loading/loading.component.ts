@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import Loading from 'src/app/interfaces/Loading';
 import { LoadingService } from 'src/app/services/loading.service';
 
@@ -8,14 +8,15 @@ import { LoadingService } from 'src/app/services/loading.service';
   styleUrls: ['./loading.component.scss'],
 })
 export class LoadingComponent implements OnInit {
-  @Input() private payload: Loading;
-  text: string;
+  public payload: Loading = {
+    isLoading: false,
+    text: undefined,
+  };
 
   constructor(private loadingService: LoadingService) {}
   ngOnInit(): void {
-    this.text = this.payload.text;
     this.loadingService.isLoading$().subscribe((payload: Loading) => {
-      this.text = payload.text;
+      this.payload = payload;
     });
   }
 }

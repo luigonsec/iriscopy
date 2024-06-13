@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import Option from 'src/app/interfaces/Option';
 import options from 'src/config/options';
 
@@ -10,7 +10,26 @@ import options from 'src/config/options';
 export class PrintTypeComponent implements OnInit {
   public options: Option[];
   public option: Option = undefined;
+  private _paperType: any;
+
   @Output() emitChange = new EventEmitter<Option>();
+
+  @Input() set paperType(value: any) {
+    this._paperType = value;
+    const filteredOptions = options.printType.filter((x) => {
+      return !(x.code === 'color' && this._paperType.code === 'fotografico');
+    });
+
+    if (
+      this._paperType.code === 'fotografico' &&
+      this.option.code === 'color'
+    ) {
+      this.option = filteredOptions.find((x) => x.default);
+      this.emitChange.emit(this.option);
+    }
+
+    this.options = filteredOptions;
+  }
 
   constructor() {}
 

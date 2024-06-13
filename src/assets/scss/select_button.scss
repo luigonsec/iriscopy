@@ -1,0 +1,65 @@
+.p-selectbutton .p-button.p-highlight,
+.p-selectbutton .p-button.p-highlight:hover,
+.p-selectbutton .p-button.p-highlight:focus {
+  background: $darkGray;
+  border-color: $darkGray;
+  color: #ffffff;
+  box-shadow: none;
+  z-index: 0;
+}
+
+.p-selectbutton .p-button,
+.p-selectbutton .p-button:focus {
+  background: #ffffff;
+  border: none;
+  border-top: 2px solid $black;
+  border-bottom: 2px solid $black;
+  color: $primary;
+  box-shadow: none;
+  z-index: 0;
+}
+
+.p-selectbutton .p-button:not(.p-highlight):last-of-type {
+  border-right: 2px solid $black;
+}
+
+.p-selectbutton .p-button:not(.p-highlight):first-of-type {
+  border-left: 2px solid $black;
+}
+
+.p-selectbutton .p-button:not(.p-disabled):not(.p-highlight):hover {
+  background: $lightGray;
+  border-color: black;
+  color: $primary;
+}
+
+.Button {
+  text-align: center;
+  width: 100%;
+  .Button__label {
+    font-family: "Montserrat" !important;
+    font-weight: 800 !important;
+    font-size: 16px;
+  }
+
+  .Button__description {
+    font-size: 10px;
+    font-weight: bold;
+  }
+
+  .Button__img {
+    width: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .Button {
+    .Button__label {
+      font-size: 13px;
+    }
+
+    .Button__description {
+      font-size: 9px;
+    }
+  }
+}

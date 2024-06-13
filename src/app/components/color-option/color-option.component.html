@@ -1,3 +1,2 @@
-<div class="Color__option" [style.background]="this.option.color" [style.borderColor]="this.active ? 'black' : 'white'"
-  (click)="this.colorClicked()">
-</div>
+<div class="Option" [style]="{'background-image': 'url(' + this.option.image + ')'}" (click)="this.colorClicked()"
+  [style.borderColor]="this.active ? 'black' : 'white'"></div>

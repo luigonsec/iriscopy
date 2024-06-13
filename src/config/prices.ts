@@ -1,34 +1,4 @@
 export default {
-  'color-pro': {
-    'una-cara': {
-      A4: (paginas) => {
-        if (paginas <= 20) return 0.12;
-        if (paginas <= 50) return 0.1;
-        if (paginas <= 150) return 0.095;
-        return 0.09;
-      },
-      A3: (paginas) => {
-        if (paginas <= 20) return 0.28;
-        if (paginas <= 50) return 0.26;
-        if (paginas <= 150) return 0.24;
-        return 0.228;
-      },
-    },
-    'doble-cara': {
-      A4: (paginas) => {
-        if (paginas <= 20) return 0.12;
-        if (paginas <= 50) return 0.1;
-        if (paginas <= 150) return 0.095;
-        return 0.09;
-      },
-      A3: (paginas) => {
-        if (paginas <= 20) return 0.28;
-        if (paginas <= 50) return 0.26;
-        if (paginas <= 150) return 0.24;
-        return 0.228;
-      },
-    },
-  },
   'blanco-negro': {
     'una-cara': {
       A4: (paginas) => {
@@ -94,6 +64,36 @@ export default {
         if (paginas <= 250) return 0.13;
         if (paginas <= 500) return 0.124;
         return 0.116;
+      },
+    },
+  },
+  'color-pro': {
+    'una-cara': {
+      A4: (paginas) => {
+        if (paginas <= 20) return 0.12;
+        if (paginas <= 50) return 0.1;
+        if (paginas <= 150) return 0.095;
+        return 0.09;
+      },
+      A3: (paginas) => {
+        if (paginas <= 20) return 0.28;
+        if (paginas <= 50) return 0.26;
+        if (paginas <= 150) return 0.24;
+        return 0.228;
+      },
+    },
+    'doble-cara': {
+      A4: (paginas) => {
+        if (paginas <= 20) return 0.12;
+        if (paginas <= 50) return 0.1;
+        if (paginas <= 150) return 0.095;
+        return 0.09;
+      },
+      A3: (paginas) => {
+        if (paginas <= 20) return 0.28;
+        if (paginas <= 50) return 0.26;
+        if (paginas <= 150) return 0.24;
+        return 0.228;
       },
     },
   },

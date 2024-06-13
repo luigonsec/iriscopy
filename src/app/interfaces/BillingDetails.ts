@@ -8,6 +8,7 @@ export default interface BillingDetails {
   city: string;
   state: string;
   postcode: string;
+  occupation?: string;
   phone: string;
   email: string;
   others: string;

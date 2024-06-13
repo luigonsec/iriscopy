@@ -1,0 +1,15 @@
+.Shop__menu {
+  ::ng-deep.p-menubar {
+    background-color: white !important;
+  }
+}
+
+.Product_wrapper {
+  border-right: 6px solid white;
+  border-bottom: 6px solid white;
+}
+
+.Shop_wrapper {
+  border-top: 6px solid white;
+  border-left: 6px solid white;
+}

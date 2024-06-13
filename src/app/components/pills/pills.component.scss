@@ -1,0 +1,28 @@
+@import "src/assets/scss/colors.scss";
+
+.Pills {
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+
+  &::-webkit-scrollbar {
+    display: none; // Oculta la scrollbar en Chrome, Safari y Opera
+  }
+  .Pill {
+    font-weight: 300;
+    border-radius: 5px;
+    color: white;
+    background-color: $primary;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    box-sizing: border-box;
+
+    &.active {
+      color: white;
+      background-color: $primary;
+    }
+  }
+}

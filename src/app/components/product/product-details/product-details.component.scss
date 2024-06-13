@@ -1,0 +1,65 @@
+@import "src/assets/scss/colors.scss";
+
+.ProductDetails {
+  .Details {
+    padding-left: 30px;
+    height: auto;
+    align-content: center;
+
+    .Options {
+      margin-bottom: 15px;
+
+      .Title {
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .Option__selected {
+        font-size: 12px;
+      }
+
+      .Name {
+        color: $primary;
+        align-content: center;
+        text-align: right;
+      }
+    }
+  }
+  .Price {
+    color: $primary;
+    align-content: center;
+    text-align: right;
+  }
+
+  .Name {
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    min-height: 60px;
+  }
+  .Image {
+    width: 100%;
+    padding-bottom: 100%;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .Variation__wrapper {
+    background-color: #dcdcdc;
+    padding: 2px;
+    border-radius: 2px;
+    cursor: pointer;
+
+    &:hover,
+    &.active {
+      border: 2px solid $primary;
+    }
+    .Variation {
+      width: 100%;
+      padding-bottom: 100%;
+      background-size: cover;
+      background-position: center;
+    }
+  }
+}

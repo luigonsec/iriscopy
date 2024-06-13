@@ -1,0 +1,27 @@
+<div class="Product" (click)="this.openDetails()">
+    <div class="grid">
+
+        <div class="col-12">
+            <div class="grid">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <div class="Image" [style]="{'background-image': 'url(' +product.images[0]?.src+ ')'}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <span class="Name">
+                {{product.name}}
+            </span>
+        </div>
+        <!-- <div class="Categories col-12 md:col-10">
+            <div class="Category" *ngFor="let category of product.categories">
+                {{ category.name}}
+            </div>
+
+        </div> -->
+        <div class="Price col-12 md:col-12" [innerHTML]="product.price_html">
+
+        </div>
+    </div>
+</div>

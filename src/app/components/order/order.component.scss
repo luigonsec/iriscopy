@@ -1,25 +1,23 @@
 @import "src/assets/scss/colors";
 
-.Title {
-  font-size: 20px;
-  font-weight: bold;
-}
+.Order__item {
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 10px 20px;
 
-.Shopcart__item {
-  border-bottom: 1px solid gray;
+  background-color: white;
   width: 100%;
-  padding-bottom: 15px;
-  padding-top: 15px;
+  margin-bottom: 10px;
 
   .Title {
+    color: black;
     font-size: 16px;
-    font-weight: normal;
-  }
+    font-weight: 500;
+    margin-bottom: 15px;
 
-  .File {
-    padding-left: 10px;
-    border-left: 5px solid $primary;
-    margin-bottom: 10px;
+    .Value {
+      display: block;
+    }
   }
 
   .Key {
@@ -30,15 +28,83 @@
     display: inline;
   }
 
-  .Price {
-    text-align: right;
-    margin-bottom: 10px;
+  .Bound__details {
+    display: block;
+    width: 100%;
   }
 
   .Description {
-    .Item {
-      color: gray;
-      font-size: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .Description .Item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: $darkGray;
+    color: white;
+    font-size: 14px;
+    min-width: 40px;
+    height: 40px;
+    box-sizing: border-box;
+
+    &.white {
+      background-color: white;
+    }
+  }
+
+  .Description .Item img {
+    height: 100%;
+    width: auto;
+    margin: 0;
+    padding: 0;
+  }
+
+  .Bound__details {
+    .Bound__detail {
+      display: flex;
+      align-items: center;
+      justify-content: left;
+      margin-top: 10px;
+      font-size: 14px;
+      .Text {
+        font-weight: 500;
+        height: auto;
+      }
+      img {
+        display: inline-block;
+        transform: rotate(90deg);
+        background-position: center;
+        width: 25px;
+        margin-right: 20px;
+      }
+    }
+  }
+
+  .Order__options {
+    text-align: right;
+    margin-top: 20px;
+    width: 100%;
+    .Remove {
+      display: inline;
+      cursor: pointer;
+      padding-right: 5px;
+      color: $darkGray;
+    }
+    .Price {
+      display: inline;
+      color: $primary;
+      height: 100%;
+      .Value {
+        font-weight: 500;
+        font-size: 20px;
+        width: 100%;
+      }
     }
   }
 }
@@ -52,4 +118,25 @@
   margin-top: 15px;
   font-size: 16px;
   font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .Order__item {
+    .Title {
+      font-size: 14px;
+    }
+
+    .Description .Item {
+      font-size: 12px;
+      min-width: 30px;
+      height: 30px;
+    }
+    .Order__options {
+      .Price {
+        .Value {
+          font-size: 16px;
+        }
+      }
+    }
+  }
 }

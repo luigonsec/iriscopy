@@ -12,7 +12,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 export class UploaderComponent implements OnInit {
   public uploadedFiles: File[] = [];
   public src: string;
-  @Output() emitChange = new EventEmitter<any>();
+  @Output() emitChange = new EventEmitter<unknown>();
 
   constructor(
     private filesService: FilesService,
