@@ -168,3 +168,46 @@ a {
 #Shipping_address__form {
   margin-top: 20px;
 }
+
+@media (max-width: 768px) {
+  #Order {
+    margin-bottom: 10px;
+  }
+  #Header {
+    padding: 20px 15px;
+  }
+
+  #Links__mobile {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    i {
+      margin-left: 20px;
+      cursor: pointer;
+      font-size: 24px;
+    }
+  }
+
+  #Checkout {
+    // Estilos para costos
+
+    font-size: 14px;
+    .Cost {
+      .Title {
+        font-size: 14px;
+      }
+      &.Total {
+        .Title {
+          font-size: 16px;
+        }
+      }
+
+      .Amount {
+        font-size: 14px;
+      }
+    }
+  }
+  .Title {
+    font-size: 16px;
+  }
+}

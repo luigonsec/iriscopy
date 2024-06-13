@@ -20,11 +20,6 @@
     }
   }
 
-  .OrderItem {
-    padding-left: 10px;
-    margin-bottom: 10px;
-  }
-
   .Key {
     font-weight: bold;
     display: inline;
@@ -123,4 +118,25 @@
   margin-top: 15px;
   font-size: 16px;
   font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .Order__item {
+    .Title {
+      font-size: 14px;
+    }
+
+    .Description .Item {
+      font-size: 12px;
+      min-width: 30px;
+      height: 30px;
+    }
+    .Order__options {
+      .Price {
+        .Value {
+          font-size: 16px;
+        }
+      }
+    }
+  }
 }

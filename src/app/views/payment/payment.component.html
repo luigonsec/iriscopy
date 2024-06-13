@@ -79,13 +79,13 @@
         <div id="Promotional" class="grid" *ngIf="!!!this.coupon">
           <div class="col-12">
           </div>
-          <div class="col-8">
+          <div class="col-12 sm:col-8">
             <div class="p-fluid">
               <input pInputText class="p-inputtext-sm" type="text" [(ngModel)]="this.inputCoupon"
                 placeholder="¿Tienes un código promocional?">
             </div>
           </div>
-          <div class="Buttons col-4">
+          <div class="Buttons col-12 sm:col-4">
             <button pButton class='Secondary p-button-sm' (click)="this.getCoupon()"
               [disabled]="this.searching_coupon">{{this.apply_cupon_text}}</button>
           </div>
@@ -129,7 +129,7 @@
         </div>
 
         <div id="Confirm">
-          <button pButton (click)="validate()" class="p-button-lg">Realizar el pedido</button>
+          <button pButton (click)="validate()" class="p-button-md">Realizar el pedido</button>
           <form #redsysForm *ngIf="this.redsysData" [action]="'https://sis.redsys.es/sis/realizarPago'" method="POST">
             <input type="hidden" name="Ds_SignatureVersion" [(ngModel)]="this.redsysData.Ds_SignatureVersion" />
             <input type="hidden" name="Ds_MerchantParameters" [(ngModel)]="this.redsysData.Ds_MerchantParameters" />

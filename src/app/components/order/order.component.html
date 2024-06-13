@@ -76,12 +76,10 @@
     <div class="Order__item" *ngFor="let product of this.products">
       <div class="grid">
         <div class="col-12">
-          <div class="OrderItem">
-            <div class="Title">
-              {{product.product.name}}<br>
-              {{product.variation?.attributes[0].option}}
+          <div class="Title">
+            {{product.product.name}}<br>
+            {{product.variation?.attributes[0].option}}
 
-            </div>
           </div>
           <div class="Description">
             <div class="Item">Unidades: {{product.quantity}}</div>

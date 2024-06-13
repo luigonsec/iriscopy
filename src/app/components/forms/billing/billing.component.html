@@ -5,9 +5,8 @@
 
 
         <div class="input-container">
-          <input [(ngModel)]="this.billingDetails.first_name" placeholder="" pInputText />
-          <label for="custom-placeholder-input" class="custom-placeholder">Nombre y apellidos
-            <span class="required">*</span></label>
+          <input [(ngModel)]="this.billingDetails.first_name" placeholder="Nombre y apellidos *" pInputText />
+
         </div>
         <small *ngIf="this.billingDetailsErrors.first_name" id="first_name-help" class="p-error">
           {{this.billingDetailsErrors.first_name}}
@@ -17,10 +16,8 @@
     <div class="field col-12 md:col-4">
       <div class="p-fluid">
         <div class="input-container">
-          <input [(ngModel)]="this.billingDetails.last_name" id="last_name" pInputText placeholder="" />
-          <label for="custom-placeholder-input" class="custom-placeholder">
-            DNI/NIE/CIF <span class="required">*</span>
-          </label>
+          <input [(ngModel)]="this.billingDetails.last_name" id="last_name" pInputText placeholder="DNI/NIE/CIF *" />
+
         </div>
         <small *ngIf="this.billingDetailsErrors.last_name" id="last_name-help"
           class="p-error">{{this.billingDetailsErrors.last_name}}</small>
@@ -33,10 +30,8 @@
         <div class="input-container">
 
           <input [(ngModel)]="this.billingDetails.phone" id="phone" aria-describedby="phone-help" pInputText
-            placeholder="" />
-          <label for="custom-placeholder-input" class="custom-placeholder">
-            Teléfono <span class="required">*</span>
-          </label>
+            placeholder="Teléfono *" />
+
         </div>
         <small *ngIf="this.billingDetailsErrors.phone" id="phone-help"
           class="p-error">{{this.billingDetailsErrors.phone}}</small>
@@ -48,10 +43,8 @@
       <div class="p-fluid">
         <div class="input-container">
           <input [(ngModel)]="this.billingDetails.email" id="email" aria-describedby="email-help" pInputText
-            placeholder="" />
-          <label for="custom-placeholder-input" class="custom-placeholder">
-            Correo electrónico <span class="required">*</span>
-          </label>
+            placeholder="Correo electrónico *" />
+
         </div>
         <small *ngIf="this.billingDetailsErrors.email" id="email-help"
           class="p-error">{{this.billingDetailsErrors.email}}</small>
@@ -63,11 +56,7 @@
       <div class="p-fluid">
         <div class="input-container">
           <input [(ngModel)]="this.billingDetails.address_1" id="address_1" aria-describedby="address_1-help" pInputText
-            placeholder="" />
-
-          <label for="custom-placeholder-input" class="custom-placeholder">
-            Dirección de envío <span class="required">*</span> <span class="small">calle y número</span>
-          </label>
+            placeholder="Dirección de envío * calle y número" />
         </div>
         <small *ngIf="this.billingDetailsErrors.address_1" id="address_1-help"
           class="p-error">{{this.billingDetailsErrors.address_1}}</small>
@@ -80,12 +69,7 @@
         <div class="input-container">
 
           <input [(ngModel)]="this.billingDetails.address_2" id="address_2" aria-describedby="address_2-help"
-            placeholder="" pInputText />
-
-          <label for="custom-placeholder-input" class="custom-placeholder">
-            <span class="small">planta, piso/puerta u otro</span>
-
-          </label>
+            placeholder="planta, piso/puerta u otro" pInputText />
         </div>
 
         <small *ngIf="this.billingDetailsErrors.address_2" id="address_2-help"
@@ -98,11 +82,8 @@
     <div class="field col-12 md:col-8">
       <div class="p-fluid">
         <div class="input-container">
-          <input [(ngModel)]="this.billingDetails.city" id="city" aria-describedby="city-help" placeholder=""
-            pInputText />
-          <label for="custom-placeholder-input" class="custom-placeholder">
-            Localidad / Ciudad <span class="required">*</span>
-          </label>
+          <input [(ngModel)]="this.billingDetails.city" id="city" aria-describedby="city-help"
+            placeholder="Localidad / Ciudad *" pInputText />
         </div>
 
         <small *ngIf="this.billingDetailsErrors.city" id="city-help"
@@ -114,11 +95,7 @@
       <div class="p-fluid">
         <div class="input-container">
           <input [(ngModel)]="this.billingDetails.postcode" id="postcode" aria-describedby="postcode-help"
-            placeholder="" pInputText />
-
-          <label for="custom-placeholder-input" class="custom-placeholder">
-            Código postal <span class="required">*</span>
-          </label>
+            placeholder="Código postal *" pInputText />
         </div>
         <small *ngIf="this.billingDetailsErrors.postcode" id="postcode-help"
           class="p-error">{{this.billingDetailsErrors.postcode}}</small>
@@ -130,10 +107,7 @@
       <div class="p-fluid">
         <div class="input-container">
           <textarea [(ngModel)]="this.billingDetails.others" [rows]="5" aria-labelledby="others-help" [cols]="30"
-            pInputTextarea autoResize="autoResize" placeholder=""></textarea>
-          <label for="custom-placeholder-input" class="custom-textarea">
-            Observaciones de tu pedido
-          </label>
+            pInputTextarea autoResize="autoResize" placeholder="Observaciones de tu pedido"></textarea>
         </div>
       </div>
     </div>
