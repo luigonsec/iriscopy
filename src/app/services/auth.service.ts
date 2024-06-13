@@ -40,8 +40,8 @@ export class AuthService {
         `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/auth/refresh`,
         { refreshToken }
       )
-      .subscribe(
-        (response: SuccessAuthResponse) => {
+      .subscribe({
+        next: (response: SuccessAuthResponse) => {
           this.store.dispatch(
             loginSuccess({
               customer: undefined,
@@ -52,16 +52,16 @@ export class AuthService {
           );
           this.startRefreshTokenTimer(response.expiresAt);
         },
-        () => {
+        error: () => {
           this.store.dispatch(logout());
           this.stopRefreshTokenTimer();
-        }
-      );
+        },
+      });
   }
 
   public startRefreshTokenTimer(expiresAt: number) {
-    const diff = expiresAt - Date.now();
-    const millisencondsToRefresh = diff - 60 * 1000;
+    const millisencondsToRefresh = expiresAt - Date.now();
+
     this.refreshTokenTimeout = setTimeout(() => {
       this.refreshToken();
     }, millisencondsToRefresh);

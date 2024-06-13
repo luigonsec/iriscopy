@@ -237,6 +237,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     this.redsysService.sendPayment(order, this.payment).subscribe({
       next: (redsysData: RedsysData) => {
         this.redsysData = redsysData;
+        this.loadingService.stopLoading();
         return callback();
       },
       error: (err: HttpErrorResponse) => {

@@ -24,6 +24,13 @@ export class LoadingService {
     return this.loading$.next(this.loading);
   }
 
+  stopLoading() {
+    this.loading = {
+      isLoading: false,
+    };
+    return this.loading$.next(this.loading);
+  }
+
   isLoading() {
     return this.loading;
   }
