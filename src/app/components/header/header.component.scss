@@ -72,6 +72,13 @@
 /* Media Query para pantallas de móviles */
 @media (max-width: 768px) {
   #Header {
-    padding: 10px 5px;
+    padding: 20px 15px;
+  }
+
+  #Links__mobile {
+    font-size: 30px;
+    i {
+      font-size: 20px;
+    }
   }
 }
