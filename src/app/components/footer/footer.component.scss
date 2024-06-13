@@ -36,5 +36,13 @@
 @media (max-width: 768px) {
   #Footer {
     padding: 30px 15px;
+
+    .Title {
+      font-size: 13px;
+    }
+    .Item,
+    #Description {
+      font-size: 11px;
+    }
   }
 }

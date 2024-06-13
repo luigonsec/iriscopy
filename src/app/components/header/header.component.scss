@@ -11,14 +11,6 @@
       display: inline-block;
     }
 
-    #Links__mobile {
-      cursor: pointer;
-      font-size: 30px;
-      i {
-        margin-left: 30px;
-      }
-    }
-
     #Links {
       .ShoppingCart__Icon {
         font-size: 20px;
@@ -76,9 +68,13 @@
   }
 
   #Links__mobile {
-    font-size: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
     i {
-      font-size: 20px;
+      margin-left: 20px;
+      cursor: pointer;
+      font-size: 24px;
     }
   }
 }
