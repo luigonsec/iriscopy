@@ -188,7 +188,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
         summary: 'Error',
       });
     }
-    if (!['Bizum', 'Card'].includes(this.payment)) {
+    if (!['BIZUM', 'CARD'].includes(this.payment)) {
       return this.messageService.add({
         severity: 'error',
         detail: 'Debes indicar un "Método de pago"',
@@ -197,7 +197,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     }
 
     if (
-      this.payment == 'Bizum' &&
+      this.payment == 'BIZUM' &&
       this.getSubtotalWithDiscount() < this.PAYMENT_MINIMUM_PRICE_BIZUM
     ) {
       return this.messageService.add({
@@ -208,7 +208,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     }
 
     if (
-      this.payment == 'Card' &&
+      this.payment == 'CARD' &&
       this.getSubtotalWithDiscount() < this.PAYMENT_MINIMUM_PRICE_CARD
     ) {
       return this.messageService.add({
@@ -440,7 +440,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   comprobarMetodoDePago() {
     const subtotalMasDescuento = this.subtotal + this.discount;
     if (subtotalMasDescuento < this.PAYMENT_MINIMUM_PRICE_BIZUM) {
-      this.payment = 'Card';
+      this.payment = 'CARD';
     }
     if (subtotalMasDescuento < this.PAYMENT_MINIMUM_PRICE_CARD) {
       this.payment = null;
