@@ -92,8 +92,6 @@ export class OrderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.copies = this.shopcartService.getCart().copies;
     this.products = this.shopcartService.getCart().products;
-    console.log(this.products);
-
     this.getCopiesPrice();
 
     this.cartSubscription = this.shopcartService
@@ -101,8 +99,6 @@ export class OrderComponent implements OnInit, OnDestroy {
       .subscribe((orders) => {
         this.copies = orders.copies;
         this.products = orders.products;
-        console.log(this.products);
-
         this.getCopiesPrice();
       });
   }
