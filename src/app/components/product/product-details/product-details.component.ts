@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import Product from 'src/app/interfaces/Product';
 import ProductVariation from 'src/app/interfaces/ProductVariation';
 import { ProductsService } from 'src/app/services/products.service';
@@ -22,6 +22,7 @@ export class ProductDetailsComponent {
   constructor(
     private shopCart: ShopcartService,
     private conf: DynamicDialogConfig,
+    private ref: DynamicDialogRef,
     private productService: ProductsService
   ) {
     this.product = this.conf.data.product;
@@ -35,6 +36,8 @@ export class ProductDetailsComponent {
       quantity: this.quantity,
     });
     this.quantity = 0;
+    this.ref.close()
+
   }
 
   hasAttributes() {

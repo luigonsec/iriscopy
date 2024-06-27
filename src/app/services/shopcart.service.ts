@@ -5,13 +5,14 @@ import Cart from '../interfaces/Cart';
 import OrderProduct from '../interfaces/OrderProduct';
 import JSONfn from 'json-fn';
 import options from 'src/config/options';
+import { MessageService } from 'primeng/api';
 @Injectable({
   providedIn: 'root',
 })
 export class ShopcartService {
   private itemCart$: Subject<Cart>;
 
-  constructor() {
+  constructor(private messageService: MessageService) {
     this.itemCart$ = new Subject();
   }
 
@@ -20,6 +21,7 @@ export class ShopcartService {
     cart.copies.push(order);
     this.itemCart$.next(cart);
     localStorage.setItem('cart', JSONfn.stringify(cart));
+    this.messageService.add({ severity: 'success', summary: 'Carro actualizado', detail: 'El pedido se ha añadido al carro' });
   }
 
   addProductToCart(order: OrderProduct) {
@@ -27,6 +29,7 @@ export class ShopcartService {
     cart.products.push(order);
     this.itemCart$.next(cart);
     localStorage.setItem('cart', JSONfn.stringify(cart));
+    this.messageService.add({ severity: 'success', summary: 'Carro actualizado', detail: 'El producto se ha añadido al carro' });
   }
 
   updateCopies(orders: OrderCopy[]) {

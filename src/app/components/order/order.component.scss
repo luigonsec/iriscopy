@@ -24,6 +24,7 @@
     font-weight: bold;
     display: inline;
   }
+
   .Value {
     display: inline;
   }
@@ -56,6 +57,15 @@
     &.white {
       background-color: white;
     }
+
+    &.bordered {
+      border: 1px solid $darkGray
+    }
+
+    &.lg {
+      min-width: 60px;
+      height: 60px;
+    }
   }
 
   .Description .Item img {
@@ -72,10 +82,12 @@
       justify-content: left;
       margin-top: 10px;
       font-size: 14px;
+
       .Text {
         font-weight: 500;
         height: auto;
       }
+
       img {
         display: inline-block;
         transform: rotate(90deg);
@@ -90,16 +102,19 @@
     text-align: right;
     margin-top: 20px;
     width: 100%;
+
     .Remove {
       display: inline;
       cursor: pointer;
       padding-right: 5px;
       color: $darkGray;
     }
+
     .Price {
       display: inline;
       color: $primary;
       height: 100%;
+
       .Value {
         font-weight: 500;
         font-size: 20px;
@@ -131,6 +146,7 @@
       min-width: 30px;
       height: 30px;
     }
+
     .Order__options {
       .Price {
         .Value {

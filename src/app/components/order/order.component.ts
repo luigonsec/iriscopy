@@ -22,7 +22,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     private router: Router,
     private orderService: OrdersService,
     private shopcartService: ShopcartService
-  ) {}
+  ) { }
 
   ngOnDestroy(): void {
     this.cartSubscription.unsubscribe();
@@ -92,6 +92,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.copies = this.shopcartService.getCart().copies;
     this.products = this.shopcartService.getCart().products;
+    console.log(this.products);
 
     this.getCopiesPrice();
 
@@ -100,6 +101,8 @@ export class OrderComponent implements OnInit, OnDestroy {
       .subscribe((orders) => {
         this.copies = orders.copies;
         this.products = orders.products;
+        console.log(this.products);
+
         this.getCopiesPrice();
       });
   }

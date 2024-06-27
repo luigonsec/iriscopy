@@ -18,7 +18,7 @@ export class ProductComponent implements OnInit {
   constructor(
     private shopCart: ShopcartService,
     private dialogService: DialogService
-  ) {}
+  ) { }
 
   addToCart() {
     if (this.quantity == 0) return;
@@ -40,5 +40,5 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

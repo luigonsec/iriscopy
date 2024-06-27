@@ -20,7 +20,7 @@ export class ConfirmBarComponent implements OnInit, OnChanges {
     private orderService: OrdersService,
     private shopcartService: ShopcartService,
     private router: Router
-  ) {}
+  ) { }
 
   getPrecio() {
     const others = this.shopcartService.getCart().copies;
@@ -40,6 +40,7 @@ export class ConfirmBarComponent implements OnInit, OnChanges {
     const order = JSONfn.parse(JSONfn.stringify(this.order));
     this.shopcartService.addCopyToCart(order);
     this.reset();
+    window.scrollTo(0, 0);
   }
 
   finishAndPay() {

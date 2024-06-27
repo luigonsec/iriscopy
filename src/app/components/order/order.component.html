@@ -57,9 +57,7 @@
               </div>
             </div>
             <div class="Order__options col:12 md:col-12">
-              <!-- <div class="Edit">
-                <i class="fas fa-pencil-alt" (click)="this.editCopy(order)"></i>
-              </div> -->
+
               <div class="Price">
                 <div class="Remove">
                   <i class="far fa-trash-alt" (click)="this.removeCopy(order)"></i>
@@ -82,18 +80,23 @@
 
           </div>
           <div class="Description">
+            <div class="Item white">
+              <img [src]=" product.product.images[0].src " alt="">
+            </div>
             <div class="Item">Unidades: {{product.quantity}}</div>
             <div class="Item">Precio unidad: {{product.product.price}} €</div>
 
           </div>
-          <div class="grid">
-            <div class="col-12">
-              <div class="Price">
-                <div class='Value'>{{this.getProductPrice(product).toFixed(2)}} €</div>
-              </div>
+          <div class="Order__options col:12 md:col-12">
 
+            <div class="Price">
+              <div class="Remove">
+                <i class="far fa-trash-alt" (click)="this.removeProduct(product)"></i>
+              </div>
+              <div class='Value'>{{this.getProductPrice(product).toFixed(2)}} €</div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
