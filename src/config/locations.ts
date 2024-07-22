@@ -16,12 +16,12 @@ const locations = [
   },
   {
     id: 5209,
-    name: 'Facultad de Ingeniería de la Edificación (Sevilla)',
-    address: 'Av de la Reina Mercedes 4A',
+    name: 'Facultad de Matemáticas (Sevilla)',
+    address: 'Calle Tarfia',
   },
   {
     id: 5208,
-    name: 'Escuela de Ingeniería (Sevilla)',
+    name: 'Escuela de Ingeniería ETSI (Sevilla)',
     address: 'Camino de los Descubrimientos s/n',
   },
   {
