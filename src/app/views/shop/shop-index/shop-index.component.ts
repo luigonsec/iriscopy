@@ -13,6 +13,7 @@ import { ProductsService } from 'src/app/services/products.service';
   styleUrls: ['./shop-index.component.scss'],
 })
 export class ShopIndexComponent implements OnInit {
+  second_per_slide = 8;
   categories: MenuItem[];
   products: Product[] = [];
   filteredProducts: Product[] = [];
@@ -23,7 +24,10 @@ export class ShopIndexComponent implements OnInit {
     private productsService: ProductsService,
     private categoriesService: ProductCategoriesService,
     private loading: LoadingService
-  ) {}
+  ) { }
+
+
+
 
   public loadProducts(id) {
     this.products = [];

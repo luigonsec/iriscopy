@@ -1,0 +1,8 @@
+<div class="carousel-container" *ngIf="this.banners.length !== 0">
+    <div class="carousel">
+        <div class="slide">
+            <div class="slide-item" [style]="{backgroundImage: 'url(' + this.banners[this.banner_index].url + ')'}">
+            </div>
+        </div>
+    </div>
+</div>

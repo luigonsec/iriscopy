@@ -1,0 +1,47 @@
+.carousel-container {
+    width: 100%;
+    height: calc(100vh - var(--header-height));
+    /* Ajusta la altura según el componente app-pills */
+    overflow: hidden;
+}
+
+.carousel {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    width: 100%;
+    height: 100%;
+}
+
+.slide {
+
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    .slide-item {
+        width: 100%;
+        height: 100%;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        z-index: -1;
+
+    }
+}
+
+.slide img {
+    width: 100%;
+    height: auto;
+}
+
+.caption {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}

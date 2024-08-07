@@ -8,6 +8,7 @@
   &::-webkit-scrollbar {
     display: none; // Oculta la scrollbar en Chrome, Safari y Opera
   }
+
   .Pill {
     font-weight: 300;
     border-radius: 5px;
@@ -19,6 +20,7 @@
     align-items: center;
     padding: 5px 10px;
     box-sizing: border-box;
+    z-index: 99;
 
     &.active {
       color: white;

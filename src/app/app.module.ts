@@ -77,6 +77,7 @@ import { ProductDetailsComponent } from './components/product/product-details/pr
 import { DividerModule } from 'primeng/divider';
 import { PillsComponent } from './components/pills/pills.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { CarouselComponent } from './components/carousel/carousel.component';
 
 @NgModule({
   declarations: [
@@ -120,6 +121,7 @@ import { FooterComponent } from './components/footer/footer.component';
     ProductDetailsComponent,
     PillsComponent,
     FooterComponent,
+    CarouselComponent,
   ],
   imports: [
     BrowserModule,

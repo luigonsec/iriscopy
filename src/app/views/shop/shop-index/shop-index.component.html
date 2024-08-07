@@ -1,25 +1,33 @@
 <div class="grid">
-    <div class="col-8 col-offset-2">
-        <app-banner class="hidden sm:block" [options]="{visible_pc: true, visible_shop: true}"></app-banner>
-        <app-banner class="block sm:hidden" [options]="{visible_phone: true, visible_shop: true}"></app-banner>
+    <div class="col-12">
+
+        <app-carousel class="hidden sm:block" [seconds_per_slide]="second_per_slide"
+            [options]="{visible_pc: true, visible_shop: true}"></app-carousel>
+        <app-carousel class="block sm:hidden" [seconds_per_slide]="second_per_slide"
+            [options]="{visible_phone: true, visible_shop: true}"></app-carousel>
     </div>
-    <div class="col-12 md:col-4">
-        <div class="p-fluid">
-            <span class="p-input-icon-right">
-                <i class="pi pi-search"></i>
-                <input type="text" pInputText [(ngModel)]="searchText" placeholder="buscar en la tienda..."
-                    (ngModelChange)="this.filter()" />
-            </span>
-        </div>
-    </div>
-    <div class="col-12 md:col-8">
-        <div class="p-fluid">
-            <app-pills [pills]="categories"></app-pills>
+
+    <div id="shop-menu-container" class="col-12">
+        <div class="grid">
+            <div class="col-12 md:col-4">
+                <div class="p-fluid">
+                    <span class="p-input-icon-right">
+                        <i class="pi pi-search"></i>
+                        <input type="text" pInputText [(ngModel)]="searchText" placeholder="buscar en la tienda..."
+                            (ngModelChange)="this.filter()" />
+                    </span>
+                </div>
+            </div>
+            <div class="col-12 md:col-8">
+                <div class="p-fluid">
+                    <app-pills #pills [pills]="categories"></app-pills>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-12 md:col-12">
-        <div class="Shop_wrapper grid">
-            <div class="Product_wrapper col-6 md:col-3" *ngFor="let product of filteredProducts">
+        <div class="shop-container grid">
+            <div class="product-container col-6 md:col-3" *ngFor="let product of filteredProducts">
                 <app-product [product]="product"></app-product>
             </div>
         </div>

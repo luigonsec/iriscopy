@@ -3,9 +3,9 @@ export default {
     'una-cara': {
       A4: (paginas) => {
         if (paginas <= 50) return 0.034;
-        if (paginas <= 100) return 0.031;
-        if (paginas <= 250) return 0.029;
-        if (paginas <= 500) return 0.027;
+        if (paginas <= 100) return 0.032;
+        if (paginas <= 250) return 0.03;
+        if (paginas <= 500) return 0.028;
         return 0.025;
       },
       A3: (paginas) => {
@@ -19,9 +19,9 @@ export default {
     'doble-cara': {
       A4: (paginas) => {
         if (paginas <= 50) return 0.03;
-        if (paginas <= 100) return 0.026;
-        if (paginas <= 250) return 0.023;
-        if (paginas <= 500) return 0.021;
+        if (paginas <= 100) return 0.028;
+        if (paginas <= 250) return 0.025;
+        if (paginas <= 500) return 0.022;
         return 0.019;
       },
       A3: (paginas) => {
@@ -36,11 +36,11 @@ export default {
   color: {
     'una-cara': {
       A4: (paginas) => {
-        if (paginas <= 25) return 0.075;
-        if (paginas <= 75) return 0.072;
-        if (paginas <= 150) return 0.07;
-        if (paginas <= 300) return 0.065;
-        return 0.06;
+        if (paginas <= 25) return 0.085;
+        if (paginas <= 100) return 0.08;
+        if (paginas <= 250) return 0.077;
+        if (paginas <= 400) return 0.074;
+        return 0.07;
       },
       A3: (paginas) => {
         if (paginas <= 50) return 0.16;
@@ -52,11 +52,11 @@ export default {
     },
     'doble-cara': {
       A4: (paginas) => {
-        if (paginas <= 25) return 0.065;
-        if (paginas <= 75) return 0.058;
-        if (paginas <= 150) return 0.055;
-        if (paginas <= 300) return 0.052;
-        return 0.049;
+        if (paginas <= 25) return 0.075;
+        if (paginas <= 100) return 0.072;
+        if (paginas <= 250) return 0.065;
+        if (paginas <= 400) return 0.06;
+        return 0.055;
       },
       A3: (paginas) => {
         if (paginas <= 50) return 0.15;
@@ -70,10 +70,10 @@ export default {
   'color-pro': {
     'una-cara': {
       A4: (paginas) => {
-        if (paginas <= 20) return 0.12;
-        if (paginas <= 50) return 0.1;
-        if (paginas <= 150) return 0.095;
-        return 0.09;
+        if (paginas <= 20) return 0.15;
+        if (paginas <= 50) return 0.12;
+        if (paginas <= 150) return 0.011;
+        return 0.010;
       },
       A3: (paginas) => {
         if (paginas <= 20) return 0.28;
@@ -84,10 +84,10 @@ export default {
     },
     'doble-cara': {
       A4: (paginas) => {
-        if (paginas <= 20) return 0.12;
-        if (paginas <= 50) return 0.1;
-        if (paginas <= 150) return 0.095;
-        return 0.09;
+        if (paginas <= 20) return 0.15;
+        if (paginas <= 50) return 0.12;
+        if (paginas <= 150) return 0.011;
+        return 0.010;
       },
       A3: (paginas) => {
         if (paginas <= 20) return 0.28;
