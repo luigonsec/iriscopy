@@ -1,7 +1,8 @@
 <p-galleria [(value)]="this.banners" [autoPlay]="true" [circular]="true" [numVisible]="5" [showThumbnails]="false"
     [containerStyle]="{ 'max-width': '100%' }">
     <ng-template pTemplate="item" let-item>
-        <div class="Banner" [style]="'background-image: url(' +item.url+ ');'">
-        </div>
+        <img [src]="item.url" alt="" [style]="{width: '100%'}">
+        <!-- <div class="Banner" [style]="'background-image: url(' +item.url+ ');'">
+        </div> -->
     </ng-template>
 </p-galleria>
