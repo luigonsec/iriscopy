@@ -16,6 +16,17 @@
   border-left: 6px solid white;
 }
 
+.carousel-container {
+
+  // in smartphones -300px in other cases -200px
+  @media (max-width: 767px) {
+    margin-bottom: calc(-300px + 30px);
+  }
+
+  @media (min-width: 768px) {
+    margin-bottom: calc(-200px + 30px);
+  }
+}
 
 #shop-menu-container {
   z-index: 999;
@@ -25,12 +36,5 @@
   border-radius: 30px;
 
 
-  // in smartphones -300px in other cases -200px
-  @media (max-width: 767px) {
-    margin-top: -300px;
-  }
 
-  @media (min-width: 768px) {
-    margin-top: -200px;
-  }
 }
