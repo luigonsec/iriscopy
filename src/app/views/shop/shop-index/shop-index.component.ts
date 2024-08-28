@@ -78,15 +78,11 @@ export class ShopIndexComponent implements OnInit {
       return (
         product.name
           .toLocaleLowerCase()
-          .includes(this.searchText.toLocaleLowerCase()) ||
-        product.categories.some((category) => {
-          return category.name
-            .toLocaleLowerCase()
-            .includes(this.searchText.toLocaleLowerCase());
-        })
+          .includes(this.searchText.toLocaleLowerCase())
       );
     });
   }
+
   loadCategories() {
     return this.categoriesService.getAll().pipe(
       map((categories: ProductCategory[]) => {
