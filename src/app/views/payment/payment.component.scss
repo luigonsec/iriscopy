@@ -41,6 +41,13 @@ a {
       font-size: 14px;
     }
 
+    &.Discount {
+      i {
+        cursor: pointer;
+        color: black;
+      }
+    }
+
     &.Total {
       .Title {
         font-size: 20px;

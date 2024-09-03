@@ -95,7 +95,7 @@
           <div class="col-12">
             <div class="Cost Subtotal">
               <div class="Title">
-                Subtotal
+                Subtotal {{this.precio_copias}}
               </div>
               <div class="Amount">
                 {{this.subtotal.toFixed(2)}} €
@@ -111,7 +111,7 @@
             </div>
             <div class="Cost Discount" *ngIf="this.coupon">
               <div class="Title">
-                Descuento ({{this.coupon.code}})
+                Descuento ({{this.coupon.code}}) <i class="far fa-trash-alt" (click)="this.removeCoupon()"></i>
               </div>
               <div class="Amount">
                 -{{this.discount.toFixed(2)}} €

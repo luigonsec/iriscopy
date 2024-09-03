@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { environment } from 'src/environments/environment';
 import { loginSuccess, logout } from '../_actions/customer.actions';
+import { log } from 'async';
 
 interface SuccessAuthResponse {
   expiresAt: number;

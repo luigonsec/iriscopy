@@ -77,6 +77,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   apply_cupon_text = 'Aplicar mi cupón';
   searching_coupon = false;
+  precio_copias: number = 0;
 
   constructor(
     private shopcartService: ShopcartService,
@@ -101,6 +102,11 @@ export class PaymentComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.subcriptorCustomer.unsubscribe();
     this.subcriptorCoupon.unsubscribe();
+  }
+
+  public removeCoupon() {
+    this.coupon = undefined;
+    this.store.dispatch(clearCoupon());
   }
 
   public getCoupon() {
@@ -130,7 +136,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   private comprobarCantidadMinima(coupon: Coupon) {
-    if (coupon.minimum_amount > this.subtotal) {
+    if (coupon.minimum_amount > this.precio_copias) {
       return false;
     }
     return true;
@@ -147,7 +153,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     if (!this.comprobarCantidadMinima(coupon)) {
       this.messageService.add({
         severity: 'error',
-        detail: `El código promocional solo puede aplicarse a pedidos mayores de ${coupon.minimum_amount} €`,
+        detail: `El código promocional solo puede aplicarse a pedidos de copias mayores de ${coupon.minimum_amount} €`,
         summary: 'Código no aplicado',
       });
       return this.clearCoupon();
@@ -281,14 +287,14 @@ export class PaymentComponent implements OnInit, OnDestroy {
     return this.subtotal - this.discount;
   }
 
-  private getSubtotal() {
+  private getPrecioCopias() {
     this.subtotal = 0;
 
     return this.orderService.getOrderPrice(this.copies);
   }
 
   public getDiscount() {
-    const subtotal = this.subtotal;
+    const subtotal = this.precio_copias;
     this.discount = 0;
     if (this.coupon) {
       let discountAmount = 0;
@@ -421,7 +427,8 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   calcularPrecios(callback = undefined) {
-    this.getSubtotal().subscribe((price) => {
+    this.getPrecioCopias().subscribe((price) => {
+      this.precio_copias = price;
       this.subtotal =
         price +
         this.products
