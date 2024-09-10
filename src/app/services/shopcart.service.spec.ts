@@ -2,12 +2,16 @@ import { TestBed } from '@angular/core/testing';
 
 import { ShopcartService } from './shopcart.service';
 import { OrderCopy } from '../interfaces/OrderCopy';
+import { MessageService } from 'primeng/api';
 
 describe('ShopcartService', () => {
   let service: ShopcartService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    const messageService = jasmine.createSpyObj('MessageService', ['add']);
+    TestBed.configureTestingModule({
+      providers: [{ provide: MessageService, useValue: messageService }],
+    });
     service = TestBed.inject(ShopcartService);
   });
 
