@@ -13,6 +13,7 @@ import { IsAdminGuardGuard } from './_guards/is-admin-guard.guard';
 import { ShopIndexComponent } from './views/shop/shop-index/shop-index.component';
 import { AdminBannerComponent } from './views/admin/admin-banner/admin-banner.component';
 import { AdminShopComponent } from './views/admin/admin-shop/admin-shop.component';
+import { IsShopActiveGuard } from './_guards/is-shop-active-guard.service';
 
 const routes: Routes = [
   {
@@ -39,6 +40,7 @@ const routes: Routes = [
   {
     path: 'shop',
     component: ShopIndexComponent,
+    canActivate: [IsShopActiveGuard],
   },
   {
     path: 'admin',

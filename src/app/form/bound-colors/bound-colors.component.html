@@ -36,6 +36,10 @@
       *ngFor="let color of this.colorsRings"></app-color-option>
     <div class="Colors__title" *ngIf="this.colorActive.anillas">
       {{this.colorActive.anillas.name}}
+      <div *ngIf="this.colorActive.anillas.advice" class="Colors__advice">
+        {{this.colorActive.anillas.advice}}
+
+      </div>
     </div>
   </div>
 </div>

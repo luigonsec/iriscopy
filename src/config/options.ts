@@ -179,6 +179,8 @@ export default {
       color:
         'radial-gradient(circle at 10% 20%, rgb(0, 0, 0) 0%, rgb(64, 64, 64) 90.2%)',
       name: 'Metálica negra',
+      advice:
+        '(Máximo 600 hojas a doble cara ó 350 hojas a una cara. Para más cantidad dividir el documento)',
       code: 'metalica-negra',
       image: 'assets/images/rings/negra.png',
       default: true,
