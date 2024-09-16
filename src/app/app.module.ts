@@ -78,6 +78,7 @@ import { DividerModule } from 'primeng/divider';
 import { PillsComponent } from './components/pills/pills.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
+import { SignUpComponent } from './views/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -122,6 +123,7 @@ import { CarouselComponent } from './components/carousel/carousel.component';
     PillsComponent,
     FooterComponent,
     CarouselComponent,
+    SignUpComponent,
   ],
   imports: [
     BrowserModule,

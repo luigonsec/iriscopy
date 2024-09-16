@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { BillingComponent } from 'src/app/components/forms/billing/billing.component';
 import { ShippingComponent } from 'src/app/components/forms/shipping/shipping.component';
@@ -12,11 +13,17 @@ import { CustomersService } from 'src/app/services/customers.service';
 export class ProfileComponent {
   @ViewChild('billing') billing: BillingComponent;
   @ViewChild('shipping') shipping: ShippingComponent;
+  public firstLogin: boolean = false;
 
   constructor(
     private customersService: CustomersService,
-    private messages: MessageService
-  ) {}
+    private messages: MessageService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.firstLogin = params.signup == 'true';
+    });
+  }
 
   manageBilling() {
     const isValid = this.billing.validate();

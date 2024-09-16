@@ -14,6 +14,7 @@ import { ShopIndexComponent } from './views/shop/shop-index/shop-index.component
 import { AdminBannerComponent } from './views/admin/admin-banner/admin-banner.component';
 import { AdminShopComponent } from './views/admin/admin-shop/admin-shop.component';
 import { IsShopActiveGuard } from './_guards/is-shop-active-guard.service';
+import { SignUpComponent } from './views/sign-up/sign-up.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'sign-up',
+    component: SignUpComponent,
   },
   {
     path: 'payment',
