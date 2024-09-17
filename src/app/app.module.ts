@@ -73,7 +73,6 @@ import { ProductComponent } from './components/product/product.component';
 import { AdminShopComponent } from './views/admin/admin-shop/admin-shop.component';
 import { AdminBannerComponent } from './views/admin/admin-banner/admin-banner.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
-import { ProductDetailsComponent } from './components/product/product-details/product-details.component';
 import { DividerModule } from 'primeng/divider';
 import { PillsComponent } from './components/pills/pills.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -81,6 +80,7 @@ import { CarouselComponent } from './components/carousel/carousel.component';
 import { SignUpComponent } from './views/sign-up/sign-up.component';
 import { ResetPasswordComponent } from './views/reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './views/forgot-password/forgot-password.component';
+import { ShopProductComponent } from './views/shop/shop-product/shop-product.component';
 
 @NgModule({
   declarations: [
@@ -121,13 +121,13 @@ import { ForgotPasswordComponent } from './views/forgot-password/forgot-password
     ProductComponent,
     AdminShopComponent,
     AdminBannerComponent,
-    ProductDetailsComponent,
     PillsComponent,
     FooterComponent,
     CarouselComponent,
     SignUpComponent,
     ResetPasswordComponent,
     ForgotPasswordComponent,
+    ShopProductComponent,
   ],
   imports: [
     BrowserModule,

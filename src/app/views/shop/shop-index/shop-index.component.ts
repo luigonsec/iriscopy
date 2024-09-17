@@ -24,10 +24,7 @@ export class ShopIndexComponent implements OnInit {
     private productsService: ProductsService,
     private categoriesService: ProductCategoriesService,
     private loading: LoadingService
-  ) { }
-
-
-
+  ) {}
 
   public loadProducts(id) {
     this.products = [];
@@ -75,11 +72,9 @@ export class ShopIndexComponent implements OnInit {
 
   filter() {
     this.filteredProducts = this.products.filter((product: Product) => {
-      return (
-        product.name
-          .toLocaleLowerCase()
-          .includes(this.searchText.toLocaleLowerCase())
-      );
+      return product.name
+        .toLocaleLowerCase()
+        .includes(this.searchText.toLocaleLowerCase());
     });
   }
 

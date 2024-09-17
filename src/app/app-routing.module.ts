@@ -17,6 +17,7 @@ import { IsShopActiveGuard } from './_guards/is-shop-active-guard.service';
 import { SignUpComponent } from './views/sign-up/sign-up.component';
 import { ResetPasswordComponent } from './views/reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './views/forgot-password/forgot-password.component';
+import { ShopProductComponent } from './views/shop/shop-product/shop-product.component';
 
 const routes: Routes = [
   {
@@ -55,6 +56,11 @@ const routes: Routes = [
   {
     path: 'shop',
     component: ShopIndexComponent,
+    canActivate: [IsShopActiveGuard],
+  },
+  {
+    path: 'shop/:slug',
+    component: ShopProductComponent,
     canActivate: [IsShopActiveGuard],
   },
   {

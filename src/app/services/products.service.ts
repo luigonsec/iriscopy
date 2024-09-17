@@ -19,6 +19,12 @@ export class ProductsService {
     );
   }
 
+  findBySlug(slug: string) {
+    return this.http.get(
+      `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/products/${slug}`
+    );
+  }
+
   getVariations(id: number) {
     return this.http.get(
       `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/products/${id}/variations`
