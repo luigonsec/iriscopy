@@ -39,7 +39,7 @@ export class ResetPasswordComponent {
     }
   }
 
-  reset() {
+  validate() {
     let isValid = true;
     const validatorPassword = this.validator.validatePassword(this.password);
     if (!!!validatorPassword.isValid) {
@@ -52,7 +52,12 @@ export class ResetPasswordComponent {
       this.errors.confirm = 'Las contraseñas no coinciden.';
       isValid = false;
     }
+    if (isValid) {
+      this.resetPassword();
+    }
+  }
 
+  public resetPassword() {
     this.usersService.resetPassword(this.token, this.password).subscribe(
       () => {
         this.password = '';
