@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import Product from 'src/app/interfaces/Product';
@@ -18,14 +19,28 @@ export class ShopProductComponent implements OnInit {
   public selectedAttribute: string;
   public picture: string;
   public selectedVariation: ProductVariation;
-
   public quantity: number = 0;
 
   constructor(
+    private titleService: Title,
     private shopCart: ShopcartService,
     private productsService: ProductsService,
-    private router: ActivatedRoute
+    private router: ActivatedRoute,
+    private meta: Meta
   ) {}
+
+  adjustFieldsSEO() {
+    this.titleService.setTitle(this.product.name);
+
+    // Metadatos Open Graph
+    this.meta.addTags([
+      { property: 'og:title', content: this.product.name },
+      { property: 'og:description', content: this.product.short_description },
+      { property: 'og:image', content: this.picture }, // URL de la imagen del producto
+      { property: 'og:url', content: window.location.href },
+      { property: 'og:type', content: 'website' },
+    ]);
+  }
 
   addToCart() {
     if (this.quantity <= 0) return;
@@ -83,6 +98,7 @@ export class ShopProductComponent implements OnInit {
   loadProduct() {
     this.productsService.findBySlug(this.slug).subscribe((product: Product) => {
       this.product = product;
+      this.adjustFieldsSEO();
       this.picture = this.product.images[0]?.src;
       this.loadVariations();
     });

@@ -15,7 +15,7 @@ export class ProductComponent implements OnInit {
   public quantity: number = 0;
   ref: DynamicDialogRef | undefined;
 
-  constructor(private shopCart: ShopcartService, private router: Router) {}
+  constructor(private shopCart: ShopcartService) {}
 
   addToCart() {
     if (this.quantity == 0) return;
