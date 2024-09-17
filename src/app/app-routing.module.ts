@@ -15,6 +15,8 @@ import { AdminBannerComponent } from './views/admin/admin-banner/admin-banner.co
 import { AdminShopComponent } from './views/admin/admin-shop/admin-shop.component';
 import { IsShopActiveGuard } from './_guards/is-shop-active-guard.service';
 import { SignUpComponent } from './views/sign-up/sign-up.component';
+import { ResetPasswordComponent } from './views/reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './views/forgot-password/forgot-password.component';
 
 const routes: Routes = [
   {
@@ -37,6 +39,14 @@ const routes: Routes = [
   {
     path: 'sign-up',
     component: SignUpComponent,
+  },
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent,
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
   },
   {
     path: 'payment',

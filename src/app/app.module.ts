@@ -79,6 +79,8 @@ import { PillsComponent } from './components/pills/pills.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { SignUpComponent } from './views/sign-up/sign-up.component';
+import { ResetPasswordComponent } from './views/reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './views/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -124,6 +126,8 @@ import { SignUpComponent } from './views/sign-up/sign-up.component';
     FooterComponent,
     CarouselComponent,
     SignUpComponent,
+    ResetPasswordComponent,
+    ForgotPasswordComponent,
   ],
   imports: [
     BrowserModule,

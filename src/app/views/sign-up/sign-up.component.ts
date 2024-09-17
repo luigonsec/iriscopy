@@ -8,6 +8,7 @@ import { selectCustomer } from 'src/app/_selectors/customer.selectors';
 import { AppState } from 'src/app/app.state';
 import { AuthService } from 'src/app/services/auth.service';
 import { CustomersService } from 'src/app/services/customers.service';
+import { ValidatorsService } from 'src/app/services/validators.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -33,6 +34,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     public customerService: CustomersService,
     public authService: AuthService,
     public router: Router,
+    public validator: ValidatorsService,
     private store: Store<AppState>
   ) {}
 
@@ -74,24 +76,9 @@ export class SignUpComponent implements OnInit, OnDestroy {
       isValid = false;
     }
 
-    // Validación de la contraseña
-    if (!this.password || this.password.length < 8) {
-      this.errors.password = 'La contraseña debe tener al menos 8 caracteres.';
-      isValid = false;
-    } else if (!/[A-Z]/.test(this.password)) {
-      this.errors.password =
-        'La contraseña debe tener al menos una letra mayúscula.';
-      isValid = false;
-    } else if (!/[a-z]/.test(this.password)) {
-      this.errors.password =
-        'La contraseña debe tener al menos una letra minúscula.';
-      isValid = false;
-    } else if (!/[0-9]/.test(this.password)) {
-      this.errors.password = 'La contraseña debe tener al menos un número.';
-      isValid = false;
-    } else if (!/[!@#$%^&*(),.?¿":{}|\+<>-]/.test(this.password)) {
-      this.errors.password =
-        'La contraseña debe tener al menos un carácter especial.';
+    const validatorPassword = this.validator.validatePassword(this.password);
+    if (!!!validatorPassword.isValid) {
+      this.errors.password = validatorPassword.message;
       isValid = false;
     }
 
