@@ -127,6 +127,8 @@ describe('ResetPasswordComponent', () => {
 
       expect(component.password).toBe('');
       expect(component.confirm).toBe('');
+      expect(component.errors.password).toBe('');
+      expect(component.errors.confirm).toBe('');
     });
 
     it('should display a success message if password is reset', () => {

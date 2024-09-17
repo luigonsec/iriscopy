@@ -62,6 +62,8 @@ export class ResetPasswordComponent {
       () => {
         this.password = '';
         this.confirm = '';
+        this.errors.password = '';
+        this.errors.confirm = '';
         this.messageService.add({
           severity: 'success',
           summary: 'Contraseña modificada',
