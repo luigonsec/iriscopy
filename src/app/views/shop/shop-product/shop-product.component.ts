@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import Product from 'src/app/interfaces/Product';
-import ProductVariation from 'src/app/interfaces/ProductVariation';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from 'src/app/services/products.service';
 import { ShopcartService } from 'src/app/services/shopcart.service';
+import Product from 'src/app/interfaces/Product';
+import ProductVariation from 'src/app/interfaces/ProductVariation';
 
 @Component({
   selector: 'app-shop-product',
@@ -22,25 +21,11 @@ export class ShopProductComponent implements OnInit {
   public quantity: number = 0;
 
   constructor(
-    private titleService: Title,
-    private shopCart: ShopcartService,
-    private productsService: ProductsService,
-    private router: ActivatedRoute,
-    private meta: Meta
+    public shopCart: ShopcartService,
+    public productsService: ProductsService,
+    public activatedRouter: ActivatedRoute,
+    public router: Router
   ) {}
-
-  adjustFieldsSEO() {
-    this.titleService.setTitle(this.product.name);
-
-    // Metadatos Open Graph
-    this.meta.addTags([
-      { property: 'og:title', content: this.product.name },
-      { property: 'og:description', content: this.product.short_description },
-      { property: 'og:image', content: this.picture }, // URL de la imagen del producto
-      { property: 'og:url', content: window.location.href },
-      { property: 'og:type', content: 'website' },
-    ]);
-  }
 
   addToCart() {
     if (this.quantity <= 0) return;
@@ -97,17 +82,21 @@ export class ShopProductComponent implements OnInit {
 
   loadProduct() {
     this.productsService.findBySlug(this.slug).subscribe((product: Product) => {
+      if (!!!product) {
+        return this.router.navigate(['/']);
+      }
       this.product = product;
-      this.adjustFieldsSEO();
       this.picture = this.product.images[0]?.src;
       this.loadVariations();
     });
   }
 
   ngOnInit(): void {
-    this.router.params.subscribe((params) => {
+    this.activatedRouter.params.subscribe((params) => {
       this.slug = params.slug;
-      this.loadProduct();
+      if (this.slug) {
+        this.loadProduct();
+      }
     });
   }
 }
