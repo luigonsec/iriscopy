@@ -30,7 +30,7 @@ module.exports = function (config) {
     browsers: process.env.CI ? ['ChromeHeadless'] : ['Chrome'], // Usa ChromeHeadless en CI, Chrome en local
     customLaunchers: {
       ChromeHeadless: {
-        base: 'Chrome',
+        base: 'ChromeHeadless',
         flags: ['--no-sandbox', '--headless', '--disable-gpu', '--remote-debugging-port=9222'],
       },
     },
