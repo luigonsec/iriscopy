@@ -81,6 +81,9 @@ import { SignUpComponent } from './views/sign-up/sign-up.component';
 import { ResetPasswordComponent } from './views/reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './views/forgot-password/forgot-password.component';
 import { ShopProductComponent } from './views/shop/shop-product/shop-product.component';
+import { UserOrdersComponent } from './views/profile/user-orders/user-orders.component';
+import { UserInformationComponent } from './views/profile/user-information/user-information.component';
+import { OrderDetailsComponent } from './components/order-details/order-details.component';
 
 @NgModule({
   declarations: [
@@ -128,6 +131,9 @@ import { ShopProductComponent } from './views/shop/shop-product/shop-product.com
     ResetPasswordComponent,
     ForgotPasswordComponent,
     ShopProductComponent,
+    UserOrdersComponent,
+    UserInformationComponent,
+    OrderDetailsComponent,
   ],
   imports: [
     BrowserModule,

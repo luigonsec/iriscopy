@@ -54,4 +54,10 @@ export class OrdersService {
       { order }
     );
   }
+
+  getByCustomer(customers_id: number): Observable<Order[]> {
+    return this.http.get<Order[]>(
+      `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/orders/customers/${customers_id}`
+    );
+  }
 }

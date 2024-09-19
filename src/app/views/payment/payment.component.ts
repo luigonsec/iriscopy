@@ -373,7 +373,9 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   private buildOrderObject(shippingLine, flattenFiles: File[]): Order {
+    const customer_id = this.customer ? this.customer.id : 0;
     return {
+      customer_id,
       coupon: this.coupon,
       billing: this.billing.billingDetails,
       shipping: this.differentAddress

@@ -1,78 +1,27 @@
-import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { MessageService } from 'primeng/api';
-import { BillingComponent } from 'src/app/components/forms/billing/billing.component';
-import { ShippingComponent } from 'src/app/components/forms/shipping/shipping.component';
-import { CustomersService } from 'src/app/services/customers.service';
+import { Component, OnInit } from '@angular/core';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
 })
-export class ProfileComponent {
-  @ViewChild('billing') billing: BillingComponent;
-  @ViewChild('shipping') shipping: ShippingComponent;
-  public firstLogin: boolean = false;
+export class ProfileComponent implements OnInit {
+  items: MenuItem[] = [];
+  activeItem: MenuItem;
+  constructor() {}
+  ngOnInit(): void {
+    this.items = [
+      {
+        label: 'Información personal',
+        routerLink: '/profile/information',
+      },
+      {
+        label: 'Pedidos',
+        routerLink: '/profile/orders',
+      },
+    ];
 
-  constructor(
-    private customersService: CustomersService,
-    private messages: MessageService,
-    private activatedRoute: ActivatedRoute
-  ) {
-    this.activatedRoute.queryParams.subscribe((params) => {
-      this.firstLogin = params.signup == 'true';
-    });
-  }
-
-  manageBilling() {
-    const isValid = this.billing.validate();
-    if (isValid) {
-      this.customersService
-        .update(1, { billing: this.billing.billingDetails })
-        .subscribe({
-          next: () => {
-            this.messages.add({
-              severity: 'success',
-              summary: 'Tus datos de facturación han sido actualizados',
-              detail: 'Datos actualizados',
-            });
-          },
-          error: () => {
-            this.messages.add({
-              severity: 'error',
-              summary:
-                'Tus datos de facturación no han podido ser actualizados',
-              detail: 'Error',
-            });
-          },
-        });
-    }
-  }
-
-  manageShipping() {
-    const isValid = this.shipping.validate();
-    if (isValid) {
-      this.customersService
-        .update(1, {
-          shipping: this.shipping.shippingDetails,
-        })
-        .subscribe({
-          next: () => {
-            this.messages.add({
-              severity: 'success',
-              summary: 'Tus datos de envío han sido actualizados',
-              detail: 'Datos actualizados',
-            });
-          },
-          error: () => {
-            this.messages.add({
-              severity: 'error',
-              summary: 'Tus datos de envío no han podido ser actualizados',
-              detail: 'Error',
-            });
-          },
-        });
-    }
+    this.activeItem = this.items[0];
   }
 }

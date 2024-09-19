@@ -1,57 +1,8 @@
-<div class="grid" *ngIf="this.firstLogin">
-  <div class="col-12">
-    <h2>¡Registro realizado!</h2>
-    <p>
-      Puedes rellenar ahora tus datos de envío para futuros pedidos y ahorrar
-      tiempo. Si ahora no quieres hacerlo no te preocupes, puedes rellenarlos
-      más adelante.
-    </p>
-  </div>
-</div>
 <div class="grid">
-  <div class="col-12 md:col-6">
-    <div class="grid">
-      <div class="col-12">
-        <h2>Datos de envío</h2>
-      </div>
-    </div>
-    <div class="grid">
-      <div class="col-12">
-        <app-shipping #shipping></app-shipping>
-      </div>
-    </div>
-    <div class="grid">
-      <div class="col-12">
-        <button
-          pButton
-          [label]="'Guardar datos de envío'"
-          class="p-button-sm"
-          (click)="this.manageShipping()"
-        ></button>
-      </div>
-    </div>
+  <div class="col-12">
+    <p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu>
   </div>
-
-  <div class="col-12 md:col-6">
-    <div class="grid">
-      <div class="col-12">
-        <h2>Datos de facturación</h2>
-      </div>
-    </div>
-    <div class="grid">
-      <div class="col-12">
-        <app-billing #billing [shipping]="true"></app-billing>
-      </div>
-    </div>
-    <div class="grid">
-      <div class="col-12">
-        <button
-          pButton
-          [label]="'Guardar datos de facturación'"
-          class="p-button-sm"
-          (click)="this.manageBilling()"
-        ></button>
-      </div>
-    </div>
+  <div class="col-12">
+    <router-outlet></router-outlet>
   </div>
 </div>

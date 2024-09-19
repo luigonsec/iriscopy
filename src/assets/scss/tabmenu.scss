@@ -1,0 +1,38 @@
+p-tabmenu {
+
+    .p-tabmenu-nav.p-reset,
+    .p-ripple.p-element.p-menuitem-link.ng-star-inserted,
+    .p-ripple.p-element.p-menuitem-link.ng-star-inserted
+    
+    {
+        background-color: transparent;
+    }
+
+    .p-element.p-tabmenuitem.p-highlight.ng-star-inserted {
+        .p-ripple.p-element.p-menuitem-link.ng-star-inserted {
+            background-color: transparent;
+            border-bottom-color: $primary;
+            color: $primary;
+        }
+    } 
+
+    .p-element.p-tabmenuitem.ng-star-inserted:hover {
+        .p-ripple.p-element.p-menuitem-link.ng-star-inserted {
+            background-color: transparent;
+        }
+
+    }
+
+    .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:not(.p-disabled):focus {
+
+        box-shadow: none !important;
+    }
+    
+
+    .p-element.p-tabmenuitem.ng-star-inserted:focus {
+        .p-ripple.p-element.p-menuitem-link.ng-star-inserted {
+            background-color: transparent;
+        }
+
+    }
+}

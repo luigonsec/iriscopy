@@ -179,9 +179,12 @@ describe('SignUpComponent', () => {
 
       component.ngOnInit();
 
-      expect(mockRouter.navigate).toHaveBeenCalledWith(['/profile'], {
-        queryParams: { signup: true },
-      });
+      expect(mockRouter.navigate).toHaveBeenCalledWith(
+        ['/profile/information'],
+        {
+          queryParams: { signup: true },
+        }
+      );
     });
   });
 });

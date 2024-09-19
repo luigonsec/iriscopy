@@ -7,6 +7,7 @@ import ShippingLine from './ShippingLine';
 
 export default interface Order {
   id?: number;
+  customer_id?: number;
   coupon?: Coupon;
   billing: BillingDetails;
   shipping: ShippingDetails;

@@ -18,6 +18,8 @@ import { SignUpComponent } from './views/sign-up/sign-up.component';
 import { ResetPasswordComponent } from './views/reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './views/forgot-password/forgot-password.component';
 import { ShopProductComponent } from './views/shop/shop-product/shop-product.component';
+import { UserInformationComponent } from './views/profile/user-information/user-information.component';
+import { UserOrdersComponent } from './views/profile/user-orders/user-orders.component';
 
 const routes: Routes = [
   {
@@ -81,6 +83,10 @@ const routes: Routes = [
     path: 'profile',
     component: ProfileComponent,
     canActivate: [AuthGuard],
+    children: [
+      { path: 'information', component: UserInformationComponent },
+      { path: 'orders', component: UserOrdersComponent },
+    ],
   },
   {
     path: 'payment/error',

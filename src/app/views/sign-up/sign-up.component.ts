@@ -133,7 +133,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
       .select(selectCustomer)
       .subscribe((customer) => {
         if (customer) {
-          this.router.navigate(['/profile'], {
+          this.router.navigate(['/profile/information'], {
             queryParams: { signup: true },
           });
         }
