@@ -19,7 +19,16 @@ export class UserOrdersComponent implements OnInit, OnDestroy {
   customer$: any;
   customer: Customer;
   orders: Order[];
-  statusTranslations: {};
+  statusTranslations: {} = {
+    processing: 'Procesando',
+    'on-hold': 'En espera',
+    refunded: 'Reembolsado',
+    failed: 'Fallido',
+    trash: 'Eliminado',
+    cancelled: 'Cancelado',
+    pending: 'Pendiente de pago',
+    completed: 'Completado',
+  };
   public moment = moment;
 
   constructor(
@@ -50,12 +59,15 @@ export class UserOrdersComponent implements OnInit, OnDestroy {
       isLoading: true,
       text: 'Cargando...',
     });
-    this.ordersService
-      .getByCustomer(this.customer.id)
-      .subscribe((orders: Order[]) => {
+    this.ordersService.getByCustomer(this.customer.id).subscribe({
+      next: (orders: Order[]) => {
         this.orders = orders;
         this.loadingService.stopLoading();
-      });
+      },
+      error: () => {
+        this.loadingService.stopLoading();
+      },
+    });
   }
 
   getStatusName(name) {
@@ -63,11 +75,6 @@ export class UserOrdersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.statusTranslations = {
-      cancelled: 'Cancelado',
-      pending: 'Pendiente',
-      completed: 'Completado',
-    };
     this.customer$ = this.store
       .select(selectCustomer)
       .subscribe((customer: Customer) => {
