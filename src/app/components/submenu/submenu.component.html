@@ -8,13 +8,7 @@
   </div>
   <div class="col-12 sm:col-6">
     <a class="Back" *ngIf="this.customer" (click)="this.logout()">Salir</a>
-    <a
-      class="Back"
-      *ngIf="!!!this.customer"
-      href="/login"
-      (click)="this.logout()"
-      >Acceso</a
-    >
+    <a class="Back" *ngIf="!!!this.customer" href="/login">Acceso</a>
     <a class="Back" *ngIf="this.customer" [routerLink]="'/profile/information'"
       >Tus datos</a
     >

@@ -102,7 +102,11 @@
         </a>
       </div>
       <div class="Item" *ngIf="!!!this.customer">
-        <a class="Link" href="/login" (click)="this.sidebarVisible = false">
+        <a
+          class="Link"
+          [routerLink]="'/login'"
+          (click)="this.sidebarVisible = false"
+        >
           <i class="fas fa-user-circle"></i> acceso
         </a>
       </div>
