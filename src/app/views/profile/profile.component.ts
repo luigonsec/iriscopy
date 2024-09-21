@@ -20,6 +20,10 @@ export class ProfileComponent implements OnInit {
         label: 'Pedidos',
         routerLink: '/profile/orders',
       },
+      {
+        label: 'Seguridad',
+        routerLink: '/profile/security',
+      },
     ];
 
     this.activeItem = this.items[0];

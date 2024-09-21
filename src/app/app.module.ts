@@ -84,6 +84,7 @@ import { ShopProductComponent } from './views/shop/shop-product/shop-product.com
 import { UserOrdersComponent } from './views/profile/user-orders/user-orders.component';
 import { UserInformationComponent } from './views/profile/user-information/user-information.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
+import { UserPasswordComponent } from './views/profile/user-password/user-password.component';
 
 @NgModule({
   declarations: [
@@ -134,6 +135,7 @@ import { OrderDetailsComponent } from './components/order-details/order-details.
     UserOrdersComponent,
     UserInformationComponent,
     OrderDetailsComponent,
+    UserPasswordComponent,
   ],
   imports: [
     BrowserModule,

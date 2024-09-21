@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { environment } from 'src/environments/environment';
 import { loginSuccess, logout } from '../_actions/customer.actions';
-import { log } from 'async';
 
 interface SuccessAuthResponse {
   expiresAt: number;
@@ -36,6 +35,7 @@ export class AuthService {
     if (!refreshToken) {
       return this.stopRefreshTokenTimer();
     }
+
     return this.http
       .post(
         `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/auth/refresh`,

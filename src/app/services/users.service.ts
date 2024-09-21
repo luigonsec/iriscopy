@@ -21,4 +21,11 @@ export class UsersService {
       { token, password }
     );
   }
+
+  modifyPassword(customer_id: number, password: string) {
+    return this.http.post(
+      `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/users/${customer_id}/modify-password`,
+      { password }
+    );
+  }
 }
