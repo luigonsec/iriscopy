@@ -343,6 +343,14 @@ export default {
       sides: ['delantera', 'trasera'],
       image: 'assets/images/bounds/morado.png',
     },
+    {
+      id: 13,
+      color: '#800080',
+      name: 'Lila',
+      code: 'lila',
+      sides: ['delantera', 'trasera'],
+      image: 'assets/images/bounds/lila.png',
+    },
   ],
 
   bounds: [
