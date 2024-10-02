@@ -19,7 +19,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { HeaderComponent } from './components/header/header.component';
 import { UploaderComponent } from './components/uploader/uploader.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { BoundComponent } from './components/bound/bound.component';
+import { BoundComponent } from './form/bound/bound.component';
 import { BoundColorsComponent } from './form/bound-colors/bound-colors.component';
 import { TabViewModule } from 'primeng/tabview';
 import { BadgeModule } from 'primeng/badge';
@@ -50,7 +50,6 @@ import { SuccessComponent } from './views/success/success.component';
 import { ErrorComponent } from './views/error/error.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { FilterPipe } from './filters/FilterPipe';
-import { SubmenuComponent } from './components/submenu/submenu.component';
 import { LoginComponent } from './views/login/login.component';
 import { StoreModule } from '@ngrx/store';
 import { customerReducer } from './_reducer/customer.reducer';
@@ -85,6 +84,7 @@ import { UserOrdersComponent } from './views/profile/user-orders/user-orders.com
 import { UserInformationComponent } from './views/profile/user-information/user-information.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { UserPasswordComponent } from './views/profile/user-password/user-password.component';
+import { BoundPagesComponent } from './form/bound-pages/bound-pages.component';
 
 @NgModule({
   declarations: [
@@ -114,7 +114,6 @@ import { UserPasswordComponent } from './views/profile/user-password/user-passwo
     SuccessComponent,
     ErrorComponent,
     LoadingComponent,
-    SubmenuComponent,
     LoginComponent,
     ShippingComponent,
     BillingComponent,
@@ -136,6 +135,7 @@ import { UserPasswordComponent } from './views/profile/user-password/user-passwo
     UserInformationComponent,
     OrderDetailsComponent,
     UserPasswordComponent,
+    BoundPagesComponent,
   ],
   imports: [
     BrowserModule,

@@ -22,6 +22,7 @@ export class PrintComponent implements OnInit, OnDestroy {
   public paperType: Option;
   public paperSize: Option;
   public boundType: Option = options.boundTypes.find((x) => x.default);
+  public boundPages: Option = options.boundPages.find((x) => x.default);
 
   public boundColors = {
     delantera: options.colorsCover
@@ -52,6 +53,7 @@ export class PrintComponent implements OnInit, OnDestroy {
       paperType: this.paperType,
       paperSize: this.paperSize,
       boundType: this.boundType,
+      boundPages: this.boundPages,
       boundColors: this.boundColors,
       copiesQuantity: this.copiesQuantity,
       additionalComments: this.additionalComments,
@@ -116,11 +118,14 @@ export class PrintComponent implements OnInit, OnDestroy {
   }
 
   getBound(value) {
+    this.boundPages = value.boundPages;
     this.boundType = value.boundType;
     this.boundColors = value.boundColors;
 
     this.order.boundType = this.boundType;
     this.order.boundColors = this.boundColors;
+    this.order.boundPages = this.boundPages;
+
     this.order = Object.assign({}, this.order);
   }
 

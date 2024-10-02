@@ -173,6 +173,30 @@ export default {
       description: 'Todos en uno',
     },
   ],
+
+  boundPages: [
+    {
+      name: 'No',
+      code: 'no',
+      default: true,
+    },
+    {
+      name: 'Por delante',
+      code: 'delante',
+      description: '+0.015€',
+    },
+    {
+      name: 'Por detrás',
+      code: 'detras',
+      description: '+0.015€',
+    },
+    {
+      name: 'Ambos',
+      code: 'ambos',
+      description: '+0.03€',
+    },
+  ],
+
   colorsRings: [
     {
       id: 1,

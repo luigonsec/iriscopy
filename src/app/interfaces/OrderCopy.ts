@@ -13,6 +13,7 @@ export interface OrderCopy {
   paperType: Option;
   paperSize: Option;
   boundType: Option;
+  boundPages: Option;
 
   boundColors: {
     delantera: BoundColor;

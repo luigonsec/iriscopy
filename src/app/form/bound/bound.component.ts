@@ -4,6 +4,7 @@ import Option from 'src/app/interfaces/Option';
 import RingColor from 'src/app/interfaces/RingColor';
 import options from 'src/config/options';
 interface Bound {
+  boundPages: Option;
   boundType: Option;
   boundColors: {
     anillas: RingColor;
@@ -24,8 +25,10 @@ export class BoundComponent implements OnInit {
     trasera: BoundColor;
   };
   @Input() public boundType: Option;
+  @Input() public boundPages: Option;
 
   public bound = {
+    boundPages: options.boundPages.find((x) => x.default),
     boundType: options.boundTypes.find((x) => x.default),
     boundColors: {
       anillas: options.colorsRings.find((x) => x.default),
@@ -40,6 +43,11 @@ export class BoundComponent implements OnInit {
 
   handleBoundType(value) {
     this.bound.boundType = value;
+    this.emitChangeBound.emit(this.bound);
+  }
+
+  handleBoundPages(value) {
+    this.bound.boundPages = value;
     this.emitChangeBound.emit(this.bound);
   }
 
