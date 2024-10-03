@@ -183,17 +183,14 @@ export default {
     {
       name: 'Por delante',
       code: 'delante',
-      description: '+0.015€',
     },
     {
       name: 'Por detrás',
       code: 'detras',
-      description: '+0.015€',
     },
     {
       name: 'Ambos',
       code: 'ambos',
-      description: '+0.03€',
     },
   ],
 
