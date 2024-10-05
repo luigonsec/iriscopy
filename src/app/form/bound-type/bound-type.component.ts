@@ -35,7 +35,10 @@ export class BoundTypeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.options = options.boundTypes;
+    this.options = options.boundTypes.filter((x) => {
+      if (!!!this._files || this._files.length == 0) return true;
+      return !(x.code === 'agrupados' && this._files.length == 1);
+    });
     this.option = this.option || options.boundTypes.find((x) => x.default);
     this.emitChange.emit(this.option);
   }
