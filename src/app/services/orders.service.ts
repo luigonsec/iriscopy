@@ -41,8 +41,11 @@ export class OrdersService {
     return this.order$;
   }
 
-  getCopyPrice(line: OrderCopy, order: OrderCopy[]): Observable<number> {
-    return this.http.post<number>(
+  getCopyPrice(
+    line: OrderCopy,
+    order: OrderCopy[]
+  ): Observable<{ precio: number; notas: string[] }> {
+    return this.http.post<{ precio: number; notas: string[] }>(
       `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/orders/price/line`,
       { line, order }
     );

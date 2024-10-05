@@ -1,158 +1,115 @@
 @import "src/assets/scss/colors";
 
-.Order__item {
+.order-item {
   border: 1px solid black;
   border-radius: 20px;
   padding: 10px 20px;
-
   background-color: white;
   width: 100%;
   margin-bottom: 10px;
 
-  .Title {
+  .title {
     color: black;
     font-size: 16px;
     font-weight: 500;
     margin-bottom: 15px;
-
-    .Value {
+    .value {
       display: block;
     }
   }
 
-  .Key {
-    font-weight: bold;
-    display: inline;
-  }
-
-  .Value {
-    display: inline;
-  }
-
-  .Bound__details {
-    display: block;
-    width: 100%;
-  }
-
-  .Description {
+  .description {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     text-align: center;
-  }
-
-  .Description .Item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    padding: 5px;
-    background-color: $darkGray;
-    color: white;
-    font-size: 14px;
-    min-width: 40px;
-    height: 40px;
-    box-sizing: border-box;
-
-    &.white {
-      background-color: white;
-    }
-
-    &.bordered {
-      border: 1px solid $darkGray
-    }
-
-    &.lg {
-      min-width: 60px;
-      height: 60px;
-    }
-  }
-
-  .Description .Item img {
-    height: 100%;
-    width: auto;
-    margin: 0;
-    padding: 0;
-  }
-
-  .Bound__details {
-    .Bound__detail {
+    .item {
       display: flex;
       align-items: center;
-      justify-content: left;
+      justify-content: center;
+      border-radius: 5px;
+      padding: 5px;
+      background-color: $darkGray;
+      color: white;
+      font-size: 14px;
+      min-width: 40px;
+      height: 40px;
+      box-sizing: border-box;
+      img {
+        height: 100%;
+        width: auto;
+      }
+    }
+    .item.white {
+      background-color: white;
+    }
+  }
+
+  .bound-details {
+    display: block;
+    width: 100%;
+    .bound-detail {
+      display: flex;
+      align-items: center;
       margin-top: 10px;
       font-size: 14px;
-
-      .Text {
-        font-weight: 500;
-        height: auto;
-      }
-
       img {
-        display: inline-block;
         transform: rotate(90deg);
-        background-position: center;
         width: 25px;
         margin-right: 20px;
       }
     }
   }
 
-  .Order__options {
-    text-align: right;
-    margin-top: 20px;
-    width: 100%;
+  .order_note {
+    color: gray;
+    font-size: 14px;
+    margin-top: 10px;
+    font-style: italic;
 
-    .Remove {
-      display: inline;
+  }
+
+  .order-options {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px; 
+    margin-top: 20px;
+  
+    .remove {
+      display: flex; 
+      align-items: center; 
       cursor: pointer;
-      padding-right: 5px;
       color: $darkGray;
     }
-
-    .Price {
-      display: inline;
+  
+    .price {
+      display: flex; 
+      align-items: center;
       color: $primary;
-      height: 100%;
-
-      .Value {
+  
+      .value {
         font-weight: 500;
         font-size: 20px;
-        width: 100%;
+        margin-left: 10px; 
       }
     }
   }
-}
-
-.Buttons {
-  text-align: right;
-}
-
-.Subtotal__Price {
-  text-align: right;
-  margin-top: 15px;
-  font-size: 16px;
-  font-weight: bold;
+  
 }
 
 @media (max-width: 768px) {
-  .Order__item {
-    .Title {
+  .order-item {
+    .title {
       font-size: 14px;
     }
-
-    .Description .Item {
+    .description .item {
       font-size: 12px;
       min-width: 30px;
       height: 30px;
     }
-
-    .Order__options {
-      .Price {
-        .Value {
-          font-size: 16px;
-        }
-      }
+    .order-options .price .value {
+      font-size: 16px;
     }
   }
 }

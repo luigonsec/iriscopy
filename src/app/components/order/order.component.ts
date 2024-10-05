@@ -16,13 +16,14 @@ export class OrderComponent implements OnInit, OnDestroy {
   public products: OrderProduct[] = [];
 
   public copiesPrice = {};
+  public copiesNotes = {};
 
   cartSubscription: Subscription;
   constructor(
     private router: Router,
     private orderService: OrdersService,
     private shopcartService: ShopcartService
-  ) { }
+  ) {}
 
   ngOnDestroy(): void {
     this.cartSubscription.unsubscribe();
@@ -47,10 +48,14 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   getCopyPrice(order: OrderCopy) {
-    this.orderService.getCopyPrice(order, this.copies).subscribe((price) => {
-      this.copiesPrice[order.id] = price;
-      this.copiesPrice = Object.assign({}, this.copiesPrice);
-    });
+    this.orderService
+      .getCopyPrice(order, this.copies)
+      .subscribe(({ precio, notas }) => {
+        this.copiesPrice[order.id] = precio;
+        this.copiesNotes[order.id] = notas;
+        this.copiesPrice = Object.assign({}, this.copiesPrice);
+        this.copiesNotes = Object.assign({}, this.copiesNotes);
+      });
   }
 
   getProductPrice(order: OrderProduct): number {

@@ -9,29 +9,51 @@
         <div id="Shipping">
           <div class="Title">Envío / Recogida</div>
           <div class="Option p-field-radiobutton">
-            <p-radioButton value="Shipping" [(ngModel)]="deliver" inputId="shipping"
-              (onClick)="this.calcularPrecios()"></p-radioButton>
-            <label for="shipping"> Envío en 48 horas <label
-                class="Extra">{{this.getGastosDeEnvio().toFixed(2)}}€</label></label>
+            <p-radioButton
+              value="Shipping"
+              [(ngModel)]="deliver"
+              inputId="shipping"
+              (onClick)="this.calcularPrecios()"
+            ></p-radioButton>
+            <label for="shipping">
+              Envío en 48 horas
+              <label class="Extra"
+                >{{ this.getGastosDeEnvio().toFixed(2) }}€</label
+              ></label
+            >
           </div>
           <div class="Option p-field-radiobutton">
-            <p-radioButton value="Pickup" [(ngModel)]="deliver" inputId="pickup"
-              (onClick)="this.calcularPrecios()"></p-radioButton>
-            <label for="pickup"> Recogida en local</label> <label class="Extra"> Gratuita</label>
+            <p-radioButton
+              value="Pickup"
+              [(ngModel)]="deliver"
+              inputId="pickup"
+              (onClick)="this.calcularPrecios()"
+            ></p-radioButton>
+            <label for="pickup"> Recogida en local</label>
+            <label class="Extra"> Gratuita</label>
           </div>
 
           <div class="p-fluid">
-            <p-dropdown *ngIf="this.deliver === 'Pickup'" [options]="locations" [(ngModel)]="selectedLocation"
-              optionLabel="name" [showClear]="true" placeholder="Local de recogida">
+            <p-dropdown
+              *ngIf="this.deliver === 'Pickup'"
+              [options]="locations"
+              [(ngModel)]="selectedLocation"
+              optionLabel="name"
+              [showClear]="true"
+              placeholder="Local de recogida"
+            >
               <ng-template pTemplate="selectedItem">
-                <div class="location-item location-item-value" *ngIf="selectedLocation">
-                  <div>{{selectedLocation.name}}</div>
+                <div
+                  class="location-item location-item-value"
+                  *ngIf="selectedLocation"
+                >
+                  <div>{{ selectedLocation.name }}</div>
                 </div>
               </ng-template>
               <ng-template let-location pTemplate="item">
                 <div class="Location">
-                  <div class="Name">{{location.name}}</div>
-                  <div class="Address">{{location.address_1}}</div>
+                  <div class="Name">{{ location.name }}</div>
+                  <div class="Address">{{ location.address_1 }}</div>
                 </div>
               </ng-template>
             </p-dropdown>
@@ -43,120 +65,184 @@
           <div class="Option p-field-radiobutton">
             <p-radioButton value="CARD" [(ngModel)]="payment" inputId="card">
             </p-radioButton>
-            <label class="Payment__type" for="card">Tarjeta de
-              crédito/débito</label>
+            <label class="Payment__type" for="card"
+              >Tarjeta de crédito/débito</label
+            >
             <label class="Payment__type_minimum" for="card">
-              (Pedido mínimo {{PAYMENT_MINIMUM_PRICE_CARD}}€)
+              (Pedido mínimo {{ PAYMENT_MINIMUM_PRICE_CARD }}€)
             </label>
-            <img class='Payment_method__img' src="assets/images/payment_methods/visa.png" alt="">
-            <img class='Payment_method__img' src="assets/images/payment_methods/mastercard.png" alt="">
-            <img class='Payment_method__img' src="assets/images/payment_methods/amex.png" alt="">
-            <img class='Payment_method__img' src="assets/images/payment_methods/discover.png" alt="">
-            <img class='Payment_method__img' src="assets/images/payment_methods/ucb.png" alt="">
-            <img class='Payment_method__img' src="assets/images/payment_methods/diners.png" alt="">
-
-
-
+            <img
+              class="Payment_method__img"
+              src="assets/images/payment_methods/visa.png"
+              alt=""
+            />
+            <img
+              class="Payment_method__img"
+              src="assets/images/payment_methods/mastercard.png"
+              alt=""
+            />
+            <img
+              class="Payment_method__img"
+              src="assets/images/payment_methods/amex.png"
+              alt=""
+            />
+            <img
+              class="Payment_method__img"
+              src="assets/images/payment_methods/discover.png"
+              alt=""
+            />
+            <img
+              class="Payment_method__img"
+              src="assets/images/payment_methods/ucb.png"
+              alt=""
+            />
+            <img
+              class="Payment_method__img"
+              src="assets/images/payment_methods/diners.png"
+              alt=""
+            />
           </div>
           <div class="Option p-field-radiobutton">
-            <p-radioButton value="BIZUM" [(ngModel)]="payment" inputId="bizum"></p-radioButton>
+            <p-radioButton
+              value="BIZUM"
+              [(ngModel)]="payment"
+              inputId="bizum"
+            ></p-radioButton>
             <label class="Payment__type" for="bizum">BIZUM</label>
-            <label class="Payment__type_minimum" for="bizum">(Pedido mínimo {{PAYMENT_MINIMUM_PRICE_BIZUM}}€)</label>
-            <img class='Payment_method__img' src="assets/images/payment_methods/bizum.png" alt="">
+            <label class="Payment__type_minimum" for="bizum"
+              >(Pedido mínimo {{ PAYMENT_MINIMUM_PRICE_BIZUM }}€)</label
+            >
+            <img
+              class="Payment_method__img"
+              src="assets/images/payment_methods/bizum.png"
+              alt=""
+            />
           </div>
         </div>
 
         <div id="Terms">
-
           <p>
-            <p-checkbox name="groupname" value="val1" [(ngModel)]="this.termsAccepted"></p-checkbox>
-            He leído y acepto la <a href="https://iriscopyshop.com/politica-de-privacidad/" target="_blank">política de
-              privacidad</a> y los <a href="/terms" target="_blank">términos y condiciones</a> de la web.<span
-              class="Mandatory">*</span>
+            <p-checkbox
+              name="groupname"
+              value="val1"
+              [(ngModel)]="this.termsAccepted"
+            ></p-checkbox>
+            He leído y acepto la
+            <a
+              href="https://iriscopyshop.com/politica-de-privacidad/"
+              target="_blank"
+              >política de privacidad</a
+            >
+            y los <a href="/terms" target="_blank">términos y condiciones</a> de
+            la web.<span class="Mandatory">*</span>
           </p>
         </div>
 
         <div id="Promotional" class="grid" *ngIf="!!!this.coupon">
-          <div class="col-12">
-          </div>
+          <div class="col-12"></div>
           <div class="col-12 sm:col-8">
             <div class="p-fluid">
-              <input pInputText class="p-inputtext-sm" type="text" [(ngModel)]="this.inputCoupon"
-                placeholder="¿Tienes un código promocional?">
+              <input
+                pInputText
+                class="p-inputtext-sm"
+                type="text"
+                [(ngModel)]="this.inputCoupon"
+                placeholder="¿Tienes un código promocional?"
+              />
             </div>
           </div>
           <div class="Buttons col-12 sm:col-4">
-            <button pButton class='Secondary p-button-sm' (click)="this.getCoupon()"
-              [disabled]="this.searching_coupon">{{this.apply_cupon_text}}</button>
+            <button
+              pButton
+              class="Secondary p-button-sm"
+              (click)="this.getCoupon()"
+              [disabled]="this.searching_coupon"
+            >
+              {{ this.apply_cupon_text }}
+            </button>
           </div>
         </div>
 
         <div class="grid">
           <div class="col-12">
             <div class="Cost Subtotal">
-              <div class="Title">
-                Subtotal {{this.precio_copias}}
-              </div>
-              <div class="Amount">
-                {{this.subtotal.toFixed(2)}} €
-              </div>
+              <div class="Title">Subtotal</div>
+              <div class="Amount">{{ this.subtotal.toFixed(2) }} €</div>
             </div>
             <div class="Cost Shipping" *ngIf="this.deliver === 'Shipping'">
-              <div class="Title">
-                Envío
-              </div>
+              <div class="Title">Envío</div>
               <div class="Amount">
-                {{this.getGastosDeEnvio().toFixed(2)}} €
+                {{ this.getGastosDeEnvio().toFixed(2) }} €
               </div>
             </div>
             <div class="Cost Discount" *ngIf="this.coupon">
               <div class="Title">
-                Descuento ({{this.coupon.code}}) <i class="far fa-trash-alt" (click)="this.removeCoupon()"></i>
+                Descuento ({{ this.coupon.code }})
+                <i class="far fa-trash-alt" (click)="this.removeCoupon()"></i>
               </div>
-              <div class="Amount">
-                -{{this.discount.toFixed(2)}} €
-              </div>
+              <div class="Amount">-{{ this.discount.toFixed(2) }} €</div>
             </div>
             <div class="Cost Total">
-              <div class="Title">
-                Total
-              </div>
-              <div class="Amount">
-                {{this.total.toFixed(2)}} €
-              </div>
+              <div class="Title">Total</div>
+              <div class="Amount">{{ this.total.toFixed(2) }} €</div>
             </div>
           </div>
         </div>
 
         <div id="Confirm">
-          <button pButton (click)="validate()" class="p-button-md">Realizar el pedido</button>
-          <form #redsysForm *ngIf="this.redsysData" [action]="'https://sis.redsys.es/sis/realizarPago'" method="POST">
-            <input type="hidden" name="Ds_SignatureVersion" [(ngModel)]="this.redsysData.Ds_SignatureVersion" />
-            <input type="hidden" name="Ds_MerchantParameters" [(ngModel)]="this.redsysData.Ds_MerchantParameters" />
-            <input type="hidden" name="Ds_Signature" [(ngModel)]="this.redsysData.Ds_Signature" />
+          <button pButton (click)="validate()" class="p-button-md">
+            Realizar el pedido
+          </button>
+          <form
+            #redsysForm
+            *ngIf="this.redsysData"
+            [action]="'https://sis.redsys.es/sis/realizarPago'"
+            method="POST"
+          >
+            <input
+              type="hidden"
+              name="Ds_SignatureVersion"
+              [(ngModel)]="this.redsysData.Ds_SignatureVersion"
+            />
+            <input
+              type="hidden"
+              name="Ds_MerchantParameters"
+              [(ngModel)]="this.redsysData.Ds_MerchantParameters"
+            />
+            <input
+              type="hidden"
+              name="Ds_Signature"
+              [(ngModel)]="this.redsysData.Ds_Signature"
+            />
             <input type="hidden" name="Order_ID" [(ngModel)]="this.OrderID" />
-
           </form>
         </div>
       </div>
-
     </div>
   </div>
-  <div id='CustomerDetails' class="col-12 sm:col-6 sm:col-offset-1">
+  <div id="CustomerDetails" class="col-12 sm:col-6 sm:col-offset-1">
     <div class="Title">Datos de envío y facturación</div>
     <div class="p-fluid">
-
-      <button pButton id='LoginButton' class="Secondary" [routerLink]="'/login'" [queryParams]="{ backTo: 'payment' }"
-        *ngIf="!!!this.customer">
+      <button
+        pButton
+        id="LoginButton"
+        class="Secondary"
+        [routerLink]="'/login'"
+        [queryParams]="{ backTo: 'payment' }"
+        *ngIf="!!!this.customer"
+      >
         <p>
-          ¿Tienes una cuenta? <span>Accede a ella</span> para evitar rellenar tus datos de facturación.
+          ¿Tienes una cuenta? <span>Accede a ella</span> para evitar rellenar
+          tus datos de facturación.
         </p>
       </button>
     </div>
 
-
     <div id="Forms">
-      <app-billing #billing [shipping]="this.deliver === 'Shipping' "></app-billing>
+      <app-billing
+        #billing
+        [shipping]="this.deliver === 'Shipping'"
+      ></app-billing>
       <div class="grid" *ngIf="this.deliver === 'Shipping'">
         <div class="col-12">
           <p-checkbox binary="true" [(ngModel)]="this.differentAddress">
@@ -177,7 +263,10 @@
   <div class="col-12 sm:col-6 sm:col-offset-2">
     <p-card>
       <h4>CARRO DE LA COMPRA VACÍO</h4>
-      <p>Su carro de la compra está vacio, haz click <a href="/">aquí</a> para volver al configurador de pedidos</p>
+      <p>
+        Su carro de la compra está vacio, haz click <a href="/">aquí</a> para
+        volver al configurador de pedidos
+      </p>
       <div id="Warning">
         <i class="fas fa-exclamation-triangle"></i>
       </div>

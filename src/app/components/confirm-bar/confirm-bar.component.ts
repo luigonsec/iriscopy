@@ -15,19 +15,24 @@ export class ConfirmBarComponent implements OnInit, OnChanges {
   @Input('order') order: OrderCopy;
   @Input('reset') reset: () => void = () => undefined;
 
-  precio: number = 0;
+  public precio: number = 0;
+  public notas: string[] = [];
+
   constructor(
     private orderService: OrdersService,
     private shopcartService: ShopcartService,
     private router: Router
-  ) { }
+  ) {}
 
   getPrecio() {
     const others = this.shopcartService.getCart().copies;
     others.push(this.order);
-    this.orderService.getCopyPrice(this.order, others).subscribe((precio) => {
-      this.precio = precio;
-    });
+    this.orderService
+      .getCopyPrice(this.order, others)
+      .subscribe(({ precio, notas }) => {
+        this.precio = precio;
+        this.notas = notas;
+      });
   }
 
   ngOnChanges(): void {

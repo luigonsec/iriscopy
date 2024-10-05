@@ -1,26 +1,38 @@
-<div id="ConfirmBar">
+<div id="confirm-bar">
   <div class="grid">
-    <div class="col-12 md:col-8">
-      <div id="Botones">
+    <div class="col-12 md:col-4">
+      <div id="buttons">
         <div class="grid">
-          <div class="col-12 md:col-4 md:col-offset-2">
+          <div class="col-12 md:col-6">
             <div class="p-fluid">
-              <button pButton class="Boton" label="Finalizar y pagar" (click)="this.finishAndPay()"></button>
+              <button
+                pButton
+                class="Boton"
+                label="Finalizar y pagar"
+                (click)="this.finishAndPay()"
+              ></button>
             </div>
           </div>
-          <div class="col-12 md:col-4">
+          <div class="col-12 md:col-6">
             <div class="p-fluid">
-              <button pButton class="Boton" label="Añadir al carro" (click)="this.addConfiguration()"></button>
+              <button
+                pButton
+                class="Boton"
+                label="Añadir al carro"
+                (click)="this.addConfiguration()"
+              ></button>
             </div>
           </div>
-
         </div>
       </div>
-
     </div>
-    <div class="col-12 md:col-4">
+    <div class="col-12 md:col-3 md:col-offset-5">
       <div id="Precio">
-        <span id="Texto">Total a pagar </span><span id="Cantidad">{{this.precio}} €</span>
+        <span id="Texto">Total a pagar </span
+        ><span id="Cantidad">{{ this.precio }} €</span>
+        <div class="notes" *ngFor="let nota of this.notas">
+          {{ nota }}
+        </div>
       </div>
     </div>
   </div>
