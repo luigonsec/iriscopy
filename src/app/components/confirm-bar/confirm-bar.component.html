@@ -26,13 +26,15 @@
         </div>
       </div>
     </div>
-    <div class="col-12 md:col-3 md:col-offset-5">
+    <div class="col-12 md:col-5">
+      <div class="notes" *ngFor="let nota of this.notas">
+        {{ nota }}
+      </div>
+    </div>
+    <div class="col-12 md:col-3">
       <div id="Precio">
         <span id="Texto">Total a pagar </span
         ><span id="Cantidad">{{ this.precio }} €</span>
-        <div class="notes" *ngFor="let nota of this.notas">
-          {{ nota }}
-        </div>
       </div>
     </div>
   </div>
