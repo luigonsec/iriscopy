@@ -2,6 +2,7 @@
   <div class="p-fluid">
     <app-bound-type
       (emitChange)="this.handleBoundType($event)"
+      [(files)]="this.files"
       [option]="this.boundType"
     ></app-bound-type>
   </div>

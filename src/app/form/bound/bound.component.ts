@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import BoundColor from 'src/app/interfaces/BoundColor';
+import File from 'src/app/interfaces/File';
 import Option from 'src/app/interfaces/Option';
 import RingColor from 'src/app/interfaces/RingColor';
 import options from 'src/config/options';
@@ -26,6 +27,7 @@ export class BoundComponent implements OnInit {
   };
   @Input() public boundType: Option;
   @Input() public boundPages: Option;
+  @Input('files') public files: File[];
 
   public bound = {
     boundPages: options.boundPages.find((x) => x.default),
@@ -57,6 +59,6 @@ export class BoundComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.emitChangeBound.emit(this.bound);
+    this.emitChangeBound.emit(this.bound);
   }
 }

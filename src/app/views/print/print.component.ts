@@ -136,7 +136,7 @@ export class PrintComponent implements OnInit, OnDestroy {
   }
 
   getFile(files) {
-    this.files = files;
+    this.files = files.map((file) => Object.assign({}, file));
     this.order.files = this.files;
     this.order = Object.assign({}, this.order);
   }
