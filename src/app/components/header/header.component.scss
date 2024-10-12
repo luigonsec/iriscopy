@@ -102,12 +102,15 @@
   #header {
     #logo {
       padding-left: 10px;
+      img {
+        height: 40px;
+      }
     }
 
     #menu {
       gap: 10px;
 
-      .links {
+      .icons {
         gap: 10px;
         .icon {
           padding: 5px;
