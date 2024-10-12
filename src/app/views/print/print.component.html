@@ -1,5 +1,5 @@
-<div class="grid" id="print-wrapper">
-  <div id="form-wrapper" class="col-12 sm:col-12 md:col-5 lg:col-5">
+<div id="print-wrapper" class="grid p-0 m-0">
+  <div id="form-column" class="col-12 sm:col-12 md:col-5 lg:col-5 p-0 m-0">
     <div id="form">
       <div class="Form__Section p-field">
         <div class="p-fluid">
@@ -109,21 +109,25 @@
   </div>
 
   <div
-    id="upload-wrapper"
-    class="col-12 sm:col-12 md:col-3 lg:col-3 order-1 sm:pt-8"
+    id="upload-column"
+    class="col-12 sm:col-12 md:col-3 lg:col-3 order-1 sm:pt-8 p-0 m-0"
   >
-    <app-uploader #uploader (emitChange)="getFile($event)"></app-uploader>
+    <div id="upload">
+      <app-uploader #uploader (emitChange)="getFile($event)"></app-uploader>
+    </div>
   </div>
 
-  <div id="banner" class="md:col-3">
-    <app-banner
-      class="hidden sm:block"
-      [options]="{ visible_pc: true, visible_print: true }"
-    ></app-banner>
-    <app-banner
-      class="block sm:hidden"
-      [options]="{ visible_phone: true, visible_print: true }"
-    ></app-banner>
+  <div id="banner-column" class="md:col-3">
+    <div id="banner">
+      <app-banner
+        class="hidden sm:block"
+        [options]="{ visible_pc: true, visible_print: true }"
+      ></app-banner>
+      <app-banner
+        class="block sm:hidden"
+        [options]="{ visible_phone: true, visible_print: true }"
+      ></app-banner>
+    </div>
   </div>
 
   <app-confirm-bar

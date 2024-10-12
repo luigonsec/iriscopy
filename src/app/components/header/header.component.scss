@@ -1,24 +1,31 @@
 @import "src/assets/scss/colors.scss";
 
 #header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
   border-bottom: $border;
   font-family: "NeverMind";
-  align-items: center;
-  padding-top: 20px;
-  padding-bottom: 5px;
-  padding-left: 100px;
+
+  #logo {
+    flex-shrink: 0;
+    padding-left: 50px;
+    img {
+      height: 50px;
+    }
+  }
 
   #menu {
-    text-align: left;
-    padding-left: 100px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
 
-    .links {
-      font-size: 16px;
-      .bars  {
-        font-size: 30px;
-        color: $rosa;
-      }
+    .icons {
+      display: flex;
+      gap: 10px;
       .icon {
+        cursor: pointer;
         color: $rosa;
         border: 3px solid $rosa;
         padding: 10px;
@@ -30,8 +37,11 @@
         &.not-rounded {
           border: none;
         }
-      }
 
+        .bars {
+          font-size: 30px;
+        }
+      }
       .ShoppingCart__Icon {
         ::ng-deep .p-badge {
           font-size: 0.6rem;
@@ -44,11 +54,17 @@
       }
     }
 
+    .links {
+      align-items: center;
+      display: flex;
+      gap: 30px;
+      font-size: 16px;
+    }
+
     .link {
       cursor: pointer;
       text-decoration: none;
       color: black;
-      margin-left: 20px;
 
       &:hover {
         text-decoration: none;
@@ -84,15 +100,16 @@
 /* Media Query para pantallas de móviles */
 @media (max-width: 768px) {
   #header {
-    padding-top: 20px;
-    padding-left: 30px;
-    padding-right: 30px;
+    #logo {
+      padding-left: 10px;
+    }
+
     #menu {
-      padding-left: 0;
-      text-align: right;
+      gap: 10px;
+
       .links {
+        gap: 10px;
         .icon {
-          margin-left: 10px;
           padding: 5px;
           padding-left: 8px;
           padding-right: 8px;
@@ -105,17 +122,6 @@
           }
         }
       }
-    }
-  }
-
-  #Links__mobile {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    i {
-      margin-left: 20px;
-      cursor: pointer;
-      font-size: 24px;
     }
   }
 }
