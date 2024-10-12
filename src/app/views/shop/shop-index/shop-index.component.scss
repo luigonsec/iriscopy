@@ -17,7 +17,6 @@
 }
 
 .carousel-container {
-
   // in smartphones -300px in other cases -200px
   @media (max-width: 767px) {
     margin-bottom: calc(-300px + 30px);
@@ -31,10 +30,7 @@
 #shop-menu-container {
   z-index: 999;
   // hace el fondo borroso a partir de una variable scss
-  background-color: rgba($background, 0.4);
+  background-color: rgba($lila, 0.4);
   padding: 30px;
   border-radius: 30px;
-
-
-
 }
