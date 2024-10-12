@@ -1,17 +1,40 @@
-#Form {
+@import "src/assets/scss/colors.scss";
+
+#form-wrapper {
   order: 1;
 }
 
-#Uploader {
+#form {
+  background-color: white;
+  border-right: $border;
+  padding: 20px 50px ;
+}
+
+#upload-wrapper {
   order: 2;
 }
 
+#banner {
+  padding-top: 40px;
+  order: 3;
+}
+
 @media (max-width: 768px) {
-  #Form {
+  #form-wrapper {
     order: 2;
   }
+  #form {
+    padding: 10px 10px;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+  }
 
-  #Uploader {
+  #banner{
+    padding: 40px;
+
+  }
+
+  #upload-wrapper {
     order: 1;
   }
 }

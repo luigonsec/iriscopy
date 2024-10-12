@@ -1,37 +1,37 @@
-.p-selectbutton .p-button.p-highlight,
-.p-selectbutton .p-button.p-highlight:hover,
-.p-selectbutton .p-button.p-highlight:focus {
-  background: $darkGray;
-  border-color: $darkGray;
-  color: #ffffff;
+$bordered: 2px solid black !important;
+.p-selectbutton .p-button
+{
+  
+  border-top: $bordered;
+  border-bottom: $bordered;
+  color: $rosa;
   box-shadow: none;
-  z-index: 0;
+
+  &:hover{
+    &:not(.p-highlight) {
+      color: $rosa !important;
+    }
+  }
+
+  &.p-highlight,
+  &.p-highlight:hover,
+  &.p-highlight:focus {
+    background: $lila;
+    color: $negro;
+    &:first-of-type {
+      border-left:  $bordered;
+    }
+  }
+
+  &:first-of-type {
+    border-left: $bordered;
+  }
+
+  border-right: $bordered;
+  border-left: none !important;
 }
 
-.p-selectbutton .p-button,
-.p-selectbutton .p-button:focus {
-  background: #ffffff;
-  border: none;
-  border-top: 2px solid $black;
-  border-bottom: 2px solid $black;
-  color: $primary;
-  box-shadow: none;
-  z-index: 0;
-}
 
-.p-selectbutton .p-button:not(.p-highlight):last-of-type {
-  border-right: 2px solid $black;
-}
-
-.p-selectbutton .p-button:not(.p-highlight):first-of-type {
-  border-left: 2px solid $black;
-}
-
-.p-selectbutton .p-button:not(.p-disabled):not(.p-highlight):hover {
-  background: $lightGray;
-  border-color: black;
-  color: $primary;
-}
 
 .Button {
   text-align: center;

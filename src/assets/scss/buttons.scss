@@ -25,10 +25,11 @@
 .Secondary:not(.p-disabled):hover {
   color: black;
   background: $yellow;
-  border: 2px solid $green;
+  border: 2px solid $negro;
   font-weight: bold;
+  padding: 15px 40px 15px 40px;
 
   .p-button-label {
-    font-family: "Montserrat" !important;
+    font-family: "NeverMind" !important;
   }
 }

@@ -1,0 +1,15 @@
+.ng-trigger.p-menu.p-component.p-menu-overlay.ng-star-inserted {
+    font-family: 'NeverMind' !important;
+}
+
+
+.p-menu .p-menuitem-link:not(.p-disabled):hover {
+    background: white;
+    span.p-menuitem-text.ng-star-inserted {
+        color: $rosa;
+    }
+}
+
+.p-menu .p-menuitem:not(:last-child) .p-menuitem-link:not(.p-disabled) {
+    border-bottom: $border;
+}

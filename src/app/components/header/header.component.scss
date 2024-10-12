@@ -1,19 +1,43 @@
 @import "src/assets/scss/colors.scss";
 
-#Header {
-  padding: 20px 30px;
-  #Menu {
-    text-align: right;
-    padding-top: 20px;
-    padding-right: 30px;
+#header {
+  border-bottom: $border;
+  font-family: 'NeverMind';
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 5px;
+  padding-left: 100px;
 
-    div {
-      display: inline-block;
-    }
 
-    #Links {
+  #menu {
+    text-align: left;
+    padding-left: 100px;
+
+    .links {
+      font-size: 16px;
+      .bars {
+        font-size: 30px;
+        color: $rosa;
+      }
+      .icon {
+        color: $rosa;
+        border: 3px solid $rosa;
+        padding: 10px;
+        border-radius: 100%;
+        i {
+          font-size: 20px;
+        }
+
+        &.not-rounded {
+          border: none
+
+        }
+      }
+
+
+
+
       .ShoppingCart__Icon {
-        font-size: 20px;
         ::ng-deep .p-badge {
           font-size: 0.6rem;
           font-weight: 700;
@@ -25,7 +49,7 @@
       }
     }
 
-    .Link {
+    .link {
       cursor: pointer;
       text-decoration: none;
       color: black;
@@ -58,13 +82,16 @@
 }
 
 ::ng-deep .p-badge {
-  background-color: $primary;
+  background-color: white;
+  color: $negro;
 }
 
 /* Media Query para pantallas de móviles */
 @media (max-width: 768px) {
-  #Header {
-    padding: 20px 15px;
+  #header {
+    padding-top: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 
   #Links__mobile {
