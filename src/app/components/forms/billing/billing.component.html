@@ -1,114 +1,181 @@
-<div class="Billing">
-  <div class="grid">
-    <div class="field col-12 md:col-8">
-      <div class="p-fluid">
-
-
-        <div class="input-container">
-          <input [(ngModel)]="this.billingDetails.first_name" placeholder="Nombre y apellidos *" pInputText />
-
-        </div>
-        <small *ngIf="this.billingDetailsErrors.first_name" id="first_name-help" class="p-error">
-          {{this.billingDetailsErrors.first_name}}
-        </small>
+<div class="grid">
+  <div class="field col-12 md:col-8">
+    <div class="p-fluid">
+      <div class="input-container">
+        <input
+          [(ngModel)]="this.billingDetails.first_name"
+          placeholder="Nombre y apellidos *"
+          pInputText
+        />
       </div>
-    </div>
-    <div class="field col-12 md:col-4">
-      <div class="p-fluid">
-        <div class="input-container">
-          <input [(ngModel)]="this.billingDetails.last_name" id="last_name" pInputText placeholder="DNI/NIE/CIF *" />
-
-        </div>
-        <small *ngIf="this.billingDetailsErrors.last_name" id="last_name-help"
-          class="p-error">{{this.billingDetailsErrors.last_name}}</small>
-      </div>
+      <small
+        *ngIf="this.billingDetailsErrors.first_name"
+        id="first_name-help"
+        class="p-error"
+      >
+        {{ this.billingDetailsErrors.first_name }}
+      </small>
     </div>
   </div>
-  <div class="grid">
-    <div class="field col-12 md:col-8">
-      <div class="p-fluid">
-        <div class="input-container">
-
-          <input [(ngModel)]="this.billingDetails.phone" id="phone" aria-describedby="phone-help" pInputText
-            placeholder="Teléfono *" />
-
-        </div>
-        <small *ngIf="this.billingDetailsErrors.phone" id="phone-help"
-          class="p-error">{{this.billingDetailsErrors.phone}}</small>
+  <div class="field col-12 md:col-4">
+    <div class="p-fluid">
+      <div class="input-container">
+        <input
+          [(ngModel)]="this.billingDetails.last_name"
+          id="last_name"
+          pInputText
+          placeholder="DNI/NIE/CIF *"
+        />
       </div>
+      <small
+        *ngIf="this.billingDetailsErrors.last_name"
+        id="last_name-help"
+        class="p-error"
+        >{{ this.billingDetailsErrors.last_name }}</small
+      >
     </div>
   </div>
-  <div class="grid">
-    <div class="field col-12 md:col-8">
-      <div class="p-fluid">
-        <div class="input-container">
-          <input [(ngModel)]="this.billingDetails.email" id="email" aria-describedby="email-help" pInputText
-            placeholder="Correo electrónico *" />
-
-        </div>
-        <small *ngIf="this.billingDetailsErrors.email" id="email-help"
-          class="p-error">{{this.billingDetailsErrors.email}}</small>
+</div>
+<div class="grid">
+  <div class="field col-12 md:col-8">
+    <div class="p-fluid">
+      <div class="input-container">
+        <input
+          [(ngModel)]="this.billingDetails.phone"
+          id="phone"
+          aria-describedby="phone-help"
+          pInputText
+          placeholder="Teléfono *"
+        />
       </div>
+      <small
+        *ngIf="this.billingDetailsErrors.phone"
+        id="phone-help"
+        class="p-error"
+        >{{ this.billingDetailsErrors.phone }}</small
+      >
     </div>
   </div>
-  <div class="grid" *ngIf="this.shipping">
-    <div class="field col-12 md:col-8">
-      <div class="p-fluid">
-        <div class="input-container">
-          <input [(ngModel)]="this.billingDetails.address_1" id="address_1" aria-describedby="address_1-help" pInputText
-            placeholder="Dirección de envío * calle y número" />
-        </div>
-        <small *ngIf="this.billingDetailsErrors.address_1" id="address_1-help"
-          class="p-error">{{this.billingDetailsErrors.address_1}}</small>
+</div>
+<div class="grid">
+  <div class="field col-12 md:col-8">
+    <div class="p-fluid">
+      <div class="input-container">
+        <input
+          [(ngModel)]="this.billingDetails.email"
+          id="email"
+          aria-describedby="email-help"
+          pInputText
+          placeholder="Correo electrónico *"
+        />
       </div>
+      <small
+        *ngIf="this.billingDetailsErrors.email"
+        id="email-help"
+        class="p-error"
+        >{{ this.billingDetailsErrors.email }}</small
+      >
     </div>
-
-    <div class="field col-12 md:col-4">
-      <div class="p-fluid">
-
-        <div class="input-container">
-
-          <input [(ngModel)]="this.billingDetails.address_2" id="address_2" aria-describedby="address_2-help"
-            placeholder="planta, piso/puerta u otro" pInputText />
-        </div>
-
-        <small *ngIf="this.billingDetailsErrors.address_2" id="address_2-help"
-          class="p-error">{{this.billingDetailsErrors.address_2}}</small>
+  </div>
+</div>
+<div class="grid" *ngIf="this.shipping">
+  <div class="field col-12 md:col-8">
+    <div class="p-fluid">
+      <div class="input-container">
+        <input
+          [(ngModel)]="this.billingDetails.address_1"
+          id="address_1"
+          aria-describedby="address_1-help"
+          pInputText
+          placeholder="Dirección de envío * calle y número"
+        />
       </div>
+      <small
+        *ngIf="this.billingDetailsErrors.address_1"
+        id="address_1-help"
+        class="p-error"
+        >{{ this.billingDetailsErrors.address_1 }}</small
+      >
     </div>
   </div>
 
-  <div class="grid" *ngIf="this.shipping">
-    <div class="field col-12 md:col-8">
-      <div class="p-fluid">
-        <div class="input-container">
-          <input [(ngModel)]="this.billingDetails.city" id="city" aria-describedby="city-help"
-            placeholder="Localidad / Ciudad *" pInputText />
-        </div>
-
-        <small *ngIf="this.billingDetailsErrors.city" id="city-help"
-          class="p-error">{{this.billingDetailsErrors.city}}</small>
+  <div class="field col-12 md:col-4">
+    <div class="p-fluid">
+      <div class="input-container">
+        <input
+          [(ngModel)]="this.billingDetails.address_2"
+          id="address_2"
+          aria-describedby="address_2-help"
+          placeholder="planta, piso/puerta u otro"
+          pInputText
+        />
       </div>
-    </div>
 
-    <div class="field col-12 md:col-4">
-      <div class="p-fluid">
-        <div class="input-container">
-          <input [(ngModel)]="this.billingDetails.postcode" id="postcode" aria-describedby="postcode-help"
-            placeholder="Código postal *" pInputText />
-        </div>
-        <small *ngIf="this.billingDetailsErrors.postcode" id="postcode-help"
-          class="p-error">{{this.billingDetailsErrors.postcode}}</small>
-      </div>
+      <small
+        *ngIf="this.billingDetailsErrors.address_2"
+        id="address_2-help"
+        class="p-error"
+        >{{ this.billingDetailsErrors.address_2 }}</small
+      >
     </div>
   </div>
-  <div class="grid">
-    <div class="field col-12 ">
-      <div class="p-fluid">
-        <div class="input-container">
-          <textarea [(ngModel)]="this.billingDetails.others" [rows]="5" aria-labelledby="others-help" [cols]="30"
-            pInputTextarea autoResize="autoResize" placeholder="Observaciones de tu pedido"></textarea>
-        </div>
+</div>
+
+<div class="grid" *ngIf="this.shipping">
+  <div class="field col-12 md:col-8">
+    <div class="p-fluid">
+      <div class="input-container">
+        <input
+          [(ngModel)]="this.billingDetails.city"
+          id="city"
+          aria-describedby="city-help"
+          placeholder="Localidad / Ciudad *"
+          pInputText
+        />
+      </div>
+
+      <small
+        *ngIf="this.billingDetailsErrors.city"
+        id="city-help"
+        class="p-error"
+        >{{ this.billingDetailsErrors.city }}</small
+      >
+    </div>
+  </div>
+
+  <div class="field col-12 md:col-4">
+    <div class="p-fluid">
+      <div class="input-container">
+        <input
+          [(ngModel)]="this.billingDetails.postcode"
+          id="postcode"
+          aria-describedby="postcode-help"
+          placeholder="Código postal *"
+          pInputText
+        />
+      </div>
+      <small
+        *ngIf="this.billingDetailsErrors.postcode"
+        id="postcode-help"
+        class="p-error"
+        >{{ this.billingDetailsErrors.postcode }}</small
+      >
+    </div>
+  </div>
+</div>
+<div class="grid">
+  <div class="field col-12">
+    <div class="p-fluid">
+      <div class="input-container">
+        <textarea
+          [(ngModel)]="this.billingDetails.others"
+          [rows]="5"
+          aria-labelledby="others-help"
+          [cols]="30"
+          pInputTextarea
+          autoResize="autoResize"
+          placeholder="Observaciones de tu pedido"
+        ></textarea>
       </div>
     </div>
   </div>

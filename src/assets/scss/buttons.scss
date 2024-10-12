@@ -37,9 +37,12 @@
     padding: 5px;
   }
 
+  &.low-padding {
+    padding: 15px;
+  }
+
   &.pink {
     background-color: $rosa;
     color: white;
-    padding: 5px 0px;
   }
 }
