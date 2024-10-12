@@ -15,10 +15,11 @@ $borderRadius: 8px;
 
 @import "~@fortawesome/fontawesome-free/css/all.min.css";
 @import url("https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,700,800,900");
+@import url("https://fonts.googleapis.com/css?family=Tilt+Warp:100,200,300,400,500,700,800,900");
 
 @font-face {
-  font-family: 'NeverMind';
-  src: url('/assets/fonts/NeverMindRoundedMono-Regular.ttf') format('truetype');
+  font-family: "NeverMind";
+  src: url("/assets/fonts/NeverMindRoundedMono-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -32,7 +33,6 @@ body {
   font-family: "Montserrat" !important;
 }
 
-
 .Form__Section {
   margin-bottom: 5px;
 
@@ -41,6 +41,21 @@ body {
     font-size: 18px;
     font-weight: 600;
   }
+}
+
+h2 {
+  font-family: "Tilt Warp";
+  color: $rosa;
+  font-size: 30px;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 40px;
+}
+
+.form-label {
+  font-family: "Montserrat";
+  font-weight: bold;
+  margin-bottom: 15px !important;
 }
 
 .p-fileupload-files {

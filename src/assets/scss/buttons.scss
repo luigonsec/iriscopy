@@ -32,4 +32,14 @@
   .p-button-label {
     font-family: "NeverMind" !important;
   }
+
+  &.no-padding {
+    padding: 5px;
+  }
+
+  &.pink {
+    background-color: $rosa;
+    color: white;
+    padding: 5px 0px;
+  }
 }

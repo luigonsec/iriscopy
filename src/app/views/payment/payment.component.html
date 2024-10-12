@@ -1,9 +1,7 @@
-<div class="grid" *ngIf="!!!this.emptyCart">
+<div class="grid p-0 m-0" *ngIf="!!!this.emptyCart">
   <div class="col-12 sm:col-5">
     <div id="Order">
-      <div class="Title">Tu pedido</div>
-
-      <app-order #order></app-order>
+      <div class="Title">Tramitar pedido</div>
 
       <div id="Checkout">
         <div id="Shipping">
@@ -226,7 +224,7 @@
       <button
         pButton
         id="LoginButton"
-        class="Secondary"
+        class="Secondary pink"
         [routerLink]="'/login'"
         [queryParams]="{ backTo: 'payment' }"
         *ngIf="!!!this.customer"
@@ -256,10 +254,16 @@
         </div>
       </div>
     </div>
+
+    <div id="Order">
+      <div class="Title">Tu pedido</div>
+
+      <app-order #order></app-order>
+    </div>
   </div>
 </div>
 
-<div class="grid" *ngIf="this.emptyCart">
+<div class="grid p-0 m-0" *ngIf="this.emptyCart">
   <div class="col-12 sm:col-6 sm:col-offset-2">
     <p-card>
       <h4>CARRO DE LA COMPRA VACÍO</h4>
