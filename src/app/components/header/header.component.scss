@@ -2,12 +2,11 @@
 
 #header {
   border-bottom: $border;
-  font-family: 'NeverMind';
+  font-family: "NeverMind";
   align-items: center;
   padding-top: 20px;
   padding-bottom: 5px;
   padding-left: 100px;
-
 
   #menu {
     text-align: left;
@@ -15,7 +14,7 @@
 
     .links {
       font-size: 16px;
-      .bars {
+      .bars  {
         font-size: 30px;
         color: $rosa;
       }
@@ -29,13 +28,9 @@
         }
 
         &.not-rounded {
-          border: none
-
+          border: none;
         }
       }
-
-
-
 
       .ShoppingCart__Icon {
         ::ng-deep .p-badge {
@@ -92,6 +87,25 @@
     padding-top: 20px;
     padding-left: 30px;
     padding-right: 30px;
+    #menu {
+      padding-left: 0;
+      text-align: right;
+      .links {
+        .icon {
+          margin-left: 10px;
+          padding: 5px;
+          padding-left: 8px;
+          padding-right: 8px;
+          i {
+            font-size: 14px;
+          }
+
+          .bars {
+            font-size: 20px;
+          }
+        }
+      }
+    }
   }
 
   #Links__mobile {
