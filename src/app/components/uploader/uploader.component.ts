@@ -10,41 +10,7 @@ import { LoadingService } from 'src/app/services/loading.service';
   styleUrls: ['./uploader.component.scss'],
 })
 export class UploaderComponent implements OnInit {
-  public uploadedFiles: File[] = [
-    {
-      name: 'File',
-      pages: 30,
-      original_filename: 'original',
-      size: 2,
-      id: 1,
-      source: '',
-      url: 'https://pics.filmaffinity.com/El_seanor_de_los_anillos_La_comunidad_del_anillo-952398002-mmed.jpg',
-      image:
-        'https://pics.filmaffinity.com/El_seanor_de_los_anillos_La_comunidad_del_anillo-952398002-mmed.jpg',
-    },
-    {
-      name: 'Nombre de archivo muy largo 2024 10 12 fisica y matematicas.pdf',
-      pages: 30,
-      original_filename: 'original',
-      size: 2,
-      id: 1,
-      source: '',
-      url: 'https://pics.filmaffinity.com/El_seanor_de_los_anillos_La_comunidad_del_anillo-952398002-mmed.jpg',
-      image:
-        'https://pics.filmaffinity.com/El_seanor_de_los_anillos_La_comunidad_del_anillo-952398002-mmed.jpg',
-    },
-    {
-      name: 'File',
-      pages: 30,
-      original_filename: 'original',
-      size: 2,
-      id: 1,
-      source: '',
-      url: 'https://pics.filmaffinity.com/El_seanor_de_los_anillos_La_comunidad_del_anillo-952398002-mmed.jpg',
-      image:
-        'https://pics.filmaffinity.com/El_seanor_de_los_anillos_La_comunidad_del_anillo-952398002-mmed.jpg',
-    },
-  ];
+  public uploadedFiles: File[] = [];
   public src: string;
   @Output() emitChange = new EventEmitter<unknown>();
 
