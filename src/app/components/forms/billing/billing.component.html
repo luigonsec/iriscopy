@@ -2,9 +2,12 @@
   <div class="field col-12 md:col-8">
     <div class="p-fluid">
       <div class="input-container">
+        <label class="form-label" for="name"
+          >Nombre y apellidos <span class="mandatory">*</span></label
+        >
         <input
+          id="name"
           [(ngModel)]="this.billingDetails.first_name"
-          placeholder="Nombre y apellidos *"
           pInputText
         />
       </div>
@@ -20,11 +23,13 @@
   <div class="field col-12 md:col-4">
     <div class="p-fluid">
       <div class="input-container">
+        <label class="form-label" for="last_name"
+          >DNI/NIE/CIF <span class="mandatory">*</span></label
+        >
         <input
           [(ngModel)]="this.billingDetails.last_name"
           id="last_name"
           pInputText
-          placeholder="DNI/NIE/CIF *"
         />
       </div>
       <small
@@ -40,12 +45,14 @@
   <div class="field col-12 md:col-8">
     <div class="p-fluid">
       <div class="input-container">
+        <label class="form-label" for="phone"
+          >Teléfono <span class="mandatory">*</span></label
+        >
         <input
           [(ngModel)]="this.billingDetails.phone"
           id="phone"
           aria-describedby="phone-help"
           pInputText
-          placeholder="Teléfono *"
         />
       </div>
       <small
@@ -61,12 +68,14 @@
   <div class="field col-12 md:col-8">
     <div class="p-fluid">
       <div class="input-container">
+        <label class="form-label" for="email"
+          >Correo electrónico <span class="mandatory">*</span></label
+        >
         <input
           [(ngModel)]="this.billingDetails.email"
           id="email"
           aria-describedby="email-help"
           pInputText
-          placeholder="Correo electrónico *"
         />
       </div>
       <small
@@ -82,12 +91,15 @@
   <div class="field col-12 md:col-8">
     <div class="p-fluid">
       <div class="input-container">
+        <label class="form-label" for="address_1"
+          >Dirección de envío <span class="mandatory">*</span> calle y
+          número</label
+        >
         <input
           [(ngModel)]="this.billingDetails.address_1"
           id="address_1"
           aria-describedby="address_1-help"
           pInputText
-          placeholder="Dirección de envío * calle y número"
         />
       </div>
       <small
@@ -102,11 +114,13 @@
   <div class="field col-12 md:col-4">
     <div class="p-fluid">
       <div class="input-container">
+        <label class="form-label" for="address_2"
+          >planta, piso/puerta u otro</label
+        >
         <input
           [(ngModel)]="this.billingDetails.address_2"
           id="address_2"
           aria-describedby="address_2-help"
-          placeholder="planta, piso/puerta u otro"
           pInputText
         />
       </div>
@@ -125,11 +139,13 @@
   <div class="field col-12 md:col-8">
     <div class="p-fluid">
       <div class="input-container">
+        <label class="form-label" for="city"
+          >Localidad / Ciudad <span class="mandatory">*</span></label
+        >
         <input
           [(ngModel)]="this.billingDetails.city"
           id="city"
           aria-describedby="city-help"
-          placeholder="Localidad / Ciudad *"
           pInputText
         />
       </div>
@@ -146,11 +162,13 @@
   <div class="field col-12 md:col-4">
     <div class="p-fluid">
       <div class="input-container">
+        <label class="form-label" for="postcode"
+          >Código postal <span class="mandatory">*</span></label
+        >
         <input
           [(ngModel)]="this.billingDetails.postcode"
           id="postcode"
           aria-describedby="postcode-help"
-          placeholder="Código postal *"
           pInputText
         />
       </div>
@@ -167,14 +185,17 @@
   <div class="field col-12">
     <div class="p-fluid">
       <div class="input-container">
+        <label class="form-label" for="comments"
+          >Observaciones de tu pedido</label
+        >
         <textarea
+          id="comments"
           [(ngModel)]="this.billingDetails.others"
           [rows]="5"
           aria-labelledby="others-help"
           [cols]="30"
           pInputTextarea
           autoResize="autoResize"
-          placeholder="Observaciones de tu pedido"
         ></textarea>
       </div>
     </div>

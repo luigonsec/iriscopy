@@ -1,134 +1,14 @@
 @import "src/assets/scss/colors";
 
 // Estilos para enlaces
+
+#payment {
+  padding: 20px;
+}
 a {
   color: black;
   text-decoration: none;
   font-weight: bold;
-}
-
-.Title {
-  font-size: 20px;
-  font-weight: 600;
-  color: $primary;
-  margin-bottom: 10px;
-}
-
-// Estilos principales del checkout
-#process-order {
-  background-color: white;
-  border: 1px solid black;
-  border-radius: 8px;
-  padding: 10px 20px;
-
-  // Estilos para costos
-  .Cost {
-    font-weight: 500;
-    margin-bottom: 10px;
-    border-bottom: 1px solid black;
-
-    .Title {
-      display: inline-block;
-      width: 50%;
-      font-size: 14px;
-    }
-
-    &.Discount i {
-      cursor: pointer;
-      color: black;
-    }
-
-    &.Total .Title {
-      font-size: 20px;
-    }
-
-    .Amount {
-      display: inline-block;
-      width: 50%;
-      text-align: right;
-      color: $primary;
-    }
-  }
-
-  // Opciones y secciones dentro del checkout
-  .Option {
-    margin-bottom: 10px;
-  }
-
-  #Payment_methods,
-  #Shipping,
-  #Terms {
-    padding-bottom: 15px;
-
-    .Title {
-      color: $primary;
-      font-size: 16px;
-      margin: 10px 0;
-    }
-
-    p {
-      font-size: 14px;
-    }
-  }
-
-  // Campo promocional
-  #Promotional {
-    padding-bottom: 15px;
-
-    input {
-      border: none;
-      border-bottom: 1px solid black;
-
-      &:focus {
-        box-shadow: none;
-      }
-    }
-  }
-
-  .Location .Address {
-    font-size: 12px;
-    color: gray;
-  }
-
-  // Métodos de pago
-  #Payment_methods {
-    .Payment__type {
-      margin-left: 5px;
-    }
-
-    .Payment__type_minimum {
-      font-size: 10px;
-      margin-left: 3px;
-    }
-
-    .Payment_method__img {
-      height: 12px;
-      margin-left: 5px;
-    }
-  }
-
-  // Confirmación del pedido
-  #confirm-order {
-    margin-top: 20px;
-    text-align: center;
-
-    button {
-      font-weight: 500;
-    }
-  }
-}
-
-// Estilo de advertencia
-#warning-icon {
-  text-align: center;
-  font-size: 60px;
-}
-
-// Texto adicional
-.Extra {
-  font-weight: bold;
-  color: $primary;
-  font-size: 14px;
 }
 
 #customer-info #button-login {
@@ -142,27 +22,14 @@ a {
   margin-bottom: 30px;
 }
 
-#Shipping_address__form {
+#shipping-forms {
   margin-top: 20px;
 }
 
 @media (max-width: 768px) {
-  #process-order {
-    font-size: 14px;
-
-    .Cost {
-      .Title,
-      .Amount {
-        font-size: 14px;
-      }
-
-      &.Total .Title {
-        font-size: 16px;
-      }
-    }
-  }
-
-  .Title {
-    font-size: 16px;
+  #payment {
+    padding: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 }

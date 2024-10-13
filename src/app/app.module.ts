@@ -85,6 +85,8 @@ import { UserInformationComponent } from './views/profile/user-information/user-
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { UserPasswordComponent } from './views/profile/user-password/user-password.component';
 import { BoundPagesComponent } from './form/bound-pages/bound-pages.component';
+import { OrderProcessingComponent } from './components/order-processing/order-processing.component';
+import { PaymentsEmptyCartWarningComponent } from './components/payments-empty-cart-warning/payments-empty-cart-warning.component';
 
 @NgModule({
   declarations: [
@@ -136,6 +138,8 @@ import { BoundPagesComponent } from './form/bound-pages/bound-pages.component';
     OrderDetailsComponent,
     UserPasswordComponent,
     BoundPagesComponent,
+    OrderProcessingComponent,
+    PaymentsEmptyCartWarningComponent,
   ],
   imports: [
     BrowserModule,

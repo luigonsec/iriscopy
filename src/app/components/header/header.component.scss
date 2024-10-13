@@ -5,6 +5,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px;
+  padding-right: 30px;
   border-bottom: $border;
   font-family: "NeverMind";
 
@@ -100,6 +101,7 @@
 /* Media Query para pantallas de móviles */
 @media (max-width: 768px) {
   #header {
+    padding-right: 0px;
     #logo {
       padding-left: 10px;
       img {
