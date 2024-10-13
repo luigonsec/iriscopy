@@ -13,6 +13,7 @@ import { logout } from 'src/app/_actions/customer.actions';
 import { Router } from '@angular/router';
 import { ConfigService } from 'src/app/services/config.service';
 import { Menu } from 'primeng/menu';
+import { MenuSidebarComponent } from '../menu-sidebar/menu-sidebar.component';
 
 @Component({
   selector: 'app-header',
@@ -25,11 +26,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public products: OrderProduct[] = [];
   public display: boolean = true;
   public shop_active: boolean = false;
-  public sidebarVisible = false;
+  public sidebarVisible = true;
 
   @ViewChild('menu') public menu: Menu;
 
   @ViewChild('shopcart') public shopcart: ShopcartComponent;
+  @ViewChild('sidebar') public sidebar: MenuSidebarComponent;
+
   cartSubscription: Subscription;
   customer$: Subscription;
   customer: Customer;
@@ -71,8 +74,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
   }
 
-  toggleSidebar() {
+  toggleShoppingCart() {
     this.shopcart.toggle();
+  }
+
+  toggleSidebarMenu() {
+    this.sidebar.toggle();
   }
 
   getConfig() {
@@ -80,8 +87,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.shop_active = conf.shop_active;
     });
   }
-
-  openSidebar() {}
 
   iconProfileClicked($event) {
     this.setProfile();

@@ -6,10 +6,10 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./menu-sidebar.component.scss'],
 })
 export class MenuSidebarComponent implements OnInit {
-  @Input('sidebarVisible') public sidebarVisible = false;
   @Input('isShopActive') public isShopActive;
   public puntosRecogida: { label: string; routerLink: string }[];
   public puntosRecogidaOpened = false;
+  public visible = false;
 
   setPuntosRecogida() {
     this.puntosRecogida = [
@@ -42,6 +42,10 @@ export class MenuSidebarComponent implements OnInit {
         routerLink: 'https://iriscopyshop.com/copisteria-reina-mercedes/',
       },
     ];
+  }
+
+  toggle() {
+    this.visible = !!!this.visible;
   }
 
   ngOnInit(): void {

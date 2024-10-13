@@ -1,4 +1,4 @@
-<p-sidebar [(visible)]="sidebarVisible" [position]="'right'" class="Menu">
+<p-sidebar [(visible)]="visible" [position]="'right'" class="Menu">
   <ng-template pTemplate="header">
     <img class="logo" src="assets/images/logo.png" alt="logo iriscopy" />
   </ng-template>
@@ -12,18 +12,14 @@
           <a
             class="link"
             x
-            (click)="this.sidebarVisible = false"
+            (click)="this.visible = false"
             [routerLink]="'/print'"
           >
             Imprimir
           </a>
         </div>
         <div class="item-link" *ngIf="this.isShopActive">
-          <a
-            class="link"
-            (click)="this.sidebarVisible = false"
-            [routerLink]="'/shop'"
-          >
+          <a class="link" (click)="this.visible = false" [routerLink]="'/shop'">
             Tienda
           </a>
         </div>

@@ -32,7 +32,7 @@
         <p-menu #menu [model]="profile" [popup]="true"></p-menu>
       </a>
 
-      <a class="icon" (click)="toggleSidebar()">
+      <a class="icon" (click)="toggleShoppingCart()">
         <i
           *ngIf="this.copies.length + this.products.length == 0"
           class="ShoppingCart__Icon fas fa-shopping-cart"
@@ -45,16 +45,13 @@
         ></i>
       </a>
 
-      <a class="sm:hidden icon not-rounded" (click)="sidebarVisible = true">
+      <a class="sm:hidden icon not-rounded" (click)="this.toggleSidebarMenu()">
         <i class="bars fas fa-bars"></i>
       </a>
     </div>
   </div>
 </div>
 
-<app-menu-sidebar
-  [sidebarVisible]="this.sidebarVisible"
-  [isShopActive]="this.shop_active"
-></app-menu-sidebar>
+<app-menu-sidebar #sidebar [isShopActive]="this.shop_active"></app-menu-sidebar>
 
 <app-shopcart class="" #shopcart></app-shopcart>
