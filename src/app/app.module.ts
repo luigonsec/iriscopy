@@ -87,6 +87,7 @@ import { UserPasswordComponent } from './views/profile/user-password/user-passwo
 import { BoundPagesComponent } from './form/bound-pages/bound-pages.component';
 import { OrderProcessingComponent } from './components/order-processing/order-processing.component';
 import { PaymentsEmptyCartWarningComponent } from './components/payments-empty-cart-warning/payments-empty-cart-warning.component';
+import { MenuSidebarComponent } from './components/menu-sidebar/menu-sidebar.component';
 
 @NgModule({
   declarations: [
@@ -140,6 +141,7 @@ import { PaymentsEmptyCartWarningComponent } from './components/payments-empty-c
     BoundPagesComponent,
     OrderProcessingComponent,
     PaymentsEmptyCartWarningComponent,
+    MenuSidebarComponent,
   ],
   imports: [
     BrowserModule,

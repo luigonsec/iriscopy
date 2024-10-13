@@ -73,13 +73,11 @@ h3 {
   &.padding-sm {
     padding: 50px 60px 20px 60px;
   }
+}
 
-  label.form-label {
-    font-weight: bold;
-
-    span.mandatory {
-      color: red;
-    }
+label.form-label {
+  span.mandatory {
+    color: red;
   }
 }
 

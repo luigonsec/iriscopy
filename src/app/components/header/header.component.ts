@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public products: OrderProduct[] = [];
   public display: boolean = true;
   public shop_active: boolean = false;
-  public sidebarVisible = false;
+  public sidebarVisible = true;
 
   @ViewChild('menu') public menu: Menu;
 
