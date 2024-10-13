@@ -7,7 +7,6 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class MenuSidebarComponent implements OnInit {
   @Input('sidebarVisible') public sidebarVisible = false;
-  @Input('customer') public customer;
   @Input('isShopActive') public isShopActive;
   public puntosRecogida: { label: string; routerLink: string }[];
   public puntosRecogidaOpened = false;
