@@ -82,11 +82,6 @@ export class UploaderComponent implements OnInit {
     }
   }
 
-  removeFile(id) {
-    this.uploadedFiles = this.uploadedFiles.filter((x) => x.id !== id);
-    this.emitChange.emit(this.uploadedFiles);
-  }
-
   clear() {
     this.uploadedFiles = [];
     this.emitChange.emit(this.uploadedFiles);

@@ -69,6 +69,10 @@ export class PrintComponent implements OnInit, OnDestroy {
     this.uploader.clear();
   }
 
+  removeFile(id) {
+    this.files = this.files.filter((x) => x.id !== id);
+  }
+
   getPaperType(value) {
     this.paperType = value;
     this.order.paperType = this.paperType;
