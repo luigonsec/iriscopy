@@ -10,7 +10,41 @@ import { LoadingService } from 'src/app/services/loading.service';
   styleUrls: ['./uploader.component.scss'],
 })
 export class UploaderComponent implements OnInit {
-  public uploadedFiles: File[] = [];
+  public uploadedFiles: File[] = [
+    {
+      name: 'File',
+      pages: 30,
+      original_filename: 'original',
+      size: 2,
+      id: 1,
+      source: '',
+      url: 'https://pics.filmaffinity.com/El_seanor_de_los_anillos_La_comunidad_del_anillo-952398002-mmed.jpg',
+      image:
+        'https://pics.filmaffinity.com/El_seanor_de_los_anillos_La_comunidad_del_anillo-952398002-mmed.jpg',
+    },
+    {
+      name: 'Nombre de archivo muy largo 2024 10 12 fisica y matematicas.pdf',
+      pages: 30,
+      original_filename: 'original',
+      size: 2,
+      id: 1,
+      source: '',
+      url: 'https://pics.filmaffinity.com/El_seanor_de_los_anillos_La_comunidad_del_anillo-952398002-mmed.jpg',
+      image:
+        'https://pics.filmaffinity.com/El_seanor_de_los_anillos_La_comunidad_del_anillo-952398002-mmed.jpg',
+    },
+    {
+      name: 'File',
+      pages: 30,
+      original_filename: 'original',
+      size: 2,
+      id: 1,
+      source: '',
+      url: 'https://pics.filmaffinity.com/El_seanor_de_los_anillos_La_comunidad_del_anillo-952398002-mmed.jpg',
+      image:
+        'https://pics.filmaffinity.com/El_seanor_de_los_anillos_La_comunidad_del_anillo-952398002-mmed.jpg',
+    },
+  ];
   public src: string;
   @Output() emitChange = new EventEmitter<unknown>();
 
@@ -19,69 +53,6 @@ export class UploaderComponent implements OnInit {
     private loadingService: LoadingService,
     private messageService: MessageService
   ) {}
-
-  // onUpload($event, fileUpload) {
-  //   const files = $event.currentFiles;
-  //   const treatedFiles = this.uploadedFiles;
-  //   if (files) {
-  //     this.loadingService.setLoading({
-  //       text: 'Procesando archivos',
-  //       isLoading: true,
-  //     });
-  //     async.each(
-  //       files,
-  //       (file: any, done) => {
-  //         const reader = new FileReader();
-  //         reader.readAsBinaryString(file);
-  //         reader.onloadend = () => {
-  //           try {
-  //             this.filesService.upload(file).subscribe(
-  //               (uploadedFile: UploadedFile) => {
-  //                 const newFile: File = {
-  //                   id: uploadedFile.id,
-  //                   pages: uploadedFile.pages,
-  //                   name: file.name,
-  //                   size: file.size,
-  //                   url: uploadedFile.source_url,
-  //                   original_filename: uploadedFile.title.raw,
-  //                   source: 'local',
-  //                   image: uploadedFile.media_details.sizes.medium.source_url,
-  //                 };
-  //                 treatedFiles.push(newFile);
-  //                 return done();
-  //               },
-  //               (err: HttpErrorResponse) => {
-  //                 return done(err);
-  //               }
-  //             );
-  //           } catch (err) {
-  //             this.messageService.add({
-  //               severity: 'error',
-  //               detail: 'El PDF adjunto no es válido.',
-  //               summary: 'Error',
-  //             });
-  //             return done(err);
-  //           }
-  //         };
-  //       },
-  //       (err: HttpErrorResponse) => {
-  //         if (err && err.status && err.status === 413) {
-  //           this.messageService.add({
-  //             summary: 'Error',
-  //             detail: 'El archivo es demasiado grande',
-  //             severity: 'error',
-  //           });
-  //         }
-  //         this.loadingService.setLoading({
-  //           isLoading: false,
-  //         });
-  //         this.uploadedFiles = treatedFiles;
-  //         this.emitChange.emit(this.uploadedFiles);
-  //         fileUpload.clear();
-  //       }
-  //     );
-  //   }
-  // }
 
   onUpload($event, fileUpload) {
     const files = $event.currentFiles;

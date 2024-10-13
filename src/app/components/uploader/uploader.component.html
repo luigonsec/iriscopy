@@ -1,50 +1,31 @@
-<div id="uploader">
-  <p>
-    Sube aquí los documentos<br />
-    que deseas imprimir
-  </p>
-  <p-fileUpload
-    #fileUpload
-    mode="basic"
-    name="file[]"
-    (onSelect)="onUpload($event, fileUpload)"
-    accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
-    text/plain, application/pdf"
-    maxFileSize="52428800"
-    uploadLabel="Confirmar y subir"
-    [className]="'UploadButton'"
-    [chooseLabel]="
-      this.uploadedFiles.length === 0
-        ? 'Subir documentos'
-        : 'Añadir más archivos...'
-    "
-    [chooseIcon]="'fas'"
-    cancelLabel="Cancelar"
-    multiple="multiple"
-    [auto]="true"
-  >
-  </p-fileUpload>
-</div>
-
-<div class="col-12 sm:col-6 md:col-4" *ngFor="let file of uploadedFiles || []">
-  <div class="p-fluid">
-    <p-card
-      class="File__Card"
-      [header]="file.name"
-      [subheader]="file.size + ' bytes. ' + file.pages + ' páginas'"
-      [style]="{ padding: '25px' }"
-      styleClass="p-card-shadow"
-    >
-      <ng-template pTemplate="header">
-        <img alt="Card" src="{{ file.image }}" />
-      </ng-template>
-      <ng-template pTemplate="body">
-        <button
-          pButton
-          label="Eliminar"
-          (click)="this.removeFile(file.id)"
-        ></button>
-      </ng-template>
-    </p-card>
+<div class="grid p-0 m-0">
+  <div class="col-12">
+    <div id="uploader">
+      <p>
+        Sube aquí los documentos<br />
+        que deseas imprimir
+      </p>
+      <p-fileUpload
+        #fileUpload
+        mode="basic"
+        name="file[]"
+        (onSelect)="onUpload($event, fileUpload)"
+        accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+      text/plain, application/pdf"
+        maxFileSize="52428800"
+        uploadLabel="Confirmar y subir"
+        [className]="'UploadButton'"
+        [chooseLabel]="
+          this.uploadedFiles.length === 0
+            ? 'Subir documentos'
+            : 'Subir otro documento'
+        "
+        [chooseIcon]="'fas'"
+        cancelLabel="Cancelar"
+        multiple="multiple"
+        [auto]="true"
+      >
+      </p-fileUpload>
+    </div>
   </div>
 </div>

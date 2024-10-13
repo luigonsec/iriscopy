@@ -16,6 +16,7 @@ export class AdminBannerComponent implements OnInit {
     visible_phone: false,
     visible_shop: false,
     visible_print: false,
+    link_to: undefined,
   };
   constructor(
     private messageService: MessageService,

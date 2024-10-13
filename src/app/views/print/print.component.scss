@@ -3,14 +3,26 @@
 #form-column {
   order: 1;
 }
-#upload-column {
+
+#other-column {
   order: 2;
 }
-#banner-column {
+#upload-column {
   order: 3;
 }
+#banner-column {
+  order: 4;
+}
 
-#form {
+#files-column {
+  order: 5;
+}
+
+#banner-sm-column {
+  order: 6;
+}
+
+#form-column {
   background-color: white;
   border-right: $border;
   padding: 20px 50px 0px 50px;
@@ -20,25 +32,46 @@
   padding-top: 40px;
 }
 
+.uploaded-file {
+  .titulo {
+    font-weight: bold;
+    color: $rosa;
+    height: 40px;
+  }
+  padding: 10px;
+  background-color: white;
+  font-family: "Montserrat" !important;
+  img {
+    width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
   #form-column {
-    order: 2;
-  }
-  #form {
     padding: 10px 10px;
     border-top: 2px solid black;
     border-bottom: 2px solid black;
   }
 
-  #banner {
-    padding: 40px;
+  #form-column {
+    order: 3;
   }
 
+  #other-column {
+    order: 1;
+  }
   #upload-column {
     order: 1;
   }
+  #banner-column {
+    order: 4;
+  }
 
-  #banner-colum {
-    order: 3;
+  #files-column {
+    order: 2;
+  }
+
+  #banner-sm-column {
+    order: 5;
   }
 }
