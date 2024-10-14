@@ -28,6 +28,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public shop_active: boolean = false;
   public sidebarVisible = true;
 
+  public mobileMenuOpened = false;
+
   @ViewChild('menu') public menu: Menu;
 
   @ViewChild('shopcart') public shopcart: ShopcartComponent;
@@ -78,8 +80,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.shopcart.toggle();
   }
 
-  toggleSidebarMenu() {
-    this.sidebar.toggle();
+  toggleMobileMenu() {
+    this.mobileMenuOpened = !!!this.mobileMenuOpened;
   }
 
   getConfig() {

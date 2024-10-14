@@ -1,15 +1,17 @@
 .ng-trigger.p-menu.p-component.p-menu-overlay.ng-star-inserted {
-    font-family: 'NeverMind' !important;
-}
+  font-family: "Tilt Warp" !important;
 
+  .p-menuitem-link {
+    padding: 0.9em 1em;
+  }
+  span.p-menuitem-text.ng-star-inserted {
+    color: black !important;
+  }
+}
 
 .p-menu .p-menuitem-link:not(.p-disabled):hover {
-    background: white;
-    span.p-menuitem-text.ng-star-inserted {
-        color: $rosa;
-    }
-}
-
-.p-menu .p-menuitem:not(:last-child) .p-menuitem-link:not(.p-disabled) {
-    border-bottom: $border;
+  background: white;
+  span.p-menuitem-text.ng-star-inserted {
+    color: $rosa;
+  }
 }

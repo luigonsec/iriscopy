@@ -1,23 +1,27 @@
 @import "src/assets/scss/colors.scss";
 
 #header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 10px;
-  padding-right: 30px;
+  padding-left: 264px;
+  padding-right: 264px;
+  display: flex;
+  align-items: center;
   border-bottom: $border;
-  font-family: "NeverMind";
+  font-family: "Montserrat";
+  height: 80px;
 
   #logo {
     flex-shrink: 0;
-    padding-left: 50px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-right: 20px;
     img {
-      height: 50px;
+      height: 25px;
     }
   }
 
   #menu {
+    padding-left: 75px;
     display: flex;
     align-items: center;
     gap: 40px;
@@ -28,7 +32,6 @@
       .icon {
         cursor: pointer;
         color: $rosa;
-        border: 3px solid $rosa;
         padding: 10px;
         border-radius: 100%;
         i {
@@ -58,8 +61,15 @@
     .links {
       align-items: center;
       display: flex;
-      gap: 30px;
-      font-size: 16px;
+      gap: 32px;
+      font-size: 1rem;
+      color: black;
+      font-family: "Tilt Warp";
+
+      .collapse-icon {
+        padding-left: 5px;
+        font-size: 0.7rem;
+      }
     }
 
     .link {
@@ -75,25 +85,28 @@
 }
 
 ::ng-deep .p-badge {
-  background-color: white;
-  color: $negro;
+  background-color: $rosa;
+  color: white;
 }
 
 /* Media Query para pantallas de móviles */
 @media (max-width: 768px) {
   #header {
+    padding-left: 5px;
     padding-right: 0px;
     #logo {
       padding-left: 10px;
       img {
-        height: 40px;
+        height: 18px;
       }
     }
 
     #menu {
       gap: 10px;
-
+      padding-right: 20px;
+      margin-left: auto;
       .icons {
+        text-align: right;
         gap: 10px;
         .icon {
           padding: 5px;

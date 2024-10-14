@@ -1,7 +1,7 @@
 <div id="header">
   <div id="logo">
     <a href="/">
-      <img src="assets/images/logo.png" alt="" />
+      <img src="assets/images/logo-nuevo.png" alt="" />
     </a>
   </div>
 
@@ -9,15 +9,19 @@
     <div class="links hidden sm:flex">
       <a class="link" href="https://iriscopyshop.com">Inicio</a>
       <a class="link" href="/"> Imprimir </a>
-      <a class="link" href="/shop" *ngIf="this.shop_active"> Tienda </a>
-      <a class="link" (click)="this.menuRecogida.toggle($event)">
+      <a class="link" href="/shop" *ngIf="this.shop_active">Papelería </a>
+      <a
+        class="link"
+        (click)="this.menuRecogida.toggle($event)"
+        (mouseenter)="this.menuRecogida.open($event)"
+      >
         <p-menu
           #menuRecogida
           [model]="puntosRecogida"
           [popup]="true"
           [style]="{ width: '300px' }"
         ></p-menu>
-        Puntos de recogida
+        Puntos de recogida <i class="collapse-icon fas fa-chevron-down"></i>
       </a>
       <a class="link" href="https://iriscopyshop.com/encuadernar/">
         Encuadernar apuntes
@@ -27,6 +31,13 @@
       </a>
     </div>
     <div class="icons">
+      <a class="sm:hidden icon not-rounded" (click)="this.toggleMobileMenu()">
+        <i
+          [class]="
+            'bars' + (this.mobileMenuOpened ? ' fas fa-times' : ' fas fa-bars')
+          "
+        ></i>
+      </a>
       <a class="icon" (click)="this.iconProfileClicked($event)">
         <i class="fas fa-user"></i>
         <p-menu #menu [model]="profile" [popup]="true"></p-menu>
@@ -44,14 +55,11 @@
           [value]="this.copies.length + this.products.length"
         ></i>
       </a>
-
-      <a class="sm:hidden icon not-rounded" (click)="this.toggleSidebarMenu()">
-        <i class="bars fas fa-bars"></i>
-      </a>
     </div>
   </div>
 </div>
 
-<app-menu-sidebar #sidebar [isShopActive]="this.shop_active"></app-menu-sidebar>
+<app-mobile-menu *ngIf="this.mobileMenuOpened"></app-mobile-menu>
 
+<app-menu-sidebar #sidebar [isShopActive]="this.shop_active"></app-menu-sidebar>
 <app-shopcart class="" #shopcart></app-shopcart>

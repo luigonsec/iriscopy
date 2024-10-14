@@ -1,0 +1,80 @@
+<div id="mobile-menu" class="sm:hidden">
+  <ul>
+    <li class="link">
+      <a href="https://iriscopyshop.com">Inicio</a>
+    </li>
+    <li class="link">
+      <a href="/print">Imprimir</a>
+    </li>
+    <li class="link">
+      <a href="/shop">Papelería</a>
+    </li>
+    <li class="link" (click)="this.togglePickUpPoints()">
+      <a>
+        Puntos de recogida <i class="chevron-down fas fa-chevron-down"></i>
+      </a>
+    </li>
+    <ul
+      id="pickup-points"
+      [className]="this.pickUpPointsOpened ? 'opened' : 'closed'"
+    >
+      <li class="sublink">
+        <a href="https://iriscopyshop.com/copisteria-sevilla">
+          <i class="chevron-right fas fa-chevron-right"></i>
+          Copisterías en Sevilla
+        </a>
+      </li>
+
+      <li class="sublink">
+        <a href="https://iriscopyshop.com/copisteria-etsi">
+          <i class="chevron-right fas fa-chevron-right"></i>
+          Copistería ETSI
+        </a>
+      </li>
+
+      <li class="sublink">
+        <a href="https://iriscopyshop.com/copisteria-sevilla-centro">
+          <i class="chevron-right fas fa-chevron-right"></i>
+          Copistería Sevilla centro
+        </a>
+      </li>
+
+      <li class="sublink">
+        <a href="https://iriscopyshop.com/copisteria-fcom">
+          <i class="chevron-right fas fa-chevron-right"></i>
+          Copistería FCOM
+        </a>
+      </li>
+
+      <li class="sublink">
+        <a href="https://iriscopyshop.com/copisteria-mairena-aljarafe">
+          <i class="chevron-right fas fa-chevron-right"></i>
+          Copistería Mairena del Aljarafe
+        </a>
+      </li>
+
+      <li class="sublink">
+        <a href="https://iriscopyshop.com/copisteria-viapol">
+          <i class="chevron-right fas fa-chevron-right"></i>
+          Copistería Viapol
+        </a>
+      </li>
+
+      <li class="sublink">
+        <a href="https://iriscopyshop.com/copisteria-reina-mercedes">
+          <i class="chevron-right fas fa-chevron-right"></i>
+          Copistería R eina Mercedes
+        </a>
+      </li>
+    </ul>
+
+    <li class="link">
+      <a href="https://iriscopyshop.com/encuadernar/"> Encuadernar apuntes </a>
+    </li>
+    <li class="link">
+      <a href="https://iriscopyshop.com/preguntas-frecuentes">
+        Preguntas frecuentes
+      </a>
+    </li>
+  </ul>
+</div>

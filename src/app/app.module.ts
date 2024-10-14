@@ -88,6 +88,7 @@ import { BoundPagesComponent } from './form/bound-pages/bound-pages.component';
 import { OrderProcessingComponent } from './components/order-processing/order-processing.component';
 import { PaymentsEmptyCartWarningComponent } from './components/payments-empty-cart-warning/payments-empty-cart-warning.component';
 import { MenuSidebarComponent } from './components/menu-sidebar/menu-sidebar.component';
+import { MobileMenuComponent } from './components/mobile-menu/mobile-menu.component';
 
 @NgModule({
   declarations: [
@@ -142,6 +143,7 @@ import { MenuSidebarComponent } from './components/menu-sidebar/menu-sidebar.com
     OrderProcessingComponent,
     PaymentsEmptyCartWarningComponent,
     MenuSidebarComponent,
+    MobileMenuComponent,
   ],
   imports: [
     BrowserModule,
