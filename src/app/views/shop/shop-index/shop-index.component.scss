@@ -6,14 +6,11 @@
   }
 }
 
-.product-container {
-  border-right: 6px solid white;
-  border-bottom: 6px solid white;
-}
-
 .shop-container {
-  border-top: 6px solid white;
-  border-left: 6px solid white;
+  padding: 0px 10px;
+  @media (max-width: 767px) {
+    padding: 0px 0px;
+  }
 }
 
 .carousel-container {
@@ -28,9 +25,17 @@
 }
 
 #shop-menu-container {
-  z-index: 999;
+  z-index: 99;
   // hace el fondo borroso a partir de una variable scss
   background-color: rgba($lila, 0.4);
   padding: 30px;
-  border-radius: 30px;
+  border-bottom: 2px solid black;
+  input {
+    border: 2px solid black;
+    font-family: "NeverMind";
+
+    &::-webkit-input-placeholder {
+      font-family: "NeverMind";
+    }
+  }
 }
