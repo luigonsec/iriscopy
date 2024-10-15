@@ -6,7 +6,7 @@
   </div>
 
   <div id="menu">
-    <div class="links hidden sm:flex">
+    <div class="links hidden lg:flex">
       <a class="link" href="https://iriscopyshop.com">Inicio</a>
       <a class="link" href="/"> Imprimir </a>
       <a class="link" href="/shop" *ngIf="this.shop_active">Papelería </a>
@@ -31,7 +31,7 @@
       </a>
     </div>
     <div class="icons">
-      <a class="sm:hidden icon not-rounded" (click)="this.toggleMobileMenu()">
+      <a class="lg:hidden icon not-rounded" (click)="this.toggleMobileMenu()">
         <i
           [class]="
             'bars' + (this.mobileMenuOpened ? ' fas fa-times' : ' fas fa-bars')

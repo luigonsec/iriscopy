@@ -1,5 +1,5 @@
 <div id="print-wrapper" class="grid p-0 m-0">
-  <div id="form-column" class="col-12 sm:col-12 md:col-5 lg:col-5">
+  <div id="form-column" class="col-12 lg:col-5">
     <div id="form">
       <div class="Form__Section p-field">
         <div class="p-fluid">
@@ -108,15 +108,18 @@
     </div>
   </div>
 
-  <div id="other-column" class="col-12 sm:col-12 md:col-7 lg:col-7">
+  <div id="other-column" class="col-12 lg:col-7">
     <div class="grid p-0 m-0">
-      <div id="upload-column" class="col-12 sm:col-12 md:col-6 sm:pt-8">
+      <div id="upload-column" class="col-12 lg:pt-8 lg:col-12 xl:col-6">
         <div id="upload">
           <app-uploader #uploader (emitChange)="getFile($event)"></app-uploader>
         </div>
       </div>
 
-      <div id="banner-column" class="md:col-6 hidden sm:block">
+      <div
+        id="banner-column"
+        class="col-12 lg:col-8 lg:col-offset-2 xl:col-6 xl:col-offset-0 hidden lg:block"
+      >
         <div id="banner">
           <app-banner
             class="hidden sm:block"
@@ -130,7 +133,10 @@
       </div>
 
       <div id="files-column" class="grid">
-        <div *ngFor="let file of files || []" class="col-6 sm:col-3">
+        <div
+          *ngFor="let file of files || []"
+          class="col-6 sm:col-4 md:col-4 lg:col-4 xl:col-3"
+        >
           <div class="uploaded-file">
             <div class="titulo">
               {{ file.name }}
@@ -151,8 +157,8 @@
     </div>
   </div>
 
-  <div id="banner-sm-column" class="sm:hidden">
-    <div id="banner-column" class="md:col-6 sm:visible">
+  <div id="banner-sm-column" class="lg:hidden">
+    <div id="banner-column" class="col-12 sm:col-6 sm:col-offset-3 sm:visible">
       <div id="banner">
         <app-banner
           class="hidden sm:block"
