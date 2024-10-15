@@ -22,7 +22,7 @@ export default {
     },
     {
       name: 'Cartulina',
-      code: 'cartulina',
+      code: 'cartulina (Blanca)',
       description: '180 grs',
     },
     {

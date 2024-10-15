@@ -42,7 +42,7 @@ export class ShippingCostsService {
   }
 
   public getGastosEnvioCanarias() {
-    return 35;
+    return 23;
   }
 
   public getGastosEnvioMallorca() {
