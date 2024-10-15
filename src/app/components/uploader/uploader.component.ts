@@ -10,63 +10,7 @@ import { LoadingService } from 'src/app/services/loading.service';
   styleUrls: ['./uploader.component.scss'],
 })
 export class UploaderComponent implements OnInit {
-  public uploadedFiles: File[] = [
-    {
-      id: 1,
-      name: 'Archivo',
-      pages: 50,
-      image:
-        'https://m.media-amazon.com/images/I/71CznHCE+PL._UF1000,1000_QL80_.jpg',
-      original_filename: 'Algo',
-      size: 22,
-      source: 'a',
-      url: 'a',
-    },
-    {
-      id: 1,
-      name: 'Archivo',
-      pages: 50,
-      image:
-        'https://m.media-amazon.com/images/I/71CznHCE+PL._UF1000,1000_QL80_.jpg',
-      original_filename: 'Algo',
-      size: 22,
-      source: 'a',
-      url: 'a',
-    },
-    {
-      id: 1,
-      name: 'Archivo',
-      pages: 50,
-      image:
-        'https://m.media-amazon.com/images/I/71CznHCE+PL._UF1000,1000_QL80_.jpg',
-      original_filename: 'Algo',
-      size: 22,
-      source: 'a',
-      url: 'a',
-    },
-    {
-      id: 1,
-      name: 'Archivo',
-      pages: 50,
-      image:
-        'https://m.media-amazon.com/images/I/71CznHCE+PL._UF1000,1000_QL80_.jpg',
-      original_filename: 'Algo',
-      size: 22,
-      source: 'a',
-      url: 'a',
-    },
-    {
-      id: 1,
-      name: 'Archivo',
-      pages: 50,
-      image:
-        'https://m.media-amazon.com/images/I/71CznHCE+PL._UF1000,1000_QL80_.jpg',
-      original_filename: 'Algo',
-      size: 22,
-      source: 'a',
-      url: 'a',
-    },
-  ];
+  public uploadedFiles: File[] = [];
   public src: string;
   @Output() emitChange = new EventEmitter<unknown>();
 
