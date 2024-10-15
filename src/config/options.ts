@@ -22,8 +22,8 @@ export default {
     },
     {
       name: 'Cartulina',
-      code: 'cartulina (Blanca)',
-      description: '180 grs',
+      code: 'cartulina',
+      description: '180 grs (Blanca)',
     },
     {
       name: 'Fotográfico',
