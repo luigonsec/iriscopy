@@ -21,7 +21,7 @@ export class FinishTypeComponent implements OnInit {
   public optionsGroup2: Option[];
   public option: Option = undefined;
   private _paperSize: any;
-  private _files: File[];
+  private _files: File[] = [];
   private _printForm: Option;
   private _pagesPerSide: Option;
 
@@ -34,7 +34,7 @@ export class FinishTypeComponent implements OnInit {
     this.manageOptions();
   }
   @Input() set files(value: any) {
-    this._files = value;
+    this._files = value || [];
     this.manageOptions();
   }
 
