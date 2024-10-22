@@ -89,6 +89,55 @@
 }
 
 /* Media Query para pantallas de móviles */
+@media (max-width: 1526px) {
+  #header {
+    padding-left: 100px;
+    #menu {
+      padding-left: 30px;
+      .links {
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 1199px) {
+  #header {
+    padding-left: 15px;
+    padding-right: 0px;
+    #logo {
+      padding-left: 10px;
+      img {
+        height: 18px;
+      }
+    }
+
+    #menu {
+      padding-left: 10px;
+      gap: 30px;
+      .links {
+        gap: 12px;
+        font-size: 0.7rem;
+        .collapse-icon {
+          padding-left: 0px;
+          font-size: 0.5rem;
+        }
+      }
+
+      .icons {
+        .icon {
+          padding: 6px;
+          i {
+            font-size: 16px;
+          }
+        }
+
+        gap: 0px;
+      }
+    }
+  }
+}
+
 @media (max-width: 991px) {
   #header {
     padding-left: 5px;

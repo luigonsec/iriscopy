@@ -41,3 +41,17 @@
     }
   }
 }
+
+@media (max-width: 1199px) {
+  #buttons-column {
+    order: 1;
+  }
+
+  #price-column {
+    order: 2;
+  }
+
+  #notes-column {
+    order: 3;
+  }
+}

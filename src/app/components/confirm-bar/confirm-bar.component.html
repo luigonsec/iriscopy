@@ -1,9 +1,9 @@
 <div id="confirm-bar">
   <div class="grid">
-    <div class="col-12 md:col-4">
+    <div id="button-column" class="col-12 lg:col-8 xl:col-4">
       <div id="buttons">
         <div class="grid">
-          <div class="col-12 md:col-6">
+          <div class="col-12 sm:col-6 xl:col-6">
             <div class="p-fluid">
               <button
                 pButton
@@ -13,7 +13,7 @@
               ></button>
             </div>
           </div>
-          <div class="col-12 md:col-6">
+          <div class="col-12 sm:col-6 xl:col-6">
             <div class="p-fluid">
               <button
                 pButton
@@ -26,12 +26,12 @@
         </div>
       </div>
     </div>
-    <div class="col-12 md:col-5">
+    <div id="notes-column" class="col-12 lg:col-12 xl:col-5">
       <div class="notes" *ngFor="let nota of this.notas">
         {{ nota }}
       </div>
     </div>
-    <div class="col-12 md:col-3">
+    <div id="price-column" class="col-12 lg:col-4 xl:col-3">
       <div id="Precio">
         <span id="Texto">Total a pagar </span
         ><span id="Cantidad">{{ this.precio }} €</span>

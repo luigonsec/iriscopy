@@ -19,6 +19,7 @@
 }
 
 #banner-sm-column {
+  padding-bottom: 180px;
   order: 6;
 }
 
@@ -43,6 +44,12 @@
   font-family: "Montserrat" !important;
   img {
     width: 100%;
+  }
+}
+
+@media (max-width: 1199px) {
+  #form-column {
+    padding: 10px 10px;
   }
 }
 

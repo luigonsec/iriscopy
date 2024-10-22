@@ -89,6 +89,7 @@ import { OrderProcessingComponent } from './components/order-processing/order-pr
 import { PaymentsEmptyCartWarningComponent } from './components/payments-empty-cart-warning/payments-empty-cart-warning.component';
 import { MenuSidebarComponent } from './components/menu-sidebar/menu-sidebar.component';
 import { MobileMenuComponent } from './components/mobile-menu/mobile-menu.component';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 @NgModule({
   declarations: [
@@ -156,6 +157,7 @@ import { MobileMenuComponent } from './components/mobile-menu/mobile-menu.compon
     TableModule,
     MenuModule,
     DividerModule,
+    OverlayPanelModule,
     DataViewModule,
     InputSwitchModule,
     SelectButtonModule,

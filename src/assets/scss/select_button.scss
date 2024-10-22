@@ -1,13 +1,15 @@
 $bordered: 2px solid black !important;
-.p-selectbutton .p-button
-{
-  
+.p-buttonset .p-button:focus {
+  z-index: 0 !important;
+}
+
+.p-selectbutton .p-button {
   border-top: $bordered;
   border-bottom: $bordered;
   color: $rosa;
   box-shadow: none;
 
-  &:hover{
+  &:hover {
     &:not(.p-highlight) {
       color: $rosa !important;
     }
@@ -19,7 +21,7 @@ $bordered: 2px solid black !important;
     background: $lila;
     color: $negro;
     &:first-of-type {
-      border-left:  $bordered;
+      border-left: $bordered;
     }
   }
 
@@ -30,8 +32,6 @@ $bordered: 2px solid black !important;
   border-right: $bordered;
   border-left: none !important;
 }
-
-
 
 .Button {
   text-align: center;
