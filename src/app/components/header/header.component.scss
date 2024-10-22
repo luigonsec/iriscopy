@@ -3,11 +3,10 @@
 #header {
   padding: 10px;
   padding-left: 10%;
-  padding-right: 10%;
   display: flex;
   align-items: center;
   border-bottom: $border;
-  font-family: "Montserrat";
+  font-family: "NeverMind";
   height: 80px;
 
   #logo {
@@ -24,7 +23,7 @@
     padding-left: 75px;
     display: flex;
     align-items: center;
-    gap: 40px;
+    gap: 30px;
 
     .icons {
       display: flex;
@@ -61,10 +60,10 @@
     .links {
       align-items: center;
       display: flex;
-      gap: 32px;
-      font-size: 1rem;
+      gap: 40px;
+      font-size: 0.9rem;
       color: black;
-      font-family: "Tilt Warp";
+      font-family: "NeverMind";
 
       .collapse-icon {
         padding-left: 5px;
@@ -85,8 +84,8 @@
 }
 
 ::ng-deep .p-badge {
-  background-color: $rosa;
-  color: white;
+  background-color: white;
+  color: black;
 }
 
 /* Media Query para pantallas de móviles */

@@ -103,31 +103,31 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.puntosRecogida = [
       {
         label: 'Copisterías en Sevilla',
-        routerLink: 'https://iriscopyshop.com/copisteria-sevilla/',
+        url: 'https://iriscopyshop.com/copisteria-sevilla',
       },
       {
         label: 'Copistería ETSI',
-        routerLink: 'https://iriscopyshop.com/copisteria-etsi/',
+        url: 'https://iriscopyshop.com/copisteria-etsi',
       },
       {
         label: 'Copistería Sevilla centro',
-        routerLink: 'https://iriscopyshop.com/copisteria-sevilla-centro/',
+        url: 'https://iriscopyshop.com/copisteria-sevilla-centro',
       },
       {
         label: 'Copistería FCOM',
-        routerLink: 'https://iriscopyshop.com/copisteria-fcom/',
+        url: 'https://iriscopyshop.com/copisteria-fcom',
       },
       {
         label: 'Copistería Mairena del Aljarafe',
-        routerLink: 'https://iriscopyshop.com/copisteria-mairena-aljarafe/',
+        url: 'https://iriscopyshop.com/copisteria-mairena-aljarafe',
       },
       {
         label: 'Copistería Viapol',
-        routerLink: 'https://iriscopyshop.com/copisteria-viapol/',
+        url: 'https://iriscopyshop.com/copisteria-viapol',
       },
       {
         label: 'Copistería Reina Mercedes',
-        routerLink: 'https://iriscopyshop.com/copisteria-reina-mercedes/',
+        url: 'https://iriscopyshop.com/copisteria-reina-mercedes',
       },
     ];
   }

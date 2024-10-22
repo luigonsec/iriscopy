@@ -10,11 +10,7 @@
       <a class="link" href="https://iriscopyshop.com">Inicio</a>
       <a class="link" href="/"> Imprimir </a>
       <a class="link" href="/shop" *ngIf="this.shop_active">Papelería </a>
-      <a
-        class="link"
-        (click)="this.menuRecogida.toggle($event)"
-        (mouseenter)="this.menuRecogida.open($event)"
-      >
+      <a class="link" (click)="this.menuRecogida.toggle($event)">
         <p-menu
           #menuRecogida
           [model]="puntosRecogida"
@@ -31,13 +27,6 @@
       </a>
     </div>
     <div class="icons">
-      <a class="lg:hidden icon not-rounded" (click)="this.toggleMobileMenu()">
-        <i
-          [class]="
-            'bars' + (this.mobileMenuOpened ? ' fas fa-times' : ' fas fa-bars')
-          "
-        ></i>
-      </a>
       <a class="icon" (click)="this.iconProfileClicked($event)">
         <i class="fas fa-user"></i>
         <p-menu #menu [model]="profile" [popup]="true"></p-menu>
@@ -53,6 +42,13 @@
           pBadge
           class="ShoppingCart__Icon fas fa-shopping-cart"
           [value]="this.copies.length + this.products.length"
+        ></i>
+      </a>
+      <a class="lg:hidden icon not-rounded" (click)="this.toggleMobileMenu()">
+        <i
+          [class]="
+            'bars' + (this.mobileMenuOpened ? ' fas fa-times' : ' fas fa-bars')
+          "
         ></i>
       </a>
     </div>

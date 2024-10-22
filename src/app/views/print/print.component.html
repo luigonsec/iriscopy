@@ -132,24 +132,26 @@
         </div>
       </div>
 
-      <div id="files-column" class="grid">
-        <div
-          *ngFor="let file of files || []"
-          class="col-6 sm:col-4 md:col-4 lg:col-4 xl:col-3"
-        >
-          <div class="uploaded-file">
-            <div class="titulo">
-              {{ file.name }}
-            </div>
-            <img src="{{ file.image }}" alt="" />
-            <p>{{ file.pages }} páginas</p>
-            <div class="flex justify-content-right">
-              <button
-                pButton
-                class="Secondary pink no-padding"
-                label="Eliminar"
-                (click)="this.removeFile(file.id)"
-              ></button>
+      <div id="files-column" class="col-12">
+        <div class="grid">
+          <div
+            *ngFor="let file of files || []"
+            class="col-6 sm:col-4 md:col-4 lg:col-4 xl:col-3"
+          >
+            <div class="uploaded-file">
+              <div class="titulo">
+                {{ file.name }}
+              </div>
+              <img src="{{ file.image }}" alt="" />
+              <p>{{ file.pages }} páginas</p>
+              <div class="flex justify-content-right">
+                <button
+                  pButton
+                  class="Secondary pink no-padding"
+                  label="Eliminar"
+                  (click)="this.removeFile(file.id)"
+                ></button>
+              </div>
             </div>
           </div>
         </div>
