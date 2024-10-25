@@ -60,11 +60,13 @@ export default {
       name: 'Una cara',
       code: 'una-cara',
       description: 'Por una cara del papel',
+      factor: 1,
     },
     {
       name: 'Doble cara',
       code: 'doble-cara',
       description: 'Por ambas caras del papel',
+      factor: 0.5,
     },
   ],
 
@@ -74,6 +76,7 @@ export default {
       code: '1_vertical',
       description: 'Por cara',
       image: 'assets/images/pagesPerSide/ppc_v_1',
+      factor: 1,
       default: true,
     },
     {
@@ -81,24 +84,28 @@ export default {
       code: '1_horizontal',
       description: 'Por cara',
       image: 'assets/images/pagesPerSide/ppc_h_1',
+      factor: 1,
       default: true,
     },
     {
       name: '2 páginas',
       code: '2_horizontal',
       image: 'assets/images/pagesPerSide/ppc_h_2',
+      factor: 0.5,
       description: 'Por cara',
     },
     {
       name: '2 páginas',
       code: '2_vertical',
       image: 'assets/images/pagesPerSide/ppc_v_2',
+      factor: 0.5,
       description: 'Por cara',
     },
     {
       name: '4 páginas',
       code: '4_horizontal',
       image: 'assets/images/pagesPerSide/ppc_h_4',
+      factor: 0.25,
       description: 'Por cara',
     },
   ],
@@ -139,6 +146,7 @@ export default {
       name: 'Grapado',
       code: 'grapado',
       description: 'En esquina',
+      info: 'Nuestras máquinas grapan hasta 50 folios, para archivos más grandes esta opción no está disponible',
     },
     {
       name: 'Dos Taladros',

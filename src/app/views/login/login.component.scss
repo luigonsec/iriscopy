@@ -1,10 +1,39 @@
 .links {
-    margin-top: 30px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    font-weight: 500;
-    cursor: pointer;
+  align-items: center;
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap; /* Permitir que los elementos se rompan en varias filas */
+  gap: 40px;
+  font-weight: 500;
+  cursor: pointer;
 
+  button {
+    align-self: flex-start; /* Alinea el botón a la izquierda en móviles */
+  }
+
+  .link {
+    flex-grow: 1;
+    text-align: center; /* Centramos los enlaces */
+  }
+}
+
+@media (max-width: 768px) {
+  /* Pantallas móviles */
+  .links {
+    flex-direction: column; /* En móviles, apilamos los elementos en una columna */
+    gap: 10px; /* Espaciado entre los elementos */
+  }
+
+  .links button {
+    align-self: center; /* El botón se alinea a la izquierda */
+  }
+
+  .links .link {
+    &:first-of-type {
+      margin-top: 40px;
+    }
+    text-align: center; /* Centramos los enlaces */
+    width: 100%; /* Cada enlace ocupa toda la fila */
+  }
 }

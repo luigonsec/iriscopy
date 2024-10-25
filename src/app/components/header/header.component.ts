@@ -12,6 +12,8 @@ import Customer from 'src/app/interfaces/Customer';
 import { logout } from 'src/app/_actions/customer.actions';
 import { Router } from '@angular/router';
 import { ConfigService } from 'src/app/services/config.service';
+import { Menu } from 'primeng/menu';
+import { MenuSidebarComponent } from '../menu-sidebar/menu-sidebar.component';
 
 @Component({
   selector: 'app-header',
@@ -24,13 +26,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public products: OrderProduct[] = [];
   public display: boolean = true;
   public shop_active: boolean = false;
-  public sidebarVisible = false;
+  public sidebarVisible = true;
+
+  public mobileMenuOpened = false;
+
+  @ViewChild('menu') public menu: Menu;
 
   @ViewChild('shopcart') public shopcart: ShopcartComponent;
+  @ViewChild('sidebar') public sidebar: MenuSidebarComponent;
+
   cartSubscription: Subscription;
   customer$: Subscription;
   customer: Customer;
   configSubscription: Subscription;
+  profile: MenuItem[];
+  puntosRecogida: MenuItem[];
 
   constructor(
     private shopcartService: ShopcartService,
@@ -54,6 +64,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   logout() {
     this.store.dispatch(logout());
     this.router.navigate(['/login']);
+    this.setProfile();
   }
 
   subscribeCart() {
@@ -65,8 +76,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
   }
 
-  toggleSidebar() {
+  toggleShoppingCart() {
     this.shopcart.toggle();
+  }
+
+  toggleMobileMenu() {
+    this.mobileMenuOpened = !!!this.mobileMenuOpened;
   }
 
   getConfig() {
@@ -75,10 +90,74 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
   }
 
-  openSidebar() {}
+  iconProfileClicked($event) {
+    this.setProfile();
+    if (this.customer) {
+      this.menu.toggle($event);
+    } else {
+      this.router.navigate(['/login']);
+    }
+  }
+
+  setPuntosRecogida() {
+    this.puntosRecogida = [
+      {
+        label: 'Copisterías en Sevilla',
+        url: 'https://iriscopyshop.com/copisteria-sevilla',
+      },
+      {
+        label: 'Copistería ETSI',
+        url: 'https://iriscopyshop.com/copisteria-etsi',
+      },
+      {
+        label: 'Copistería Sevilla centro',
+        url: 'https://iriscopyshop.com/copisteria-sevilla-centro',
+      },
+      {
+        label: 'Copistería FCOM',
+        url: 'https://iriscopyshop.com/copisteria-fcom',
+      },
+      {
+        label: 'Copistería Mairena del Aljarafe',
+        url: 'https://iriscopyshop.com/copisteria-mairena-aljarafe',
+      },
+      {
+        label: 'Copistería Viapol',
+        url: 'https://iriscopyshop.com/copisteria-viapol',
+      },
+      {
+        label: 'Copistería Reina Mercedes',
+        url: 'https://iriscopyshop.com/copisteria-reina-mercedes',
+      },
+    ];
+  }
+
+  setProfile() {
+    this.profile = [
+      {
+        visible: this.customer != undefined,
+        label: 'Tus datos',
+        routerLink: '/profile/information',
+      },
+      {
+        visible: this.customer != undefined && this.customer.admin,
+        label: 'Administrar',
+        routerLink: '/admin/banner',
+      },
+      {
+        visible: this.customer != undefined,
+        label: 'Salir',
+        command: () => {
+          this.logout();
+        },
+      },
+    ];
+  }
 
   ngOnInit() {
     this.getConfig();
+    this.setPuntosRecogida();
+    this.setProfile();
     this.configSubscription = this.config.config$.subscribe(
       (conf: { shop_active: boolean }) => {
         this.shop_active = conf.shop_active;

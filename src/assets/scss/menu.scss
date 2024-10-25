@@ -1,0 +1,17 @@
+.ng-trigger.p-menu.p-component.p-menu-overlay.ng-star-inserted {
+  font-family: "Tilt Warp" !important;
+
+  .p-menuitem-link {
+    padding: 0.9em 1em;
+  }
+  span.p-menuitem-text.ng-star-inserted {
+    color: black !important;
+  }
+}
+
+.p-menu .p-menuitem-link:not(.p-disabled):hover {
+  background: white;
+  span.p-menuitem-text.ng-star-inserted {
+    color: $rosa;
+  }
+}

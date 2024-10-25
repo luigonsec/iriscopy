@@ -1,7 +1,18 @@
 <p-sidebar class="Shopcart" [(visible)]="display" [position]="'right'">
-  <div class="Next">
+  <div class="buttons">
     <div class="p-fluid">
-      <p-button label="Continuar con el pago" styleClass="p-button-sm" (click)="this.continue()"></p-button>
+      <button
+        pButton
+        label="Continuar con el pago"
+        class="button p-button-sm Secondary no-padding"
+        (click)="this.continue()"
+      ></button>
+
+      <button
+        pButton
+        label="Seguir comprando"
+        class="button p-button-sm Secondary no-padding pink"
+      ></button>
     </div>
   </div>
   <app-order></app-order>

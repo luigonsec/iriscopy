@@ -1,83 +1,76 @@
-<div class="grid">
-  <div class="col-12 lg:col-6">
-    <p-card>
-      <div class="grid">
-        <div class="col-12 md:col-12">
-          <h2>Regístrate en Iris Copya</h2>
+<div class="grid p-0 m-0">
+  <div class="col-12 lg:col-6 lg:col-offset-3">
+    <div id="sign-up" class="iriscopy-box mt-8">
+      <h2>Regístrate en Iris Copy</h2>
+
+      <form>
+        <div class="grid">
+          <div class="field col-12 md:col-5">
+            <label for="username">Nombre de usuario</label>
+            <input
+              [(ngModel)]="this.username"
+              id="username"
+              type="text"
+              name="username"
+              class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            />
+            <small class="error" *ngIf="this.errors['username']">
+              {{ this.errors["username"] }}
+            </small>
+          </div>
+          <div class="field col-12 md:col-7">
+            <label for="username">Email</label>
+            <input
+              [(ngModel)]="this.email"
+              id="email"
+              type="text"
+              name="email"
+              class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            />
+            <small class="error" *ngIf="this.errors['email']">
+              {{ this.errors["email"] }}
+            </small>
+          </div>
+          <div class="field col-12 md:col-6">
+            <label for="password">Contraseña</label>
+            <input
+              [(ngModel)]="this.password"
+              id="password"
+              type="password"
+              name="password"
+              class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            />
+            <small class="error" *ngIf="this.errors['password']">
+              {{ this.errors["password"] }}
+            </small>
+          </div>
+          <div class="field col-12 md:col-6">
+            <label for="passwordConfirm">Confirmar contraseña</label>
+            <input
+              [(ngModel)]="this.passwordConfirm"
+              id="passwordConfirm"
+              type="password"
+              name="passwordConfirm"
+              class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            />
+            <small class="error" *ngIf="this.errors['passwordConfirm']">
+              {{ this.errors["passwordConfirm"] }}
+            </small>
+          </div>
+          <div class="col-12 md:col-12">
+            <button
+              type="submit"
+              pButton
+              [label]="this.buttonText"
+              class="p-button-sm Secondary"
+              (click)="this.register()"
+            ></button>
+          </div>
+          <div class="field col-12 md:col-12">
+            {{ this.errors["general"] }}
+          </div>
         </div>
-      </div>
-      <div class="grid">
-        <div class="col-12 md:col-12">
-          <form>
-            <div class="grid">
-              <div class="field col-5">
-                <label for="username">Nombre de usuario</label>
-                <input
-                  [(ngModel)]="this.username"
-                  id="username"
-                  type="text"
-                  name="username"
-                  class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-                />
-                <small class="error" *ngIf="this.errors['username']">
-                  {{ this.errors["username"] }}
-                </small>
-              </div>
-              <div class="field col-7">
-                <label for="username">Email</label>
-                <input
-                  [(ngModel)]="this.email"
-                  id="email"
-                  type="text"
-                  name="email"
-                  class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-                />
-                <small class="error" *ngIf="this.errors['email']">
-                  {{ this.errors["email"] }}
-                </small>
-              </div>
-              <div class="field col-6">
-                <label for="password">Contraseña</label>
-                <input
-                  [(ngModel)]="this.password"
-                  id="password"
-                  type="password"
-                  name="password"
-                  class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-                />
-                <small class="error" *ngIf="this.errors['password']">
-                  {{ this.errors["password"] }}
-                </small>
-              </div>
-              <div class="field col-6">
-                <label for="passwordConfirm">Confirmar contraseña</label>
-                <input
-                  [(ngModel)]="this.passwordConfirm"
-                  id="passwordConfirm"
-                  type="password"
-                  name="passwordConfirm"
-                  class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-                />
-                <small class="error" *ngIf="this.errors['passwordConfirm']">
-                  {{ this.errors["passwordConfirm"] }}
-                </small>
-              </div>
-              <div class="col-12">
-                <button
-                  type="submit"
-                  pButton
-                  [label]="this.buttonText"
-                  class="p-button-sm"
-                  (click)="this.register()"
-                ></button>
-              </div>
-              <div class="field col-12">
-                {{ this.errors["general"] }}
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </p-card>
+      </form>
+    </div>
   </div>
 </div>

@@ -1,18 +1,33 @@
 .tabla-productos {
-    td,th {
-        text-align: center;
+  td,
+  th {
+    text-align: center;
+  }
+
+  td.left,
+  th.left {
+    text-align: left;
+  }
+  .producto {
+    .imagen {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .tabla-productos {
+    .p-column-title {
+      font-weight: bold;
     }
 
-    td.left,th.left {
-        text-align: left;
-    }
     .producto {
-
-        .imagen {
-            width: 100%;
-        }
-    
-
-    
+      .celda-imagen {
+        justify-content: center !important;
+      }
+      .imagen {
+        width: 50%;
+      }
     }
+  }
 }

@@ -1,4 +1,4 @@
-<div class="grid" *ngIf="this.firstLogin">
+<div class="grid p-0 m-0" *ngIf="this.firstLogin">
   <div class="col-12">
     <router-outlet></router-outlet>
     <h2>¡Registro realizado!</h2>
@@ -9,11 +9,11 @@
     </p>
   </div>
 </div>
-<div class="grid">
+<div class="grid p-0 m-0">
   <div class="col-12 md:col-6">
     <div class="grid">
       <div class="col-12">
-        <h2>Datos de envío</h2>
+        <h3>Datos de envío</h3>
       </div>
     </div>
     <div class="grid">
@@ -26,7 +26,7 @@
         <button
           pButton
           [label]="'Guardar datos de envío'"
-          class="p-button-sm"
+          class="p-button-sm Secondary"
           (click)="this.manageShipping()"
         ></button>
       </div>
@@ -36,7 +36,7 @@
   <div class="col-12 md:col-6">
     <div class="grid">
       <div class="col-12">
-        <h2>Datos de facturación</h2>
+        <h3>Datos de facturación</h3>
       </div>
     </div>
     <div class="grid">
@@ -49,7 +49,7 @@
         <button
           pButton
           [label]="'Guardar datos de facturación'"
-          class="p-button-sm"
+          class="p-button-sm Secondary"
           (click)="this.manageBilling()"
         ></button>
       </div>

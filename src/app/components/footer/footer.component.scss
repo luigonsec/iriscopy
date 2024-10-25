@@ -1,48 +1,7 @@
 @import "src/assets/scss/colors";
 
-#Footer {
-  padding-top: 30px;
-  padding-left: 30px;
-  background-color: #e3e3e3;
-  margin-top: 200px;
-  padding-right: 30px;
-  font-size: 14px;
-  #Logo {
-    img {
-      width: 100%;
-    }
-  }
-
-  #Description {
-    margin-bottom: 30px;
-  }
-
-  .Title {
-    font-weight: bold;
-    color: $darkGray;
-    font-size: 14px;
-    margin-bottom: 30px;
-  }
-
-  .Item {
-    margin-bottom: 8px;
-    a {
-      text-decoration: none;
-      color: $darkGray;
-    }
-  }
-}
-
-@media (max-width: 768px) {
-  #Footer {
-    padding: 30px 15px;
-
-    .Title {
-      font-size: 13px;
-    }
-    .Item,
-    #Description {
-      font-size: 11px;
-    }
-  }
+#footer {
+  border-top: $border;
+  background-color: $rosa;
+  min-height: 100px;
 }

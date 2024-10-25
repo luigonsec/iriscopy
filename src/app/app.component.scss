@@ -2,33 +2,15 @@ html,
 body {
   height: 100%;
   margin: 0;
+  padding: 0;
 }
 
-.container {
+:host {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100vh; /* Hacer que el componente raíz ocupe toda la pantalla */
 }
 
-.content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.header,
-.footer {
-  flex-shrink: 0;
-}
-
-.main-content {
-  padding: 0px 30px;
-  flex: 1;
-}
-
-/* Media Query para pantallas de móviles */
-@media (max-width: 768px) {
-  .main-content {
-    padding: 0px 2px;
-  }
+.contain {
+  flex: 1; /* Hacer que esta sección ocupe el espacio restante */
 }

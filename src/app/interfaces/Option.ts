@@ -3,4 +3,5 @@ export default interface Option {
   code: string;
   description?: string;
   default?: boolean;
+  factor?: number;
 }

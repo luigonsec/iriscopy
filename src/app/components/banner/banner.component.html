@@ -1,8 +1,20 @@
-<p-galleria [(value)]="this.banners" [autoPlay]="true" [circular]="true" [numVisible]="5" [showThumbnails]="false"
-    [containerStyle]="{ 'max-width': '100%' }">
-    <ng-template pTemplate="item" let-item>
-        <img [src]="item.url" alt="" [style]="{width: '100%'}">
-        <!-- <div class="Banner" [style]="'background-image: url(' +item.url+ ');'">
-        </div> -->
-    </ng-template>
+<p-galleria
+  [(value)]="this.banners"
+  [autoPlay]="true"
+  [circular]="true"
+  [numVisible]="5"
+  [showThumbnails]="false"
+  [containerStyle]="{ 'max-width': '100%' }"
+>
+  <ng-template pTemplate="item" let-item>
+    <a href="{{ item.link_to }}" *ngIf="item.link_to">
+      <img [src]="item.url" alt="" [style]="{ width: '100%' }" />
+    </a>
+    <img
+      [src]="item.url"
+      alt=""
+      [style]="{ width: '100%' }"
+      *ngIf="!!!item.link_to"
+    />
+  </ng-template>
 </p-galleria>

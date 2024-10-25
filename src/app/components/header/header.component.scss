@@ -1,19 +1,51 @@
 @import "src/assets/scss/colors.scss";
 
-#Header {
-  padding: 20px 30px;
-  #Menu {
-    text-align: right;
-    padding-top: 20px;
-    padding-right: 30px;
+#header {
+  padding: 10px;
+  padding-left: 10%;
+  display: flex;
+  align-items: center;
+  border-bottom: $border;
+  font-family: "NeverMind";
+  height: 80px;
 
-    div {
-      display: inline-block;
+  #logo {
+    flex-shrink: 0;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-right: 20px;
+    img {
+      height: 25px;
     }
+  }
 
-    #Links {
+  #menu {
+    padding-left: 75px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+
+    .icons {
+      display: flex;
+      gap: 10px;
+      .icon {
+        cursor: pointer;
+        color: $rosa;
+        padding: 10px;
+        border-radius: 100%;
+        i {
+          font-size: 20px;
+        }
+
+        &.not-rounded {
+          border: none;
+        }
+
+        .bars {
+          font-size: 30px;
+        }
+      }
       .ShoppingCart__Icon {
-        font-size: 20px;
         ::ng-deep .p-badge {
           font-size: 0.6rem;
           font-weight: 700;
@@ -25,11 +57,24 @@
       }
     }
 
-    .Link {
+    .links {
+      align-items: center;
+      display: flex;
+      gap: 40px;
+      font-size: 0.9rem;
+      color: black;
+      font-family: "NeverMind";
+
+      .collapse-icon {
+        padding-left: 5px;
+        font-size: 0.7rem;
+      }
+    }
+
+    .link {
       cursor: pointer;
       text-decoration: none;
       color: black;
-      margin-left: 20px;
 
       &:hover {
         text-decoration: none;
@@ -38,43 +83,92 @@
   }
 }
 
-/* Añade esta regla a tu archivo CSS global */
-::ng-deep .Menu {
-  .p-sidebar {
-    background-color: $darkGray;
-    color: white; /* Para cambiar el color del texto a blanco */
+::ng-deep .p-badge {
+  background-color: white;
+  color: black;
+}
 
-    .Item {
-      padding: 15px;
-      border-bottom: 1px solid white;
-      width: 100%;
-
-      .Link {
-        text-decoration: none;
-        color: white;
+/* Media Query para pantallas de móviles */
+@media (max-width: 1526px) {
+  #header {
+    padding-left: 100px;
+    #menu {
+      padding-left: 30px;
+      .links {
+        font-size: 0.8rem;
       }
     }
   }
 }
 
-::ng-deep .p-badge {
-  background-color: $primary;
+@media (max-width: 1199px) {
+  #header {
+    padding-left: 15px;
+    padding-right: 0px;
+    #logo {
+      padding-left: 10px;
+      img {
+        height: 18px;
+      }
+    }
+
+    #menu {
+      padding-left: 10px;
+      gap: 30px;
+      .links {
+        gap: 12px;
+        font-size: 0.7rem;
+        .collapse-icon {
+          padding-left: 0px;
+          font-size: 0.5rem;
+        }
+      }
+
+      .icons {
+        .icon {
+          padding: 6px;
+          i {
+            font-size: 16px;
+          }
+        }
+
+        gap: 0px;
+      }
+    }
+  }
 }
 
-/* Media Query para pantallas de móviles */
-@media (max-width: 768px) {
-  #Header {
-    padding: 20px 15px;
-  }
+@media (max-width: 991px) {
+  #header {
+    padding-left: 5px;
+    padding-right: 0px;
+    #logo {
+      padding-left: 10px;
+      img {
+        height: 18px;
+      }
+    }
 
-  #Links__mobile {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    i {
-      margin-left: 20px;
-      cursor: pointer;
-      font-size: 24px;
+    #menu {
+      gap: 10px;
+      padding-right: 20px;
+      margin-left: auto;
+      .icons {
+        text-align: right;
+        gap: 10px;
+        .icon {
+          padding: 5px;
+          padding-left: 8px;
+          padding-right: 8px;
+          i {
+            font-size: 14px;
+          }
+
+          .bars {
+            font-size: 20px;
+          }
+        }
+      }
     }
   }
 }

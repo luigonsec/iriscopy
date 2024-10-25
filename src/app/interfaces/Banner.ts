@@ -6,4 +6,5 @@ export default interface Banner {
 
   visible_shop: boolean;
   visible_print: boolean;
+  link_to?: string;
 }

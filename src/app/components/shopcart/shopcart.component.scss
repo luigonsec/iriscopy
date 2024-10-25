@@ -1,8 +1,9 @@
 @import "src/assets/scss/colors.scss";
 
-.Next {
-  margin-bottom: 15px;
-  text-align: center;
+.buttons {
+  .button {
+    margin-bottom: 10px !important;
+  }
 }
 
 /* Añade esta regla a tu archivo CSS global */

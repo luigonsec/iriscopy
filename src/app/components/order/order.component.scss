@@ -2,16 +2,16 @@
 
 .order-item {
   border: 1px solid black;
-  border-radius: 20px;
+  border-radius: 5px;
   padding: 10px 20px;
-  background-color: white;
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  background-color: white;
 
   .title {
     color: black;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 400;
     margin-bottom: 15px;
     .value {
       display: block;
@@ -29,8 +29,9 @@
       justify-content: center;
       border-radius: 5px;
       padding: 5px;
-      background-color: $darkGray;
-      color: white;
+      background-color: $lila;
+      color: black;
+      border: 1px solid black;
       font-size: 14px;
       min-width: 40px;
       height: 40px;
@@ -66,36 +67,34 @@
     font-size: 14px;
     margin-top: 10px;
     font-style: italic;
-
   }
 
   .order-options {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 10px; 
+    gap: 10px;
     margin-top: 20px;
-  
+
     .remove {
-      display: flex; 
-      align-items: center; 
+      display: flex;
+      align-items: center;
       cursor: pointer;
       color: $darkGray;
     }
-  
+
     .price {
-      display: flex; 
+      display: flex;
       align-items: center;
       color: $primary;
-  
+
       .value {
-        font-weight: 500;
-        font-size: 20px;
-        margin-left: 10px; 
+        font-weight: 300;
+        font-size: 24px;
+        margin-left: 10px;
       }
     }
   }
-  
 }
 
 @media (max-width: 768px) {

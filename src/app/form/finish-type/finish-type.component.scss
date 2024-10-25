@@ -1,3 +1,21 @@
+@import "src/assets/scss/colors.scss";
+
 .Button {
-    word-break: break-word;
+  word-break: break-word;
+  position: relative;
+
+  .Button__info {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    font-weight: 100 !important;
+    border-radius: 100%;
+    border: 1px solid $primary;
+    width: 16px;
+    height: 16px;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

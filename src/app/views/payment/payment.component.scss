@@ -1,220 +1,35 @@
 @import "src/assets/scss/colors";
 
 // Estilos para enlaces
+
+#payment {
+  padding: 20px;
+}
 a {
   color: black;
   text-decoration: none;
   font-weight: bold;
 }
 
-.Title {
-  font-size: 20px;
-  font-weight: 600;
-  color: $primary;
-  margin-bottom: 10px;
+#customer-info #button-login {
+  font-weight: 500;
+  text-align: left;
+
+  span {
+    font-weight: bold;
+  }
+
+  margin-bottom: 30px;
 }
 
-// Estilos de advertencia de inicio de sesión
-.Login__warning {
-  background-color: #ffff6d;
-  padding: 20px 15px;
-  border-radius: 10px;
-}
-
-// Estilos principales del checkout
-#Checkout {
-  background-color: white;
-  border: 1px solid black;
-  border-radius: 20px;
-  padding: 10px 20px;
-
-  // Estilos para costos
-  .Cost {
-    font-weight: 500;
-    margin-bottom: 10px;
-    border-bottom: 1px solid black;
-
-    .Title {
-      display: inline-block;
-      width: 50%;
-      text-align: left;
-      font-size: 14px;
-    }
-
-    &.Discount {
-      i {
-        cursor: pointer;
-        color: black;
-      }
-    }
-
-    &.Total {
-      .Title {
-        font-size: 20px;
-      }
-    }
-
-    .Amount {
-      display: inline-block;
-      width: 50%;
-      text-align: right;
-      color: $primary;
-    }
-  }
-
-  // Estilos generales para opciones
-  .Option {
-    margin-bottom: 10px;
-  }
-  // Secciones dentro del checkout
-  #Payment_methods,
-  #Shipping,
-  #Privacy__policy,
-  #Terms {
-    padding-bottom: 15px;
-    .Mandatory {
-      color: red;
-    }
-    .Title {
-      color: $primary;
-      font-size: 16px;
-      margin: 10px 0 20px;
-      font-weight: 600;
-    }
-
-    p {
-      font-size: 14px;
-    }
-  }
-
-  // Estilos para el campo promocional
-  #Promotional {
-    padding: 0px 0 15px;
-
-    .Buttons {
-      text-align: right;
-    }
-
-    input {
-      border: none;
-      border-bottom: 1px solid black;
-
-      &:focus {
-        box-shadow: none;
-      }
-    }
-  }
-
-  // Estilos para ubicaciones
-  .Location {
-    .Address {
-      font-size: 12px;
-      color: gray;
-    }
-  }
-
-  // Métodos de pago
-  #Payment_methods {
-    .Payment__type {
-      margin-left: 5px;
-    }
-
-    .Payment__type_minimum {
-      font-size: 10px;
-      margin-left: 3px;
-    }
-
-    .Payment_method__img {
-      height: 12px;
-      margin-left: 5px;
-    }
-  }
-
-  // Confirmación del pedido
-  #Confirm {
-    margin-top: 20px;
-    text-align: right;
-
-    button {
-      font-weight: 500;
-    }
-  }
-}
-
-// Estilos de advertencia
-#Warning {
-  text-align: center;
-  font-size: 60px;
-}
-
-// Estilo para texto adicional
-.Extra {
-  font-weight: bold;
-  color: $primary;
-  font-size: 14px;
-}
-
-#CustomerDetails {
-  #LoginButton {
-    font-weight: 500;
-    text-align: left;
-    p {
-      margin-block: 5px !important;
-    }
-    span {
-      display: inline-block;
-      font-weight: bold;
-    }
-  }
-
-  #Forms {
-    margin-top: 15px;
-  }
-}
-
-#Shipping_address__form {
+#shipping-forms {
   margin-top: 20px;
 }
 
 @media (max-width: 768px) {
-  #Order {
-    margin-bottom: 10px;
-  }
-  #Header {
-    padding: 20px 15px;
-  }
-
-  #Links__mobile {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    i {
-      margin-left: 20px;
-      cursor: pointer;
-      font-size: 24px;
-    }
-  }
-
-  #Checkout {
-    // Estilos para costos
-
-    font-size: 14px;
-    .Cost {
-      .Title {
-        font-size: 14px;
-      }
-      &.Total {
-        .Title {
-          font-size: 16px;
-        }
-      }
-
-      .Amount {
-        font-size: 14px;
-      }
-    }
-  }
-  .Title {
-    font-size: 16px;
+  #payment {
+    padding: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 }

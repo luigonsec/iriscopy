@@ -1,93 +1,150 @@
 <div class="grid">
-    <div class="col-12">
-        <p-card>
-            <div class="grid">
-                <div class="col-12">
-                    <h2>Administración de banners</h2>
-                </div>
-            </div>
+  <div class="col-12">
+    <p-card>
+      <div class="grid">
+        <div class="col-12">
+          <h2>Administración de banners</h2>
+        </div>
+      </div>
 
+      <div class="grid">
+        <div class="col-12">
+          <p-table
+            [value]="banners"
+            [tableStyle]="{ 'min-width': '60rem' }"
+            [responsive]="true"
+          >
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Imagen</th>
+                <th>URL</th>
+                <th>Enlace</th>
+                <th>Teléfono</th>
+                <th>PC</th>
+                <th>Tienda</th>
+                <th>Impresiones</th>
+                <th>Acciones</th>
+              </tr>
+              <tr>
+                <th>
+                  <img [src]="this.banner.url" width="100" class="shadow-4" />
+                </th>
+                <th>
+                  <div class="p-fluid">
+                    <input
+                      type="text"
+                      pInputText
+                      [(ngModel)]="this.banner.url"
+                    />
+                  </div>
+                </th>
+                <th>
+                  <div class="p-fluid">
+                    <input
+                      type="text"
+                      pInputText
+                      [(ngModel)]="this.banner.link_to"
+                    />
+                  </div>
+                </th>
+                <th>
+                  <p-checkbox
+                    [(ngModel)]="this.banner.visible_phone"
+                    [binary]="true"
+                  ></p-checkbox>
+                </th>
+                <th>
+                  <p-checkbox
+                    [(ngModel)]="this.banner.visible_pc"
+                    [binary]="true"
+                  ></p-checkbox>
+                </th>
+                <th>
+                  <p-checkbox
+                    [(ngModel)]="this.banner.visible_shop"
+                    [binary]="true"
+                  ></p-checkbox>
+                </th>
+                <th>
+                  <p-checkbox
+                    [(ngModel)]="this.banner.visible_print"
+                    [binary]="true"
+                  ></p-checkbox>
+                </th>
+                <th>
+                  <button
+                    pButton
+                    class="p-button-info p-button-sm"
+                    label="Crear"
+                    (click)="this.confirmCreate()"
+                  ></button>
+                </th>
+              </tr>
+            </ng-template>
 
-
-            <div class="grid">
-                <div class="col-12">
-                    <p-table [value]="banners" [tableStyle]="{'min-width': '60rem'}" [responsive]="true">
-                        <ng-template pTemplate="header">
-                            <tr>
-                                <th>Imagen</th>
-                                <th>URL</th>
-                                <th>Teléfono</th>
-                                <th>PC</th>
-                                <th>Tienda</th>
-                                <th>Impresiones</th>
-
-                                <th>Acciones</th>
-                            </tr>
-                            <tr>
-
-                                <th>
-                                    <img [src]="this.banner.url" width="100" class="shadow-4" />
-                                </th>
-                                <th>
-                                    <div class="p-fluid">
-                                        <input type="text" pInputText [(ngModel)]="this.banner.url" />
-                                    </div>
-                                </th>
-                                <th>
-                                    <p-checkbox [(ngModel)]="this.banner.visible_phone" [binary]="true"></p-checkbox>
-                                </th>
-                                <th>
-                                    <p-checkbox [(ngModel)]="this.banner.visible_pc" [binary]="true"></p-checkbox>
-                                </th>
-                                <th>
-                                    <p-checkbox [(ngModel)]="this.banner.visible_shop" [binary]="true"></p-checkbox>
-                                </th>
-                                <th>
-                                    <p-checkbox [(ngModel)]="this.banner.visible_print" [binary]="true"></p-checkbox>
-                                </th>
-                                <th>
-                                    <button pButton class="p-button-info p-button-sm" label="Crear"
-                                        (click)="this.confirmCreate()"></button>
-                                </th>
-                            </tr>
-                        </ng-template>
-
-                        <ng-template pTemplate="body" let-banner>
-                            <tr>
-                                <td><img [src]="banner.url" width="100" class="shadow-4" /></td>
-                                <td>
-                                    <div class="p-fluid">
-                                        <input type="text" pInputText [(ngModel)]="banner.url" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <p-checkbox [(ngModel)]="banner.visible_phone" [binary]="true"></p-checkbox>
-                                </td>
-                                <td>
-                                    <p-checkbox [(ngModel)]="banner.visible_pc" [binary]="true"></p-checkbox>
-                                </td>
-                                <td>
-                                    <p-checkbox [(ngModel)]="banner.visible_shop" [binary]="true"></p-checkbox>
-                                </td>
-                                <td>
-                                    <p-checkbox [(ngModel)]="banner.visible_print" [binary]="true"></p-checkbox>
-                                </td>
-                                <td>
-                                    <div class="p-buttonset">
-                                        <button pButton class="p-button-info p-button-sm" label="Editar"
-                                            (click)="this.confirmUpdate(banner)"></button>
-                                        <button pButton class="p-button-danger p-button-sm" label="Borrar"
-                                            (click)="this.confirmDelete(banner.id)"></button>
-                                    </div>
-                                </td>
-
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                </div>
-            </div>
-
-        </p-card>
-    </div>
+            <ng-template pTemplate="body" let-banner>
+              <tr>
+                <td><img [src]="banner.url" width="100" class="shadow-4" /></td>
+                <td>
+                  <div class="p-fluid">
+                    <input type="text" pInputText [(ngModel)]="banner.url" />
+                  </div>
+                </td>
+                <td>
+                  <div class="p-fluid">
+                    <input
+                      type="text"
+                      pInputText
+                      [(ngModel)]="banner.link_to"
+                    />
+                  </div>
+                </td>
+                <td>
+                  <p-checkbox
+                    [(ngModel)]="banner.visible_phone"
+                    [binary]="true"
+                  ></p-checkbox>
+                </td>
+                <td>
+                  <p-checkbox
+                    [(ngModel)]="banner.visible_pc"
+                    [binary]="true"
+                  ></p-checkbox>
+                </td>
+                <td>
+                  <p-checkbox
+                    [(ngModel)]="banner.visible_shop"
+                    [binary]="true"
+                  ></p-checkbox>
+                </td>
+                <td>
+                  <p-checkbox
+                    [(ngModel)]="banner.visible_print"
+                    [binary]="true"
+                  ></p-checkbox>
+                </td>
+                <td>
+                  <div class="p-buttonset">
+                    <button
+                      pButton
+                      class="p-button-info p-button-sm"
+                      label="Editar"
+                      (click)="this.confirmUpdate(banner)"
+                    ></button>
+                    <button
+                      pButton
+                      class="p-button-danger p-button-sm"
+                      label="Borrar"
+                      (click)="this.confirmDelete(banner.id)"
+                    ></button>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+    </p-card>
+  </div>
 </div>
 <p-confirmDialog [position]="'bottom'"></p-confirmDialog>

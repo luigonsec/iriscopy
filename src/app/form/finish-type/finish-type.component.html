@@ -1,22 +1,44 @@
 <div class="mb-2">
-
-  <p-selectButton [options]="optionsGroup1" [(ngModel)]="option" optionLabel="name" (onChange)="onSelect($event)">
+  <p-selectButton
+    optionLabel="name"
+    [options]="optionsGroup1"
+    [(ngModel)]="option"
+    (onChange)="onSelect($event)"
+  >
     <ng-template let-item>
       <div class="Button">
-        <div class="Button__label">{{item.name}}</div>
-        <div class="Button__description">{{item.description}}</div>
+        <div class="Button__label">{{ item.name }}</div>
+        <div class="Button__description">{{ item.description }}</div>
+        <div
+          class="Button__info"
+          *ngIf="item.info"
+          (click)="showOverlay($event)"
+          (mouseenter)="overlayPanel.show($event)"
+          (mouseleave)="overlayPanel.hide($event)"
+        >
+          <i class="fas fa-info"></i>
+          <p-overlayPanel #overlayPanel>
+            <ng-template pTemplate="content">
+              <div>{{ item.info }}</div>
+            </ng-template>
+          </p-overlayPanel>
+        </div>
       </div>
     </ng-template>
   </p-selectButton>
-
 </div>
-<div>
 
-  <p-selectButton [options]="optionsGroup2" [(ngModel)]="option" optionLabel="name" (onChange)="onSelect($event)">
+<div>
+  <p-selectButton
+    [options]="optionsGroup2"
+    [(ngModel)]="option"
+    optionLabel="name"
+    (onChange)="onSelect($event)"
+  >
     <ng-template let-item>
       <div class="Button">
-        <div class="Button__label">{{item.name}}</div>
-        <div class="Button__description">{{item.description}}</div>
+        <div class="Button__label">{{ item.name }}</div>
+        <div class="Button__description">{{ item.description }}</div>
       </div>
     </ng-template>
   </p-selectButton>

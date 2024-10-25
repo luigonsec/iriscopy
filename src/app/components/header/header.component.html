@@ -1,148 +1,61 @@
-<div id="Header" class="grid">
-  <div class="Logo col-6 sm:col-4 md:col-2">
-    <div class="p-fluid">
-      <a href="/">
-        <img src="assets/images/logo.png" style="width: 100%" alt="" />
-      </a>
-    </div>
+<div id="header">
+  <div id="logo">
+    <a href="/">
+      <img src="assets/images/logo-nuevo.png" alt="" />
+    </a>
   </div>
 
-  <div id="Menu" class="col-6 sm:col-8 md:col-10">
-    <div id="Links" class="hidden sm:inline-block">
-      <a class="Link" href="https://iriscopyshop.com"
-        ><i class="fas fa-home"></i> inicio</a
-      >
-      <a class="Link" href="/"> <i class="fas fa-print"></i> imprimir </a>
-      <a class="Link" href="/shop" *ngIf="this.shop_active">
-        <i class="fas fa-highlighter"></i> tienda
+  <div id="menu">
+    <div class="links hidden lg:flex">
+      <a class="link" href="https://iriscopyshop.com">Inicio</a>
+      <a class="link" href="/"> Imprimir </a>
+      <a class="link" href="/shop" *ngIf="this.shop_active">Papelería </a>
+      <a class="link" (click)="this.menuRecogida.toggle($event)">
+        <p-menu
+          #menuRecogida
+          [model]="puntosRecogida"
+          [popup]="true"
+          [style]="{ width: '300px' }"
+        ></p-menu>
+        Puntos de recogida <i class="collapse-icon fas fa-chevron-down"></i>
       </a>
-      <a
-        class="Link"
-        href="https://iriscopyshop.com/preguntas-frecuentes/"
-        target="_blank"
-      >
-        <i class="far fa-question-circle"></i> FAQs
+      <a class="link" href="https://iriscopyshop.com/encuadernar/">
+        Encuadernar apuntes
       </a>
-      <a class="Link" href="/login" *ngIf="!!!this.customer">
-        <i class="fas fa-user-circle"></i> acceso
+      <a class="link" href="https://iriscopyshop.com/preguntas-frecuentes">
+        Preguntas frecuentes
+      </a>
+    </div>
+    <div class="icons">
+      <a class="icon" (click)="this.iconProfileClicked($event)">
+        <i class="fas fa-user"></i>
+        <p-menu #menu [model]="profile" [popup]="true"></p-menu>
       </a>
 
-      <a
-        class="Link"
-        *ngIf="this.customer"
-        [routerLink]="'/profile/information'"
-        ><i class="fas fa-user-circle"></i> tus datos</a
-      >
-      <a
-        class="Link"
-        *ngIf="this.customer && this.customer.admin"
-        [routerLink]="'/admin/banner'"
-      >
-        <i class="fas fa-user-cog"></i> administrar</a
-      >
-
-      <a class="Link" *ngIf="this.customer" (click)="this.logout()"
-        ><i class="fas fa-power-off"></i> salir</a
-      >
-      <a
-        class="Link"
-        *ngIf="this.copies.length + this.products.length"
-        (click)="toggleSidebar()"
-      >
+      <a class="icon" (click)="toggleShoppingCart()">
         <i
+          *ngIf="this.copies.length + this.products.length == 0"
+          class="ShoppingCart__Icon fas fa-shopping-cart"
+        ></i>
+        <i
+          *ngIf="this.copies.length + this.products.length"
           pBadge
           class="ShoppingCart__Icon fas fa-shopping-cart"
           [value]="this.copies.length + this.products.length"
         ></i>
       </a>
-    </div>
-    <div id="Links__mobile" class="sm:hidden">
-      <i
-        *ngIf="this.copies.length + this.products.length"
-        pBadge
-        class="fas fa-shopping-cart"
-        [value]="this.copies.length + this.products.length"
-        (click)="toggleSidebar()"
-      ></i>
-      <i class="fas fa-bars" (click)="sidebarVisible = true"></i>
+      <a class="lg:hidden icon not-rounded" (click)="this.toggleMobileMenu()">
+        <i
+          [class]="
+            'bars' + (this.mobileMenuOpened ? ' fas fa-times' : ' fas fa-bars')
+          "
+        ></i>
+      </a>
     </div>
   </div>
 </div>
 
-<p-sidebar [(visible)]="sidebarVisible" [position]="'right'" class="Menu">
-  <div class="grid">
-    <div class="col-8 col-offset-2">
-      <img src="assets/images/logo_white.png" style="width: 100%" alt="" />
-    </div>
-  </div>
-  <div class="grid">
-    <div class="col-12">
-      <div class="Item">
-        <a class="Link" href="https://iriscopyshop.com"
-          ><i class="fas fa-home"></i> inicio</a
-        >
-      </div>
-      <div class="Item">
-        <a
-          class="Link"
-          (click)="this.sidebarVisible = false"
-          [routerLink]="'/print'"
-        >
-          <i class="fas fa-print"></i> imprimir
-        </a>
-      </div>
-      <div class="Item" *ngIf="this.shop_active">
-        <a
-          class="Link"
-          (click)="this.sidebarVisible = false"
-          [routerLink]="'/shop'"
-        >
-          <i class="fas fa-highlighter"></i> tienda
-        </a>
-      </div>
-      <div class="Item">
-        <a
-          class="Link"
-          href="https://iriscopyshop.com/preguntas-frecuentes/"
-          target="_blank"
-        >
-          <i class="far fa-question-circle"></i> FAQs
-        </a>
-      </div>
-      <div class="Item" *ngIf="!!!this.customer">
-        <a
-          class="Link"
-          [routerLink]="'/login'"
-          (click)="this.sidebarVisible = false"
-        >
-          <i class="fas fa-user-circle"></i> acceso
-        </a>
-      </div>
-      <div class="Item" *ngIf="this.customer">
-        <a
-          class="Link"
-          (click)="this.sidebarVisible = false"
-          [routerLink]="'/profile/information'"
-        >
-          <i class="fas fa-user-circle"></i> tus datos
-        </a>
-      </div>
-      <div class="Item" *ngIf="this.customer && this.customer.admin">
-        <a
-          class="Link"
-          (click)="this.sidebarVisible = false"
-          [routerLink]="'/admin/banner'"
-        >
-          <i class="fas fa-user-cog"></i> administrar
-        </a>
-      </div>
-      <div class="Item" *ngIf="this.customer">
-        <a class="Link" (click)="this.sidebarVisible = false; this.logout()">
-          <i class="fas fa-power-off"></i> salir
-        </a>
-      </div>
-    </div>
-  </div>
-</p-sidebar>
+<app-mobile-menu *ngIf="this.mobileMenuOpened"></app-mobile-menu>
 
+<app-menu-sidebar #sidebar [isShopActive]="this.shop_active"></app-menu-sidebar>
 <app-shopcart class="" #shopcart></app-shopcart>

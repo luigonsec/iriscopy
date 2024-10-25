@@ -1,27 +1,18 @@
 @import "src/assets/scss/colors";
 
-.Message {
-  padding-left: 20px;
-  .Title {
-    margin-top: 60px;
-    color: $primary;
-    font-weight: 600;
-    font-size: 23px;
-  }
+.Information {
+  justify-content: center;
+  color: black;
+  font-weight: 500;
+}
 
-  .Information {
-    justify-content: center;
+.links {
+  margin-top: 60px;
+  text-align: center;
+  .link {
+    text-decoration: none;
     color: black;
-    font-weight: 500;
-  }
-
-  .Links {
-    text-align: center;
-    .Link {
-      text-decoration: none;
-      color: black;
-      font-weight: 600;
-      margin-right: 15px;
-    }
+    font-weight: 600;
+    margin-right: 15px;
   }
 }
