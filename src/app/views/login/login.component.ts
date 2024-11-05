@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private activatedRouter: ActivatedRoute
   ) {
     this.activatedRouter.queryParams.subscribe((data) => {
+      this.username = data.email;
       const backTo = data.backTo;
       this.subscriptor = this.store
         .select(selectCustomer)

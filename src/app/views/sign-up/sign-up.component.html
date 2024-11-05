@@ -66,8 +66,12 @@
               (click)="this.register()"
             ></button>
           </div>
-          <div class="field col-12 md:col-12">
-            {{ this.errors["general"] }}
+          <div class="field col-12 md:col-12" *ngIf="this.errors['general']">
+            {{ this.errors["general"] }}. Accede a tu cuenta
+            <a href="/login?email={{ this.email }}">aquí</a> o
+            <a href="/forgot-password?email={{ this.email }}"
+              >recupera tu contraseña</a
+            >.
           </div>
         </div>
       </form>

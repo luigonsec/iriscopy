@@ -1,10 +1,10 @@
-<input
-  pInputText
-  class="Input p-inputtext-lg"
+<textarea
+  pInputTextarea
+  class="Textarea p-inputtext-lg"
   [(ngModel)]="this.text"
-  autoResize="autoResize"
+  [rows]="1"
   [placeholder]="
     'Se tomará en cuenta si no supone un coste añadido al importe del pedido'
   "
   (change)="this.handleChange($event)"
-/>
+></textarea>

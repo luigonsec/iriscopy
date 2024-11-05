@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -13,8 +14,15 @@ export class ForgotPasswordComponent {
 
   constructor(
     private usersService: UsersService,
-    private messageService: MessageService
-  ) {}
+    private messageService: MessageService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      if (params['email']) {
+        this.email = params['email'];
+      }
+    });
+  }
 
   reset() {
     if (this.email && this.email.trim() != '') {
