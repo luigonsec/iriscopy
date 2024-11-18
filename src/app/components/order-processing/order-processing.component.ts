@@ -40,7 +40,6 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   public PAYMENT_MINIMUM_PRICE_CARD = generalConfig.PAYMENT_MINIMUM_PRICE_CARD;
   public inputCoupon: string;
   public coupon: Coupon;
-  public differentAddress = false;
   public payment: string;
   public copies: OrderCopy[];
   public products: OrderProduct[];
@@ -59,7 +58,8 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   @ViewChild('redsysForm') redsysForm;
   @Input('billing') public billing: BillingComponent;
   @Input('shipping') public shipping: ShippingComponent;
-  @Input('shipping') public customer: Customer;
+  @Input('customer') public customer: Customer;
+  @Input('differentAddress') public differentAddress = false;
 
   @Input('updateDeliveryMethod') public updateDeliveryMethod: (
     delivery: string

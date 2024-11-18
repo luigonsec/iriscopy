@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { OrderComponent } from 'src/app/components/order/order.component';
 import Location from 'src/app/interfaces/Location';
@@ -39,13 +45,24 @@ export class PaymentComponent implements OnInit, OnDestroy {
   public OrderID;
   @ViewChild('order') public order: OrderComponent;
   @ViewChild('billing') public billing: BillingComponent;
-  @ViewChild('shipping') public shipping: ShippingComponent;
+  // Cambia la inicialización de shipping a nulo
+  private _shipping: ShippingComponent | null = null;
 
+  @ViewChild('shipping', { static: false }) set shipping(
+    component: ShippingComponent | null
+  ) {
+    this._shipping = component;
+    this.cdr.detectChanges(); // Notifica a Angular que debe actualizarse.
+  }
   public customer: Customer;
   public subcriptorCustomer: Subscription;
   public subscriptionCart: Subscription;
 
-  constructor(private shopcartService: ShopcartService, private store: Store) {
+  constructor(
+    private shopcartService: ShopcartService,
+    private store: Store,
+    private cdr: ChangeDetectorRef
+  ) {
     this.subcriptorCustomer = this.store
       .select(selectCustomer)
       .subscribe((customer) => {
@@ -59,9 +76,18 @@ export class PaymentComponent implements OnInit, OnDestroy {
     this.deliver = deliver;
   }
 
+  public get currentShipping(): ShippingComponent | null {
+    return this._shipping;
+  }
+
   public ngOnDestroy(): void {
     this.subcriptorCustomer.unsubscribe();
     this.subscriptionCart.unsubscribe();
+  }
+
+  public onDifferentAddressChange(): void {
+    this.differentAddress = !this.differentAddress;
+    this.cdr.detectChanges();
   }
 
   ngOnInit(): void {

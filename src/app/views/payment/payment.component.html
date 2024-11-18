@@ -1,18 +1,19 @@
 <div id="payment">
-  <div class="grid p-0 m-0" *ngIf="!!!this.emptyCart">
+  <div class="grid p-0 m-0" *ngIf="!this.emptyCart">
     <div class="col-12 sm:col-5">
       <app-order-processing
-        [updateDeliveryMethod]="this.updateDeliveryMethod.bind(this)"
-        [billing]="this.billing"
-        [shipping]="this.shipping"
-        [customer]="this.customer"
+        [differentAddress]="differentAddress"
+        [billing]="billing"
+        [shipping]="currentShipping"
+        [updateDeliveryMethod]="updateDeliveryMethod.bind(this)"
+        [customer]="customer"
       >
       </app-order-processing>
     </div>
     <div class="col-12 sm:col-6 sm:col-offset-1">
       <div id="customer-info">
         <h3>Datos de envío y facturación</h3>
-        <div class="p-fluid" *ngIf="!!!this.customer">
+        <div class="p-fluid" *ngIf="!this.customer">
           <button
             pButton
             id="button-login"
@@ -27,16 +28,13 @@
           </button>
         </div>
 
-        <app-billing
-          #billing
-          [shipping]="this.deliver === 'Shipping'"
-        ></app-billing>
-        <div class="grid" *ngIf="this.deliver === 'Shipping'">
+        <app-billing #billing [shipping]="deliver === 'Shipping'"></app-billing>
+        <div class="grid" *ngIf="deliver === 'Shipping'">
           <div class="col-12">
-            <p-checkbox binary="true" [(ngModel)]="this.differentAddress">
+            <p-checkbox binary="true" (onChange)="onDifferentAddressChange()">
             </p-checkbox>
             <strong> ENVIAR A UNA DIRECCIÓN DIFERENTE</strong>
-            <ng-container *ngIf="this.differentAddress">
+            <ng-container *ngIf="differentAddress">
               <div id="shipping-form" class="mt-4">
                 <app-shipping #shipping></app-shipping>
               </div>
@@ -54,5 +52,5 @@
 </div>
 
 <app-payments-empty-cart-warning
-  *ngIf="this.emptyCart"
+  *ngIf="emptyCart"
 ></app-payments-empty-cart-warning>
