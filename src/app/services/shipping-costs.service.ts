@@ -36,8 +36,8 @@ export class ShippingCostsService {
     const precioPedido = subtotal;
     if (precioPedido > 0 && precioPedido < 15) return 4.9;
     if (precioPedido >= 15 && precioPedido < 25) return 3.9;
-    if (precioPedido >= 25 && precioPedido < 35) return 2.9;
-    if (precioPedido >= 35) return 0;
+    if (precioPedido >= 25 && precioPedido < 39) return 2.9;
+    if (precioPedido >= 39) return 0;
     return 4.9;
   }
 

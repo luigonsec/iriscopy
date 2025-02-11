@@ -19,6 +19,7 @@ import { selectCustomer } from 'src/app/_selectors/customer.selectors';
 import Customer from 'src/app/interfaces/Customer';
 import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import OrderProduct from 'src/app/interfaces/OrderProduct';
+import { OrderProcessingComponent } from 'src/app/components/order-processing/order-processing.component';
 
 @Component({
   selector: 'app-payment',
@@ -43,6 +44,9 @@ export class PaymentComponent implements OnInit, OnDestroy {
   };
 
   public OrderID;
+  @ViewChild('orderProcessing')
+  public orderProcessing: OrderProcessingComponent;
+
   @ViewChild('order') public order: OrderComponent;
   @ViewChild('billing') public billing: BillingComponent;
   // Cambia la inicialización de shipping a nulo
@@ -72,9 +76,15 @@ export class PaymentComponent implements OnInit, OnDestroy {
       });
   }
 
-  public updateDeliveryMethod(deliver: string) {
+  public updateDeliveryMethod = (deliver: string) => {
     this.deliver = deliver;
-  }
+  };
+
+  public updatePostalCode = () => {
+    this.orderProcessing.calculateGastosDeEnvioEstandar();
+    this.orderProcessing.getGastosDeEnvio();
+    this.orderProcessing.getTotal();
+  };
 
   public get currentShipping(): ShippingComponent | null {
     return this._shipping;

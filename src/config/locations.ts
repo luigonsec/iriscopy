@@ -2,7 +2,7 @@ const locations = [
   {
     id: 24856,
     name: 'Centro logístico en Polígono Pisa (Sevilla)',
-    address: 'Calle Desarrollo 7 Parque empresarial Pisa Mairena del Aljarafe',
+    address: 'Calle Congreso 54, Parque empresarial Pisa Mairena del Aljarafe',
   },
   {
     id: 5212,

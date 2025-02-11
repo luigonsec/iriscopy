@@ -2,10 +2,11 @@
   <div class="grid p-0 m-0" *ngIf="!this.emptyCart">
     <div class="col-12 sm:col-5">
       <app-order-processing
+        #orderProcessing
         [differentAddress]="differentAddress"
         [billing]="billing"
         [shipping]="currentShipping"
-        [updateDeliveryMethod]="updateDeliveryMethod.bind(this)"
+        [updateDeliveryMethod]="updateDeliveryMethod"
         [customer]="customer"
       >
       </app-order-processing>
@@ -28,15 +29,22 @@
           </button>
         </div>
 
-        <app-billing #billing [shipping]="deliver === 'Shipping'"></app-billing>
-        <div class="grid" *ngIf="deliver === 'Shipping'">
+        <app-billing
+          #billing
+          [onUpdatePostalCode]="updatePostalCode"
+          [shipping]="deliver.includes('Shipping')"
+        ></app-billing>
+        <div class="grid" *ngIf="deliver.includes('Shipping')">
           <div class="col-12">
             <p-checkbox binary="true" (onChange)="onDifferentAddressChange()">
             </p-checkbox>
             <strong> ENVIAR A UNA DIRECCIÓN DIFERENTE</strong>
             <ng-container *ngIf="differentAddress">
               <div id="shipping-form" class="mt-4">
-                <app-shipping #shipping></app-shipping>
+                <app-shipping
+                  #shipping
+                  [onUpdatePostalCode]="updatePostalCode"
+                ></app-shipping>
               </div>
             </ng-container>
           </div>

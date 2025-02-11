@@ -53,6 +53,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     Ds_Signature: undefined,
     Ds_SignatureVersion: undefined,
   };
+  public expectedDeliveryDate: string;
 
   public OrderID;
   @ViewChild('redsysForm') redsysForm;
@@ -76,6 +77,9 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   apply_cupon_text = 'Aplicar mi cupón';
   searching_coupon = false;
   precio_copias: number = 0;
+  shippingCostStandard: number = 4.9;
+  shippingCostFinal: number = 0;
+  shippingCostUrgent: number = 6.9;
 
   constructor(
     private shopcartService: ShopcartService,
@@ -244,28 +248,24 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     });
   }
 
-  // FIXME
-  public getGastosDeEnvio() {
+  public calculateGastosDeEnvioEstandar() {
     if (this.billing) {
       const postcode =
         this.differentAddress && this.shipping
           ? this.shipping.shippingDetails.postcode
           : this.billing.billingDetails.postcode;
 
-      this.precioEnvio = this.shippingCostService.getGastosDeEnvio(
+      this.shippingCostStandard = this.shippingCostService.getGastosDeEnvio(
         this.subtotal - this.discount,
         postcode
       );
-    } else {
-      this.precioEnvio = 4.9;
+      return;
     }
-    this.getTotal();
-    return this.precioEnvio;
+    this.shippingCostStandard = 4.9;
   }
 
   public getTotal() {
-    const priceShipping = this.deliver === 'Shipping' ? this.precioEnvio : 0;
-    this.total = this.getSubtotalWithDiscount() + priceShipping;
+    this.total = this.getSubtotalWithDiscount() + this.shippingCostFinal;
   }
 
   public getSubtotalWithDiscount() {
@@ -394,8 +394,10 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   }
 
   private setShippingProperties(shippingLine) {
-    shippingLine.method_title = 'Envío en 48 horas';
-    shippingLine.method_id = 'flat_rate';
+    shippingLine.method_title =
+      this.deliver == 'UrgentShipping' ? 'Envío urgente' : 'Envío en 48 horas';
+    shippingLine.method_id =
+      this.deliver == 'UrgentShipping' ? 'urgent_flat_rate' : 'flat_rate';
     shippingLine.instance_id = '9';
     // shippingLine.total = this.getGastosDeEnvio().toFixed(2);
     shippingLine.total_tax = '0.00';
@@ -436,6 +438,48 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     });
   }
 
+  getGastosDeEnvio() {
+    if (this.deliver === 'Pickup') {
+      this.shippingCostFinal = 0;
+    } else if (this.deliver === 'Shipping') {
+      this.calculateGastosDeEnvioEstandar();
+      this.shippingCostFinal = this.shippingCostStandard;
+    } else if (this.deliver === 'UrgentShipping') {
+      this.shippingCostFinal = this.shippingCostUrgent;
+    }
+    return this.shippingCostFinal;
+  }
+
+  private addWorkingDays(
+    date: moment.Moment,
+    workingDays: number
+  ): moment.Moment {
+    const result = date.clone();
+    while (workingDays > 0) {
+      result.add(1, 'day');
+      // Con isoWeekday(), de lunes (1) a viernes (5) son días laborables.
+      if (result.isoWeekday() <= 5) {
+        workingDays--;
+      }
+    }
+    return result;
+  }
+
+  calculateExpectedDeliveryDate() {
+    // Asegurarse de que Moment use el locale en español
+    moment.locale('es');
+
+    const today = moment();
+    const earliest = this.addWorkingDays(today, 2);
+    const latest = this.addWorkingDays(today, 4);
+
+    // Formateamos la salida para mostrar abreviaturas en minúsculas (por ejemplo, 'vie 9' en vez de 'Vie 9')
+    // Nota: Para obtener las abreviaturas en minúsculas, puedes transformar el string resultante a minúsculas.
+    this.expectedDeliveryDate = `${earliest
+      .format('ddd D')
+      .toLowerCase()} - ${latest.format('ddd D').toLowerCase()}`;
+  }
+
   comprobarMetodoDePago() {
     const subtotalMasDescuento = this.subtotal + this.discount;
     if (subtotalMasDescuento < this.PAYMENT_MINIMUM_PRICE_BIZUM) {
@@ -462,7 +506,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     this.copies = this.shopcartService.getCart().copies;
     this.products = this.shopcartService.getCart().products;
     this.calcularPrecios(this.subscribeCoupon.bind(this));
-
+    this.calculateExpectedDeliveryDate();
     this.subscriptionCart = this.shopcartService
       .getCart$()
       .subscribe((order) => {

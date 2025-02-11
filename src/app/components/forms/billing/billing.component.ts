@@ -13,6 +13,7 @@ import { BillingService } from 'src/app/services/billing.service';
   styleUrls: ['./billing.component.scss'],
 })
 export class BillingComponent implements OnDestroy {
+  @Input('onUpdatePostalCode') onUpdatePostalCode: () => void = () => {};
   @Input('shipping') shipping: boolean;
   public emptyCart: boolean = false;
   public billingDetails: BillingDetails = {} as BillingDetails;

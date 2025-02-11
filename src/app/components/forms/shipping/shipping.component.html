@@ -116,6 +116,7 @@
             Código postal <span class="mandatory">*</span>
           </label>
           <input
+            (change)="this.onUpdatePostalCode()"
             [(ngModel)]="this.shippingDetails.postcode"
             id="postcode"
             aria-describedby="postcode-help"

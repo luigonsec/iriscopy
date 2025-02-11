@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
@@ -13,6 +13,8 @@ import { ShippingService } from 'src/app/services/shipping.service';
   styleUrls: ['./shipping.component.scss'],
 })
 export class ShippingComponent implements OnDestroy {
+  @Input('onUpdatePostalCode') onUpdatePostalCode: () => void = () => {};
+
   public shippingDetails: ShippingDetails = {} as ShippingDetails;
   public shippingDetailsErrors: ShippingDetails = {} as ShippingDetails;
   public subcription: Subscription;
