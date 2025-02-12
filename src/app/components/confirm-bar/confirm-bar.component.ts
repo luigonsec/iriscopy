@@ -17,12 +17,24 @@ export class ConfirmBarComponent implements OnInit, OnChanges {
 
   public precio: number = 0;
   public notas: string[] = [];
+  disableButtons: boolean = false;
 
   constructor(
     private orderService: OrdersService,
     private shopcartService: ShopcartService,
     private router: Router
   ) {}
+
+  checkButtonsEnabled() {
+    if (
+      this.notas?.length &&
+      (this.order?.additionalComments || '').trim() === ''
+    ) {
+      this.disableButtons = true;
+    } else {
+      this.disableButtons = false;
+    }
+  }
 
   getPrecio() {
     const others = this.shopcartService.getCart().copies;
@@ -32,11 +44,13 @@ export class ConfirmBarComponent implements OnInit, OnChanges {
       .subscribe(({ precio, notas }) => {
         this.precio = precio;
         this.notas = notas;
+        this.checkButtonsEnabled();
       });
   }
 
   ngOnChanges(): void {
     this.getPrecio();
+    this.checkButtonsEnabled();
   }
 
   addConfiguration() {

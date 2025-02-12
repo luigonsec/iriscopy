@@ -6,6 +6,7 @@
           <div class="col-12 sm:col-6 xl:col-6">
             <div class="p-fluid">
               <button
+                [disabled]="this.disableButtons"
                 pButton
                 class="p-button-sm Secondary pink"
                 label="Finalizar y pagar"
@@ -16,6 +17,7 @@
           <div class="col-12 sm:col-6 xl:col-6">
             <div class="p-fluid">
               <button
+                [disabled]="this.disableButtons"
                 pButton
                 class="p-button-sm Secondary pink"
                 label="Añadir al carrito"
@@ -27,9 +29,11 @@
       </div>
     </div>
     <div id="notes-column" class="col-12 lg:col-12 xl:col-5">
-      <div class="notes" *ngFor="let nota of this.notas">
-        {{ nota }}
-      </div>
+      <div
+        class="notes"
+        *ngFor="let nota of this.notas"
+        [innerHTML]="nota"
+      ></div>
     </div>
     <div id="price-column" class="col-12 lg:col-4 xl:col-3">
       <div id="Precio">
