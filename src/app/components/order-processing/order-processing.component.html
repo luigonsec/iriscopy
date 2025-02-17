@@ -69,7 +69,12 @@
   <div id="Payment_methods">
     <div class="Title">Método de pago</div>
     <div class="Option p-field-radiobutton">
-      <p-radioButton value="CARD" [(ngModel)]="payment" inputId="card">
+      <p-radioButton
+        value="CARD"
+        [(ngModel)]="payment"
+        inputId="card"
+        (ngModelChange)="this.infoPagoAnalytics()"
+      >
       </p-radioButton>
       <label class="Payment__type" for="card">Tarjeta de crédito/débito</label>
       <label class="Payment__type_minimum" for="card">
@@ -108,6 +113,7 @@
     </div>
     <div class="Option p-field-radiobutton">
       <p-radioButton
+        (ngModelChange)="this.infoPagoAnalytics()"
         value="BIZUM"
         [(ngModel)]="payment"
         inputId="bizum"

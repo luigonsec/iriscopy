@@ -28,6 +28,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { selectCoupon } from 'src/app/_selectors/coupons.selector';
 import { ShippingCostsService } from 'src/app/services/shipping-costs.service';
 import moment from 'moment';
+import { AnalyticsService } from 'src/app/services/analytics.service';
 
 @Component({
   selector: 'app-order-processing',
@@ -89,9 +90,23 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     private couponsService: CouponsService,
     private shippingCostService: ShippingCostsService,
-
+    private analytics: AnalyticsService,
     private store: Store
   ) {}
+
+  public infoPagoAnalytics() {
+    this.analytics.infoPago(
+      [
+        {
+          item_name: 'Método de pago',
+          item_id: 1,
+          price: this.total,
+          item_brand: 'IrisCopy',
+        },
+      ],
+      this.payment
+    );
+  }
 
   public removeCoupon() {
     this.coupon = undefined;
@@ -484,6 +499,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     const subtotalMasDescuento = this.subtotal + this.discount;
     if (subtotalMasDescuento < this.PAYMENT_MINIMUM_PRICE_BIZUM) {
       this.payment = 'CARD';
+      this.infoPagoAnalytics();
     }
     if (subtotalMasDescuento < this.PAYMENT_MINIMUM_PRICE_CARD) {
       this.payment = null;

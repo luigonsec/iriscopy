@@ -6,17 +6,36 @@ import OrderProduct from '../interfaces/OrderProduct';
 import JSONfn from 'json-fn';
 import options from 'src/config/options';
 import { MessageService } from 'primeng/api';
+import { AnalyticsService } from './analytics.service';
+import { OrdersService } from './orders.service';
 @Injectable({
   providedIn: 'root',
 })
 export class ShopcartService {
   private itemCart$: Subject<Cart>;
 
-  constructor(private messageService: MessageService) {
+  constructor(
+    private messageService: MessageService,
+    private analytics: AnalyticsService,
+    private orders: OrdersService
+  ) {
     this.itemCart$ = new Subject();
   }
 
-  addCopyToCart(order: OrderCopy) {
+  async orderCopyToAnalytics(order: OrderCopy) {
+    return {
+      item_name: 'Impresión',
+      item_id: 1,
+      price: (
+        await this.orders.getCopyPrice(order, this.getCart().copies).toPromise()
+      ).precio,
+      item_brand: 'Iris Copy',
+      item_category: 'Impresiones',
+      quantity: order.copiesQuantity,
+    };
+  }
+
+  async addCopyToCart(order: OrderCopy) {
     const cart: Cart = this.getCart();
     cart.copies.push(order);
     this.itemCart$.next(cart);
@@ -26,6 +45,8 @@ export class ShopcartService {
       summary: 'Carro actualizado',
       detail: 'El pedido se ha añadido al carro',
     });
+
+    this.analytics.anadirAlCarrito([await this.orderCopyToAnalytics(order)]);
   }
 
   addProductToCart(order: OrderProduct) {
@@ -47,11 +68,12 @@ export class ShopcartService {
     this.itemCart$.next(cart);
   }
 
-  removeCopy(order: OrderCopy) {
+  async removeCopy(order: OrderCopy) {
     const cart: Cart = this.getCart();
     cart.copies = cart.copies.filter((x) => x.id !== order.id);
     localStorage.setItem('cart', JSONfn.stringify(cart));
     this.itemCart$.next(cart);
+    this.analytics.quitarDelCarrito([await this.orderCopyToAnalytics(order)]);
   }
 
   removeProduct(product: OrderProduct) {
