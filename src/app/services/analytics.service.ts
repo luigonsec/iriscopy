@@ -100,8 +100,6 @@ export class AnalyticsService {
    * Equivale a 'add_payment_info'
    */
   public infoPago(items: any[], paymentType: string): void {
-    console.log('pushing');
-
     this.dataLayer.push({ ecommerce: null });
     this.dataLayer.push({
       event: 'add_payment_info',
