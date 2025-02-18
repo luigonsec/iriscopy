@@ -4,6 +4,7 @@ import { OrderCopy } from '../interfaces/OrderCopy';
 import { environment } from 'src/environments/environment';
 import { Observable, Subject } from 'rxjs';
 import Order from '../interfaces/Order';
+import OrderProduct from '../interfaces/OrderProduct';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,28 @@ export class OrdersService {
 
   constructor(private http: HttpClient) {
     this.order$ = new Subject();
+  }
+
+  async orderCopyToAnalytics(order: OrderCopy, copies: OrderCopy[]) {
+    return {
+      item_name: 'Impresión',
+      item_id: 1,
+      price: (await this.getCopyPrice(order, copies).toPromise()).precio,
+      item_brand: 'Iris Copy',
+      item_category: 'Impresiones',
+      quantity: order.copiesQuantity,
+    };
+  }
+
+  async orderProductToAnalytics(order: OrderProduct) {
+    return {
+      item_name: 'Impresión',
+      item_id: 1,
+      price: order.product.price,
+      item_brand: 'Iris Copy',
+      item_category: 'Impresiones',
+      quantity: order.quantity,
+    };
   }
 
   create(order: Order) {

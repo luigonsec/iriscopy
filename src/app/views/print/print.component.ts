@@ -8,6 +8,7 @@ import { UploaderComponent } from 'src/app/components/uploader/uploader.componen
 import { OrdersService } from 'src/app/services/orders.service';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { AnalyticsService } from 'src/app/services/analytics.service';
 @Component({
   selector: 'app-print',
   templateUrl: './print.component.html',
@@ -42,7 +43,10 @@ export class PrintComponent implements OnInit, OnDestroy {
   @ViewChild('uploader') public uploader: UploaderComponent;
   orderSubscription: Subscription;
 
-  constructor(private orderService: OrdersService, private store: Store) {
+  constructor(
+    private orderService: OrdersService,
+    private analytics: AnalyticsService
+  ) {
     this.reset = this.reset.bind(this);
     this.order = {
       orientation: this.orientation,
@@ -180,6 +184,7 @@ export class PrintComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.analytics.verListadoImpresiones([]);
     this.orderSubscription = this.orderService.getOrder().subscribe((order) => {
       this.order = order;
       this.order = Object.assign({}, this.order);

@@ -108,6 +108,20 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     );
   }
 
+  public infoEntregaAnalytics() {
+    this.analytics.infoEntrega(
+      [
+        {
+          item_name: 'Método de entrega',
+          item_id: 1,
+          price: this.total,
+          item_brand: 'IrisCopy',
+        },
+      ],
+      this.deliver
+    );
+  }
+
   public removeCoupon() {
     this.coupon = undefined;
     this.store.dispatch(clearCoupon());
@@ -190,6 +204,8 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
         return;
       }
     }
+
+    this.infoEntregaAnalytics();
 
     if (this.deliver === 'Pickup' && !this.selectedLocation) {
       return this.messageService.add({

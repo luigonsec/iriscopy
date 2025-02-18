@@ -16,6 +16,18 @@ export class AnalyticsService {
     this.dataLayer.push({ ecommerce: null });
     this.dataLayer.push({
       event: 'view_item_list',
+      item_list_name: 'Productos',
+      ecommerce: {
+        items,
+      },
+    });
+  }
+
+  public verListadoImpresiones(items: any[]): void {
+    this.dataLayer.push({ ecommerce: null });
+    this.dataLayer.push({
+      event: 'view_item_list',
+      item_list_name: 'Impresiones',
       ecommerce: {
         items,
       },
@@ -115,25 +127,11 @@ export class AnalyticsService {
    * Equivale a 'purchase'
    * Recibe los datos básicos de la transacción y el array de productos
    */
-  public registrarCompra(
-    transactionId: string,
-    affiliation: string,
-    value: number,
-    tax: number,
-    shipping: number,
-    currency: string,
-    coupon: string,
-    items: any[]
-  ): void {
+  public registrarCompra(currency: string, coupon: string, items: any[]): void {
     this.dataLayer.push({ ecommerce: null });
     this.dataLayer.push({
       event: 'purchase',
       ecommerce: {
-        transaction_id: transactionId,
-        affiliation,
-        value,
-        tax,
-        shipping,
         currency,
         coupon,
         items,

@@ -3,6 +3,7 @@ import { MenuItem } from 'primeng/api';
 import { map, tap } from 'rxjs';
 import Product from 'src/app/interfaces/Product';
 import ProductCategory from 'src/app/interfaces/ProductCategory';
+import { AnalyticsService } from 'src/app/services/analytics.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { ProductCategoriesService } from 'src/app/services/product-categories.service';
 import { ProductsService } from 'src/app/services/products.service';
@@ -21,6 +22,7 @@ export class ShopIndexComponent implements OnInit {
   searchText: string = undefined;
 
   constructor(
+    private analytics: AnalyticsService,
     private productsService: ProductsService,
     private categoriesService: ProductCategoriesService,
     private loading: LoadingService
@@ -120,6 +122,7 @@ export class ShopIndexComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.analytics.verListadoProductos([]);
     this.loading.setLoading({ isLoading: true, text: 'Cargando...' });
     this.loadCategories().subscribe(() => {
       this.loadAllProducts().subscribe(() => {

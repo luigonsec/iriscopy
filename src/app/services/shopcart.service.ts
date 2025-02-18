@@ -22,19 +22,6 @@ export class ShopcartService {
     this.itemCart$ = new Subject();
   }
 
-  async orderCopyToAnalytics(order: OrderCopy) {
-    return {
-      item_name: 'Impresión',
-      item_id: 1,
-      price: (
-        await this.orders.getCopyPrice(order, this.getCart().copies).toPromise()
-      ).precio,
-      item_brand: 'Iris Copy',
-      item_category: 'Impresiones',
-      quantity: order.copiesQuantity,
-    };
-  }
-
   async addCopyToCart(order: OrderCopy) {
     const cart: Cart = this.getCart();
     cart.copies.push(order);
@@ -46,7 +33,9 @@ export class ShopcartService {
       detail: 'El pedido se ha añadido al carro',
     });
 
-    this.analytics.anadirAlCarrito([await this.orderCopyToAnalytics(order)]);
+    this.analytics.anadirAlCarrito([
+      await this.orders.orderCopyToAnalytics(order, this.getCart().copies),
+    ]);
   }
 
   addProductToCart(order: OrderProduct) {
@@ -54,6 +43,10 @@ export class ShopcartService {
     cart.products.push(order);
     this.itemCart$.next(cart);
     localStorage.setItem('cart', JSONfn.stringify(cart));
+
+    this.analytics.anadirAlCarrito([
+      this.orders.orderProductToAnalytics(order),
+    ]);
     this.messageService.add({
       severity: 'success',
       summary: 'Carro actualizado',
@@ -73,7 +66,9 @@ export class ShopcartService {
     cart.copies = cart.copies.filter((x) => x.id !== order.id);
     localStorage.setItem('cart', JSONfn.stringify(cart));
     this.itemCart$.next(cart);
-    this.analytics.quitarDelCarrito([await this.orderCopyToAnalytics(order)]);
+    this.analytics.quitarDelCarrito([
+      await this.orders.orderCopyToAnalytics(order, this.getCart().copies),
+    ]);
   }
 
   removeProduct(product: OrderProduct) {
@@ -83,6 +78,9 @@ export class ShopcartService {
     );
     localStorage.setItem('cart', JSONfn.stringify(cart));
     this.itemCart$.next(cart);
+    this.analytics.quitarDelCarrito([
+      this.orders.orderProductToAnalytics(product),
+    ]);
   }
 
   getCopies(): OrderCopy[] {

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrderCopy } from 'src/app/interfaces/OrderCopy';
+import { AnalyticsService } from 'src/app/services/analytics.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { ShopcartService } from 'src/app/services/shopcart.service';
 
@@ -14,6 +15,7 @@ export class ShopcartComponent implements OnInit {
   public orders: OrderCopy[] = [];
   constructor(
     private shopcartService: ShopcartService,
+    private analyticsService: AnalyticsService,
     private orderService: OrdersService,
     private router: Router
   ) {}
@@ -30,6 +32,16 @@ export class ShopcartComponent implements OnInit {
 
   toggle() {
     this.display = !this.display;
+    if (this.display) {
+      this.analyticsService.verCarrito(
+        this.orders.map((order) => {
+          return this.orderService.orderCopyToAnalytics(
+            order,
+            this.shopcartService.getCart().copies
+          );
+        })
+      );
+    }
   }
 
   remove(order: OrderCopy): void {
