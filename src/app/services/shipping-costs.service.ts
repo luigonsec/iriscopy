@@ -11,6 +11,19 @@ import generalConfig from 'src/config/general';
 export class ShippingCostsService {
   constructor() {}
 
+  public isUrgentShippingAvailable(postcode) {
+    const numericCode = +postcode;
+
+    if (
+      (numericCode >= 35000 && numericCode < 36000) ||
+      (numericCode >= 38000 && numericCode < 39000)
+    ) {
+      return false;
+    }
+
+    return true;
+  }
+
   public getGastosDeEnvio(subtotal, postcode) {
     let precioEnvio = generalConfig.SHIPPING_COST;
     const numericCode = +postcode;

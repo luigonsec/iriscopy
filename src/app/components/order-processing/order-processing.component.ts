@@ -55,6 +55,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     Ds_SignatureVersion: undefined,
   };
   public expectedDeliveryDate: string;
+  public urgentShippingAvailable = true;
 
   public OrderID;
   @ViewChild('redsysForm') redsysForm;
@@ -285,6 +286,13 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
         this.differentAddress && this.shipping
           ? this.shipping.shippingDetails.postcode
           : this.billing.billingDetails.postcode;
+
+      this.urgentShippingAvailable =
+        this.shippingCostService.isUrgentShippingAvailable(postcode);
+
+      if (!!!this.urgentShippingAvailable) {
+        this.deliver = 'Shipping';
+      }
 
       this.shippingCostStandard = this.shippingCostService.getGastosDeEnvio(
         this.subtotal - this.discount,
