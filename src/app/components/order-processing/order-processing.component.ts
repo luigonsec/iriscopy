@@ -56,6 +56,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   };
   public expectedDeliveryDate: string;
   public urgentShippingAvailable = true;
+  public standardShippingAvailable = true;
 
   public OrderID;
   @ViewChild('redsysForm') redsysForm;
@@ -290,8 +291,10 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
       this.urgentShippingAvailable =
         this.shippingCostService.isUrgentShippingAvailable(postcode);
 
+      this.standardShippingAvailable = this.urgentShippingAvailable;
+
       if (!!!this.urgentShippingAvailable) {
-        this.deliver = 'Shipping';
+        this.deliver = 'Pickup';
       }
 
       this.shippingCostStandard = this.shippingCostService.getGastosDeEnvio(

@@ -2,7 +2,10 @@
 <div id="process-order" class="iriscopy-box padding-sm">
   <div id="Shipping">
     <div class="Title">Envío / Recogida</div>
-    <div class="Option p-field-radiobutton">
+    <div
+      class="Option p-field-radiobutton"
+      *ngIf="this.standardShippingAvailable"
+    >
       <p-radioButton
         value="Shipping"
         [(ngModel)]="deliver"
@@ -26,7 +29,7 @@
         inputId="urgent_shipping"
         (onClick)="this.handleDeliveryMethodChange()"
       ></p-radioButton>
-      <label for="shipping"> Envío urgente (24-48h)</label>
+      <label for="urgent_shipping"> Envío urgente (24-48h)</label>
       <span class="Extra">
         {{ this.shippingCostUrgent | number : "1.2-2" }}€
       </span>
