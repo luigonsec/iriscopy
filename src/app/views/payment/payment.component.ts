@@ -20,6 +20,8 @@ import Customer from 'src/app/interfaces/Customer';
 import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import OrderProduct from 'src/app/interfaces/OrderProduct';
 import { OrderProcessingComponent } from 'src/app/components/order-processing/order-processing.component';
+import { AnalyticsService } from '../../services/analytics.service';
+import { OrdersService } from '../../services/orders.service';
 
 @Component({
   selector: 'app-payment',
@@ -63,9 +65,11 @@ export class PaymentComponent implements OnInit, OnDestroy {
   public subscriptionCart: Subscription;
 
   constructor(
+    private orderService: OrdersService,
     private shopcartService: ShopcartService,
     private store: Store,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private analytics: AnalyticsService
   ) {
     this.subcriptorCustomer = this.store
       .select(selectCustomer)
@@ -100,10 +104,16 @@ export class PaymentComponent implements OnInit, OnDestroy {
     this.cdr.detectChanges();
   }
 
-  ngOnInit(): void {
+  async notifyAnalytics() {
+    this.analytics.inicioPago(await this.shopcartService.getAnalyticsCart());
+  }
+
+  async ngOnInit() {
     this.copies = this.shopcartService.getCart().copies;
     this.products = this.shopcartService.getCart().products;
     this.emptyCart = this.copies.length + this.products.length === 0;
+
+    this.notifyAnalytics();
 
     this.subscriptionCart = this.shopcartService
       .getCart$()
@@ -111,6 +121,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
         this.copies = order.copies;
         this.products = order.products;
         this.emptyCart = this.copies.length + this.products.length === 0;
+        this.notifyAnalytics();
       });
   }
 }

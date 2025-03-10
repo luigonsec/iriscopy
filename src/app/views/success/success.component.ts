@@ -16,12 +16,17 @@ export class SuccessComponent implements OnInit {
     private analytics: AnalyticsService
   ) {}
 
-  ngOnInit(): void {
+  async notifyAnalytics() {
+    const items = await this.shopcart.getAnalyticsCart();
     this.analytics.registrarCompra(
       'EUR',
-      (localStorage.getItem('coupon') || { code: '' })['code'],
-      [...this.shopcart.getCart().copies, ...this.shopcart.getCart().products]
+      (localStorage.getItem('coupon') || { code: undefined })['code'],
+      items
     );
+  }
+
+  async ngOnInit() {
+    this.notifyAnalytics();
     this.store.dispatch(clearCoupon());
     this.shopcart.clearCart();
   }

@@ -10,12 +10,12 @@ import { ShopcartService } from 'src/app/services/shopcart.service';
   templateUrl: './shopcart.component.html',
   styleUrls: ['./shopcart.component.scss'],
 })
-export class ShopcartComponent implements OnInit {
+export class ShopcartComponent {
   @Input('display') display: boolean = false;
   public orders: OrderCopy[] = [];
   constructor(
     private shopcartService: ShopcartService,
-    private analyticsService: AnalyticsService,
+    private analytics: AnalyticsService,
     private orderService: OrdersService,
     private router: Router
   ) {}
@@ -30,24 +30,19 @@ export class ShopcartComponent implements OnInit {
     this.shopcartService.removeCopy(order);
   }
 
-  toggle() {
+  async toggle() {
     this.display = !this.display;
     if (this.display) {
-      this.analyticsService.verCarrito(
-        this.orders.map((order) => {
-          return this.orderService.orderCopyToAnalytics(
-            order,
-            this.shopcartService.getCart().copies
-          );
-        })
-      );
+      this.notifyAnalytics();
     }
+  }
+
+  async notifyAnalytics() {
+    this.analytics.verCarrito(await this.shopcartService.getAnalyticsCart());
   }
 
   remove(order: OrderCopy): void {
     this.shopcartService.removeCopy(order);
     if (!this.orders.length) this.display = false;
   }
-
-  ngOnInit(): void {}
 }

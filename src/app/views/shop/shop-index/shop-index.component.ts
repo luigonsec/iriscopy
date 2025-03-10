@@ -18,7 +18,6 @@ export class ShopIndexComponent implements OnInit {
   categories: MenuItem[];
   products: Product[] = [];
   filteredProducts: Product[] = [];
-
   searchText: string = undefined;
 
   constructor(
@@ -34,6 +33,7 @@ export class ShopIndexComponent implements OnInit {
       tap((products: Product[]) => {
         this.products = products;
         this.filteredProducts = this.products;
+        this.notifyAnalytics();
       })
     );
   }
@@ -44,7 +44,19 @@ export class ShopIndexComponent implements OnInit {
       tap((products: Product[][]) => {
         this.products = products.reduce((a, b) => [...a, ...b], []);
         this.filteredProducts = this.products;
+        this.notifyAnalytics();
       })
+    );
+  }
+
+  public notifyAnalytics() {
+    this.analytics.verListadoProductos(
+      this.filteredProducts.map((product) => ({
+        item_id: product.id,
+        item_name: product.name,
+        item_category: product.categories,
+        price: +product.price,
+      }))
     );
   }
 
@@ -78,6 +90,8 @@ export class ShopIndexComponent implements OnInit {
         .toLocaleLowerCase()
         .includes(this.searchText.toLocaleLowerCase());
     });
+
+    this.notifyAnalytics();
   }
 
   loadCategories() {
@@ -122,7 +136,6 @@ export class ShopIndexComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.analytics.verListadoProductos([]);
     this.loading.setLoading({ isLoading: true, text: 'Cargando...' });
     this.loadCategories().subscribe(() => {
       this.loadAllProducts().subscribe(() => {

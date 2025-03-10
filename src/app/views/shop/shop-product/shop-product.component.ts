@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from 'src/app/services/products.service';
 import { ShopcartService } from 'src/app/services/shopcart.service';
 import Product from 'src/app/interfaces/Product';
 import ProductVariation from 'src/app/interfaces/ProductVariation';
+import { AnalyticsService } from '../../../services/analytics.service';
 
 @Component({
   selector: 'app-shop-product',
@@ -24,6 +24,7 @@ export class ShopProductComponent implements OnInit {
     public shopCart: ShopcartService,
     public productsService: ProductsService,
     public activatedRouter: ActivatedRoute,
+    public analytics: AnalyticsService,
     public router: Router
   ) {}
 
@@ -87,8 +88,20 @@ export class ShopProductComponent implements OnInit {
       }
       this.product = product;
       this.picture = this.product.images[0]?.src;
+      this.notifyAnalytics();
       this.loadVariations();
     });
+  }
+
+  notifyAnalytics() {
+    this.analytics.verDetalleProducto([
+      {
+        item_id: this.product.id,
+        item_name: this.product.name,
+        item_category: this.product.categories,
+        price: +this.product.price,
+      },
+    ]);
   }
 
   ngOnInit(): void {

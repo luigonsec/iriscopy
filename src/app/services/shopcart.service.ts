@@ -17,6 +17,7 @@ export class ShopcartService {
   constructor(
     private messageService: MessageService,
     private analytics: AnalyticsService,
+    private orderService: OrdersService,
     private orders: OrdersService
   ) {
     this.itemCart$ = new Subject();
@@ -94,6 +95,18 @@ export class ShopcartService {
         products: [],
       }
     );
+  }
+
+  async getAnalyticsCart() {
+    const cart = this.getCart();
+    return await Promise.all([
+      ...cart.copies.map((copy) =>
+        this.orderService.orderCopyToAnalytics(copy, cart.copies)
+      ),
+      ...cart.products.map((product) =>
+        this.orderService.orderProductToAnalytics(product)
+      ),
+    ]);
   }
 
   clearCart() {

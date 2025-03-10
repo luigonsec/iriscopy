@@ -18,23 +18,24 @@ export class OrdersService {
   }
 
   async orderCopyToAnalytics(order: OrderCopy, copies: OrderCopy[]) {
+    const precio = (await this.getCopyPrice(order, copies).toPromise()).precio;
     return {
       item_name: 'Impresión',
       item_id: 1,
-      price: (await this.getCopyPrice(order, copies).toPromise()).precio,
+      price: +precio,
       item_brand: 'Iris Copy',
       item_category: 'Impresiones',
       quantity: order.copiesQuantity,
     };
   }
 
-  async orderProductToAnalytics(order: OrderProduct) {
+  orderProductToAnalytics(order: OrderProduct) {
     return {
-      item_name: 'Impresión',
+      item_name: order.product.name,
       item_id: 1,
       price: order.product.price,
       item_brand: 'Iris Copy',
-      item_category: 'Impresiones',
+      item_category: order.product.categories[0].name,
       quantity: order.quantity,
     };
   }
