@@ -156,11 +156,11 @@ export class AnalyticsService {
     this.dataLayer.push({
       event: 'purchase',
       ecommerce: {
-        transaction_id: new Date().getTime(),
-        value: items.reduce((acc, item) => acc + item.price, 0),
+        transaction_id: new Date().getTime().toString(),
+        value: 0.0, //items.reduce((acc, item) => acc + item.price, 0),
         currency,
-        coupon,
-        items,
+        //coupon,
+        items: [],
       },
     });
   }
