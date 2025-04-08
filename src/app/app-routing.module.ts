@@ -21,6 +21,14 @@ import { ShopProductComponent } from './views/shop/shop-product/shop-product.com
 import { UserInformationComponent } from './views/profile/user-information/user-information.component';
 import { UserOrdersComponent } from './views/profile/user-orders/user-orders.component';
 import { UserPasswordComponent } from './views/profile/user-password/user-password.component';
+import { ViewTarjetasVisitaComponent } from './views/imprenta/view-tarjetas-visita/view-tarjetas-visita.component';
+import { ViewFlyersComponent } from './views/imprenta/view-flyers/view-flyers.component';
+import { ViewCarpetasComponent } from './views/imprenta/view-carpetas/view-carpetas.component';
+import { ViewRevistasComponent } from './views/imprenta/view-revistas/view-revistas.component';
+import { ViewRollupsComponent } from './views/imprenta/view-rollups/view-rollups.component';
+import { ViewCartelesComponent } from './views/imprenta/view-carteles/view-carteles.component';
+import { ViewDipticosComponent } from './views/imprenta/view-dipticos/view-dipticos.component';
+import { ViewTripticosComponent } from './views/imprenta/view-tripticos/view-tripticos.component';
 
 const routes: Routes = [
   {
@@ -31,6 +39,38 @@ const routes: Routes = [
   {
     path: 'print',
     component: PrintComponent,
+  },
+  {
+    path: 'imprenta/tarjetas-visita',
+    component: ViewTarjetasVisitaComponent,
+  },
+  {
+    path: 'imprenta/flyers',
+    component: ViewFlyersComponent,
+  },
+  {
+    path: 'imprenta/carpetas',
+    component: ViewCarpetasComponent,
+  },
+  {
+    path: 'imprenta/revistas',
+    component: ViewRevistasComponent,
+  },
+  {
+    path: 'imprenta/rollups',
+    component: ViewRollupsComponent,
+  },
+  {
+    path: 'imprenta/carteles',
+    component: ViewCartelesComponent,
+  },
+  {
+    path: 'imprenta/dipticos',
+    component: ViewDipticosComponent,
+  },
+  {
+    path: 'imprenta/tripticos',
+    component: ViewTripticosComponent,
   },
   {
     path: 'terms',

@@ -90,6 +90,23 @@ import { PaymentsEmptyCartWarningComponent } from './components/payments-empty-c
 import { MenuSidebarComponent } from './components/menu-sidebar/menu-sidebar.component';
 import { MobileMenuComponent } from './components/mobile-menu/mobile-menu.component';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { ViewTarjetasVisitaComponent } from './views/imprenta/view-tarjetas-visita/view-tarjetas-visita.component';
+import { ViewFlyersComponent } from './views/imprenta/view-flyers/view-flyers.component';
+import { ViewCarpetasComponent } from './views/imprenta/view-carpetas/view-carpetas.component';
+import { ViewRevistasComponent } from './views/imprenta/view-revistas/view-revistas.component';
+import { ViewRollupsComponent } from './views/imprenta/view-rollups/view-rollups.component';
+import { ViewCartelesComponent } from './views/imprenta/view-carteles/view-carteles.component';
+import { ViewDipticosComponent } from './views/imprenta/view-dipticos/view-dipticos.component';
+import { ViewTripticosComponent } from './views/imprenta/view-tripticos/view-tripticos.component';
+import { InputTarjetasVisitaTipoPapelComponent } from './components/inputs/tarjetas-visita/input-tarjetas-visita-tipo-papel/input-tarjetas-visita-tipo-papel.component';
+import { InputTarjetasVisitaModoImpresionComponent } from './components/inputs/tarjetas-visita/input-tarjetas-visita-modo-impresion/input-tarjetas-visita-modo-impresion.component';
+import { InputTarjetasVisitaTipoAcabadoComponent } from './components/inputs/tarjetas-visita/input-tarjetas-visita-tipo-acabado/input-tarjetas-visita-tipo-acabado.component';
+import { InputTarjetasVisitaTiradaComponent } from './components/inputs/tarjetas-visita/input-tarjetas-visita-tirada/input-tarjetas-visita-tirada.component';
+import { InputFlyersModoImpresionComponent } from './components/inputs/flyers/input-flyers-modo-impresion/input-flyers-modo-impresion.component';
+import { InputFlyersTipoPapelComponent } from './components/inputs/flyers/input-flyers-tipo-papel/input-flyers-tipo-papel.component';
+import { InputFlyersSizeComponent } from './components/inputs/flyers/input-flyers-size/input-flyers-size.component';
+import { InputFlyersTiradaComponent } from './components/inputs/flyers/input-flyers-tirada/input-flyers-tirada.component';
+import { InputFlyersCustomSizeComponent } from './components/inputs/flyers/input-flyers-custom-size/input-flyers-custom-size.component';
 
 @NgModule({
   declarations: [
@@ -145,6 +162,23 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     PaymentsEmptyCartWarningComponent,
     MenuSidebarComponent,
     MobileMenuComponent,
+    ViewTarjetasVisitaComponent,
+    ViewFlyersComponent,
+    ViewCarpetasComponent,
+    ViewRevistasComponent,
+    ViewRollupsComponent,
+    ViewCartelesComponent,
+    ViewDipticosComponent,
+    ViewTripticosComponent,
+    InputTarjetasVisitaTipoPapelComponent,
+    InputTarjetasVisitaModoImpresionComponent,
+    InputTarjetasVisitaTipoAcabadoComponent,
+    InputTarjetasVisitaTiradaComponent,
+    InputFlyersModoImpresionComponent,
+    InputFlyersTipoPapelComponent,
+    InputFlyersSizeComponent,
+    InputFlyersTiradaComponent,
+    InputFlyersCustomSizeComponent,
   ],
   imports: [
     BrowserModule,

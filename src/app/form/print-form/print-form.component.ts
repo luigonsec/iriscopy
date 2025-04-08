@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import Option from 'src/app/interfaces/Option';
-import options from 'src/config/options';
+import options from 'src/config/tarjetas-visita';
 
 @Component({
   selector: 'app-print-form',

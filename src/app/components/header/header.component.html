@@ -10,7 +10,7 @@
       <a class="link" href="https://iriscopyshop.com">Inicio</a>
       <a class="link" href="/"> Imprimir </a>
       <a class="link" href="/shop" *ngIf="this.shop_active">Papelería </a>
-      <a class="link" (click)="this.menuRecogida.toggle($event)">
+      <a class="link" (click)="menuRecogida.toggle($event)">
         <p-menu
           #menuRecogida
           [model]="puntosRecogida"
@@ -18,6 +18,15 @@
           [style]="{ width: '300px' }"
         ></p-menu>
         Puntos de recogida <i class="collapse-icon fas fa-chevron-down"></i>
+      </a>
+      <a class="link" (click)="menuImprenta.toggle($event)">
+        <p-menu
+          #menuImprenta
+          [model]="opcionesImprenta"
+          [popup]="true"
+          [style]="{ width: '300px' }"
+        ></p-menu>
+        Imprenta <i class="collapse-icon fas fa-chevron-down"></i>
       </a>
       <a class="link" href="https://iriscopyshop.com/encuadernar/">
         Encuadernar apuntes

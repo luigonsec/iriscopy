@@ -1,12 +1,10 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-
 import Option from 'src/app/interfaces/Option';
 import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import options from 'src/config/options';
 import File from 'src/app/interfaces/File';
 import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
 import { OrdersService } from 'src/app/services/orders.service';
-import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AnalyticsService } from 'src/app/services/analytics.service';
 @Component({

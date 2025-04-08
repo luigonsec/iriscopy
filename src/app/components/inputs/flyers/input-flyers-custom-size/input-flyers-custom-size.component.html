@@ -1,0 +1,23 @@
+<div class="grid">
+  <div class="col-6">
+    <label>Alto</label>
+    <p-inputNumber
+      class="Input"
+      [(ngModel)]="this.height"
+      [min]="0"
+      [showButtons]="true"
+      (onInput)="this.handleChange($event)"
+    ></p-inputNumber>
+  </div>
+  <div class="col-6">
+    <label>Ancho</label>
+
+    <p-inputNumber
+      class="Input"
+      [(ngModel)]="this.width"
+      [min]="0"
+      [showButtons]="true"
+      (onInput)="this.handleChange($event)"
+    ></p-inputNumber>
+  </div>
+</div>
