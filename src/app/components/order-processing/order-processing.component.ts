@@ -29,6 +29,7 @@ import { selectCoupon } from 'src/app/_selectors/coupons.selector';
 import { ShippingCostsService } from 'src/app/services/shipping-costs.service';
 import moment from 'moment';
 import { AnalyticsService } from 'src/app/services/analytics.service';
+import { selectCustomer } from '../../_selectors/customer.selectors';
 
 @Component({
   selector: 'app-order-processing',
@@ -83,6 +84,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   shippingCostStandard: number = 4.9;
   shippingCostFinal: number = 0;
   shippingCostUrgent: number = 6.9;
+  shippingDiscount: number = 0;
 
   constructor(
     private shopcartService: ShopcartService,
@@ -281,29 +283,34 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     });
   }
 
-  public calculateGastosDeEnvioEstandar() {
-    if (this.billing) {
-      const postcode =
-        this.differentAddress && this.shipping
-          ? this.shipping.shippingDetails.postcode
-          : this.billing.billingDetails.postcode;
+  public calculateGastosDeEnvioEstandar(): void {
+    const discountFactor = 1 - this.shippingDiscount / 100;
 
-      this.urgentShippingAvailable =
-        this.shippingCostService.isUrgentShippingAvailable(postcode);
-
-      this.standardShippingAvailable = this.urgentShippingAvailable;
-
-      if (!!!this.urgentShippingAvailable) {
-        this.deliver = 'Pickup';
-      }
-
-      this.shippingCostStandard = this.shippingCostService.getGastosDeEnvio(
-        this.subtotal - this.discount,
-        postcode
-      );
+    if (!this.billing) {
+      this.shippingCostStandard = 4.9 * discountFactor;
       return;
     }
-    this.shippingCostStandard = 4.9;
+
+    const postcode = this.getPostcode();
+    this.urgentShippingAvailable =
+      this.shippingCostService.isUrgentShippingAvailable(postcode);
+    this.standardShippingAvailable = this.urgentShippingAvailable;
+
+    if (!this.urgentShippingAvailable) {
+      this.deliver = 'Pickup';
+    }
+
+    const baseShippingCost = this.shippingCostService.getGastosDeEnvio(
+      this.subtotal - this.discount,
+      postcode
+    );
+    this.shippingCostStandard = baseShippingCost * discountFactor;
+  }
+
+  private getPostcode(): string {
+    return this.differentAddress && this.shipping
+      ? this.shipping.shippingDetails.postcode
+      : this.billing.billingDetails.postcode;
   }
 
   public getTotal() {
@@ -549,6 +556,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     this.copies = this.shopcartService.getCart().copies;
     this.products = this.shopcartService.getCart().products;
     this.calcularPrecios(this.subscribeCoupon.bind(this));
+    this.applyStudentDiscount();
     this.calculateExpectedDeliveryDate();
     this.subscriptionCart = this.shopcartService
       .getCart$()
@@ -557,5 +565,19 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
         this.products = order.products;
         this.calcularPrecios(this.validateCoupon.bind(this, this.coupon));
       });
+  }
+
+  private applyStudentDiscount() {
+    this.store.select(selectCustomer).subscribe((customer) => {
+      this.customer = customer;
+      const role = customer?.role;
+      if (role === 'ustudiantes_unir') {
+        this.shippingDiscount = 30;
+        this.shippingCostUrgent =
+          this.shippingCostUrgent * (1 - this.shippingDiscount / 100);
+        this.shippingCostStandard =
+          this.shippingCostStandard * (1 - this.shippingDiscount / 100);
+      }
+    });
   }
 }
