@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 import Carpeta from '../../../interfaces/Carpeta';
 import folderOptions from 'src/config/carpetas';
 import { FormBase } from '../../../_classes/form-base.class';
-import { log } from 'async';
 
 @Component({
   selector: 'app-view-carpetas',
@@ -36,9 +35,6 @@ export class ViewCarpetasComponent extends FormBase<Carpeta> implements OnInit {
 
   ngOnInit() {
     super.ngOnInit();
-
-    console.log(this.uploader);
-
     this.order = {
       printForm: undefined,
       paperType: undefined,

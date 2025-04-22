@@ -6,7 +6,7 @@
           <div class="Label">Forma de impresion</div>
           <app-select-button
             [options]="this.flayerOptions.printForm"
-            (emitChange)="getPrintForm($event)"
+            (emitChange)="getProperty('printForm', $event)"
           ></app-select-button>
         </div>
       </div>
@@ -16,7 +16,7 @@
           <div class="Label">Tipo de papel</div>
           <app-select-button
             [options]="this.flayerOptions.paperType"
-            (emitChange)="getPaperType($event)"
+            (emitChange)="getProperty('paperType', $event)"
           ></app-select-button>
         </div>
       </div>
@@ -26,7 +26,7 @@
           <div class="Label">Tamaño</div>
           <app-select-button
             [options]="this.flayerOptions.size"
-            (emitChange)="getPaperSize($event)"
+            (emitChange)="getProperty('size', $event)"
           ></app-select-button>
         </div>
       </div>
@@ -35,7 +35,7 @@
         <div class="p-fluid">
           <div class="Label">Tamaño personalizado</div>
           <app-input-custom-size
-            (emitChange)="getPrintForm($event)"
+            (emitChange)="getProperty($event)"
           ></app-input-custom-size>
         </div>
       </div>
@@ -45,7 +45,7 @@
           <div class="Label">Cantidad</div>
           <app-select-button
             [options]="this.flayerOptions.copiesQuantity"
-            (emitChange)="getCopiesQuantity($event)"
+            (emitChange)="getProperty('copiesQuantity', $event)"
           ></app-select-button>
         </div>
       </div>
@@ -53,7 +53,7 @@
         <div class="p-fluid">
           <div class="Label">Comentarios adicionales</div>
           <app-additional-comment
-            (emitChange)="getAdditionalComments($event)"
+            (emitChange)="getProperty('additionalComments', $event)"
           ></app-additional-comment>
         </div>
       </div>
@@ -71,7 +71,7 @@
       <div id="files-column" class="col-12">
         <div class="grid">
           <div
-            *ngFor="let file of files || []"
+            *ngFor="let file of order.files || []"
             class="col-6 sm:col-4 md:col-4 lg:col-4 xl:col-3"
           >
             <div class="uploaded-file">

@@ -6,7 +6,7 @@
           <div class="Label">Tipo de papel portada / contraportada</div>
           <app-select-button
             [options]="rollupsOptions.sizes"
-            (emitChange)="getSize($event)"
+            (emitChange)="getProperty('size', $event)"
           ></app-select-button>
         </div>
       </div>
@@ -15,7 +15,7 @@
         <div class="p-fluid">
           <div class="Label">Comentarios adicionales</div>
           <app-additional-comment
-            (emitChange)="getAdditionalComments($event)"
+            (emitChange)="getProperty('additionalComments', $event)"
           ></app-additional-comment>
         </div>
       </div>
@@ -33,7 +33,7 @@
       <div id="files-column" class="col-12">
         <div class="grid">
           <div
-            *ngFor="let file of files || []"
+            *ngFor="let file of order.files || []"
             class="col-6 sm:col-4 md:col-4 lg:col-4 xl:col-3"
           >
             <div class="uploaded-file">
