@@ -8,9 +8,12 @@ body {
 :host {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Hacer que el componente raíz ocupe toda la pantalla */
+  min-height: 100vh;
 }
 
 .contain {
-  flex: 1; /* Hacer que esta sección ocupe el espacio restante */
+  display: flex; /* lo convertimos en flex‐container */
+  flex-direction: column; /* columnas: primero router‐outlet, luego p-toast */
+  flex: 1 1 auto; /* ocupa todo el hueco entre header y footer */
+  min-height: 0; /* para que sus hijos puedan usar % de altura */
 }

@@ -28,7 +28,7 @@ import { QuantityCopiesComponent } from './form/quantity-copies/quantity-copies.
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ToastModule } from 'primeng/toast';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AdditionalCommentComponent } from './form/additional-comment/additional-comment.component';
+import { AdditionalCommentComponent } from './components/inputs/additional-comment/additional-comment.component';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ConfirmBarComponent } from './components/confirm-bar/confirm-bar.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -98,7 +98,7 @@ import { ViewRollupsComponent } from './views/imprenta/view-rollups/view-rollups
 import { ViewCartelesComponent } from './views/imprenta/view-carteles/view-carteles.component';
 import { ViewDipticosComponent } from './views/imprenta/view-dipticos/view-dipticos.component';
 import { ViewTripticosComponent } from './views/imprenta/view-tripticos/view-tripticos.component';
-import { InputCustomSizeComponent } from './components/inputs/flyers/input-custom-size/input-custom-size.component';
+import { InputCustomSizeComponent } from './components/inputs/input-custom-size/input-custom-size.component';
 import { SelectButtonComponent } from './components/inputs/select-button/select-button.component';
 
 @NgModule({
