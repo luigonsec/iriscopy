@@ -157,10 +157,10 @@ export class AnalyticsService {
       event: 'purchase',
       ecommerce: {
         transaction_id: new Date().getTime().toString(),
-        value: 0.0, //items.reduce((acc, item) => acc + item.price, 0),
+        value: items.reduce((acc, item) => acc + item.price, 0),
         currency,
-        //coupon,
-        items: [],
+        coupon,
+        items,
       },
     });
   }
