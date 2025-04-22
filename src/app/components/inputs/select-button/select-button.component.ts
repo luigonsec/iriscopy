@@ -1,21 +1,21 @@
 import {
   Component,
   EventEmitter,
+  Input,
   OnInit,
   Output,
   ViewEncapsulation,
 } from '@angular/core';
 import Option from 'src/app/interfaces/Option';
-import options from 'src/config/tarjetas-visita';
 
 @Component({
-  selector: 'app-input-tarjetas-visita-tipo-papel',
-  templateUrl: './input-tarjetas-visita-tipo-papel.component.html',
-  styleUrls: ['./input-tarjetas-visita-tipo-papel.component.scss'],
+  selector: 'app-select-button',
+  templateUrl: './select-button.component.html',
+  styleUrls: ['./select-button.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class InputTarjetasVisitaTipoPapelComponent implements OnInit {
-  public options: Option[];
+export class SelectButtonComponent implements OnInit {
+  @Input('options') public options: Option[];
   public option: Option = undefined;
   public groups: string[] = [];
   public optionsByGroup: { [key: string]: Option[] } = {};
@@ -25,14 +25,12 @@ export class InputTarjetasVisitaTipoPapelComponent implements OnInit {
   constructor() {}
 
   handleChange($event) {
-    const paperType = $event.value;
-    this.emitChange.emit(paperType);
-    console.log(paperType);
+    const option = $event.value;
+    this.emitChange.emit(option);
   }
 
   ngOnInit(): void {
-    this.options = options.paperType;
-    this.option = options.paperType.find((x) => x.default);
+    this.option = this.options.find((x) => x.default);
     this.groups = [...new Set(this.options.map((x) => x.group))];
     this.groups.forEach((group) => {
       this.optionsByGroup[group] = this.options.filter(

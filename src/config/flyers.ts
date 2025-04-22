@@ -174,57 +174,67 @@ export default {
     },
   ],
 
-  printQuantity: [
+  copiesQuantity: [
     {
       default: true,
       name: '50',
       code: '50',
       factor: 1,
+      group: '1',
     },
     {
       name: '100',
       code: '100',
       factor: 1,
+      group: '1',
     },
     {
       name: '250',
       code: '250',
       factor: 1,
+      group: '1',
     },
     {
       name: '500',
       code: '500',
       factor: 1,
+      group: '1',
     },
     {
       name: '750',
       code: '750',
       factor: 1,
+      group: '2',
     },
     {
       name: '1000',
       code: '1000',
       factor: 1,
+      group: '2',
     },
     {
       name: '1500',
       code: '1500',
       factor: 1,
+      group: '2',
     },
     {
       name: '2000',
       code: '2000',
       factor: 1,
+      group: '3',
     },
     {
       name: '3000',
       code: '3000',
       factor: 1,
+      group: '3',
     },
     {
       name: '5000',
       code: '5000',
       factor: 1,
+      group: '3',
     },
   ],
 };

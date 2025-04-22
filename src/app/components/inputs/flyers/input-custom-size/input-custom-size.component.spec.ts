@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InputFlyersCustomSizeComponent } from './input-flyers-custom-size.component';
+import { InputFlyersCustomSizeComponent } from './input-custom-size.component';
 
 describe('InputFlyersCustomSizeComponent', () => {
   let component: InputFlyersCustomSizeComponent;
@@ -8,9 +8,8 @@ describe('InputFlyersCustomSizeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InputFlyersCustomSizeComponent ]
-    })
-    .compileComponents();
+      declarations: [InputFlyersCustomSizeComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(InputFlyersCustomSizeComponent);
     component = fixture.componentInstance;

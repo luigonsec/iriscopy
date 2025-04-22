@@ -18,6 +18,28 @@ export default {
   paperType: [
     {
       default: true,
+      name: 'Cartulina',
+      group: 'cartulina',
+      code: 'cartulina-240',
+      description: '240 gr',
+      factor: 1,
+    },
+    {
+      name: 'Cartulina',
+      group: 'cartulina',
+      code: 'cartulina-315',
+      description: '315 gr',
+      factor: 1,
+    },
+    {
+      name: 'Estucado mate',
+      group: 'estucado-mate',
+      code: 'estucado-mate-250',
+      description: '250 gr',
+      factor: 1,
+    },
+
+    {
       name: 'Estucado mate',
       group: 'estucado-mate',
       code: 'estucado-mate-300',
@@ -29,6 +51,13 @@ export default {
       group: 'estucado-mate',
       code: 'estucado-mate-350',
       description: '350 gr',
+      factor: 1,
+    },
+    {
+      name: 'Estucado brillo',
+      group: 'estucado-brillo',
+      code: 'estucado-brillo-250',
+      description: '250 gr',
       factor: 1,
     },
     {
@@ -59,13 +88,30 @@ export default {
       name: 'Laminado mate',
       code: 'laminado-mate',
     },
+  ],
+
+  size: [
     {
-      name: 'Soft touch',
-      code: 'soft-touch',
+      default: true,
+      name: 'Folio',
+      group: '1',
+      description: '21.5 x 31.5 cm',
+      code: 'folio',
+      factor: 1,
     },
     {
-      name: 'Sin acabado',
-      code: 'sin-acabado',
+      name: 'Folio prolongado',
+      group: '1',
+      description: '27.5 x 38.5 cm',
+      code: 'folio-prolongado',
+      factor: 1,
+    },
+    {
+      name: 'A4',
+      group: '1',
+      description: '21 x 29.7 cm',
+      code: 'a4',
+      factor: 1,
     },
   ],
 
@@ -90,40 +136,28 @@ export default {
       group: '1',
     },
     {
-      name: '750',
-      code: '750',
-      factor: 7.5,
-      group: '2',
-    },
-    {
       name: '1000',
       code: '1000',
       factor: 10,
-      group: '2',
-    },
-    {
-      name: '1500',
-      code: '1500',
-      factor: 15,
-      group: '2',
+      group: '1',
     },
     {
       name: '2000',
       code: '2000',
       factor: 20,
-      group: '3',
+      group: '2',
     },
     {
       name: '3000',
       code: '3000',
       factor: 30,
-      group: '3',
+      group: '2',
     },
     {
       name: '5000',
       code: '5000',
       factor: 50,
-      group: '3',
+      group: '2',
     },
   ],
 };

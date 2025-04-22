@@ -4,45 +4,49 @@
       <div class="Form__Section p-field">
         <div class="p-fluid">
           <div class="Label">Forma de impresion</div>
-          <app-input-flyers-modo-impresion
+          <app-select-button
+            [options]="this.flayerOptions.printForm"
             (emitChange)="getPrintForm($event)"
-          ></app-input-flyers-modo-impresion>
+          ></app-select-button>
         </div>
       </div>
 
       <div class="Form__Section p-field">
         <div class="p-fluid">
           <div class="Label">Tipo de papel</div>
-          <app-input-flyers-tipo-papel
+          <app-select-button
+            [options]="this.flayerOptions.paperType"
             (emitChange)="getPaperType($event)"
-          ></app-input-flyers-tipo-papel>
+          ></app-select-button>
         </div>
       </div>
 
       <div class="Form__Section p-field">
         <div class="p-fluid">
           <div class="Label">Tamaño</div>
-          <app-input-flyers-size
+          <app-select-button
+            [options]="this.flayerOptions.size"
             (emitChange)="getPaperSize($event)"
-          ></app-input-flyers-size>
+          ></app-select-button>
         </div>
       </div>
 
       <div class="Form__Section p-field" *ngIf="this.isCustomSize()">
         <div class="p-fluid">
           <div class="Label">Tamaño personalizado</div>
-          <app-input-flyers-custom-size
+          <app-input-custom-size
             (emitChange)="getPrintForm($event)"
-          ></app-input-flyers-custom-size>
+          ></app-input-custom-size>
         </div>
       </div>
 
       <div class="Form__Section p-field">
         <div class="p-fluid">
           <div class="Label">Cantidad</div>
-          <app-input-flyers-tirada
+          <app-select-button
+            [options]="this.flayerOptions.copiesQuantity"
             (emitChange)="getCopiesQuantity($event)"
-          ></app-input-flyers-tirada>
+          ></app-select-button>
         </div>
       </div>
       <div class="Form__Section p-field">

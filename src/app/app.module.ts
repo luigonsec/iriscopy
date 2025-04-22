@@ -98,15 +98,8 @@ import { ViewRollupsComponent } from './views/imprenta/view-rollups/view-rollups
 import { ViewCartelesComponent } from './views/imprenta/view-carteles/view-carteles.component';
 import { ViewDipticosComponent } from './views/imprenta/view-dipticos/view-dipticos.component';
 import { ViewTripticosComponent } from './views/imprenta/view-tripticos/view-tripticos.component';
-import { InputTarjetasVisitaTipoPapelComponent } from './components/inputs/tarjetas-visita/input-tarjetas-visita-tipo-papel/input-tarjetas-visita-tipo-papel.component';
-import { InputTarjetasVisitaModoImpresionComponent } from './components/inputs/tarjetas-visita/input-tarjetas-visita-modo-impresion/input-tarjetas-visita-modo-impresion.component';
-import { InputTarjetasVisitaTipoAcabadoComponent } from './components/inputs/tarjetas-visita/input-tarjetas-visita-tipo-acabado/input-tarjetas-visita-tipo-acabado.component';
-import { InputTarjetasVisitaTiradaComponent } from './components/inputs/tarjetas-visita/input-tarjetas-visita-tirada/input-tarjetas-visita-tirada.component';
-import { InputFlyersModoImpresionComponent } from './components/inputs/flyers/input-flyers-modo-impresion/input-flyers-modo-impresion.component';
-import { InputFlyersTipoPapelComponent } from './components/inputs/flyers/input-flyers-tipo-papel/input-flyers-tipo-papel.component';
-import { InputFlyersSizeComponent } from './components/inputs/flyers/input-flyers-size/input-flyers-size.component';
-import { InputFlyersTiradaComponent } from './components/inputs/flyers/input-flyers-tirada/input-flyers-tirada.component';
-import { InputFlyersCustomSizeComponent } from './components/inputs/flyers/input-flyers-custom-size/input-flyers-custom-size.component';
+import { InputCustomSizeComponent } from './components/inputs/flyers/input-custom-size/input-custom-size.component';
+import { SelectButtonComponent } from './components/inputs/select-button/select-button.component';
 
 @NgModule({
   declarations: [
@@ -170,15 +163,8 @@ import { InputFlyersCustomSizeComponent } from './components/inputs/flyers/input
     ViewCartelesComponent,
     ViewDipticosComponent,
     ViewTripticosComponent,
-    InputTarjetasVisitaTipoPapelComponent,
-    InputTarjetasVisitaModoImpresionComponent,
-    InputTarjetasVisitaTipoAcabadoComponent,
-    InputTarjetasVisitaTiradaComponent,
-    InputFlyersModoImpresionComponent,
-    InputFlyersTipoPapelComponent,
-    InputFlyersSizeComponent,
-    InputFlyersTiradaComponent,
-    InputFlyersCustomSizeComponent,
+    InputCustomSizeComponent,
+    SelectButtonComponent,
   ],
   imports: [
     BrowserModule,

@@ -4,12 +4,15 @@ import File from 'src/app/interfaces/File';
 import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
 import { Subscription } from 'rxjs';
 import Flyer from '../../../interfaces/Flyer';
+import flayerOptions from 'src/config/flyers';
 @Component({
   selector: 'app-view-flyers',
   templateUrl: './view-flyers.component.html',
   styleUrls: ['./view-flyers.component.scss'],
 })
 export class ViewFlyersComponent implements OnInit {
+  public flayerOptions = flayerOptions;
+
   public finishType: Option;
   public printForm: Option;
   public paperType: Option;

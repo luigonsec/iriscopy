@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import Option from 'src/app/interfaces/Option';
 import File from 'src/app/interfaces/File';
 import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
@@ -6,12 +6,14 @@ import { OrdersService } from 'src/app/services/orders.service';
 import { Subscription } from 'rxjs';
 import { AnalyticsService } from 'src/app/services/analytics.service';
 import TarjetaVisita from '../../../interfaces/TarjetaVisita';
+import tarjetaVisitaOptions from 'src/config/tarjetas-visita';
 @Component({
   selector: 'app-view-tarjetas-visita',
   templateUrl: './view-tarjetas-visita.component.html',
   styleUrls: ['./view-tarjetas-visita.component.scss'],
 })
 export class ViewTarjetasVisitaComponent implements OnInit {
+  public tarjetaVisitaOptions = tarjetaVisitaOptions;
   public finishType: Option;
   public printForm: Option;
   public paperType: Option;

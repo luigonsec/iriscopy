@@ -1,11 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-input-flyers-custom-size',
-  templateUrl: './input-flyers-custom-size.component.html',
-  styleUrls: ['./input-flyers-custom-size.component.scss'],
+  selector: 'app-input-custom-size',
+  templateUrl: './input-custom-size.component.html',
+  styleUrls: ['./input-custom-size.component.scss'],
 })
-export class InputFlyersCustomSizeComponent implements OnInit {
+export class InputCustomSizeComponent implements OnInit {
   @Output() emitChange = new EventEmitter<{
     height: number;
     width: number;
