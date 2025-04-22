@@ -1,8 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import Option from 'src/app/interfaces/Option';
-import File from 'src/app/interfaces/File';
 import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
-import { Subscription } from 'rxjs';
 import revistasOptions from 'src/config/revistas';
 import Revista from '../../../interfaces/Revista';
 import { FormBase } from '../../../_classes/form-base.class';
@@ -12,10 +9,8 @@ import { FormBase } from '../../../_classes/form-base.class';
   styleUrls: ['./view-revistas.component.scss'],
 })
 export class ViewRevistasComponent extends FormBase<Revista> implements OnInit {
-  public revistasOptions = revistasOptions;
-
   @ViewChild('uploader') public uploader: UploaderComponent;
-  orderSubscription: Subscription;
+  public revistasOptions = revistasOptions;
 
   constructor() {
     super();

@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
-import { Subscription } from 'rxjs';
 import cartelesOptions from 'src/config/carteles';
 import Cartel from '../../../interfaces/Cartel';
 import { FormBase } from '../../../_classes/form-base.class';
@@ -10,10 +9,8 @@ import { FormBase } from '../../../_classes/form-base.class';
   styleUrls: ['./view-carteles.component.scss'],
 })
 export class ViewCartelesComponent extends FormBase<Cartel> implements OnInit {
-  public cartelesOptions = cartelesOptions;
-
   @ViewChild('uploader') public uploader: UploaderComponent;
-  orderSubscription: Subscription;
+  public cartelesOptions = cartelesOptions;
 
   constructor() {
     super();

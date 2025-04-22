@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
-import { Subscription } from 'rxjs';
 import TarjetaVisita from '../../../interfaces/TarjetaVisita';
 import tarjetaVisitaOptions from 'src/config/tarjetas-visita';
 import { FormBase } from '../../../_classes/form-base.class';
@@ -13,10 +12,8 @@ export class ViewTarjetasVisitaComponent
   extends FormBase<TarjetaVisita>
   implements OnInit
 {
-  public tarjetaVisitaOptions = tarjetaVisitaOptions;
-
   @ViewChild('uploader') public uploader: UploaderComponent;
-  orderSubscription: Subscription;
+  public tarjetaVisitaOptions = tarjetaVisitaOptions;
 
   constructor() {
     super();

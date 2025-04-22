@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
-import { Subscription } from 'rxjs';
 import Flyer from '../../../interfaces/Flyer';
-import flayerOptions from 'src/config/flyers';
+import flyerOptions from 'src/config/flyers';
 import { FormBase } from '../../../_classes/form-base.class';
 @Component({
   selector: 'app-view-flyers',
@@ -10,10 +9,8 @@ import { FormBase } from '../../../_classes/form-base.class';
   styleUrls: ['./view-flyers.component.scss'],
 })
 export class ViewFlyersComponent extends FormBase<Flyer> implements OnInit {
-  public flayerOptions = flayerOptions;
-
   @ViewChild('uploader') public uploader: UploaderComponent;
-  orderSubscription: Subscription;
+  public flyerOptions = flyerOptions;
 
   constructor() {
     super();

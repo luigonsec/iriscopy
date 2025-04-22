@@ -1,8 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import Option from 'src/app/interfaces/Option';
-import File from 'src/app/interfaces/File';
 import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
-import { Subscription } from 'rxjs';
 import tripricoOptions from 'src/config/tripticos';
 import Triptico from '../../../interfaces/Triptico';
 import { FormBase } from '../../../_classes/form-base.class';
@@ -15,10 +12,8 @@ export class ViewTripticosComponent
   extends FormBase<Triptico>
   implements OnInit
 {
-  public tripricoOptions = tripricoOptions;
-
   @ViewChild('uploader') public uploader: UploaderComponent;
-  orderSubscription: Subscription;
+  public tripricoOptions = tripricoOptions;
 
   constructor() {
     super();

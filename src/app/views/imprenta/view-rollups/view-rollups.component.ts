@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
-import { Subscription } from 'rxjs';
 import rollupsOptions from 'src/config/rollups';
 import Rollup from '../../../interfaces/Rollup';
 import { FormBase } from '../../../_classes/form-base.class';
@@ -10,10 +9,8 @@ import { FormBase } from '../../../_classes/form-base.class';
   styleUrls: ['./view-rollups.component.scss'],
 })
 export class ViewRollupsComponent extends FormBase<Rollup> implements OnInit {
-  public rollupsOptions = rollupsOptions;
-
   @ViewChild('uploader') public uploader: UploaderComponent;
-  orderSubscription: Subscription;
+  public rollupsOptions = rollupsOptions;
 
   constructor() {
     super();

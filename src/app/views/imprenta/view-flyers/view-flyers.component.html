@@ -5,7 +5,7 @@
         <div class="p-fluid">
           <div class="Label">Forma de impresion</div>
           <app-select-button
-            [options]="this.flayerOptions.printForm"
+            [options]="this.flyerOptions.printForm"
             (emitChange)="getProperty('printForm', $event)"
           ></app-select-button>
         </div>
@@ -15,7 +15,7 @@
         <div class="p-fluid">
           <div class="Label">Tipo de papel</div>
           <app-select-button
-            [options]="this.flayerOptions.paperType"
+            [options]="this.flyerOptions.paperType"
             (emitChange)="getProperty('paperType', $event)"
           ></app-select-button>
         </div>
@@ -25,7 +25,7 @@
         <div class="p-fluid">
           <div class="Label">Tamaño</div>
           <app-select-button
-            [options]="this.flayerOptions.size"
+            [options]="this.flyerOptions.size"
             (emitChange)="getProperty('size', $event)"
           ></app-select-button>
         </div>
@@ -44,7 +44,7 @@
         <div class="p-fluid">
           <div class="Label">Cantidad</div>
           <app-select-button
-            [options]="this.flayerOptions.copiesQuantity"
+            [options]="this.flyerOptions.copiesQuantity"
             (emitChange)="getProperty('copiesQuantity', $event)"
           ></app-select-button>
         </div>

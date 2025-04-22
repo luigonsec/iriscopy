@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
-import { Subscription } from 'rxjs';
 import dipticosOptions from 'src/config/dipticos';
 import Diptico from '../../../interfaces/Diptico';
 import { FormBase } from '../../../_classes/form-base.class';
@@ -10,10 +9,8 @@ import { FormBase } from '../../../_classes/form-base.class';
   styleUrls: ['./view-dipticos.component.scss'],
 })
 export class ViewDipticosComponent extends FormBase<Diptico> implements OnInit {
-  public dipticosOptions = dipticosOptions;
-
   @ViewChild('uploader') public uploader: UploaderComponent;
-  orderSubscription: Subscription;
+  public dipticosOptions = dipticosOptions;
 
   constructor() {
     super();

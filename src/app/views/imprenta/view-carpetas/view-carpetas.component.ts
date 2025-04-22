@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
-import { Subscription } from 'rxjs';
 import Carpeta from '../../../interfaces/Carpeta';
 import folderOptions from 'src/config/carpetas';
 import { FormBase } from '../../../_classes/form-base.class';
@@ -11,10 +10,8 @@ import { FormBase } from '../../../_classes/form-base.class';
   styleUrls: ['./view-carpetas.component.scss'],
 })
 export class ViewCarpetasComponent extends FormBase<Carpeta> implements OnInit {
-  public folderOptions = folderOptions;
-
   @ViewChild('uploader') public uploader: UploaderComponent;
-  orderSubscription: Subscription;
+  public folderOptions = folderOptions;
 
   constructor() {
     super();
