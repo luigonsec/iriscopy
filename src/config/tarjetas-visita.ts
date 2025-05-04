@@ -51,21 +51,20 @@ export default {
   finishType: [
     {
       default: true,
-
-      name: 'Laminado brillo',
-      code: 'laminado-brillo',
+      name: 'Sin acabado',
+      code: 'sin-acabado',
     },
     {
       name: 'Laminado mate',
       code: 'laminado-mate',
     },
     {
-      name: 'Soft touch',
-      code: 'soft-touch',
+      name: 'Laminado brillo',
+      code: 'laminado-brillo',
     },
     {
-      name: 'Sin acabado',
-      code: 'sin-acabado',
+      name: 'Soft touch',
+      code: 'soft-touch',
     },
   ],
 

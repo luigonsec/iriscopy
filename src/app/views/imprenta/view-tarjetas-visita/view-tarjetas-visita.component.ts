@@ -3,6 +3,8 @@ import { UploaderComponent } from 'src/app/components/uploader/uploader.componen
 import TarjetaVisita from '../../../interfaces/TarjetaVisita';
 import tarjetaVisitaOptions from 'src/config/tarjetas-visita';
 import { FormBase } from '../../../_classes/form-base.class';
+import { PricesService } from '../../../services/prices.service';
+import { firstValueFrom } from 'rxjs';
 @Component({
   selector: 'app-view-tarjetas-visita',
   templateUrl: './view-tarjetas-visita.component.html',
@@ -15,7 +17,7 @@ export class ViewTarjetasVisitaComponent
   @ViewChild('uploader') public uploader: UploaderComponent;
   public tarjetaVisitaOptions = tarjetaVisitaOptions;
 
-  constructor() {
+  constructor(public pricesService: PricesService) {
     super();
   }
 
@@ -29,6 +31,12 @@ export class ViewTarjetasVisitaComponent
     return res;
   }
 
+  getPrice = async () => {
+    return await firstValueFrom(
+      this.pricesService.getBusinessCardPrice(this.order)
+    );
+  };
+
   ngOnInit() {
     super.ngOnInit();
     this.order = {
@@ -37,7 +45,18 @@ export class ViewTarjetasVisitaComponent
       paperType: undefined,
       copiesQuantity: 0,
       additionalComments: '',
-      files: [],
+      files: [
+        {
+          id: undefined,
+          pages: 5,
+          name: '',
+          image: '',
+          original_filename: '',
+          size: 0,
+          source: 'local',
+          url: '',
+        },
+      ],
     };
   }
 }

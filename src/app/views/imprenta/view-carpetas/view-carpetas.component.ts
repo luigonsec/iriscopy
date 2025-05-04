@@ -3,6 +3,8 @@ import { UploaderComponent } from 'src/app/components/uploader/uploader.componen
 import Carpeta from '../../../interfaces/Carpeta';
 import folderOptions from 'src/config/carpetas';
 import { FormBase } from '../../../_classes/form-base.class';
+import { firstValueFrom } from 'rxjs';
+import { PricesService } from '../../../services/prices.service';
 
 @Component({
   selector: 'app-view-carpetas',
@@ -13,7 +15,7 @@ export class ViewCarpetasComponent extends FormBase<Carpeta> implements OnInit {
   @ViewChild('uploader') public uploader: UploaderComponent;
   public folderOptions = folderOptions;
 
-  constructor() {
+  constructor(public pricesService: PricesService) {
     super();
   }
 
@@ -25,10 +27,13 @@ export class ViewCarpetasComponent extends FormBase<Carpeta> implements OnInit {
     if (!this.order.finishType) res = false;
     if (!this.order.paperSize) res = false;
     if (!this.order.copiesQuantity) res = false;
-    if (!this.order.files || !this.order.files.length) res = false;
 
     return res;
   }
+
+  getPrice = async () => {
+    return await firstValueFrom(this.pricesService.getFolderPrice(this.order));
+  };
 
   ngOnInit() {
     super.ngOnInit();

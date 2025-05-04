@@ -29,6 +29,7 @@ import { selectCoupon } from 'src/app/_selectors/coupons.selector';
 import { ShippingCostsService } from 'src/app/services/shipping-costs.service';
 import moment from 'moment';
 import { AnalyticsService } from 'src/app/services/analytics.service';
+import { PricesService } from '../../services/prices.service';
 
 @Component({
   selector: 'app-order-processing',
@@ -91,6 +92,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     private loadingService: LoadingService,
     private messageService: MessageService,
     private couponsService: CouponsService,
+    private pricesService: PricesService,
     private shippingCostService: ShippingCostsService,
     private analytics: AnalyticsService,
     private store: Store
@@ -317,7 +319,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   private getPrecioCopias() {
     this.subtotal = 0;
 
-    return this.orderService.getOrderPrice(this.copies);
+    return this.pricesService.getOrderPrice(this.copies);
   }
 
   public getDiscount() {

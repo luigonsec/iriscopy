@@ -25,6 +25,10 @@ export class ViewCartelesComponent extends FormBase<Cartel> implements OnInit {
     return false;
   }
 
+  getPrice = async () => {
+    return Promise.resolve({ precio: 55, notas: [] as string[] });
+  };
+
   isReady() {
     let res = true;
 

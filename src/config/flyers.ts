@@ -67,8 +67,8 @@ export default {
     {
       name: 'Estucado brillo',
       group: 'estucado-brillo',
-      code: 'estucado-brillo-130',
-      description: '130 gr',
+      code: 'estucado-brillo-135',
+      description: '135 gr',
       factor: 1,
     },
     {
@@ -102,8 +102,8 @@ export default {
     {
       name: 'Estucado mate',
       group: 'estucado-mate',
-      code: 'estucado-mate-130',
-      description: '130 gr',
+      code: 'estucado-mate-135',
+      description: '135 gr',
       factor: 1,
     },
     {
@@ -129,7 +129,7 @@ export default {
     },
   ],
 
-  size: [
+  paperSize: [
     {
       default: true,
       name: 'A7',
@@ -161,7 +161,7 @@ export default {
     },
     {
       name: '10x21 cm',
-      code: '10x21-cm',
+      code: '10x21',
       description: '100 x 210 mm',
       factor: 1,
       group: '2',
@@ -173,6 +173,11 @@ export default {
       group: '2',
     },
   ],
+
+  size: {
+    width: 0,
+    height: 0,
+  },
 
   copiesQuantity: [
     {

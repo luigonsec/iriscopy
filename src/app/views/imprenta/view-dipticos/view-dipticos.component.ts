@@ -27,6 +27,10 @@ export class ViewDipticosComponent extends FormBase<Diptico> implements OnInit {
     return res;
   }
 
+  getPrice = async () => {
+    return Promise.resolve({ precio: 55, notas: [] as string[] });
+  };
+
   ngOnInit() {
     super.ngOnInit();
     this.order = {

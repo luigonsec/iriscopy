@@ -29,6 +29,8 @@ export abstract class FormBase<T> {
 
   abstract isReady(): boolean;
 
+  abstract getPrice(): Promise<{ precio: number; notas: string[] }>;
+
   getFile(files) {
     this.order['files'] = files.map((file) => Object.assign({}, file));
     this.order['files'] = this.order['files'];

@@ -1,7 +1,6 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrderCopy } from 'src/app/interfaces/OrderCopy';
-import { OrdersService } from 'src/app/services/orders.service';
 import { ShopcartService } from 'src/app/services/shopcart.service';
 import * as uuid from 'uuid';
 import JSONfn from 'json-fn';
@@ -12,6 +11,8 @@ import JSONfn from 'json-fn';
   styleUrls: ['./confirm-bar.component.scss'],
 })
 export class ConfirmBarComponent implements OnInit, OnChanges {
+  @Input('getPrecio') getPrecio: () => { precio: number; notas: string[] } =
+    () => undefined;
   @Input('order') order: OrderCopy;
   @Input('reset') reset: () => void = () => undefined;
 
@@ -20,7 +21,6 @@ export class ConfirmBarComponent implements OnInit, OnChanges {
   disableButtons: boolean = false;
 
   constructor(
-    private orderService: OrdersService,
     private shopcartService: ShopcartService,
     private router: Router
   ) {}
@@ -36,20 +36,15 @@ export class ConfirmBarComponent implements OnInit, OnChanges {
     }
   }
 
-  getPrecio() {
-    const others = this.shopcartService.getCart().copies;
-    others.push(this.order);
-    this.orderService
-      .getCopyPrice(this.order, others)
-      .subscribe(({ precio, notas }) => {
-        this.precio = precio;
-        this.notas = notas;
-        this.checkButtonsEnabled();
-      });
+  async calculatePrice() {
+    const { precio, notas } = await this.getPrecio();
+    this.precio = precio;
+    this.notas = notas;
+    this.checkButtonsEnabled();
   }
 
   ngOnChanges(): void {
-    this.getPrecio();
+    this.calculatePrice();
     this.checkButtonsEnabled();
   }
 
@@ -68,6 +63,6 @@ export class ConfirmBarComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.getPrecio();
+    this.calculatePrice();
   }
 }

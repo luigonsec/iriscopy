@@ -3,6 +3,8 @@ import { UploaderComponent } from 'src/app/components/uploader/uploader.componen
 import Flyer from '../../../interfaces/Flyer';
 import flyerOptions from 'src/config/flyers';
 import { FormBase } from '../../../_classes/form-base.class';
+import { PricesService } from '../../../services/prices.service';
+import { firstValueFrom } from 'rxjs';
 @Component({
   selector: 'app-view-flyers',
   templateUrl: './view-flyers.component.html',
@@ -12,7 +14,7 @@ export class ViewFlyersComponent extends FormBase<Flyer> implements OnInit {
   @ViewChild('uploader') public uploader: UploaderComponent;
   public flyerOptions = flyerOptions;
 
-  constructor() {
+  constructor(public pricesService: PricesService) {
     super();
   }
 
@@ -29,12 +31,16 @@ export class ViewFlyersComponent extends FormBase<Flyer> implements OnInit {
     let res = true;
 
     if (!this.order.paperType) res = false;
-    if (!this.order.size) res = false;
+    if (!this.order.paperSize) res = false;
     if (!this.order.copiesQuantity) res = false;
-    if (!this.order.files || !this.order.files.length) res = false;
+    //if (!this.order.files || !this.order.files.length) res = false;
 
     return res;
   }
+
+  getPrice = async () => {
+    return await firstValueFrom(this.pricesService.getFlyerPrice(this.order));
+  };
 
   ngOnInit() {
     super.ngOnInit();

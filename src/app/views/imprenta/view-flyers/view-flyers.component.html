@@ -25,8 +25,8 @@
         <div class="p-fluid">
           <div class="Label">Tamaño</div>
           <app-select-button
-            [options]="this.flyerOptions.size"
-            (emitChange)="getProperty('size', $event)"
+            [options]="this.flyerOptions.paperSize"
+            (emitChange)="getProperty('paperSize', $event)"
           ></app-select-button>
         </div>
       </div>
@@ -35,7 +35,7 @@
         <div class="p-fluid">
           <div class="Label">Tamaño personalizado</div>
           <app-input-custom-size
-            (emitChange)="getProperty($event)"
+            (emitChange)="getProperty('size', $event)"
           ></app-input-custom-size>
         </div>
       </div>
@@ -111,6 +111,7 @@
   </div>
 
   <app-confirm-bar
+    [getPrecio]="this.getPrice"
     *ngIf="this.isReady()"
     [reset]="this.reset"
     [(order)]="this.order"

@@ -5,6 +5,7 @@ import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import OrderProduct from 'src/app/interfaces/OrderProduct';
 import { OrdersService } from 'src/app/services/orders.service';
 import { ShopcartService } from 'src/app/services/shopcart.service';
+import { PricesService } from '../../services/prices.service';
 
 @Component({
   selector: 'app-order',
@@ -22,7 +23,8 @@ export class OrderComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private orderService: OrdersService,
-    private shopcartService: ShopcartService
+    private shopcartService: ShopcartService,
+    private pricesService: PricesService
   ) {}
 
   ngOnDestroy(): void {
@@ -48,7 +50,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   getCopyPrice(order: OrderCopy) {
-    this.orderService
+    this.pricesService
       .getCopyPrice(order, this.copies)
       .subscribe(({ precio, notas }) => {
         this.copiesPrice[order.id] = precio;

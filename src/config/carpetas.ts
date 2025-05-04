@@ -80,17 +80,21 @@ export default {
   finishType: [
     {
       default: true,
-
-      name: 'Laminado brillo',
-      code: 'laminado-brillo',
+      name: 'Sin acabado',
+      code: 'sin-acabado',
     },
     {
       name: 'Laminado mate',
       code: 'laminado-mate',
     },
+
+    {
+      name: 'Laminado brillo',
+      code: 'laminado-brillo',
+    },
   ],
 
-  size: [
+  paperSize: [
     {
       default: true,
       name: 'Folio',

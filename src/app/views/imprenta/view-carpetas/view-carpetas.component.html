@@ -35,7 +35,7 @@
         <div class="p-fluid">
           <div class="Label">Tamaño</div>
           <app-select-button
-            [options]="this.folderOptions.size"
+            [options]="this.folderOptions.paperSize"
             (emitChange)="getProperty('paperSize', $event)"
           ></app-select-button>
         </div>
@@ -112,6 +112,7 @@
   </div>
 
   <app-confirm-bar
+    [getPrecio]="this.getPrice"
     *ngIf="this.isReady()"
     [reset]="this.reset"
     [(order)]="this.order"
