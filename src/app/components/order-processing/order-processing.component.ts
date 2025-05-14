@@ -294,7 +294,8 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     const postcode = this.getPostcode();
     this.urgentShippingAvailable =
       this.shippingCostService.isUrgentShippingAvailable(postcode);
-    this.standardShippingAvailable = this.urgentShippingAvailable;
+    this.standardShippingAvailable =
+      this.shippingCostService.isStandarShippingAvailable(postcode);
 
     if (!this.urgentShippingAvailable) {
       this.deliver = 'Pickup';

@@ -4,24 +4,33 @@ import { ForgotPasswordComponent } from './forgot-password.component';
 import { MessageService } from 'primeng/api';
 import { of } from 'rxjs';
 import { UsersService } from 'src/app/services/users.service';
+import { ActivatedRoute } from '@angular/router';
 
 describe('ForgotPasswordComponent', () => {
   let component: ForgotPasswordComponent;
   let fixture: ComponentFixture<ForgotPasswordComponent>;
   let usersService: jasmine.SpyObj<UsersService>;
   let messageService: jasmine.SpyObj<MessageService>;
+  let activatedRoute: jasmine.SpyObj<ActivatedRoute>;
 
   beforeEach(async () => {
     usersService = jasmine.createSpyObj('UsersService', ['forgotPassword']);
     messageService = jasmine.createSpyObj('MessageService', ['add']);
 
     usersService.forgotPassword.and.returnValue(of(undefined));
+    activatedRoute = jasmine.createSpyObj('ActivatedRoute', ['queryParams']);
 
     await TestBed.configureTestingModule({
       declarations: [ForgotPasswordComponent],
       providers: [
         { provide: UsersService, useValue: usersService },
         { provide: MessageService, useValue: messageService },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            queryParams: of({ email: 'email' }),
+          },
+        },
       ],
     }).compileComponents();
 

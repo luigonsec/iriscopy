@@ -1,11 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-
-import { ShopcartService } from './shopcart.service';
-import { OrderCopy } from '../interfaces/OrderCopy';
-import { MessageService } from 'primeng/api';
 import { ValidatorsService } from './validators.service';
 
-describe('ShopcartService', () => {
+describe('ValidatorsService', () => {
   let service: ValidatorsService;
 
   beforeEach(() => {

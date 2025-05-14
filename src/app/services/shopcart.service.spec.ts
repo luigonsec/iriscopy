@@ -3,14 +3,30 @@ import { TestBed } from '@angular/core/testing';
 import { ShopcartService } from './shopcart.service';
 import { OrderCopy } from '../interfaces/OrderCopy';
 import { MessageService } from 'primeng/api';
+import { AnalyticsService } from './analytics.service';
+import { OrdersService } from './orders.service';
 
 describe('ShopcartService', () => {
   let service: ShopcartService;
+  let messageService: jasmine.SpyObj<MessageService>;
+  let analyticsService: jasmine.SpyObj<AnalyticsService>;
+  let ordersService: jasmine.SpyObj<OrdersService>;
 
   beforeEach(() => {
-    const messageService = jasmine.createSpyObj('MessageService', ['add']);
+    messageService = jasmine.createSpyObj('MessageService', ['add']);
+    ordersService = jasmine.createSpyObj('OrdersService', [
+      'orderCopyToAnalytics',
+      'orderProductToAnalytics',
+    ]);
+    analyticsService = jasmine.createSpyObj('AnalyticsService', [
+      'anadirAlCarrito',
+    ]);
     TestBed.configureTestingModule({
-      providers: [{ provide: MessageService, useValue: messageService }],
+      providers: [
+        { provide: MessageService, useValue: messageService },
+        { provide: AnalyticsService, useValue: analyticsService },
+        { provide: OrdersService, useValue: ordersService },
+      ],
     });
     service = TestBed.inject(ShopcartService);
   });

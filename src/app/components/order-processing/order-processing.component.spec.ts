@@ -8,6 +8,7 @@ import { CouponsService } from 'src/app/services/coupons.service';
 import { Store } from '@ngrx/store';
 import { ShopcartService } from 'src/app/services/shopcart.service';
 import { of } from 'rxjs';
+import { ShippingCostsService } from '../../services/shipping-costs.service';
 
 describe('OrderProcessingComponent', () => {
   let component: OrderProcessingComponent;
@@ -18,9 +19,10 @@ describe('OrderProcessingComponent', () => {
   let couponsService: jasmine.SpyObj<CouponsService>;
   let shopcartService: jasmine.SpyObj<ShopcartService>;
   let store: jasmine.SpyObj<Store>;
+  let shippingCostsService: jasmine.SpyObj<ShippingCostsService>;
 
   beforeEach(async () => {
-    store = jasmine.createSpyObj('Store', ['dispatch']);
+    store = jasmine.createSpyObj('Store', ['dispatch', 'select']);
 
     shopcartService = jasmine.createSpyObj('ShopcartService', [
       'getCart',
@@ -37,14 +39,24 @@ describe('OrderProcessingComponent', () => {
       'getOrderPrice',
       'create',
     ]);
+    shippingCostsService = jasmine.createSpyObj('ShippingCostsService', [
+      'getGastosDeEnvio',
+      'isUrgentShippingAvailable',
+    ]);
 
     ordersService.getOrderPrice.and.returnValue(of(0));
+
+    store.select.and.returnValue(of({}));
 
     await TestBed.configureTestingModule({
       providers: [
         {
           provide: Store,
           useValue: store,
+        },
+        {
+          provide: ShippingCostsService,
+          useValue: shippingCostsService,
         },
         {
           provide: ShopcartService,

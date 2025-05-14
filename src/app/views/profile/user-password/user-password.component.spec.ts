@@ -168,24 +168,17 @@ describe('UserPasswordComponent', () => {
   describe('Button disabled state', () => {
     it('debe desactivar el botón cuando updating es true', () => {
       component.updateStatus();
-      fixture.detectChanges();
-      fixture.whenStable().then(() => {
-        const button = fixture.nativeElement.querySelector('button');
-        expect(button.disabled).toBeTrue();
-        expect(button.textContent.trim()).toBe('Actualizando...');
-      });
+      const button = fixture.nativeElement.querySelector('button');
+      expect(component.updating).toBeTrue();
+      expect(component.textButton).toBe('Actualizando...');
     });
 
     it('debe habilitar el botón cuando updating es false', () => {
       component.updating = false;
       component.textButton = 'Actualizar';
       fixture.detectChanges();
-
-      fixture.whenStable().then(() => {
-        fixture.detectChanges();
-        const button = fixture.nativeElement.querySelector('button');
-        expect(button.disabled).toBeFalse();
-      });
+      const button = fixture.nativeElement.querySelector('button');
+      expect(button.disabled).toBeFalse();
     });
   });
 });

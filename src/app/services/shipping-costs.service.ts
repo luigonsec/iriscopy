@@ -1,44 +1,41 @@
 import { Injectable } from '@angular/core';
-import mallorca from 'src/config/mallorca';
-import menorca from 'src/config/menorca';
-import ibiza from 'src/config/ibiza';
-import formentera from 'src/config/formentera';
 import generalConfig from 'src/config/general';
+import { LocationsService } from './locations.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ShippingCostsService {
-  constructor() {}
+  constructor(private locationsService: LocationsService) {}
 
   public isUrgentShippingAvailable(postcode) {
-    const numericCode = +postcode;
-
-    if (
-      (numericCode >= 35000 && numericCode < 36000) ||
-      (numericCode >= 38000 && numericCode < 39000)
-    ) {
+    if (this.locationsService.isCanarias(postcode)) {
       return false;
     }
+    if (this.locationsService.isBaleares(postcode)) {
+      return false;
+    }
+    return true;
+  }
 
+  public isStandarShippingAvailable(postcode) {
+    if (this.locationsService.isCanarias(postcode)) {
+      return false;
+    }
     return true;
   }
 
   public getGastosDeEnvio(subtotal, postcode) {
     let precioEnvio = generalConfig.SHIPPING_COST;
-    const numericCode = +postcode;
-    if (
-      (numericCode >= 35000 && numericCode < 36000) ||
-      (numericCode >= 38000 && numericCode < 39000)
-    ) {
+    if (this.locationsService.isCanarias(postcode)) {
       precioEnvio = this.getGastosEnvioCanarias();
-    } else if (mallorca.includes(numericCode))
+    } else if (this.locationsService.isMallorca(postcode))
       precioEnvio = this.getGastosEnvioMallorca();
-    else if (ibiza.includes(numericCode))
+    else if (this.locationsService.isIbiza(postcode))
       precioEnvio = this.getGastosEnvioIbiza();
-    else if (menorca.includes(numericCode))
+    else if (this.locationsService.isMenorca(postcode))
       precioEnvio = this.getGastosEnvioMenorca();
-    else if (formentera.includes(numericCode))
+    else if (this.locationsService.isFormentera(postcode))
       precioEnvio = this.getGastosEnvioFormentera();
     else precioEnvio = this.getGastosEnvioPeninsula(subtotal);
 
