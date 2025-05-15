@@ -55,6 +55,11 @@ describe('ShippingCostsService', () => {
       expect(service.isStandarShippingAvailable('35000')).toBe(false);
     });
 
+    it('should return false for Baleares', () => {
+      locationsService.isBaleares.and.returnValue(true);
+      expect(service.isStandarShippingAvailable('07864')).toBe(false);
+    });
+
     it('should return true for Peninsula', () => {
       locationsService.isCanarias.and.returnValue(false);
       expect(service.isStandarShippingAvailable('28001')).toBe(true);

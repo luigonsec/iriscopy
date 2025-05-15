@@ -22,6 +22,9 @@ export class ShippingCostsService {
     if (this.locationsService.isCanarias(postcode)) {
       return false;
     }
+    if (this.locationsService.isBaleares(postcode)) {
+      return false;
+    }
     return true;
   }
 
