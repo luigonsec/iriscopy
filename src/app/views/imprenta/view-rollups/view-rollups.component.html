@@ -73,8 +73,9 @@
   </div>
 
   <app-confirm-bar
+    [getPrecio]="this.getPrice"
     *ngIf="this.isReady()"
     [reset]="this.reset"
-    [(order)]="this.order"
+    [(order)]="order"
   ></app-confirm-bar>
 </div>

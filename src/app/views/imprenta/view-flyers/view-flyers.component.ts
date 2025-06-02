@@ -33,7 +33,7 @@ export class ViewFlyersComponent extends FormBase<Flyer> implements OnInit {
     if (!this.order.paperType) res = false;
     if (!this.order.paperSize) res = false;
     if (!this.order.copiesQuantity) res = false;
-    //if (!this.order.files || !this.order.files.length) res = false;
+    if (!this.order.files || !this.order.files.length) res = false;
 
     return res;
   }

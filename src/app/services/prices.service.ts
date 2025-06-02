@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import TarjetaVisita from '../interfaces/TarjetaVisita';
 import Flyer from '../interfaces/Flyer';
 import Carpeta from '../interfaces/Carpeta';
+import Rollup from '../interfaces/Rollup';
 
 @Injectable({
   providedIn: 'root',
@@ -52,6 +53,15 @@ export class PricesService {
     return this.http.post<{ precio: number; notas: string[] }>(
       `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/prices/folder`,
       card
+    );
+  }
+
+  getRollUpPrice(
+    rollup: Rollup
+  ): Observable<{ precio: number; notas: string[] }> {
+    return this.http.post<{ precio: number; notas: string[] }>(
+      `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/prices/rollup`,
+      rollup
     );
   }
 }
