@@ -21,14 +21,14 @@ export class ViewTarjetasVisitaComponent
     super();
   }
 
-  isReady() {
+  updateReady() {
     let res = true;
 
     if (!this.order.paperType) res = false;
     if (!this.order.copiesQuantity) res = false;
     if (!this.order.files || !this.order.files.length) res = false;
 
-    return res;
+    this.ready = res;
   }
 
   getPrice = async () => {
@@ -38,7 +38,6 @@ export class ViewTarjetasVisitaComponent
   };
 
   ngOnInit() {
-    super.ngOnInit();
     this.order = {
       finishType: undefined,
       printForm: undefined,
@@ -58,5 +57,6 @@ export class ViewTarjetasVisitaComponent
         },
       ],
     };
+    super.ngOnInit();
   }
 }

@@ -22,7 +22,7 @@ export class ViewRevistasComponent extends FormBase<Revista> implements OnInit {
     return this.order[`${formatKey}_size`]?.code === 'personalizado';
   }
 
-  isReady() {
+  updateReady() {
     let res = true;
 
     if (!this.order.cover_paperType) res = false;
@@ -30,7 +30,7 @@ export class ViewRevistasComponent extends FormBase<Revista> implements OnInit {
     if (!this.order.copiesQuantity) res = false;
     if (!this.order.files || !this.order.files.length) res = false;
 
-    return res;
+    this.ready = res;
   }
 
   getPrice = async () => {
@@ -38,7 +38,6 @@ export class ViewRevistasComponent extends FormBase<Revista> implements OnInit {
   };
 
   ngOnInit() {
-    super.ngOnInit();
     this.order = {
       format: undefined,
       vertical_size: undefined,
@@ -50,5 +49,6 @@ export class ViewRevistasComponent extends FormBase<Revista> implements OnInit {
       additionalComments: '',
       files: [],
     };
+    super.ngOnInit();
   }
 }

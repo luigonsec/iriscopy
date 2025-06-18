@@ -29,7 +29,7 @@ export class ViewCartelesComponent extends FormBase<Cartel> implements OnInit {
     return Promise.resolve({ precio: 55, notas: [] as string[] });
   };
 
-  isReady() {
+  updateReady() {
     let res = true;
 
     if (!this.order.paperType) res = false;
@@ -37,11 +37,10 @@ export class ViewCartelesComponent extends FormBase<Cartel> implements OnInit {
     if (!this.order.copiesQuantity) res = false;
     if (!this.order.files || !this.order.files.length) res = false;
 
-    return res;
+    this.ready = res;
   }
 
   ngOnInit() {
-    super.ngOnInit();
     this.order = {
       paperType: undefined,
       size: undefined,
@@ -49,5 +48,6 @@ export class ViewCartelesComponent extends FormBase<Cartel> implements OnInit {
       additionalComments: '',
       files: [],
     };
+    super.ngOnInit();
   }
 }

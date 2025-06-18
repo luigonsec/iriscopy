@@ -4,6 +4,7 @@ import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import { ShopcartService } from 'src/app/services/shopcart.service';
 import * as uuid from 'uuid';
 import JSONfn from 'json-fn';
+import Nota from '../../interfaces/Nota';
 
 @Component({
   selector: 'app-confirm-bar',
@@ -11,13 +12,13 @@ import JSONfn from 'json-fn';
   styleUrls: ['./confirm-bar.component.scss'],
 })
 export class ConfirmBarComponent implements OnInit, OnChanges {
-  @Input('getPrecio') getPrecio: () => { precio: number; notas: string[] } =
-    () => undefined;
+  @Input('getPrecio') getPrecio: () => { precio: number; notas: Nota[] } = () =>
+    undefined;
   @Input('order') order: OrderCopy;
   @Input('reset') reset: () => void = () => undefined;
 
   public precio: number = 0;
-  public notas: string[] = [];
+  public notas: Nota[] = [];
   disableButtons: boolean = false;
 
   constructor(
@@ -28,6 +29,7 @@ export class ConfirmBarComponent implements OnInit, OnChanges {
   checkButtonsEnabled() {
     if (
       this.notas?.length &&
+      this.notas.some((nota) => nota.require_comments) &&
       (this.order?.additionalComments || '').trim() === ''
     ) {
       this.disableButtons = true;

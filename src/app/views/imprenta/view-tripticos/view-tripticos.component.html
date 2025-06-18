@@ -27,18 +27,18 @@
           <app-select-button
             *ngIf="this.order.format.code === 'vertical'"
             [options]="this.tripricoOptions.vertical_size"
-            (emitChange)="getSize($event)"
+            (emitChange)="getProperty('size', $event)"
           ></app-select-button>
           <app-select-button
             *ngIf="this.order.format.code === 'horizontal'"
             [options]="this.tripricoOptions.horizontal_size"
-            (emitChange)="getSize($event)"
+            (emitChange)="getProperty('size', $event)"
           ></app-select-button>
 
           <app-select-button
             *ngIf="this.order.format.code === 'cuadrado'"
             [options]="this.tripricoOptions.square_size"
-            (emitChange)="getSize($event)"
+            (emitChange)="getProperty('size', $event)"
           ></app-select-button>
         </div>
       </div>
@@ -114,7 +114,8 @@
   </div>
 
   <app-confirm-bar
-    *ngIf="this.isReady()"
+    [getPrecio]="this.getPrice"
+    *ngIf="this.ready"
     [reset]="this.reset"
     [(order)]="this.order"
   ></app-confirm-bar>

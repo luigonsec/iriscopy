@@ -7,6 +7,8 @@ import TarjetaVisita from '../interfaces/TarjetaVisita';
 import Flyer from '../interfaces/Flyer';
 import Carpeta from '../interfaces/Carpeta';
 import Rollup from '../interfaces/Rollup';
+import Diptico from '../interfaces/Diptico';
+import Triptico from '../interfaces/Triptico';
 
 @Injectable({
   providedIn: 'root',
@@ -62,6 +64,24 @@ export class PricesService {
     return this.http.post<{ precio: number; notas: string[] }>(
       `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/prices/rollup`,
       rollup
+    );
+  }
+
+  getDiptychPrice(
+    diptico: Diptico
+  ): Observable<{ precio: number; notas: string[] }> {
+    return this.http.post<{ precio: number; notas: string[] }>(
+      `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/prices/diptych`,
+      diptico
+    );
+  }
+
+  getTriptychPrice(
+    triptico: Triptico
+  ): Observable<{ precio: number; notas: string[] }> {
+    return this.http.post<{ precio: number; notas: string[] }>(
+      `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/prices/triptych`,
+      triptico
     );
   }
 }

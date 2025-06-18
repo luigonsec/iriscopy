@@ -27,18 +27,18 @@
           <app-select-button
             *ngIf="this.order.format.code === 'vertical'"
             [options]="this.dipticosOptions.vertical_size"
-            (emitChange)="getSize($event)"
+            (emitChange)="getProperty('paperSize', $event)"
           ></app-select-button>
           <app-select-button
             *ngIf="this.order.format.code === 'horizontal'"
             [options]="this.dipticosOptions.horizontal_size"
-            (emitChange)="getSize($event)"
+            (emitChange)="getProperty('paperSize', $event)"
           ></app-select-button>
 
           <app-select-button
             *ngIf="this.order.format.code === 'cuadrado'"
             [options]="this.dipticosOptions.square_size"
-            (emitChange)="getSize($event)"
+            (emitChange)="getProperty('paperSize', $event)"
           ></app-select-button>
         </div>
       </div>
@@ -114,7 +114,8 @@
   </div>
 
   <app-confirm-bar
-    *ngIf="this.isReady()"
+    [getPrecio]="this.getPrice"
+    *ngIf="this.ready"
     [reset]="this.reset"
     [(order)]="this.order"
   ></app-confirm-bar>

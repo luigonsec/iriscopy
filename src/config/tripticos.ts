@@ -148,35 +148,24 @@ export default {
       default: true,
       name: '10x20',
       code: '10x20',
+      description: '100x200',
       group: '1',
     },
     {
       name: 'A7',
-      code: 'A7',
+      code: 'a7',
       description: '74x105',
       group: '1',
     },
     {
       name: 'A6',
-      code: 'A6',
+      code: 'a6',
       description: '105x148',
       group: '1',
     },
     {
-      name: 'A5',
-      code: 'A5',
-      description: '148x210',
-      group: '1',
-    },
-    {
-      name: 'A4',
-      code: 'A4',
-      description: '210x297',
-      group: '1',
-    },
-    {
       name: 'A4 medio',
-      code: 'A4-medio',
+      code: 'a4-medio',
       description: '105x297',
       group: '2',
     },
@@ -189,7 +178,7 @@ export default {
     {
       name: 'DVD',
       code: 'dvd',
-      description: '12x18',
+      description: '120x180',
       group: '2',
     },
     {
@@ -204,32 +193,22 @@ export default {
     {
       default: true,
       name: '20x10',
-      code: '20x10',
+      description: '200x100',
+      code: '200x100',
       group: '1',
     },
     {
       name: 'A6',
-      code: 'A6',
+      code: 'a6-horizontal',
       description: '148x105',
       group: '1',
     },
-    {
-      name: 'A5',
-      code: 'A5',
-      description: '210X148',
-      group: '1',
-    },
-    {
-      name: 'A4',
-      code: 'A4',
-      description: '297x210',
-      group: '2',
-    },
+
     {
       name: 'DVD',
-      code: 'dvd',
-      description: '18x12',
-      group: '2',
+      code: 'dvd-horizontal',
+      description: '180x120',
+      group: '1',
     },
   ],
 

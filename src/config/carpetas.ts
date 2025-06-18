@@ -92,22 +92,19 @@ export default {
       name: 'Laminado brillo',
       code: 'laminado-brillo',
     },
+    {
+      name: 'Soft touch',
+      code: 'soft-touch',
+    },
   ],
 
   paperSize: [
     {
       default: true,
-      name: 'Folio',
+      name: 'Estándar',
       group: '1',
-      description: '21.5 x 31.5 cm',
-      code: 'folio',
-      factor: 1,
-    },
-    {
-      name: 'Folio prolongado',
-      group: '1',
-      description: '27.5 x 38.5 cm',
-      code: 'folio-prolongado',
+      description: '22 x 30.5 cm',
+      code: 'carpeta-estandar',
       factor: 1,
     },
     {

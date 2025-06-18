@@ -4,7 +4,7 @@ import File from 'src/app/interfaces/File';
 export default interface Diptico {
   paperType: Option;
   format: Option;
-  size: Option;
+  paperSize: Option;
   copiesQuantity: number;
   files: File[];
   additionalComments: string;

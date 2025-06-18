@@ -19,7 +19,7 @@ export class ViewCarpetasComponent extends FormBase<Carpeta> implements OnInit {
     super();
   }
 
-  isReady() {
+  updateReady() {
     let res = true;
 
     if (!this.order.printForm) res = false;
@@ -28,7 +28,7 @@ export class ViewCarpetasComponent extends FormBase<Carpeta> implements OnInit {
     if (!this.order.paperSize) res = false;
     if (!this.order.copiesQuantity) res = false;
 
-    return res;
+    this.ready = res;
   }
 
   getPrice = async () => {
@@ -36,7 +36,6 @@ export class ViewCarpetasComponent extends FormBase<Carpeta> implements OnInit {
   };
 
   ngOnInit() {
-    super.ngOnInit();
     this.order = {
       printForm: undefined,
       paperType: undefined,
@@ -46,5 +45,6 @@ export class ViewCarpetasComponent extends FormBase<Carpeta> implements OnInit {
       additionalComments: '',
       files: [],
     };
+    super.ngOnInit();
   }
 }

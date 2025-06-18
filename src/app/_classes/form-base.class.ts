@@ -8,6 +8,7 @@ import { UploaderComponent } from '../components/uploader/uploader.component';
 })
 export abstract class FormBase<T> {
   public order: T;
+  public ready = false;
 
   @ViewChild('uploader') public uploader: UploaderComponent;
   orderSubscription: Subscription;
@@ -16,18 +17,21 @@ export abstract class FormBase<T> {
 
   reset() {
     this.uploader.clear();
+    this.updateReady();
   }
 
   removeFile(id) {
     this.order['files'] = this.order['files'].filter((x) => x.id !== id);
+    this.updateReady();
   }
 
   getProperty(property, value) {
     this.order[property] = value;
     this.order = Object.assign({}, this.order);
+    this.updateReady();
   }
 
-  abstract isReady(): boolean;
+  abstract updateReady(): void;
 
   abstract getPrice(): Promise<{ precio: number; notas: string[] }>;
 
@@ -35,9 +39,11 @@ export abstract class FormBase<T> {
     this.order['files'] = files.map((file) => Object.assign({}, file));
     this.order['files'] = this.order['files'];
     this.order = Object.assign({}, this.order);
+    this.updateReady();
   }
 
   ngOnInit() {
     this.reset = this.reset.bind(this);
+    this.updateReady();
   }
 }

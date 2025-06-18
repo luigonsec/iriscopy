@@ -27,7 +27,7 @@ export class ViewFlyersComponent extends FormBase<Flyer> implements OnInit {
     return false;
   }
 
-  isReady() {
+  updateReady() {
     let res = true;
 
     if (!this.order.paperType) res = false;
@@ -35,7 +35,7 @@ export class ViewFlyersComponent extends FormBase<Flyer> implements OnInit {
     if (!this.order.copiesQuantity) res = false;
     if (!this.order.files || !this.order.files.length) res = false;
 
-    return res;
+    this.ready = res;
   }
 
   getPrice = async () => {
@@ -43,7 +43,6 @@ export class ViewFlyersComponent extends FormBase<Flyer> implements OnInit {
   };
 
   ngOnInit() {
-    super.ngOnInit();
     this.order = {
       paperSize: undefined,
       printForm: undefined,
@@ -51,7 +50,19 @@ export class ViewFlyersComponent extends FormBase<Flyer> implements OnInit {
       size: undefined,
       copiesQuantity: 0,
       additionalComments: '',
-      files: [],
+      files: [
+        {
+          id: '',
+          name: '',
+          size: 0,
+          url: '',
+          pages: 0,
+          original_filename: '',
+          source: '',
+          image: '',
+        },
+      ],
     };
+    super.ngOnInit();
   }
 }

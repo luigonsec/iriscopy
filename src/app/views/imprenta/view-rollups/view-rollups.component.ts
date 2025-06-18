@@ -18,10 +18,10 @@ export class ViewRollupsComponent extends FormBase<Rollup> implements OnInit {
     super();
   }
 
-  isReady() {
+  updateReady() {
     let res = true;
     if (!this.order.size) res = false;
-    return res;
+    this.ready = res;
   }
 
   getPrice = async () => {
@@ -29,7 +29,6 @@ export class ViewRollupsComponent extends FormBase<Rollup> implements OnInit {
   };
 
   ngOnInit() {
-    super.ngOnInit();
     this.order = {
       size: undefined,
       copiesQuantity: 0,
@@ -47,5 +46,6 @@ export class ViewRollupsComponent extends FormBase<Rollup> implements OnInit {
         },
       ],
     };
+    super.ngOnInit();
   }
 }

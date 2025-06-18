@@ -3,6 +3,8 @@ import { UploaderComponent } from 'src/app/components/uploader/uploader.componen
 import dipticosOptions from 'src/config/dipticos';
 import Diptico from '../../../interfaces/Diptico';
 import { FormBase } from '../../../_classes/form-base.class';
+import { firstValueFrom } from 'rxjs';
+import { PricesService } from '../../../services/prices.service';
 @Component({
   selector: 'app-view-dipticos',
   templateUrl: './view-dipticos.component.html',
@@ -12,34 +14,45 @@ export class ViewDipticosComponent extends FormBase<Diptico> implements OnInit {
   @ViewChild('uploader') public uploader: UploaderComponent;
   public dipticosOptions = dipticosOptions;
 
-  constructor() {
+  constructor(public pricesService: PricesService) {
     super();
   }
 
-  isReady() {
+  updateReady() {
     let res = true;
 
     if (!this.order.paperType) res = false;
-    if (!this.order.size) res = false;
+    if (!this.order.paperSize) res = false;
     if (!this.order.copiesQuantity) res = false;
     if (!this.order.files || !this.order.files.length) res = false;
 
-    return res;
+    this.ready = res;
   }
 
   getPrice = async () => {
-    return Promise.resolve({ precio: 55, notas: [] as string[] });
+    return await firstValueFrom(this.pricesService.getDiptychPrice(this.order));
   };
 
   ngOnInit() {
-    super.ngOnInit();
     this.order = {
       format: undefined,
       paperType: undefined,
-      size: undefined,
+      paperSize: undefined,
       copiesQuantity: 0,
       additionalComments: '',
-      files: [],
+      files: [
+        {
+          id: '',
+          name: '',
+          size: 0,
+          url: '',
+          pages: 0,
+          original_filename: '',
+          source: '',
+          image: '',
+        },
+      ],
     };
+    super.ngOnInit();
   }
 }
