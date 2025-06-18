@@ -8,10 +8,10 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import { ShopcartService } from 'src/app/services/shopcart.service';
 import { v4 as uuidv4 } from 'uuid';
 import Nota from '../../interfaces/Nota';
+import Orderable from '../../interfaces/Orderable';
 
 /**
  * Interface para el precio calculado y las notas asociadas
@@ -37,10 +37,13 @@ export class ConfirmBarComponent implements OnInit, OnChanges {
     () => ({ precio: 0, notas: [] });
 
   /** Pedido actual que se está configurando */
-  @Input() order: OrderCopy;
+  @Input() order: Orderable;
 
   /** Función para resetear el formulario después de añadir al carrito */
   @Input() reset: () => void = () => undefined;
+
+  @Input() addToCartFn: (order: Orderable) => Promise<void> = () =>
+    Promise.resolve();
 
   /** Precio calculado para el pedido */
   public precio: number = 0;
@@ -54,11 +57,7 @@ export class ConfirmBarComponent implements OnInit, OnChanges {
   /** Indica si está cargando datos */
   public isLoading: boolean = false;
 
-  constructor(
-    private shopcartService: ShopcartService,
-    private router: Router,
-    private cdr: ChangeDetectorRef
-  ) {}
+  constructor(private router: Router, private cdr: ChangeDetectorRef) {}
 
   /**
    * Función para optimizar el renderizado de listas en el template
@@ -141,7 +140,7 @@ export class ConfirmBarComponent implements OnInit, OnChanges {
       orderCopy.id = uuidv4();
 
       // Añade al carrito
-      await this.shopcartService.addCopyToCart(orderCopy);
+      await this.addToCartFn(orderCopy);
 
       // Resetea el formulario
       if (typeof this.reset === 'function') {

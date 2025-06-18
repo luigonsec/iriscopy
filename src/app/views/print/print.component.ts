@@ -194,6 +194,10 @@ export class PrintComponent implements OnInit, OnDestroy {
     return res;
   };
 
+  addToCartFn = async (order: OrderCopy) => {
+    return this.shopcartService.addCopyToCart.bind(this.shopcartService)(order);
+  };
+
   ngOnInit() {
     this.analytics.verListadoImpresiones([]);
     this.orderSubscription = this.orderService.getOrder().subscribe((order) => {

@@ -5,6 +5,7 @@ import flyerOptions from 'src/config/flyers';
 import { FormBase } from '../../../_classes/form-base.class';
 import { PricesService } from '../../../services/prices.service';
 import { firstValueFrom } from 'rxjs';
+import { ShopcartService } from '../../../services/shopcart.service';
 @Component({
   selector: 'app-view-flyers',
   templateUrl: './view-flyers.component.html',
@@ -14,7 +15,10 @@ export class ViewFlyersComponent extends FormBase<Flyer> implements OnInit {
   @ViewChild('uploader') public uploader: UploaderComponent;
   public flyerOptions = flyerOptions;
 
-  constructor(public pricesService: PricesService) {
+  constructor(
+    public pricesService: PricesService,
+    public shopCart: ShopcartService
+  ) {
     super();
   }
 
@@ -40,6 +44,10 @@ export class ViewFlyersComponent extends FormBase<Flyer> implements OnInit {
 
   getPrice = async () => {
     return await firstValueFrom(this.pricesService.getFlyerPrice(this.order));
+  };
+
+  addToCartFn = async (order: Flyer) => {
+    return this.shopCart.addFlyerToCart.bind(this.shopCart)(order);
   };
 
   ngOnInit() {

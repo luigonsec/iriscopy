@@ -6,6 +6,7 @@ import OrderProduct from 'src/app/interfaces/OrderProduct';
 import { OrdersService } from 'src/app/services/orders.service';
 import { ShopcartService } from 'src/app/services/shopcart.service';
 import { PricesService } from '../../services/prices.service';
+import Flyer from '../../interfaces/Flyer';
 
 @Component({
   selector: 'app-order',
@@ -15,9 +16,13 @@ import { PricesService } from '../../services/prices.service';
 export class OrderComponent implements OnInit, OnDestroy {
   public copies: OrderCopy[] = [];
   public products: OrderProduct[] = [];
+  public flyers: Flyer[] = [];
 
   public copiesPrice = {};
+  public flyersPrice = {};
+
   public copiesNotes = {};
+  public flyersNotes = {};
 
   cartSubscription: Subscription;
   constructor(
@@ -32,6 +37,10 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   getTotalPrice() {
+    const priceFlyers = this.flyers
+      .map((x) => this.flyersPrice[x.id])
+      .reduce((a, b) => a + b, 0);
+
     const priceCopies = this.copies
       .map((x) => this.copiesPrice[x.id])
       .reduce((a, b) => a + b, 0);
@@ -40,12 +49,16 @@ export class OrderComponent implements OnInit, OnDestroy {
       .map((x) => this.getProductPrice(x))
       .reduce((a, b) => a + b, 0);
 
-    return priceCopies + priceProducts;
+    return priceCopies + priceProducts + priceFlyers;
   }
 
-  getCopiesPrice() {
+  getPrintItemPrices() {
     this.copies.forEach((copy) => {
       this.getCopyPrice(copy);
+    });
+
+    this.flyers.forEach((flyer) => {
+      this.getFlyerPrice(flyer);
     });
   }
 
@@ -60,12 +73,25 @@ export class OrderComponent implements OnInit, OnDestroy {
       });
   }
 
+  getFlyerPrice(flyer: Flyer) {
+    this.pricesService.getFlyerPrice(flyer).subscribe(({ precio, notas }) => {
+      this.flyersPrice[flyer.id] = precio;
+      this.flyersNotes[flyer.id] = notas;
+      this.flyersPrice = Object.assign({}, this.flyersPrice);
+      this.flyersNotes = Object.assign({}, this.flyersNotes);
+    });
+  }
+
   getProductPrice(order: OrderProduct): number {
     return parseFloat(order.product.price) * order.quantity;
   }
 
   removeCopy(order: OrderCopy): void {
     this.shopcartService.removeCopy(order);
+  }
+
+  removeFlyer(order: Flyer): void {
+    this.shopcartService.removeFlyer(order);
   }
 
   editCopy(order: OrderCopy): void {
@@ -98,15 +124,17 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.copies = this.shopcartService.getCart().copies;
+    this.flyers = this.shopcartService.getCart().flyers;
     this.products = this.shopcartService.getCart().products;
-    this.getCopiesPrice();
+    this.getPrintItemPrices();
 
     this.cartSubscription = this.shopcartService
       .getCart$()
       .subscribe((orders) => {
+        this.flyers = orders.flyers;
         this.copies = orders.copies;
         this.products = orders.products;
-        this.getCopiesPrice();
+        this.getPrintItemPrices();
       });
   }
 }

@@ -178,6 +178,7 @@
   </div>
 
   <app-confirm-bar
+    [addToCartFn]="this.addToCartFn"
     *ngIf="this.isReady()"
     [getPrecio]="this.getPrecio"
     [reset]="this.reset"

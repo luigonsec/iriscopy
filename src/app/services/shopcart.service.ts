@@ -67,11 +67,16 @@ export class ShopcartService {
     analyticsCallback?: () => Promise<void> | void
   ): Promise<void> {
     const cart: Cart = this.getCart();
+
     // Añadir el elemento al array correspondiente en el carrito
+    if (!cart[itemType]) {
+      cart[itemType] = [];
+    }
     (cart[itemType] as T[]).push(item);
 
     // Actualizar el Subject y guardar en localStorage
     this.itemCart$.next(cart);
+
     localStorage.setItem('cart', JSONfn.stringify(cart));
 
     // Mostrar mensaje de éxito
@@ -105,6 +110,7 @@ export class ShopcartService {
     );
 
     // Actualizar localStorage y el Subject
+
     localStorage.setItem('cart', JSONfn.stringify(cart));
     this.itemCart$.next(cart);
 

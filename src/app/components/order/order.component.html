@@ -60,6 +60,30 @@
   </div>
 </div>
 
+<div class="order-item" *ngFor="let flyer of this.flyers">
+  <div class="title">
+    <b>Flyer</b>
+  </div>
+  <div class="description">
+    <div class="item">{{ flyer.printForm.name }}</div>
+    <div class="item">
+      {{ flyer.paperType.name }} - {{ flyer.paperType.description }}
+    </div>
+    <div class="item">{{ flyer.paperSize.name }}</div>
+    <div class="item">{{ flyer.copiesQuantity.code }} copias</div>
+  </div>
+  <div class="order-options">
+    <div class="price">
+      <div class="remove">
+        <i class="far fa-trash-alt" (click)="this.removeFlyer(flyer)"></i>
+      </div>
+      <div class="value">
+        {{ (this.flyersPrice[flyer.id] || 0).toFixed(2) }}€
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="order-item" *ngFor="let product of this.products">
   <div class="title">
     {{ product.product.name }}<br />
