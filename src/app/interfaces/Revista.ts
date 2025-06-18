@@ -1,8 +1,8 @@
 import Option from './Option';
 import File from 'src/app/interfaces/File';
+import Orderable from './Orderable';
 
-export default interface Revista {
-  id?: string;
+export default interface Revista extends Orderable {
   cover_paperType: Option;
   inner_paperType: Option;
   format: Option;
@@ -11,5 +11,4 @@ export default interface Revista {
   square_size: Option;
   copiesQuantity: number;
   files: File[];
-  additionalComments: string;
 }

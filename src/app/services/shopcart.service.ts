@@ -8,6 +8,36 @@ import options from 'src/config/options';
 import { MessageService } from 'primeng/api';
 import { AnalyticsService } from './analytics.service';
 import { OrdersService } from './orders.service';
+import TarjetaVisita from '../interfaces/TarjetaVisita';
+import Flyer from '../interfaces/Flyer';
+import Carpeta from '../interfaces/Carpeta';
+import Rollup from '../interfaces/Rollup';
+import Triptico from '../interfaces/Triptico';
+import Diptico from '../interfaces/Diptico';
+
+/**
+ * Enum para identificar los diferentes tipos de elementos del carrito
+ */
+export enum CartItemType {
+  COPY = 'copies',
+  PRODUCT = 'products',
+  BUSINESS_CARD = 'bussinessCard',
+  FLYER = 'flyers',
+  FOLDER = 'folders',
+  DIPTYCH = 'diptychs',
+  TRIPTYCH = 'triptychs',
+  ROLLUP = 'rollups',
+}
+
+/**
+ * Interface para la configuración de mensajes
+ */
+interface CartMessageConfig {
+  detail: string;
+  summary?: string;
+  severity?: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -23,36 +53,129 @@ export class ShopcartService {
     this.itemCart$ = new Subject();
   }
 
-  async addCopyToCart(order: OrderCopy) {
+  /**
+   * Método genérico para añadir cualquier tipo de elemento al carrito
+   * @param item Elemento a añadir al carrito
+   * @param itemType Tipo del elemento (propiedad en el carrito)
+   * @param messageConfig Configuración para el mensaje de éxito
+   * @param analyticsCallback Callback opcional para enviar datos a analytics
+   */
+  private async addToCart<T>(
+    item: T,
+    itemType: CartItemType,
+    messageConfig: CartMessageConfig,
+    analyticsCallback?: () => Promise<void> | void
+  ): Promise<void> {
     const cart: Cart = this.getCart();
-    cart.copies.push(order);
+    // Añadir el elemento al array correspondiente en el carrito
+    (cart[itemType] as T[]).push(item);
+
+    // Actualizar el Subject y guardar en localStorage
     this.itemCart$.next(cart);
     localStorage.setItem('cart', JSONfn.stringify(cart));
+
+    // Mostrar mensaje de éxito
     this.messageService.add({
-      severity: 'success',
-      summary: 'Carro actualizado',
-      detail: 'El pedido se ha añadido al carro',
+      severity: messageConfig.severity || 'success',
+      summary: messageConfig.summary || 'Carro actualizado',
+      detail: messageConfig.detail,
     });
 
-    this.analytics.anadirAlCarrito([
-      await this.orders.orderCopyToAnalytics(order, this.getCart().copies),
-    ]);
+    // Ejecutar el callback de analytics si existe
+    if (analyticsCallback) {
+      await Promise.resolve(analyticsCallback());
+    }
   }
 
-  addProductToCart(order: OrderProduct) {
+  /**
+   * Método para eliminar elementos del carrito
+   * @param itemType Tipo de elemento a eliminar
+   * @param predicate Función que determina qué elemento debe ser eliminado
+   * @param analyticsCallback Callback opcional para enviar datos a analytics
+   */
+  private async removeFromCart<T>(
+    itemType: CartItemType,
+    predicate: (item: T) => boolean,
+    analyticsCallback?: () => Promise<void> | void
+  ): Promise<void> {
     const cart: Cart = this.getCart();
-    cart.products.push(order);
-    this.itemCart$.next(cart);
-    localStorage.setItem('cart', JSONfn.stringify(cart));
+    // Filtrar los elementos que no cumplen con el predicado
+    (cart[itemType] as T[]) = (cart[itemType] as T[]).filter(
+      (item) => !predicate(item)
+    );
 
-    this.analytics.anadirAlCarrito([
-      this.orders.orderProductToAnalytics(order),
-    ]);
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Carro actualizado',
-      detail: 'El producto se ha añadido al carro',
+    // Actualizar localStorage y el Subject
+    localStorage.setItem('cart', JSONfn.stringify(cart));
+    this.itemCart$.next(cart);
+
+    // Ejecutar el callback de analytics si existe
+    if (analyticsCallback) {
+      await Promise.resolve(analyticsCallback());
+    }
+  }
+
+  // Métodos públicos para cada tipo de producto
+
+  async addCopyToCart(order: OrderCopy) {
+    await this.addToCart<OrderCopy>(
+      order,
+      CartItemType.COPY,
+      { detail: 'El pedido se ha añadido al carro' },
+      async () => {
+        this.analytics.anadirAlCarrito([
+          await this.orders.orderCopyToAnalytics(order, this.getCart().copies),
+        ]);
+      }
+    );
+  }
+
+  async addBusinessCardToCart(order: TarjetaVisita) {
+    await this.addToCart<TarjetaVisita>(order, CartItemType.BUSINESS_CARD, {
+      detail: 'La tarjeta de visita se ha añadido al carro',
     });
+  }
+
+  async addFlyerToCart(order: Flyer) {
+    await this.addToCart<Flyer>(order, CartItemType.FLYER, {
+      detail: 'El flyer se ha añadido al carro',
+    });
+  }
+
+  async addFolderToCart(order: Carpeta) {
+    await this.addToCart<Carpeta>(order, CartItemType.FOLDER, {
+      detail: 'La carpeta se ha añadido al carro',
+    });
+  }
+
+  async addDipticoToCart(order: Diptico) {
+    await this.addToCart<Diptico>(order, CartItemType.DIPTYCH, {
+      detail: 'El diptico se ha añadido al carro',
+    });
+  }
+
+  async addTripticoToCart(order: Triptico) {
+    await this.addToCart<Triptico>(order, CartItemType.TRIPTYCH, {
+      detail: 'El triptico se ha añadido al carro',
+    });
+  }
+
+  async addRollupToCart(order: Rollup) {
+    await this.addToCart<Rollup>(order, CartItemType.ROLLUP, {
+      detail: 'El rollup se ha añadido al carro',
+    });
+  }
+
+  async addProductToCart(order: OrderProduct) {
+    await this.addToCart<OrderProduct>(
+      order,
+      CartItemType.PRODUCT,
+      { detail: 'El producto se ha añadido al carro' },
+      () => {
+        this.analytics.anadirAlCarrito([
+          this.orders.orderProductToAnalytics(order),
+        ]);
+      }
+    );
   }
 
   updateCopies(orders: OrderCopy[]) {
@@ -63,25 +186,70 @@ export class ShopcartService {
   }
 
   async removeCopy(order: OrderCopy) {
-    const cart: Cart = this.getCart();
-    cart.copies = cart.copies.filter((x) => x.id !== order.id);
-    localStorage.setItem('cart', JSONfn.stringify(cart));
-    this.itemCart$.next(cart);
-    this.analytics.quitarDelCarrito([
-      await this.orders.orderCopyToAnalytics(order, this.getCart().copies),
-    ]);
+    await this.removeFromCart<OrderCopy>(
+      CartItemType.COPY,
+      (item) => item.id === order.id,
+      async () => {
+        this.analytics.quitarDelCarrito([
+          await this.orders.orderCopyToAnalytics(order, this.getCart().copies),
+        ]);
+      }
+    );
   }
 
-  removeProduct(product: OrderProduct) {
-    const cart: Cart = this.getCart();
-    cart.products = cart.products.filter(
-      (x) => x.product.id !== product.product.id
+  async removeProduct(product: OrderProduct) {
+    await this.removeFromCart<OrderProduct>(
+      CartItemType.PRODUCT,
+      (item) => item.product.id === product.product.id,
+      () => {
+        this.analytics.quitarDelCarrito([
+          this.orders.orderProductToAnalytics(product),
+        ]);
+      }
     );
-    localStorage.setItem('cart', JSONfn.stringify(cart));
-    this.itemCart$.next(cart);
-    this.analytics.quitarDelCarrito([
-      this.orders.orderProductToAnalytics(product),
-    ]);
+  }
+
+  // Métodos para remover otros tipos de productos
+  async removeBusinessCard(card: TarjetaVisita) {
+    await this.removeFromCart<TarjetaVisita>(
+      CartItemType.BUSINESS_CARD,
+      (item) => item.id === card.id
+    );
+  }
+
+  async removeFlyer(flyer: Flyer) {
+    await this.removeFromCart<Flyer>(
+      CartItemType.FLYER,
+      (item) => item.id === flyer.id
+    );
+  }
+
+  async removeFolder(folder: Carpeta) {
+    await this.removeFromCart<Carpeta>(
+      CartItemType.FOLDER,
+      (item) => item.id === folder.id
+    );
+  }
+
+  async removeDiptico(diptico: Diptico) {
+    await this.removeFromCart<Diptico>(
+      CartItemType.DIPTYCH,
+      (item) => item.id === diptico.id
+    );
+  }
+
+  async removeTriptico(triptico: Triptico) {
+    await this.removeFromCart<Triptico>(
+      CartItemType.TRIPTYCH,
+      (item) => item.id === triptico.id
+    );
+  }
+
+  async removeRollup(rollup: Rollup) {
+    await this.removeFromCart<Rollup>(
+      CartItemType.ROLLUP,
+      (item) => item.id === rollup.id
+    );
   }
 
   getCopies(): OrderCopy[] {
@@ -93,6 +261,12 @@ export class ShopcartService {
       JSONfn.parse(localStorage.getItem('cart')) || {
         copies: [],
         products: [],
+        bussinessCard: [],
+        flyers: [],
+        folders: [],
+        diptychs: [],
+        triptychs: [],
+        rollups: [],
       }
     );
   }
@@ -113,6 +287,12 @@ export class ShopcartService {
     const empty: Cart = {
       copies: [],
       products: [],
+      bussinessCard: [],
+      flyers: [],
+      folders: [],
+      diptychs: [],
+      triptychs: [],
+      rollups: [],
     };
     localStorage.setItem('cart', JSONfn.stringify(empty));
     this.itemCart$.next(empty);
