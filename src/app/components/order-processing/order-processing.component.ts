@@ -11,12 +11,16 @@ import { CouponsService } from 'src/app/services/coupons.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { RedsysService } from 'src/app/services/redsys.service';
-import { ShopcartService } from 'src/app/services/shopcart.service';
+import {
+  CartItemType,
+  ShopcartService,
+} from 'src/app/services/shopcart.service';
 import locations from 'src/config/locations';
 import { applyCoupon, clearCoupon } from 'src/app/_actions/coupons.actions';
 import { BillingComponent } from 'src/app/components/forms/billing/billing.component';
 import { ShippingComponent } from 'src/app/components/forms/shipping/shipping.component';
-import { Subscription } from 'rxjs';
+import { Subscription, forkJoin, Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import Customer from 'src/app/interfaces/Customer';
 
 import generalConfig from 'src/config/general';
@@ -30,6 +34,16 @@ import { ShippingCostsService } from 'src/app/services/shipping-costs.service';
 import moment from 'moment';
 import { AnalyticsService } from 'src/app/services/analytics.service';
 import { PricesService } from '../../services/prices.service';
+import { PriceResult } from '../../interfaces/PriceResult';
+import Flyer from '../../interfaces/Flyer';
+import TarjetaVisita from '../../interfaces/TarjetaVisita';
+import Carpeta from '../../interfaces/Carpeta';
+import Diptico from '../../interfaces/Diptico';
+import Triptico from '../../interfaces/Triptico';
+import Rollup from '../../interfaces/Rollup';
+import Cartel from '../../interfaces/Cartel';
+import Revista from '../../interfaces/Revista';
+import Cart from '../../interfaces/Cart';
 
 @Component({
   selector: 'app-order-processing',
@@ -43,8 +57,17 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   public inputCoupon: string;
   public coupon: Coupon;
   public payment: string;
-  public copies: OrderCopy[];
-  public products: OrderProduct[];
+  public copies: OrderCopy[] = [];
+  public products: OrderProduct[] = [];
+  public flyers: Flyer[] = [];
+  public businessCards: TarjetaVisita[] = [];
+  public folders: Carpeta[] = [];
+  public diptychs: Diptico[] = [];
+  public triptychs: Triptico[] = [];
+  public rollups: Rollup[] = [];
+  public posters: Cartel[] = [];
+  public magazines: Revista[] = [];
+
   public first_time_coupon_applied = false;
 
   public locations = locations;
@@ -84,6 +107,9 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   shippingCostStandard: number = 4.9;
   shippingCostFinal: number = 0;
   shippingCostUrgent: number = 6.9;
+
+  public itemsPrice: { [id: string]: number } = {};
+  public itemsNotes: { [id: string]: string[] } = {};
 
   constructor(
     private shopcartService: ShopcartService,
@@ -464,21 +490,134 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     this.calcularPrecios();
   }
 
+  getPrintItemPrices(): Observable<any[]> {
+    const observables: Observable<any>[] = [];
+
+    Object.values(CartItemType).forEach((itemType) => {
+      const propertyName = this.itemTypePropertyMap[itemType];
+      if (!propertyName) return;
+
+      const items = this[propertyName];
+      if (!items || !items.length || itemType === CartItemType.PRODUCT) return;
+
+      items.forEach((item) => {
+        const observable = this.getItemPriceObservable(itemType, item);
+        if (observable) {
+          observables.push(observable);
+        }
+      });
+    });
+
+    // Si no hay observables, devolvemos un array vacío como observable
+    return observables.length ? forkJoin(observables) : of([]);
+  }
+
+  private getItemPriceObservable(
+    itemType: CartItemType,
+    item: any
+  ): Observable<any> {
+    try {
+      // Caso especial para copies que necesitan el array completo de copies
+      if (itemType === CartItemType.COPY) {
+        return this.pricesService
+          .getCopyPrice(item, this.copies)
+          .pipe(this.processPriceResultOperator(item));
+      } else {
+        return this.pricesService
+          .getItemPrice(itemType, item)
+          .pipe(this.processPriceResultOperator(item));
+      }
+    } catch (error) {
+      console.error(
+        `Error al obtener el precio para el tipo ${itemType}:`,
+        error
+      );
+      return null;
+    }
+  }
+
+  private processPriceResultOperator(item: any) {
+    return map((result: PriceResult) => {
+      this.itemsPrice[item.id] = result.precio;
+      this.itemsNotes[item.id] = result.notas;
+      return result;
+    });
+  }
+
+  // Los métodos originales getItemPrice y processPriceResult han sido reemplazados por
+  // getItemPriceObservable y processPriceResultOperator que trabajan con Observables
+
+  private itemTypePropertyMap = {
+    [CartItemType.COPY]: 'copies',
+    [CartItemType.PRODUCT]: 'products',
+    [CartItemType.BUSINESS_CARD]: 'businessCards',
+    [CartItemType.FLYER]: 'flyers',
+    [CartItemType.FOLDER]: 'folders',
+    [CartItemType.DIPTYCH]: 'diptychs',
+    [CartItemType.TRIPTYCH]: 'triptychs',
+    [CartItemType.ROLLUP]: 'rollups',
+    [CartItemType.POSTER]: 'posters',
+    [CartItemType.MAGAZINE]: 'magazines',
+  };
+
   calcularPrecios(callback = undefined) {
+    // Primero obtenemos el precio de las copias
     this.getPrecioCopias().subscribe((price) => {
       this.precio_copias = price;
-      this.subtotal =
-        price +
-        this.products
-          .map((order) => +order.product.price * order.quantity)
-          .reduce((a, b) => a + b, 0);
-      this.getDiscount();
-      this.comprobarMetodoDePago();
-      this.getGastosDeEnvio();
-      this.getTotal();
-      if (callback) {
-        callback();
-      }
+
+      // Calculamos el precio de los productos (que no necesitan llamada asíncrona)
+      const precioProductos =
+        this.products.length > 0
+          ? this.products
+              .map((order) => +order.product.price * order.quantity)
+              .reduce((a, b) => a + b, 0)
+          : 0;
+
+      // Iniciamos el cálculo de precios para todos los demás elementos
+      this.getPrintItemPrices().subscribe({
+        next: () => {
+          // Una vez que todos los precios se han calculado y actualizado en itemsPrice
+          // Calculamos el subtotal sumando el precio de las copias, los productos y todos los demás elementos
+          this.subtotal = price + precioProductos;
+
+          // Sumamos los precios de todos los demás tipos de elementos (que están en itemsPrice)
+          Object.values(CartItemType).forEach((itemType) => {
+            const propertyName = this.itemTypePropertyMap[itemType];
+            if (!propertyName || itemType === CartItemType.PRODUCT) return;
+
+            const items = this[propertyName];
+            if (!items || !items.length) return;
+
+            // Sumamos al subtotal los precios de cada tipo de elemento
+            const precioItems = items
+              .map((item) => this.itemsPrice[item.id] || 0)
+              .reduce((a, b) => a + b, 0);
+
+            this.subtotal += precioItems;
+          });
+
+          // Continuamos con el resto del proceso
+          this.getDiscount();
+          this.comprobarMetodoDePago();
+          this.getGastosDeEnvio();
+          this.getTotal();
+          if (callback) {
+            callback();
+          }
+        },
+        error: (err) => {
+          console.error('Error al calcular los precios de los elementos:', err);
+          // Aún así intentamos realizar los cálculos con lo que tengamos
+          this.subtotal = price + precioProductos;
+          this.getDiscount();
+          this.comprobarMetodoDePago();
+          this.getGastosDeEnvio();
+          this.getTotal();
+          if (callback) {
+            callback();
+          }
+        },
+      });
     });
   }
 
@@ -543,20 +682,50 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
       });
   }
 
+  private updateCartItems(cart: Cart) {
+    this.copies = cart.copies || [];
+    this.products = cart.products || [];
+    this.businessCards = cart.bussinessCard || [];
+    this.flyers = cart.flyers || [];
+    this.folders = cart.folders || [];
+    this.diptychs = cart.diptychs || [];
+    this.triptychs = cart.triptychs || [];
+    this.rollups = cart.rollups || [];
+    // Si añades más tipos en el futuro, agrégalos aquí
+  }
+
+  public getTotalCartItems(): number {
+    return (
+      this.copies.length +
+      this.products.length +
+      this.flyers.length +
+      this.businessCards.length +
+      this.folders.length +
+      this.diptychs.length +
+      this.triptychs.length +
+      this.rollups.length +
+      this.posters.length +
+      this.magazines.length
+    );
+  }
+
+  public isCartEmpty(): boolean {
+    return this.getTotalCartItems() === 0;
+  }
+
   public ngOnDestroy(): void {
     this.subcriptorCoupon.unsubscribe();
   }
 
   ngOnInit(): void {
-    this.copies = this.shopcartService.getCart().copies;
-    this.products = this.shopcartService.getCart().products;
+    this.updateCartItems(this.shopcartService.getCart());
     this.calcularPrecios(this.subscribeCoupon.bind(this));
     this.calculateExpectedDeliveryDate();
     this.subscriptionCart = this.shopcartService
       .getCart$()
       .subscribe((order) => {
-        this.copies = order.copies;
-        this.products = order.products;
+        this.updateCartItems(this.shopcartService.getCart());
+
         this.calcularPrecios(this.validateCoupon.bind(this, this.coupon));
       });
   }
