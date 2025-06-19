@@ -12,6 +12,7 @@ import { CouponHandlerService } from 'src/app/services/coupon-handler.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { RedsysService } from 'src/app/services/redsys.service';
+import { OrderBuilderService } from 'src/app/services/order-builder.service';
 import {
   CartItemType,
   ShopcartService,
@@ -121,6 +122,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     private pricesService: PricesService,
     private shippingCostService: ShippingCostsService,
     private analytics: AnalyticsService,
+    private orderBuilderService: OrderBuilderService,
     private store: Store
   ) {}
 
@@ -163,11 +165,6 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
       next: () => {},
       error: () => {},
     });
-  }
-
-  public clearCoupon() {
-    this.couponHandlerService.clearCoupon();
-    this.coupon = undefined;
   }
 
   public validateCoupon(coupon) {
@@ -338,9 +335,18 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   public async prepareOrder(callback): Promise<void> {
     this.setLoadingState(true, 'Preparando pedido');
 
-    const shippingLine = this.getShippingLine();
-    const flattenFiles = this.getFlattenFiles();
-    const order: Order = this.buildOrderObject(shippingLine, flattenFiles);
+    const order: Order = this.orderBuilderService.buildOrderObject(
+      this.customer,
+      this.coupon,
+      this.billing,
+      this.shipping,
+      this.differentAddress,
+      this.copies,
+      this.products,
+      this.payment,
+      this.deliver,
+      this.selectedLocation
+    );
 
     this.orderService.create(order).subscribe({
       next: (response: { order: number }) => {
@@ -365,81 +371,11 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getShippingLine(): ShippingDetails {
-    const shippingLine = {} as ShippingDetails;
+  // Los métodos getShippingLine, getFlattenFiles y buildOrderObject
+  // han sido trasladados al servicio OrderBuilderService
 
-    if (this.deliver === 'Pickup') {
-      this.setPickupProperties(shippingLine);
-    } else {
-      this.setShippingProperties(shippingLine);
-    }
-
-    return shippingLine;
-  }
-
-  private getFlattenFiles(): File[] {
-    return this.copies
-      .map((order) => order.files)
-      .reduce((acc, val) => acc.concat(val), []);
-  }
-
-  private buildOrderObject(shippingLine, flattenFiles: File[]): Order {
-    const customer_id = this.customer ? this.customer.id : 0;
-    return {
-      customer_id,
-      coupon: this.coupon,
-      billing: this.billing.billingDetails,
-      shipping: this.differentAddress
-        ? this.shipping.shippingDetails
-        : this.billing.billingDetails,
-      copies: this.copies,
-      products: this.products,
-      payment_method: this.payment,
-      payment_method_title: this.payment,
-      shipping_lines: [shippingLine],
-      meta_data: [
-        {
-          key: '_wcuf_uploaded_files',
-          value: {
-            '0-37198-37595': {
-              id: '0-37198-37595',
-              quantity: flattenFiles.map(() => '1'),
-              original_filename: flattenFiles.map(
-                (x: File) => x.original_filename
-              ),
-              url: flattenFiles.map((x: File) => x.url),
-              source: flattenFiles.map((x: File) => x.source),
-              num_uploaded_files: flattenFiles.length,
-              user_feedback: '',
-              is_multiple_file_upload: true,
-            },
-          },
-        },
-      ],
-    };
-  }
-
-  private setShippingProperties(shippingLine) {
-    shippingLine.method_title =
-      this.deliver == 'UrgentShipping' ? 'Envío urgente' : 'Envío en 48 horas';
-    shippingLine.method_id =
-      this.deliver == 'UrgentShipping' ? 'urgent_flat_rate' : 'flat_rate';
-    shippingLine.instance_id = '9';
-    // shippingLine.total = this.getGastosDeEnvio().toFixed(2);
-    shippingLine.total_tax = '0.00';
-  }
-
-  private setPickupProperties(shippingLine) {
-    shippingLine.method_title = 'Local de Recogida';
-    shippingLine.method_id = 'local_pickup_plus';
-    shippingLine.total = '0.00';
-    shippingLine.meta_data = [
-      {
-        key: '_pickup_location_id',
-        value: this.selectedLocation.id,
-      },
-    ];
-  }
+  // Los métodos setShippingProperties y setPickupProperties
+  // han sido trasladados al servicio OrderBuilderService
 
   handleDeliveryMethodChange() {
     this.updateDeliveryMethod(this.deliver);
