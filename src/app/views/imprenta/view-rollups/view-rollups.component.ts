@@ -36,8 +36,8 @@ export class ViewRollupsComponent extends FormBase<Rollup> implements OnInit {
       files: [
         {
           id: undefined,
-          pages: 5,
-          name: '',
+          pages: 1,
+          name: 'Archivo de prueba',
           image: '',
           original_filename: '',
           size: 0,

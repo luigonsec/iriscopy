@@ -47,14 +47,14 @@ export class ViewTripticosComponent
       additionalComments: '',
       files: [
         {
-          id: '',
-          name: '',
-          size: 0,
-          url: '',
-          pages: 0,
-          original_filename: '',
-          source: '',
+          id: undefined,
+          pages: 1,
+          name: 'Archivo de prueba',
           image: '',
+          original_filename: '',
+          size: 0,
+          source: 'local',
+          url: '',
         },
       ],
     };

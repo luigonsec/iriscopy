@@ -43,7 +43,18 @@ export class ViewCarpetasComponent extends FormBase<Carpeta> implements OnInit {
       paperSize: undefined,
       copiesQuantity: 0,
       additionalComments: '',
-      files: [],
+      files: [
+        {
+          id: undefined,
+          pages: 1,
+          name: 'Archivo de prueba',
+          image: '',
+          original_filename: '',
+          size: 0,
+          source: 'local',
+          url: '',
+        },
+      ],
     };
     super.ngOnInit();
   }

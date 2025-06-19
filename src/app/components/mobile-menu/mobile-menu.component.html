@@ -63,7 +63,7 @@
       <li class="sublink">
         <a href="https://iriscopyshop.com/copisteria-reina-mercedes">
           <i class="chevron-right fas fa-chevron-right"></i>
-          Copistería R eina Mercedes
+          Copistería Reina Mercedes
         </a>
       </li>
     </ul>
@@ -71,6 +71,65 @@
     <li class="link">
       <a href="https://iriscopyshop.com/encuadernar/"> Encuadernar apuntes </a>
     </li>
+    <li class="link">
+      <a (click)="this.togglePrintOptions()">
+        Imprenta <i class="collapse-icon fas fa-chevron-down"></i>
+      </a>
+    </li>
+    <ul
+      id="print-options"
+      [className]="this.printOptionsOpened ? 'opened' : 'closed'"
+    >
+      <li class="sublink">
+        <a href="/imprenta/tarjetas-visita">
+          <i class="chevron-right fas fa-chevron-right"></i>
+          Tarjetas de visita
+        </a>
+      </li>
+
+      <li class="sublink">
+        <a href="/imprenta/flyers">
+          <i class="chevron-right fas fa-chevron-right"></i>
+          Flyers
+        </a>
+      </li>
+      <li class="sublink">
+        <a href="/imprenta/carpetas">
+          <i class="chevron-right fas fa-chevron-right"></i>
+          Carpetas
+        </a>
+      </li>
+      <li class="sublink">
+        <a href="/imprenta/revistas">
+          <i class="chevron-right fas fa-chevron-right"></i>
+          Revistas
+        </a>
+      </li>
+      <li class="sublink">
+        <a href="/imprenta/rollups">
+          <i class="chevron-right fas fa-chevron-right"></i>
+          Rollups
+        </a>
+      </li>
+      <li class="sublink">
+        <a href="/imprenta/carteles">
+          <i class="chevron-right fas fa-chevron-right"></i>
+          Carteles
+        </a>
+      </li>
+      <li class="sublink">
+        <a href="/imprenta/dipticos">
+          <i class="chevron-right fas fa-chevron-right"></i>
+          Dipticos
+        </a>
+      </li>
+      <li class="sublink">
+        <a href="/imprenta/tripticos">
+          <i class="chevron-right fas fa-chevron-right"></i>
+          Tripticos
+        </a>
+      </li>
+    </ul>
     <li class="link">
       <a href="https://iriscopyshop.com/preguntas-frecuentes">
         Preguntas frecuentes

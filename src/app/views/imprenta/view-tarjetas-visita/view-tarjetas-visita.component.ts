@@ -47,8 +47,8 @@ export class ViewTarjetasVisitaComponent
       files: [
         {
           id: undefined,
-          pages: 5,
-          name: '',
+          pages: 1,
+          name: 'Archivo de prueba',
           image: '',
           original_filename: '',
           size: 0,

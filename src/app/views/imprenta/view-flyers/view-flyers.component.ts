@@ -61,10 +61,10 @@ export class ViewFlyersComponent extends FormBase<Flyer> implements OnInit {
       files: [
         {
           id: '',
-          name: '',
+          name: 'Archivo de prueba',
           size: 0,
           url: '',
-          pages: 0,
+          pages: 1,
           original_filename: '',
           source: '',
           image: '',
