@@ -1,18 +1,15 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
 import Coupon from 'src/app/interfaces/Coupon';
-import File from 'src/app/interfaces/File';
 import Location from 'src/app/interfaces/Location';
 import Order from 'src/app/interfaces/Order';
 import RedsysData from 'src/app/interfaces/RedsysData';
-
-import { CouponsService } from 'src/app/services/coupons.service';
 import { CouponHandlerService } from 'src/app/services/coupon-handler.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { RedsysService } from 'src/app/services/redsys.service';
 import { OrderBuilderService } from 'src/app/services/order-builder.service';
+import { ShippingHandlerService } from 'src/app/services/shipping-handler.service';
 import {
   CartItemType,
   ShopcartService,
@@ -23,15 +20,10 @@ import { ShippingComponent } from 'src/app/components/forms/shipping/shipping.co
 import { Subscription, forkJoin, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import Customer from 'src/app/interfaces/Customer';
-
 import generalConfig from 'src/config/general';
-
-import ShippingDetails from 'src/app/interfaces/ShippingDetails';
 import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import OrderProduct from 'src/app/interfaces/OrderProduct';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ShippingCostsService } from 'src/app/services/shipping-costs.service';
-import moment from 'moment';
 import { AnalyticsService } from 'src/app/services/analytics.service';
 import { PricesService } from '../../services/prices.service';
 import { PriceResult } from '../../interfaces/PriceResult';
@@ -117,13 +109,11 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     private redsysService: RedsysService,
     private loadingService: LoadingService,
     private messageService: MessageService,
-    private couponsService: CouponsService,
     private couponHandlerService: CouponHandlerService,
     private pricesService: PricesService,
-    private shippingCostService: ShippingCostsService,
+    private shippingHandlerService: ShippingHandlerService,
     private analytics: AnalyticsService,
-    private orderBuilderService: OrderBuilderService,
-    private store: Store
+    private orderBuilderService: OrderBuilderService
   ) {}
 
   public infoPagoAnalytics() {
@@ -270,28 +260,22 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   }
 
   public calculateGastosDeEnvioEstandar() {
-    if (this.billing) {
-      const postcode =
-        this.differentAddress && this.shipping
-          ? this.shipping.shippingDetails.postcode
-          : this.billing.billingDetails.postcode;
+    const shippingCosts = this.shippingHandlerService.calculateShippingCosts(
+      this.billing,
+      this.shipping,
+      this.differentAddress,
+      this.subtotal,
+      this.discount
+    );
 
-      this.urgentShippingAvailable =
-        this.shippingCostService.isUrgentShippingAvailable(postcode);
+    this.shippingCostStandard = shippingCosts.standardCost;
+    this.shippingCostUrgent = shippingCosts.urgentCost;
+    this.urgentShippingAvailable = shippingCosts.urgentAvailable;
+    this.standardShippingAvailable = shippingCosts.standardAvailable;
 
-      this.standardShippingAvailable = this.urgentShippingAvailable;
-
-      if (!!!this.urgentShippingAvailable) {
-        this.deliver = 'Pickup';
-      }
-
-      this.shippingCostStandard = this.shippingCostService.getGastosDeEnvio(
-        this.subtotal - this.discount,
-        postcode
-      );
-      return;
+    if (!this.urgentShippingAvailable) {
+      this.deliver = 'Pickup';
     }
-    this.shippingCostStandard = 4.9;
   }
 
   public getTotal() {
@@ -376,6 +360,9 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
 
   // Los métodos setShippingProperties y setPickupProperties
   // han sido trasladados al servicio OrderBuilderService
+
+  // Los métodos addWorkingDays y el cálculo completo de fechas de envío
+  // han sido trasladados al servicio ShippingHandlerService
 
   handleDeliveryMethodChange() {
     this.updateDeliveryMethod(this.deliver);
@@ -514,45 +501,23 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   }
 
   getGastosDeEnvio() {
-    if (this.deliver === 'Pickup') {
-      this.shippingCostFinal = 0;
-    } else if (this.deliver === 'Shipping') {
+    if (this.deliver === 'Shipping') {
       this.calculateGastosDeEnvioEstandar();
-      this.shippingCostFinal = this.shippingCostStandard;
-    } else if (this.deliver === 'UrgentShipping') {
-      this.shippingCostFinal = this.shippingCostUrgent;
     }
+
+    this.shippingCostFinal =
+      this.shippingHandlerService.calculateFinalShippingCost(
+        this.deliver,
+        this.shippingCostStandard,
+        this.shippingCostUrgent
+      );
+
     return this.shippingCostFinal;
   }
 
-  private addWorkingDays(
-    date: moment.Moment,
-    workingDays: number
-  ): moment.Moment {
-    const result = date.clone();
-    while (workingDays > 0) {
-      result.add(1, 'day');
-      // Con isoWeekday(), de lunes (1) a viernes (5) son días laborables.
-      if (result.isoWeekday() <= 5) {
-        workingDays--;
-      }
-    }
-    return result;
-  }
-
   calculateExpectedDeliveryDate() {
-    // Asegurarse de que Moment use el locale en español
-    moment.locale('es');
-
-    const today = moment();
-    const earliest = this.addWorkingDays(today, 2);
-    const latest = this.addWorkingDays(today, 4);
-
-    // Formateamos la salida para mostrar abreviaturas en minúsculas (por ejemplo, 'vie 9' en vez de 'Vie 9')
-    // Nota: Para obtener las abreviaturas en minúsculas, puedes transformar el string resultante a minúsculas.
-    this.expectedDeliveryDate = `${earliest
-      .format('ddd D')
-      .toLowerCase()} - ${latest.format('ddd D').toLowerCase()}`;
+    this.expectedDeliveryDate =
+      this.shippingHandlerService.calculateExpectedDeliveryDate();
   }
 
   comprobarMetodoDePago() {
