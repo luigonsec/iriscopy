@@ -458,7 +458,6 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
           // Una vez que todos los precios se han calculado y actualizado en itemsPrice
           // Calculamos el subtotal sumando el precio de las copias, los productos y todos los demás elementos
           this.subtotal = price + precioProductos;
-
           // Sumamos los precios de todos los demás tipos de elementos (que están en itemsPrice)
           Object.values(CartItemType).forEach((itemType) => {
             const propertyName = this.itemTypePropertyMap[itemType];
@@ -478,7 +477,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
           // Continuamos con el resto del proceso
           this.getDiscount();
           this.comprobarMetodoDePago();
-          this.getGastosDeEnvio();
+          this.getGastosDeEnvio(); // Este método ahora siempre calcula el costo estándar de envío
           this.getTotal();
           if (callback) {
             callback();
@@ -490,7 +489,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
           this.subtotal = price + precioProductos;
           this.getDiscount();
           this.comprobarMetodoDePago();
-          this.getGastosDeEnvio();
+          this.getGastosDeEnvio(); // Este método ahora siempre calcula el costo estándar de envío
           this.getTotal();
           if (callback) {
             callback();
@@ -501,9 +500,9 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   }
 
   getGastosDeEnvio() {
-    if (this.deliver === 'Shipping') {
-      this.calculateGastosDeEnvioEstandar();
-    }
+    // Siempre calculamos los gastos de envío estándar para tener el costo actualizado
+    // independientemente del método de entrega seleccionado
+    this.calculateGastosDeEnvioEstandar();
 
     this.shippingCostFinal =
       this.shippingHandlerService.calculateFinalShippingCost(
@@ -576,14 +575,22 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.updateCartItems(this.shopcartService.getCart());
-    this.calcularPrecios(this.subscribeCoupon.bind(this));
+    this.calcularPrecios(() => {
+      // Después de calcular precios, actualizar los costos de envío
+      this.calculateGastosDeEnvioEstandar();
+      this.subscribeCoupon();
+    });
     this.calculateExpectedDeliveryDate();
     this.subscriptionCart = this.shopcartService
       .getCart$()
       .subscribe((order) => {
         this.updateCartItems(this.shopcartService.getCart());
 
-        this.calcularPrecios(this.validateCoupon.bind(this, this.coupon));
+        this.calcularPrecios(() => {
+          // También actualizar costos de envío cuando cambia el carrito
+          this.calculateGastosDeEnvioEstandar();
+          this.validateCoupon(this.coupon);
+        });
       });
   }
 }
