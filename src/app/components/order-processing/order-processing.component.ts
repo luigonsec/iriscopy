@@ -8,6 +8,7 @@ import Order from 'src/app/interfaces/Order';
 import RedsysData from 'src/app/interfaces/RedsysData';
 
 import { CouponsService } from 'src/app/services/coupons.service';
+import { CouponHandlerService } from 'src/app/services/coupon-handler.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { RedsysService } from 'src/app/services/redsys.service';
@@ -16,7 +17,6 @@ import {
   ShopcartService,
 } from 'src/app/services/shopcart.service';
 import locations from 'src/config/locations';
-import { applyCoupon, clearCoupon } from 'src/app/_actions/coupons.actions';
 import { BillingComponent } from 'src/app/components/forms/billing/billing.component';
 import { ShippingComponent } from 'src/app/components/forms/shipping/shipping.component';
 import { Subscription, forkJoin, Observable, of } from 'rxjs';
@@ -29,7 +29,6 @@ import ShippingDetails from 'src/app/interfaces/ShippingDetails';
 import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import OrderProduct from 'src/app/interfaces/OrderProduct';
 import { HttpErrorResponse } from '@angular/common/http';
-import { selectCoupon } from 'src/app/_selectors/coupons.selector';
 import { ShippingCostsService } from 'src/app/services/shipping-costs.service';
 import moment from 'moment';
 import { AnalyticsService } from 'src/app/services/analytics.service';
@@ -118,6 +117,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     private loadingService: LoadingService,
     private messageService: MessageService,
     private couponsService: CouponsService,
+    private couponHandlerService: CouponHandlerService,
     private pricesService: PricesService,
     private shippingCostService: ShippingCostsService,
     private analytics: AnalyticsService,
@@ -154,74 +154,37 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
 
   public removeCoupon() {
     this.coupon = undefined;
-    this.store.dispatch(clearCoupon());
+    this.couponHandlerService.removeCoupon();
   }
 
   public getCoupon() {
     this.first_time_coupon_applied = true;
-    this.searching_coupon = true;
-    this.apply_cupon_text = 'Buscando cupón...';
-    this.couponsService
-      .validate(this.inputCoupon)
-      .subscribe({
-        next: (coupon: Coupon) => {
-          coupon.valid_until = moment().valueOf() + 15 * 60 * 1000;
-
-          this.store.dispatch(applyCoupon({ coupon: coupon }));
-        },
-        error: () => {
-          return this.messageService.add({
-            severity: 'error',
-            detail: 'El código promocional no existe',
-            summary: 'Código erróneo',
-          });
-        },
-      })
-      .add(() => {
-        this.searching_coupon = false;
-        this.apply_cupon_text = 'Aplicar mi cupón';
-      });
-  }
-
-  private comprobarCantidadMinima(coupon: Coupon) {
-    if (coupon.minimum_amount > this.precio_copias) {
-      return false;
-    }
-    return true;
+    this.couponHandlerService.getCoupon(this.inputCoupon).subscribe({
+      next: () => {},
+      error: () => {},
+    });
   }
 
   public clearCoupon() {
-    this.store.dispatch(clearCoupon());
+    this.couponHandlerService.clearCoupon();
     this.coupon = undefined;
   }
 
   public validateCoupon(coupon) {
     if (!coupon) return false;
 
-    if (!this.comprobarCantidadMinima(coupon)) {
-      this.messageService.add({
-        severity: 'error',
-        detail: `El código promocional solo puede aplicarse a pedidos de copias mayores de ${coupon.minimum_amount} €`,
-        summary: 'Código no aplicado',
-      });
-      return this.clearCoupon();
-    } else if (coupon.valid_until < moment().valueOf()) {
-      return this.clearCoupon();
+    const result = this.couponHandlerService.validateCoupon(
+      coupon,
+      this.precio_copias,
+      this.calcularPrecios.bind(this)
+    );
+
+    if (result) {
+      this.coupon = coupon;
+      this.discount = this.coupon.amount;
     }
 
-    this.coupon = coupon;
-    this.discount = this.coupon.amount;
-
-    this.store.dispatch(applyCoupon({ coupon: coupon }));
-    this.calcularPrecios();
-
-    if (this.first_time_coupon_applied) {
-      this.messageService.add({
-        severity: 'success',
-        detail: 'El código promocional se ha aplicado',
-        summary: 'Código aplicado',
-      });
-    }
+    return result;
   }
 
   public validate() {
@@ -350,17 +313,10 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
 
   public getDiscount() {
     const subtotal = this.precio_copias;
-    this.discount = 0;
-    if (this.coupon) {
-      let discountAmount = 0;
-
-      if (this.coupon.discount_type === 'percent') {
-        discountAmount = subtotal * (this.coupon.amount / 100);
-      } else if (this.coupon.discount_type === 'fixed_cart') {
-        discountAmount = this.coupon.amount;
-      }
-      this.discount = discountAmount;
-    }
+    this.discount = this.couponHandlerService.getDiscount(
+      subtotal,
+      this.coupon
+    );
   }
 
   public processOrder() {
@@ -675,11 +631,11 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   }
 
   subscribeCoupon() {
-    this.subcriptorCoupon = this.store
-      .select(selectCoupon)
-      .subscribe((coupon) => {
+    this.subcriptorCoupon = this.couponHandlerService.subscribeCoupon(
+      (coupon) => {
         this.validateCoupon(coupon);
-      });
+      }
+    );
   }
 
   private updateCartItems(cart: Cart) {
