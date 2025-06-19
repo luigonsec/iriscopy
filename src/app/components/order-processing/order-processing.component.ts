@@ -439,66 +439,144 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     [CartItemType.MAGAZINE]: 'magazines',
   };
 
+  /**
+   * Calcula el precio total del pedido
+   * @param callback Función callback que se ejecuta al finalizar todos los cálculos
+   */
   calcularPrecios(callback = undefined) {
     // Primero obtenemos el precio de las copias
-    this.getPrecioCopias().subscribe((price) => {
-      this.precio_copias = price;
-
-      // Calculamos el precio de los productos (que no necesitan llamada asíncrona)
-      const precioProductos =
-        this.products.length > 0
-          ? this.products
-              .map((order) => +order.product.price * order.quantity)
-              .reduce((a, b) => a + b, 0)
-          : 0;
-
-      // Iniciamos el cálculo de precios para todos los demás elementos
-      this.getPrintItemPrices().subscribe({
-        next: () => {
-          // Una vez que todos los precios se han calculado y actualizado en itemsPrice
-          // Calculamos el subtotal sumando el precio de las copias, los productos y todos los demás elementos
-          this.subtotal = price + precioProductos;
-          // Sumamos los precios de todos los demás tipos de elementos (que están en itemsPrice)
-          Object.values(CartItemType).forEach((itemType) => {
-            const propertyName = this.itemTypePropertyMap[itemType];
-            if (!propertyName || itemType === CartItemType.PRODUCT) return;
-
-            const items = this[propertyName];
-            if (!items || !items.length) return;
-
-            // Sumamos al subtotal los precios de cada tipo de elemento
-            const precioItems = items
-              .map((item) => this.itemsPrice[item.id] || 0)
-              .reduce((a, b) => a + b, 0);
-
-            this.subtotal += precioItems;
-          });
-
-          // Continuamos con el resto del proceso
-          this.getDiscount();
-          this.comprobarMetodoDePago();
-          this.getGastosDeEnvio(); // Este método ahora siempre calcula el costo estándar de envío
-          this.getTotal();
-          if (callback) {
-            callback();
-          }
-        },
-        error: (err) => {
-          console.error('Error al calcular los precios de los elementos:', err);
-          // Aún así intentamos realizar los cálculos con lo que tengamos
-          this.subtotal = price + precioProductos;
-          this.getDiscount();
-          this.comprobarMetodoDePago();
-          this.getGastosDeEnvio(); // Este método ahora siempre calcula el costo estándar de envío
-          this.getTotal();
-          if (callback) {
-            callback();
-          }
-        },
-      });
+    this.getPrecioCopias().subscribe({
+      next: (price) => {
+        this.precio_copias = price;
+        this.calcularPreciosRestantes(price, callback);
+      },
+      error: (err) => {
+        console.error('Error al calcular el precio de las copias:', err);
+        // Intentamos continuar con precio 0 para copias
+        this.precio_copias = 0;
+        this.calcularPreciosRestantes(0, callback);
+      },
     });
   }
 
+  /**
+   * Calcula los precios del resto de elementos después de obtener el precio de las copias
+   * @param precioCopias Precio calculado de las copias
+   * @param callback Función a ejecutar al finalizar los cálculos
+   */
+  private calcularPreciosRestantes(
+    precioCopias: number,
+    callback = undefined
+  ): void {
+    // Calculamos precio de productos
+    const precioProductos = this.calcularPrecioProductos();
+
+    // Iniciamos el cálculo de precios para todos los demás elementos
+    this.getPrintItemPrices().subscribe({
+      next: () => {
+        // Calculamos subtotal con todos los elementos
+        this.calcularSubtotal(precioCopias, precioProductos);
+
+        // Finalizamos los cálculos
+        this.finalizarCalculos(callback);
+      },
+      error: (err) => {
+        console.error('Error al calcular los precios de los elementos:', err);
+        // Aun con error, calculamos con lo que tenemos
+        this.subtotal = precioCopias + precioProductos;
+        this.finalizarCalculos(callback);
+      },
+    });
+  }
+
+  /**
+   * Calcula el precio total de los productos
+   */
+  private calcularPrecioProductos(): number {
+    return this.products.length > 0
+      ? this.products
+          .map((order) => +order.product.price * order.quantity)
+          .reduce((a, b) => a + b, 0)
+      : 0;
+  }
+
+  /**
+   * Calcula el subtotal sumando todos los precios de los elementos
+   */
+  private calcularSubtotal(
+    precioCopias: number,
+    precioProductos: number
+  ): void {
+    this.subtotal = precioCopias + precioProductos;
+
+    // Sumamos los precios de todos los demás tipos de elementos
+    Object.values(CartItemType).forEach((itemType) => {
+      const propertyName = this.itemTypePropertyMap[itemType];
+      if (!propertyName || itemType === CartItemType.PRODUCT) return;
+
+      const items = this[propertyName];
+      if (!items || !items.length) return;
+
+      // Sumamos al subtotal los precios de cada tipo de elemento
+      const precioItems = items
+        .map((item) => this.itemsPrice[item.id] || 0)
+        .reduce((a, b) => a + b, 0);
+
+      this.subtotal += precioItems;
+    });
+  }
+
+  /**
+   * Finaliza los cálculos del pedido aplicando descuentos y calculando gastos de envío
+   */
+  private finalizarCalculos(callback = undefined): void {
+    this.getDiscount();
+
+    // Revisar si el subtotal es suficiente para los métodos de pago disponibles
+    const subtotalMasDescuento = this.subtotal - this.discount;
+    if (subtotalMasDescuento < this.PAYMENT_MINIMUM_PRICE_BIZUM) {
+      this.payment = 'CARD';
+      this.infoPagoAnalytics();
+    }
+    if (subtotalMasDescuento < this.PAYMENT_MINIMUM_PRICE_CARD) {
+      this.payment = null;
+    }
+
+    // Siempre calculamos los gastos de envío estándar para tener el costo actualizado
+    this.calculateGastosDeEnvioEstandar();
+
+    // Calculamos el costo final de envío según el método seleccionado
+    this.shippingCostFinal =
+      this.shippingHandlerService.calculateFinalShippingCost(
+        this.deliver,
+        this.shippingCostStandard,
+        this.shippingCostUrgent
+      );
+
+    this.getTotal();
+
+    if (callback) {
+      callback();
+    }
+  }
+
+  /**
+   * Comprueba si el método de pago seleccionado es válido para el total actual
+   */
+  comprobarMetodoDePago() {
+    const subtotalMasDescuento = this.subtotal - this.discount;
+    if (subtotalMasDescuento < this.PAYMENT_MINIMUM_PRICE_BIZUM) {
+      this.payment = 'CARD';
+      this.infoPagoAnalytics();
+    }
+    if (subtotalMasDescuento < this.PAYMENT_MINIMUM_PRICE_CARD) {
+      this.payment = null;
+    }
+  }
+
+  /**
+   * Calcula los gastos de envío basado en el método de entrega seleccionado
+   */
   getGastosDeEnvio() {
     // Siempre calculamos los gastos de envío estándar para tener el costo actualizado
     // independientemente del método de entrega seleccionado
@@ -514,30 +592,17 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     return this.shippingCostFinal;
   }
 
+  /**
+   * Calcula la fecha estimada de entrega utilizando el servicio de envío
+   */
   calculateExpectedDeliveryDate() {
     this.expectedDeliveryDate =
       this.shippingHandlerService.calculateExpectedDeliveryDate();
   }
 
-  comprobarMetodoDePago() {
-    const subtotalMasDescuento = this.subtotal + this.discount;
-    if (subtotalMasDescuento < this.PAYMENT_MINIMUM_PRICE_BIZUM) {
-      this.payment = 'CARD';
-      this.infoPagoAnalytics();
-    }
-    if (subtotalMasDescuento < this.PAYMENT_MINIMUM_PRICE_CARD) {
-      this.payment = null;
-    }
-  }
-
-  subscribeCoupon() {
-    this.subcriptorCoupon = this.couponHandlerService.subscribeCoupon(
-      (coupon) => {
-        this.validateCoupon(coupon);
-      }
-    );
-  }
-
+  /**
+   * Actualiza los elementos del carrito con los valores actuales
+   */
   private updateCartItems(cart: Cart) {
     this.copies = cart.copies || [];
     this.products = cart.products || [];
@@ -547,9 +612,14 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     this.diptychs = cart.diptychs || [];
     this.triptychs = cart.triptychs || [];
     this.rollups = cart.rollups || [];
-    // Si añades más tipos en el futuro, agrégalos aquí
+    // Los posters y magazines no están en la interfaz Cart, pero mantenemos el array vacío
+    this.posters = [];
+    this.magazines = [];
   }
 
+  /**
+   * Calcula el total de elementos en el carrito
+   */
   public getTotalCartItems(): number {
     return (
       this.copies.length +
@@ -565,19 +635,42 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Verifica si el carrito está vacío
+   */
   public isCartEmpty(): boolean {
     return this.getTotalCartItems() === 0;
   }
 
-  public ngOnDestroy(): void {
-    this.subcriptorCoupon.unsubscribe();
+  /**
+   * Suscribe al componente a cambios en el cupón
+   */
+  subscribeCoupon() {
+    this.subcriptorCoupon = this.couponHandlerService.subscribeCoupon(
+      (coupon) => {
+        this.validateCoupon(coupon);
+      }
+    );
   }
 
+  /**
+   * Método que se ejecuta al destruir el componente
+   */
+  public ngOnDestroy(): void {
+    if (this.subcriptorCoupon) {
+      this.subcriptorCoupon.unsubscribe();
+    }
+    if (this.subscriptionCart) {
+      this.subscriptionCart.unsubscribe();
+    }
+  }
+
+  /**
+   * Método que se ejecuta al inicializar el componente
+   */
   ngOnInit(): void {
     this.updateCartItems(this.shopcartService.getCart());
     this.calcularPrecios(() => {
-      // Después de calcular precios, actualizar los costos de envío
-      this.calculateGastosDeEnvioEstandar();
       this.subscribeCoupon();
     });
     this.calculateExpectedDeliveryDate();
@@ -587,8 +680,6 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
         this.updateCartItems(this.shopcartService.getCart());
 
         this.calcularPrecios(() => {
-          // También actualizar costos de envío cuando cambia el carrito
-          this.calculateGastosDeEnvioEstandar();
           this.validateCoupon(this.coupon);
         });
       });
