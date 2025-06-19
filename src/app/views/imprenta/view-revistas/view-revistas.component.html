@@ -34,24 +34,24 @@
         <div class="p-fluid">
           <div class="Label">Tamaño</div>
           <app-select-button
-            *ngIf="this.order.format.code == 'vertical'"
+            *ngIf="order.format.code == 'vertical'"
             [options]="revistasOptions.vertical_size"
             (emitChange)="getProperty('vertical_size', $event)"
           ></app-select-button>
           <app-select-button
-            *ngIf="this.order.format.code == 'horizontal'"
+            *ngIf="order.format.code == 'horizontal'"
             [options]="revistasOptions.horizontal_size"
             (emitChange)="getProperty('horizontal_size', $event)"
           ></app-select-button>
           <app-select-button
-            *ngIf="this.order.format.code == 'cuadrado'"
+            *ngIf="order.format.code == 'cuadrado'"
             [options]="revistasOptions.square_size"
             (emitChange)="getProperty('square_size', $event)"
           ></app-select-button>
         </div>
       </div>
 
-      <div class="Form__Section p-field" *ngIf="this.isCustomSize()">
+      <div class="Form__Section p-field" *ngIf="isCustomSize()">
         <div class="p-fluid">
           <div class="Label">Tamaño personalizado</div>
           <app-input-custom-size
@@ -106,7 +106,7 @@
                   pButton
                   class="Secondary pink no-padding"
                   label="Eliminar"
-                  (click)="this.removeFile(file.id)"
+                  (click)="removeFile(file.id)"
                 ></button>
               </div>
             </div>
@@ -132,8 +132,8 @@
   </div>
 
   <app-confirm-bar
-    *ngIf="this.ready"
-    [reset]="this.reset"
-    [(order)]="this.order"
+    *ngIf="ready"
+    [reset]="reset"
+    [(order)]="order"
   ></app-confirm-bar>
 </div>

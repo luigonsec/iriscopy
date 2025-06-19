@@ -1,0 +1,23 @@
+<div class="title">
+  <b>{{ name }}</b>
+</div>
+<div class="description">
+  <div class="item" *ngIf="item.printForm">{{ item.printForm.name }}</div>
+  <div class="item" *ngIf="item.paperType">
+    {{ item.paperType.name }} - {{ item.paperType.description }}
+  </div>
+  <div class="item" *ngIf="item.finishType">{{ item.finishType.name }}</div>
+  <div class="item" *ngIf="item.format">{{ item.format.name }}</div>
+  <div class="item" *ngIf="item.paperSize">{{ item.paperSize.name }}</div>
+  <div class="item" *ngIf="item.copiesQuantity">
+    {{ item.copiesQuantity.code }} copias
+  </div>
+</div>
+<div class="cart-actions">
+  <div class="price">
+    <div class="remove">
+      <i class="far fa-trash-alt" (click)="removeFn(item)"></i>
+    </div>
+    <div class="value">{{ (price || 0).toFixed(2) }}€</div>
+  </div>
+</div>

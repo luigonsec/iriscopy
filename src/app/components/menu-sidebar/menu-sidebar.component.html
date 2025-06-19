@@ -9,35 +9,27 @@
           <a class="link" href="https://iriscopyshop.com">Inicio</a>
         </div>
         <div class="item-link">
-          <a
-            class="link"
-            x
-            (click)="this.visible = false"
-            [routerLink]="'/print'"
-          >
+          <a class="link" x (click)="visible = false" [routerLink]="'/print'">
             Imprimir
           </a>
         </div>
-        <div class="item-link" *ngIf="this.isShopActive">
-          <a class="link" (click)="this.visible = false" [routerLink]="'/shop'">
+        <div class="item-link" *ngIf="isShopActive">
+          <a class="link" (click)="visible = false" [routerLink]="'/shop'">
             Tienda
           </a>
         </div>
         <div class="item-link">
           <a
             class="link"
-            (click)="this.puntosRecogidaOpened = !!!this.puntosRecogidaOpened"
+            (click)="puntosRecogidaOpened = !!!puntosRecogidaOpened"
           >
             Puntos de recogida
-            <i
-              *ngIf="!!!this.puntosRecogidaOpened"
-              class="fas fa-caret-down"
-            ></i>
-            <i *ngIf="this.puntosRecogidaOpened" class="fas fa-caret-up"></i>
+            <i *ngIf="!!!puntosRecogidaOpened" class="fas fa-caret-down"></i>
+            <i *ngIf="puntosRecogidaOpened" class="fas fa-caret-up"></i>
           </a>
         </div>
         <ng-container *ngIf="puntosRecogidaOpened">
-          <div class="item-link" *ngFor="let p of this.puntosRecogida">
+          <div class="item-link" *ngFor="let p of puntosRecogida">
             <a href="{{ p.routerLink }}" class="sublink">
               {{ p.label }}
             </a>

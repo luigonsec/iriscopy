@@ -32,7 +32,7 @@ import { AdditionalCommentComponent } from './components/inputs/additional-comme
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ConfirmBarComponent } from './components/confirm-bar/confirm-bar.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ShopcartComponent } from './components/shopcart/shopcart.component';
+import { ShopcartWrapperComponent } from './components/shopcart-wrapper/shopcart-wrapper.component';
 import { SidebarModule } from 'primeng/sidebar';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { PrintComponent } from './views/print/print.component';
@@ -44,7 +44,7 @@ import { TableModule } from 'primeng/table';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MenuModule } from 'primeng/menu';
 import { CheckboxModule } from 'primeng/checkbox';
-import { OrderComponent } from './components/order/order.component';
+import { ShopcartComponent } from './components/shopcart/shopcart.component';
 import { TermsComponent } from './views/terms/terms.component';
 import { SuccessComponent } from './views/success/success.component';
 import { ErrorComponent } from './views/error/error.component';
@@ -100,6 +100,7 @@ import { ViewDipticosComponent } from './views/imprenta/view-dipticos/view-dipti
 import { ViewTripticosComponent } from './views/imprenta/view-tripticos/view-tripticos.component';
 import { InputCustomSizeComponent } from './components/inputs/input-custom-size/input-custom-size.component';
 import { SelectButtonComponent } from './components/inputs/select-button/select-button.component';
+import { ShopcartPrintItemComponent } from './components/shopcart-print-item/shopcart-print-item.component';
 
 @NgModule({
   declarations: [
@@ -121,10 +122,10 @@ import { SelectButtonComponent } from './components/inputs/select-button/select-
     QuantityCopiesComponent,
     AdditionalCommentComponent,
     ConfirmBarComponent,
-    ShopcartComponent,
+    ShopcartWrapperComponent,
     PrintComponent,
     PaymentComponent,
-    OrderComponent,
+    ShopcartComponent,
     TermsComponent,
     SuccessComponent,
     ErrorComponent,
@@ -165,6 +166,7 @@ import { SelectButtonComponent } from './components/inputs/select-button/select-
     ViewTripticosComponent,
     InputCustomSizeComponent,
     SelectButtonComponent,
+    ShopcartPrintItemComponent,
   ],
   imports: [
     BrowserModule,

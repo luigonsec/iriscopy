@@ -1,5 +1,5 @@
 export default {
-  sizes: [
+  paperSize: [
     {
       default: true,
       name: '85 x 205',

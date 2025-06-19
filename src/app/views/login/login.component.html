@@ -7,32 +7,32 @@
         <div class="field">
           <label class="form-label" for="username">Nombre de usuario</label>
           <input
-            [(ngModel)]="this.username"
+            [(ngModel)]="username"
             id="username"
             type="text"
             name="username"
             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
           />
-          <small class="error" *ngIf="this.errors['username']">
-            {{ this.errors["username"] }}
+          <small class="error" *ngIf="errors['username']">
+            {{ errors["username"] }}
           </small>
         </div>
 
         <div class="field">
           <label class="form-label" for="password">Contraseña</label>
           <input
-            [(ngModel)]="this.password"
+            [(ngModel)]="password"
             id="password"
             type="password"
             name="password"
             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
           />
-          <small class="error" *ngIf="this.errors['password']">
-            {{ this.errors["password"] }}
+          <small class="error" *ngIf="errors['password']">
+            {{ errors["password"] }}
           </small>
         </div>
         <div class="field">
-          {{ this.errors["general"] }}
+          {{ errors["general"] }}
         </div>
         <div class="links flex justify-content-right">
           <button
@@ -40,7 +40,7 @@
             pButton
             label="Acceder"
             class="p-button-sm Secondary"
-            (click)="this.performLogin()"
+            (click)="performLogin()"
           ></button>
           <div class="link" [routerLink]="'/sign-up'">Crear una cuenta</div>
           <div class="link" [routerLink]="'/forgot-password'">

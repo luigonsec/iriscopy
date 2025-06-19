@@ -5,6 +5,7 @@ import Diptico from '../../../interfaces/Diptico';
 import { FormBase } from '../../../_classes/form-base.class';
 import { firstValueFrom } from 'rxjs';
 import { PricesService } from '../../../services/prices.service';
+import { ShopcartService } from '../../../services/shopcart.service';
 @Component({
   selector: 'app-view-dipticos',
   templateUrl: './view-dipticos.component.html',
@@ -14,7 +15,10 @@ export class ViewDipticosComponent extends FormBase<Diptico> implements OnInit {
   @ViewChild('uploader') public uploader: UploaderComponent;
   public dipticosOptions = dipticosOptions;
 
-  constructor(public pricesService: PricesService) {
+  constructor(
+    public pricesService: PricesService,
+    public shopCart: ShopcartService
+  ) {
     super();
   }
 
@@ -31,6 +35,10 @@ export class ViewDipticosComponent extends FormBase<Diptico> implements OnInit {
 
   getPrice = async () => {
     return await firstValueFrom(this.pricesService.getDiptychPrice(this.order));
+  };
+
+  addToCartFn = async (order: Diptico) => {
+    return this.shopCart.addDiptychToCart.bind(this.shopCart)(order);
   };
 
   ngOnInit() {

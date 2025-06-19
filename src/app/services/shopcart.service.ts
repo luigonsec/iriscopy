@@ -14,6 +14,8 @@ import Carpeta from '../interfaces/Carpeta';
 import Rollup from '../interfaces/Rollup';
 import Triptico from '../interfaces/Triptico';
 import Diptico from '../interfaces/Diptico';
+import Revista from '../interfaces/Revista';
+import Cartel from '../interfaces/Cartel';
 
 /**
  * Enum para identificar los diferentes tipos de elementos del carrito
@@ -27,6 +29,8 @@ export enum CartItemType {
   DIPTYCH = 'diptychs',
   TRIPTYCH = 'triptychs',
   ROLLUP = 'rollups',
+  MAGAZINE = 'magazines',
+  POSTER = 'posters',
 }
 
 /**
@@ -135,6 +139,12 @@ export class ShopcartService {
     );
   }
 
+  async addPosterToCart(order: OrderProduct) {
+    await this.addToCart<OrderProduct>(order, CartItemType.POSTER, {
+      detail: 'El cartel se ha añadido al carro',
+    });
+  }
+
   async addBusinessCardToCart(order: TarjetaVisita) {
     await this.addToCart<TarjetaVisita>(order, CartItemType.BUSINESS_CARD, {
       detail: 'La tarjeta de visita se ha añadido al carro',
@@ -153,13 +163,19 @@ export class ShopcartService {
     });
   }
 
-  async addDipticoToCart(order: Diptico) {
+  async addMagazineToCart(order: OrderProduct) {
+    await this.addToCart<OrderProduct>(order, CartItemType.MAGAZINE, {
+      detail: 'La revista se ha añadido al carro',
+    });
+  }
+
+  async addDiptychToCart(order: Diptico) {
     await this.addToCart<Diptico>(order, CartItemType.DIPTYCH, {
       detail: 'El diptico se ha añadido al carro',
     });
   }
 
-  async addTripticoToCart(order: Triptico) {
+  async addTritychToCart(order: Triptico) {
     await this.addToCart<Triptico>(order, CartItemType.TRIPTYCH, {
       detail: 'El triptico se ha añadido al carro',
     });
@@ -251,6 +267,20 @@ export class ShopcartService {
     );
   }
 
+  async removeMagazine(magazine: Revista) {
+    await this.removeFromCart<Revista>(
+      CartItemType.MAGAZINE,
+      (item) => item.id === magazine.id
+    );
+  }
+
+  async removePoster(poster: Cartel) {
+    await this.removeFromCart<Cartel>(
+      CartItemType.POSTER,
+      (item) => item.id === poster.id
+    );
+  }
+
   async removeRollup(rollup: Rollup) {
     await this.removeFromCart<Rollup>(
       CartItemType.ROLLUP,
@@ -268,6 +298,8 @@ export class ShopcartService {
         copies: [],
         products: [],
         bussinessCard: [],
+        magazines: [],
+        posters: [],
         flyers: [],
         folders: [],
         diptychs: [],

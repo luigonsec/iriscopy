@@ -3,6 +3,8 @@ import { UploaderComponent } from 'src/app/components/uploader/uploader.componen
 import cartelesOptions from 'src/config/carteles';
 import Cartel from '../../../interfaces/Cartel';
 import { FormBase } from '../../../_classes/form-base.class';
+import { ShopcartService } from '../../../services/shopcart.service';
+import { PricesService } from '../../../services/prices.service';
 @Component({
   selector: 'app-view-carteles',
   templateUrl: './view-carteles.component.html',
@@ -12,7 +14,10 @@ export class ViewCartelesComponent extends FormBase<Cartel> implements OnInit {
   @ViewChild('uploader') public uploader: UploaderComponent;
   public cartelesOptions = cartelesOptions;
 
-  constructor() {
+  constructor(
+    public pricesService: PricesService,
+    public shopCart: ShopcartService
+  ) {
     super();
   }
 
@@ -39,6 +44,10 @@ export class ViewCartelesComponent extends FormBase<Cartel> implements OnInit {
 
     this.ready = res;
   }
+
+  addToCartFn = async (order: Cartel) => {
+    return this.shopCart.addPosterToCart.bind(this.shopCart)(order);
+  };
 
   ngOnInit() {
     this.order = {

@@ -76,7 +76,7 @@
                   pButton
                   class="Secondary pink no-padding"
                   label="Eliminar"
-                  (click)="this.removeFile(file.id)"
+                  (click)="removeFile(file.id)"
                 ></button>
               </div>
             </div>
@@ -102,9 +102,10 @@
   </div>
 
   <app-confirm-bar
-    [getPrecio]="this.getPrice"
-    *ngIf="this.ready"
-    [reset]="this.reset"
-    [(order)]="this.order"
+    [addToCartFn]="addToCartFn"
+    [getPrecio]="getPrice"
+    *ngIf="ready"
+    [reset]="reset"
+    [(order)]="order"
   ></app-confirm-bar>
 </div>

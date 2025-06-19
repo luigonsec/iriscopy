@@ -5,7 +5,7 @@
         <div class="p-fluid">
           <div class="Label">Tipo de papel</div>
           <app-select-button
-            [options]="this.tripricoOptions.paperType"
+            [options]="tripricoOptions.paperType"
             (emitChange)="getProperty('paperType', $event)"
           ></app-select-button>
         </div>
@@ -15,7 +15,7 @@
         <div class="p-fluid">
           <div class="Label">Orientación</div>
           <app-select-button
-            [options]="this.tripricoOptions.format"
+            [options]="tripricoOptions.format"
             (emitChange)="getProperty('format', $event)"
           ></app-select-button>
         </div>
@@ -25,20 +25,20 @@
         <div class="p-fluid">
           <div class="Label">Tamaño</div>
           <app-select-button
-            *ngIf="this.order.format.code === 'vertical'"
-            [options]="this.tripricoOptions.vertical_size"
-            (emitChange)="getProperty('size', $event)"
+            *ngIf="order.format.code === 'vertical'"
+            [options]="tripricoOptions.vertical_size"
+            (emitChange)="getProperty('paperSize', $event)"
           ></app-select-button>
           <app-select-button
-            *ngIf="this.order.format.code === 'horizontal'"
-            [options]="this.tripricoOptions.horizontal_size"
-            (emitChange)="getProperty('size', $event)"
+            *ngIf="order.format.code === 'horizontal'"
+            [options]="tripricoOptions.horizontal_size"
+            (emitChange)="getProperty('paperSize', $event)"
           ></app-select-button>
 
           <app-select-button
-            *ngIf="this.order.format.code === 'cuadrado'"
-            [options]="this.tripricoOptions.square_size"
-            (emitChange)="getProperty('size', $event)"
+            *ngIf="order.format.code === 'cuadrado'"
+            [options]="tripricoOptions.square_size"
+            (emitChange)="getProperty('paperSize', $event)"
           ></app-select-button>
         </div>
       </div>
@@ -47,7 +47,7 @@
         <div class="p-fluid">
           <div class="Label">Cantidad</div>
           <app-select-button
-            [options]="this.tripricoOptions.copiesQuantity"
+            [options]="tripricoOptions.copiesQuantity"
             (emitChange)="getProperty('copiesQuantity', $event)"
           ></app-select-button>
         </div>
@@ -88,7 +88,7 @@
                   pButton
                   class="Secondary pink no-padding"
                   label="Eliminar"
-                  (click)="this.removeFile(file.id)"
+                  (click)="removeFile(file.id)"
                 ></button>
               </div>
             </div>
@@ -114,9 +114,10 @@
   </div>
 
   <app-confirm-bar
-    [getPrecio]="this.getPrice"
-    *ngIf="this.ready"
-    [reset]="this.reset"
-    [(order)]="this.order"
+    [addToCartFn]="addToCartFn"
+    [getPrecio]="getPrice"
+    *ngIf="ready"
+    [reset]="reset"
+    [(order)]="order"
   ></app-confirm-bar>
 </div>

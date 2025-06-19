@@ -5,18 +5,14 @@
         <label class="form-label" for="name"
           >Nombre y apellidos <span class="mandatory">*</span></label
         >
-        <input
-          id="name"
-          [(ngModel)]="this.billingDetails.first_name"
-          pInputText
-        />
+        <input id="name" [(ngModel)]="billingDetails.first_name" pInputText />
       </div>
       <small
-        *ngIf="this.billingDetailsErrors.first_name"
+        *ngIf="billingDetailsErrors.first_name"
         id="first_name-help"
         class="p-error"
       >
-        {{ this.billingDetailsErrors.first_name }}
+        {{ billingDetailsErrors.first_name }}
       </small>
     </div>
   </div>
@@ -27,16 +23,16 @@
           >DNI/NIE/CIF <span class="mandatory">*</span></label
         >
         <input
-          [(ngModel)]="this.billingDetails.last_name"
+          [(ngModel)]="billingDetails.last_name"
           id="last_name"
           pInputText
         />
       </div>
       <small
-        *ngIf="this.billingDetailsErrors.last_name"
+        *ngIf="billingDetailsErrors.last_name"
         id="last_name-help"
         class="p-error"
-        >{{ this.billingDetailsErrors.last_name }}</small
+        >{{ billingDetailsErrors.last_name }}</small
       >
     </div>
   </div>
@@ -49,17 +45,17 @@
           >Teléfono <span class="mandatory">*</span></label
         >
         <input
-          [(ngModel)]="this.billingDetails.phone"
+          [(ngModel)]="billingDetails.phone"
           id="phone"
           aria-describedby="phone-help"
           pInputText
         />
       </div>
       <small
-        *ngIf="this.billingDetailsErrors.phone"
+        *ngIf="billingDetailsErrors.phone"
         id="phone-help"
         class="p-error"
-        >{{ this.billingDetailsErrors.phone }}</small
+        >{{ billingDetailsErrors.phone }}</small
       >
     </div>
   </div>
@@ -72,22 +68,22 @@
           >Correo electrónico <span class="mandatory">*</span></label
         >
         <input
-          [(ngModel)]="this.billingDetails.email"
+          [(ngModel)]="billingDetails.email"
           id="email"
           aria-describedby="email-help"
           pInputText
         />
       </div>
       <small
-        *ngIf="this.billingDetailsErrors.email"
+        *ngIf="billingDetailsErrors.email"
         id="email-help"
         class="p-error"
-        >{{ this.billingDetailsErrors.email }}</small
+        >{{ billingDetailsErrors.email }}</small
       >
     </div>
   </div>
 </div>
-<div class="grid" *ngIf="this.shipping">
+<div class="grid" *ngIf="shipping">
   <div class="field col-12 md:col-8">
     <div class="p-fluid">
       <div class="input-container">
@@ -96,17 +92,17 @@
           número</label
         >
         <input
-          [(ngModel)]="this.billingDetails.address_1"
+          [(ngModel)]="billingDetails.address_1"
           id="address_1"
           aria-describedby="address_1-help"
           pInputText
         />
       </div>
       <small
-        *ngIf="this.billingDetailsErrors.address_1"
+        *ngIf="billingDetailsErrors.address_1"
         id="address_1-help"
         class="p-error"
-        >{{ this.billingDetailsErrors.address_1 }}</small
+        >{{ billingDetailsErrors.address_1 }}</small
       >
     </div>
   </div>
@@ -118,7 +114,7 @@
           >planta, piso/puerta u otro</label
         >
         <input
-          [(ngModel)]="this.billingDetails.address_2"
+          [(ngModel)]="billingDetails.address_2"
           id="address_2"
           aria-describedby="address_2-help"
           pInputText
@@ -126,16 +122,16 @@
       </div>
 
       <small
-        *ngIf="this.billingDetailsErrors.address_2"
+        *ngIf="billingDetailsErrors.address_2"
         id="address_2-help"
         class="p-error"
-        >{{ this.billingDetailsErrors.address_2 }}</small
+        >{{ billingDetailsErrors.address_2 }}</small
       >
     </div>
   </div>
 </div>
 
-<div class="grid" *ngIf="this.shipping">
+<div class="grid" *ngIf="shipping">
   <div class="field col-12 md:col-8">
     <div class="p-fluid">
       <div class="input-container">
@@ -143,19 +139,16 @@
           >Localidad / Ciudad <span class="mandatory">*</span></label
         >
         <input
-          [(ngModel)]="this.billingDetails.city"
+          [(ngModel)]="billingDetails.city"
           id="city"
           aria-describedby="city-help"
           pInputText
         />
       </div>
 
-      <small
-        *ngIf="this.billingDetailsErrors.city"
-        id="city-help"
-        class="p-error"
-        >{{ this.billingDetailsErrors.city }}</small
-      >
+      <small *ngIf="billingDetailsErrors.city" id="city-help" class="p-error">{{
+        billingDetailsErrors.city
+      }}</small>
     </div>
   </div>
 
@@ -166,18 +159,18 @@
           >Código postal <span class="mandatory">*</span></label
         >
         <input
-          (change)="this.onUpdatePostalCode()"
-          [(ngModel)]="this.billingDetails.postcode"
+          (change)="onUpdatePostalCode()"
+          [(ngModel)]="billingDetails.postcode"
           id="postcode"
           aria-describedby="postcode-help"
           pInputText
         />
       </div>
       <small
-        *ngIf="this.billingDetailsErrors.postcode"
+        *ngIf="billingDetailsErrors.postcode"
         id="postcode-help"
         class="p-error"
-        >{{ this.billingDetailsErrors.postcode }}</small
+        >{{ billingDetailsErrors.postcode }}</small
       >
     </div>
   </div>
@@ -191,7 +184,7 @@
         >
         <textarea
           id="comments"
-          [(ngModel)]="this.billingDetails.others"
+          [(ngModel)]="billingDetails.others"
           [rows]="5"
           aria-labelledby="others-help"
           [cols]="30"

@@ -1,10 +1,10 @@
 <p-selectButton
   class="selectButton"
-  *ngFor="let group of this.groups"
+  *ngFor="let group of groups"
   [options]="optionsByGroup[group]"
   [(ngModel)]="option"
   optionLabel="name"
-  (onChange)="this.handleChange($event)"
+  (onChange)="handleChange($event)"
 >
   <ng-template let-item>
     <div class="Button">

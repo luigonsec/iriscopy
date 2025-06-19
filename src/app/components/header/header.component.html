@@ -9,7 +9,7 @@
     <div class="links hidden lg:flex">
       <a class="link" href="https://iriscopyshop.com">Inicio</a>
       <a class="link" href="/"> Imprimir </a>
-      <a class="link" href="/shop" *ngIf="this.shop_active">Papelería </a>
+      <a class="link" href="/shop" *ngIf="shop_active">Papelería </a>
       <a class="link" (click)="menuRecogida.toggle($event)">
         <p-menu
           #menuRecogida
@@ -36,27 +36,27 @@
       </a>
     </div>
     <div class="icons">
-      <a class="icon" (click)="this.iconProfileClicked($event)">
+      <a class="icon" (click)="iconProfileClicked($event)">
         <i class="fas fa-user"></i>
         <p-menu #menu [model]="profile" [popup]="true"></p-menu>
       </a>
 
       <a class="icon" (click)="toggleShoppingCart()">
         <i
-          *ngIf="this.copies.length + this.products.length == 0"
+          *ngIf="copies.length + products.length == 0"
           class="ShoppingCart__Icon fas fa-shopping-cart"
         ></i>
         <i
-          *ngIf="this.copies.length + this.products.length"
+          *ngIf="copies.length + products.length"
           pBadge
           class="ShoppingCart__Icon fas fa-shopping-cart"
-          [value]="this.copies.length + this.products.length"
+          [value]="copies.length + products.length"
         ></i>
       </a>
-      <a class="lg:hidden icon not-rounded" (click)="this.toggleMobileMenu()">
+      <a class="lg:hidden icon not-rounded" (click)="toggleMobileMenu()">
         <i
           [class]="
-            'bars' + (this.mobileMenuOpened ? ' fas fa-times' : ' fas fa-bars')
+            'bars' + (mobileMenuOpened ? ' fas fa-times' : ' fas fa-bars')
           "
         ></i>
       </a>
@@ -64,7 +64,7 @@
   </div>
 </div>
 
-<app-mobile-menu *ngIf="this.mobileMenuOpened"></app-mobile-menu>
+<app-mobile-menu *ngIf="mobileMenuOpened"></app-mobile-menu>
 
-<app-menu-sidebar #sidebar [isShopActive]="this.shop_active"></app-menu-sidebar>
-<app-shopcart class="" #shopcart></app-shopcart>
+<app-menu-sidebar #sidebar [isShopActive]="shop_active"></app-menu-sidebar>
+<app-shopcart-wrapper class="" #shopcartWrapper></app-shopcart-wrapper>

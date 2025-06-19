@@ -5,7 +5,7 @@
         <div class="p-fluid">
           <div class="Label">Forma de impresión</div>
           <app-select-button
-            [options]="this.folderOptions.printForm"
+            [options]="folderOptions.printForm"
             (emitChange)="getProperty('printForm', $event)"
           ></app-select-button>
         </div>
@@ -15,7 +15,7 @@
         <div class="p-fluid">
           <div class="Label">Tipo de papel</div>
           <app-select-button
-            [options]="this.folderOptions.paperType"
+            [options]="folderOptions.paperType"
             (emitChange)="getProperty('paperType', $event)"
           ></app-select-button>
         </div>
@@ -35,7 +35,7 @@
         <div class="p-fluid">
           <div class="Label">Tamaño (cerrado)</div>
           <app-select-button
-            [options]="this.folderOptions.paperSize"
+            [options]="folderOptions.paperSize"
             (emitChange)="getProperty('paperSize', $event)"
           ></app-select-button>
         </div>
@@ -45,7 +45,7 @@
         <div class="p-fluid">
           <div class="Label">Cantidad</div>
           <app-select-button
-            [options]="this.folderOptions.copiesQuantity"
+            [options]="folderOptions.copiesQuantity"
             (emitChange)="getProperty('copiesQuantity', $event)"
           ></app-select-button>
         </div>
@@ -72,7 +72,7 @@
       <div id="files-column" class="col-12">
         <div class="grid">
           <div
-            *ngFor="let file of this.order.files || []"
+            *ngFor="let file of order.files || []"
             class="col-6 sm:col-4 md:col-4 lg:col-4 xl:col-3"
           >
             <div class="uploaded-file">
@@ -86,7 +86,7 @@
                   pButton
                   class="Secondary pink no-padding"
                   label="Eliminar"
-                  (click)="this.removeFile(file.id)"
+                  (click)="removeFile(file.id)"
                 ></button>
               </div>
             </div>
@@ -112,9 +112,10 @@
   </div>
 
   <app-confirm-bar
-    [getPrecio]="this.getPrice"
-    *ngIf="this.ready"
-    [reset]="this.reset"
-    [(order)]="this.order"
+    [addToCartFn]="addToCartFn"
+    [getPrecio]="getPrice"
+    *ngIf="ready"
+    [reset]="reset"
+    [(order)]="order"
   ></app-confirm-bar>
 </div>

@@ -1,0 +1,39 @@
+@import "src/assets/scss/colors.scss";
+
+.buttons {
+  .button {
+    margin-bottom: 10px !important;
+  }
+}
+
+/* Añade esta regla a tu archivo CSS global */
+::ng-deep .Shopcart {
+  .p-sidebar {
+    background-color: white;
+  }
+}
+.shopcart-content {
+  position: relative;
+}
+
+.total {
+  color: black;
+  position: fixed;
+  bottom: 0;
+  width: -webkit-fill-available;
+  text-align: end;
+  padding-right: 15px;
+  padding-top: 5px;
+  border-top: 1px black solid;
+
+  .text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: black;
+  }
+  .value {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: $primary;
+  }
+}

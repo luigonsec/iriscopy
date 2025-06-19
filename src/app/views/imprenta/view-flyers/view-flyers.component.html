@@ -5,7 +5,7 @@
         <div class="p-fluid">
           <div class="Label">Forma de impresion</div>
           <app-select-button
-            [options]="this.flyerOptions.printForm"
+            [options]="flyerOptions.printForm"
             (emitChange)="getProperty('printForm', $event)"
           ></app-select-button>
         </div>
@@ -15,7 +15,7 @@
         <div class="p-fluid">
           <div class="Label">Tipo de papel</div>
           <app-select-button
-            [options]="this.flyerOptions.paperType"
+            [options]="flyerOptions.paperType"
             (emitChange)="getProperty('paperType', $event)"
           ></app-select-button>
         </div>
@@ -25,13 +25,13 @@
         <div class="p-fluid">
           <div class="Label">Tamaño (cerrado)</div>
           <app-select-button
-            [options]="this.flyerOptions.paperSize"
+            [options]="flyerOptions.paperSize"
             (emitChange)="getProperty('paperSize', $event)"
           ></app-select-button>
         </div>
       </div>
 
-      <div class="Form__Section p-field" *ngIf="this.isCustomSize()">
+      <div class="Form__Section p-field" *ngIf="isCustomSize()">
         <div class="p-fluid">
           <div class="Label">Tamaño personalizado</div>
           <app-input-custom-size
@@ -44,7 +44,7 @@
         <div class="p-fluid">
           <div class="Label">Cantidad</div>
           <app-select-button
-            [options]="this.flyerOptions.copiesQuantity"
+            [options]="flyerOptions.copiesQuantity"
             (emitChange)="getProperty('copiesQuantity', $event)"
           ></app-select-button>
         </div>
@@ -85,7 +85,7 @@
                   pButton
                   class="Secondary pink no-padding"
                   label="Eliminar"
-                  (click)="this.removeFile(file.id)"
+                  (click)="removeFile(file.id)"
                 ></button>
               </div>
             </div>
@@ -111,10 +111,10 @@
   </div>
 
   <app-confirm-bar
-    [addToCartFn]="this.addToCartFn"
-    [getPrecio]="this.getPrice"
-    *ngIf="this.ready"
-    [reset]="this.reset"
-    [(order)]="this.order"
+    [addToCartFn]="addToCartFn"
+    [getPrecio]="getPrice"
+    *ngIf="ready"
+    [reset]="reset"
+    [(order)]="order"
   ></app-confirm-bar>
 </div>

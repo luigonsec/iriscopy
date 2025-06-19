@@ -1,32 +1,31 @@
-<div class="ProductDetails grid p-0 m-0" *ngIf="this.product">
+<div class="ProductDetails grid p-0 m-0" *ngIf="product">
   <div class="col-12 md:col-10 md:col-offset-1">
-    <h2>{{ this.product.name }}</h2>
+    <h2>{{ product.name }}</h2>
   </div>
   <div class="col-offset-3 col-6 md:col-3 md:col-offset-1">
     <div
       class="Image"
-      [style]="{ 'background-image': 'url(' + this.picture + ')' }"
+      [style]="{ 'background-image': 'url(' + picture + ')' }"
     ></div>
   </div>
 
   <div class="col-12 md:col-8 Details">
-    <div class="grid Options" *ngIf="this.product.attributes.length">
+    <div class="grid Options" *ngIf="product.attributes.length">
       <div class="col-12 md:col-8 md:col-offset-4">
-        <div [innerHTML]="this.product.short_description"></div>
+        <div [innerHTML]="product.short_description"></div>
 
         <span class="Title"> Opciones disponibles </span>
         <div class="grid">
-          <div class="col-12" *ngIf="this.selectedVariation">
+          <div class="col-12" *ngIf="selectedVariation">
             <span class="Option__selected">
-              {{ this.selectedVariation.attributes[0].option }}
+              {{ selectedVariation.attributes[0].option }}
             </span>
           </div>
           <div class="col-4 md:col-2" *ngFor="let variation of variations">
             <div
               [class]="
                 'Variation__wrapper' +
-                (this.selectedVariation &&
-                this.selectedVariation.id == variation.id
+                (selectedVariation && selectedVariation.id == variation.id
                   ? ' active'
                   : '')
               "
@@ -36,7 +35,7 @@
                 [style]="{
                   'background-image': 'url(' + variation.image.src + ')'
                 }"
-                (click)="this.selectVariation(variation)"
+                (click)="selectVariation(variation)"
               ></div>
             </div>
           </div>
@@ -44,7 +43,7 @@
         <!-- <div class="p-fluid">
                           <p-dropdown [options]="product.attributes[0].options" [(ngModel)]="selectedAttribute"
                               class="p-inputtext-sm" appendTo="body" placeholder="Selecciona una opción"
-                              (onChange)="this.findVariation()"></p-dropdown>
+                              (onChange)="findVariation()"></p-dropdown>
   
                       </div> -->
       </div>
@@ -55,40 +54,38 @@
           pInputText
           type="number"
           class="p-inputtext-sm"
-          [(ngModel)]="this.quantity"
+          [(ngModel)]="quantity"
         />
         <button
           pButton
           class="Secondary no-padding"
           [icon]="'fas fa-shopping-cart'"
           [label]="'Añadir al carro'"
-          (click)="this.addToCart()"
-          [disabled]="!this.quantity || this.buttonDisabled()"
+          (click)="addToCart()"
+          [disabled]="!quantity || buttonDisabled()"
         ></button>
       </div>
     </div>
     <div class="grid">
       <div class="Price col-8 md:col-offset-4">
-        <div
-          *ngIf="this.product.attributes.length > 0 && this.selectedVariation"
-        >
-          Precio unidad: {{ (+this.selectedVariation.price).toFixed(2) }} €
+        <div *ngIf="product.attributes.length > 0 && selectedVariation">
+          Precio unidad: {{ (+selectedVariation.price).toFixed(2) }} €
           <br />
-          <span *ngIf="this.quantity">
+          <span *ngIf="quantity">
             Precio total:
-            {{ (+this.selectedVariation.price * this.quantity).toFixed(2) }} €
+            {{ (+selectedVariation.price * quantity).toFixed(2) }} €
           </span>
         </div>
 
         <div
           *ngIf="
-            this.product.attributes.length == 0 ||
-            (this.product.attributes.length > 0 &&
-              this.product.variations.length == 0 &&
+            product.attributes.length == 0 ||
+            (product.attributes.length > 0 &&
+              product.variations.length == 0 &&
               selectedAttribute)
           "
         >
-          {{ (+this.product.price).toFixed(2) }}€
+          {{ (+product.price).toFixed(2) }}€
         </div>
       </div>
     </div>

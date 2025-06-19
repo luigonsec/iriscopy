@@ -9,14 +9,14 @@
     <li class="link">
       <a href="/shop">Papelería</a>
     </li>
-    <li class="link" (click)="this.togglePickUpPoints()">
+    <li class="link" (click)="togglePickUpPoints()">
       <a>
         Puntos de recogida <i class="chevron-down fas fa-chevron-down"></i>
       </a>
     </li>
     <ul
       id="pickup-points"
-      [className]="this.pickUpPointsOpened ? 'opened' : 'closed'"
+      [className]="pickUpPointsOpened ? 'opened' : 'closed'"
     >
       <li class="sublink">
         <a href="https://iriscopyshop.com/copisteria-sevilla">
@@ -72,13 +72,13 @@
       <a href="https://iriscopyshop.com/encuadernar/"> Encuadernar apuntes </a>
     </li>
     <li class="link">
-      <a (click)="this.togglePrintOptions()">
+      <a (click)="togglePrintOptions()">
         Imprenta <i class="collapse-icon fas fa-chevron-down"></i>
       </a>
     </li>
     <ul
       id="print-options"
-      [className]="this.printOptionsOpened ? 'opened' : 'closed'"
+      [className]="printOptionsOpened ? 'opened' : 'closed'"
     >
       <li class="sublink">
         <a href="/imprenta/tarjetas-visita">

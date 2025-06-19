@@ -5,13 +5,13 @@
         <div class="p-fluid">
           <div class="Label">Tamaño</div>
           <app-select-button
-            [options]="this.cartelesOptions.size"
+            [options]="cartelesOptions.size"
             (emitChange)="getProperty('size', $event)"
           ></app-select-button>
         </div>
       </div>
 
-      <div class="Form__Section p-field" *ngIf="this.isCustomSize()">
+      <div class="Form__Section p-field" *ngIf="isCustomSize()">
         <div class="p-fluid">
           <div class="Label">Tamaño personalizado</div>
           <app-input-flyers-custom-size
@@ -24,7 +24,7 @@
         <div class="p-fluid">
           <div class="Label">Tipo de papel</div>
           <app-select-button
-            [options]="this.cartelesOptions.paperType"
+            [options]="cartelesOptions.paperType"
             (emitChange)="getProperty('paperType', $event)"
           ></app-select-button>
         </div>
@@ -34,7 +34,7 @@
         <div class="p-fluid">
           <div class="Label">Cantidad</div>
           <app-select-button
-            [options]="this.cartelesOptions.copiesQuantity"
+            [options]="cartelesOptions.copiesQuantity"
             (emitChange)="getProperty('copiesQuantity', $event)"
           ></app-select-button>
         </div>
@@ -62,7 +62,7 @@
       <div id="files-column" class="col-12">
         <div class="grid">
           <div
-            *ngFor="let file of this.order.files || []"
+            *ngFor="let file of order.files || []"
             class="col-6 sm:col-4 md:col-4 lg:col-4 xl:col-3"
           >
             <div class="uploaded-file">
@@ -76,7 +76,7 @@
                   pButton
                   class="Secondary pink no-padding"
                   label="Eliminar"
-                  (click)="this.removeFile(file.id)"
+                  (click)="removeFile(file.id)"
                 ></button>
               </div>
             </div>
@@ -102,8 +102,8 @@
   </div>
 
   <app-confirm-bar
-    *ngIf="this.ready"
-    [reset]="this.reset"
-    [(order)]="this.order"
+    *ngIf="ready"
+    [reset]="reset"
+    [(order)]="order"
   ></app-confirm-bar>
 </div>

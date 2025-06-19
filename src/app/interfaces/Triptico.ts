@@ -5,7 +5,7 @@ import Orderable from './Orderable';
 export default interface Triptico extends Orderable {
   paperType: Option;
   format: Option;
-  size: Option;
+  paperSize: Option;
   copiesQuantity: number;
   files: File[];
 }

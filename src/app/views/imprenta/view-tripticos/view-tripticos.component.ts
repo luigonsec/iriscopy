@@ -5,6 +5,7 @@ import Triptico from '../../../interfaces/Triptico';
 import { FormBase } from '../../../_classes/form-base.class';
 import { firstValueFrom } from 'rxjs';
 import { PricesService } from '../../../services/prices.service';
+import { ShopcartService } from '../../../services/shopcart.service';
 @Component({
   selector: 'app-view-tripticos',
   templateUrl: './view-tripticos.component.html',
@@ -17,7 +18,10 @@ export class ViewTripticosComponent
   @ViewChild('uploader') public uploader: UploaderComponent;
   public tripricoOptions = tripricoOptions;
 
-  constructor(public pricesService: PricesService) {
+  constructor(
+    public pricesService: PricesService,
+    public shopCart: ShopcartService
+  ) {
     super();
   }
 
@@ -25,7 +29,7 @@ export class ViewTripticosComponent
     let res = true;
 
     if (!this.order.paperType) res = false;
-    if (!this.order.size) res = false;
+    if (!this.order.paperSize) res = false;
     if (!this.order.copiesQuantity) res = false;
     if (!this.order.files || !this.order.files.length) res = false;
 
@@ -38,11 +42,15 @@ export class ViewTripticosComponent
     );
   };
 
+  addToCartFn = async (order: Triptico) => {
+    return this.shopCart.addTritychToCart.bind(this.shopCart)(order);
+  };
+
   ngOnInit() {
     this.order = {
       format: undefined,
       paperType: undefined,
-      size: undefined,
+      paperSize: undefined,
       copiesQuantity: 0,
       additionalComments: '',
       files: [

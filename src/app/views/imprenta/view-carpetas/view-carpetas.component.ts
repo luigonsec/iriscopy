@@ -5,6 +5,7 @@ import folderOptions from 'src/config/carpetas';
 import { FormBase } from '../../../_classes/form-base.class';
 import { firstValueFrom } from 'rxjs';
 import { PricesService } from '../../../services/prices.service';
+import { ShopcartService } from '../../../services/shopcart.service';
 
 @Component({
   selector: 'app-view-carpetas',
@@ -15,7 +16,10 @@ export class ViewCarpetasComponent extends FormBase<Carpeta> implements OnInit {
   @ViewChild('uploader') public uploader: UploaderComponent;
   public folderOptions = folderOptions;
 
-  constructor(public pricesService: PricesService) {
+  constructor(
+    public pricesService: PricesService,
+    public shopCart: ShopcartService
+  ) {
     super();
   }
 
@@ -33,6 +37,10 @@ export class ViewCarpetasComponent extends FormBase<Carpeta> implements OnInit {
 
   getPrice = async () => {
     return await firstValueFrom(this.pricesService.getFolderPrice(this.order));
+  };
+
+  addToCartFn = async (order: Carpeta) => {
+    return this.shopCart.addFolderToCart.bind(this.shopCart)(order);
   };
 
   ngOnInit() {

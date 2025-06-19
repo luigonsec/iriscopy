@@ -3,10 +3,10 @@
     <div id="form">
       <div class="Form__Section p-field">
         <div class="p-fluid">
-          <div class="Label">Tipo de papel portada / contraportada</div>
+          <div class="Label">Tamaño</div>
           <app-select-button
-            [options]="rollupsOptions.sizes"
-            (emitChange)="getProperty('size', $event)"
+            [options]="rollupsOptions.paperSize"
+            (emitChange)="getProperty('paperSize', $event)"
           ></app-select-button>
         </div>
       </div>
@@ -47,7 +47,7 @@
                   pButton
                   class="Secondary pink no-padding"
                   label="Eliminar"
-                  (click)="this.removeFile(file.id)"
+                  (click)="removeFile(file.id)"
                 ></button>
               </div>
             </div>
@@ -73,9 +73,10 @@
   </div>
 
   <app-confirm-bar
-    [getPrecio]="this.getPrice"
-    *ngIf="this.ready"
-    [reset]="this.reset"
+    [addToCartFn]="addToCartFn"
+    [getPrecio]="getPrice"
+    *ngIf="ready"
+    [reset]="reset"
     [(order)]="order"
   ></app-confirm-bar>
 </div>

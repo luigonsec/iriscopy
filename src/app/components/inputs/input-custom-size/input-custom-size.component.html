@@ -3,10 +3,10 @@
     <label>Alto</label>
     <p-inputNumber
       class="Input"
-      [(ngModel)]="this.height"
+      [(ngModel)]="height"
       [min]="0"
       [showButtons]="true"
-      (onInput)="this.handleChange($event)"
+      (onInput)="handleChange($event)"
     ></p-inputNumber>
   </div>
   <div class="col-6">
@@ -14,10 +14,10 @@
 
     <p-inputNumber
       class="Input"
-      [(ngModel)]="this.width"
+      [(ngModel)]="width"
       [min]="0"
       [showButtons]="true"
-      (onInput)="this.handleChange($event)"
+      (onInput)="handleChange($event)"
     ></p-inputNumber>
   </div>
 </div>

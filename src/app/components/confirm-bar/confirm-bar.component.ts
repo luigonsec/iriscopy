@@ -102,7 +102,6 @@ export class ConfirmBarComponent implements OnInit, OnChanges {
       this.isLoading = false;
       this.checkButtonsEnabled();
     } catch (error) {
-      console.error('Error al calcular el precio:', error);
       this.isLoading = false;
       this.disableButtons = true;
       this.cdr.markForCheck();

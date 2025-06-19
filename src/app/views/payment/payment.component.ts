@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { OrderComponent } from 'src/app/components/order/order.component';
+import { ShopcartComponent } from 'src/app/components/shopcart/shopcart.component';
 import Location from 'src/app/interfaces/Location';
 import RedsysData from 'src/app/interfaces/RedsysData';
 
@@ -49,7 +49,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   @ViewChild('orderProcessing')
   public orderProcessing: OrderProcessingComponent;
 
-  @ViewChild('order') public order: OrderComponent;
+  @ViewChild('shopcart') public order: ShopcartComponent;
   @ViewChild('billing') public billing: BillingComponent;
   // Cambia la inicialización de shipping a nulo
   private _shipping: ShippingComponent | null = null;

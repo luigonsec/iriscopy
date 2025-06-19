@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import { ShopcartService } from 'src/app/services/shopcart.service';
-import { ShopcartComponent } from '../shopcart/shopcart.component';
+import { ShopcartWrapperComponent } from '../shopcart-wrapper/shopcart-wrapper.component';
 import Cart from 'src/app/interfaces/Cart';
 import { Store } from '@ngrx/store';
 import OrderProduct from 'src/app/interfaces/OrderProduct';
@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public mobileMenuOpened = false;
 
   @ViewChild('menu') public menu: Menu;
-  @ViewChild('shopcart') public shopcart: ShopcartComponent;
+  @ViewChild('shopcartWrapper') public shopcart: ShopcartWrapperComponent;
   @ViewChild('sidebar') public sidebar: MenuSidebarComponent;
 
   cartSubscription: Subscription;

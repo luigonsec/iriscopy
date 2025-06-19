@@ -3,6 +3,8 @@ import { UploaderComponent } from 'src/app/components/uploader/uploader.componen
 import revistasOptions from 'src/config/revistas';
 import Revista from '../../../interfaces/Revista';
 import { FormBase } from '../../../_classes/form-base.class';
+import { PricesService } from '../../../services/prices.service';
+import { ShopcartService } from '../../../services/shopcart.service';
 @Component({
   selector: 'app-view-revistas',
   templateUrl: './view-revistas.component.html',
@@ -12,7 +14,10 @@ export class ViewRevistasComponent extends FormBase<Revista> implements OnInit {
   @ViewChild('uploader') public uploader: UploaderComponent;
   public revistasOptions = revistasOptions;
 
-  constructor() {
+  constructor(
+    public pricesService: PricesService,
+    public shopCart: ShopcartService
+  ) {
     super();
   }
 
@@ -35,6 +40,10 @@ export class ViewRevistasComponent extends FormBase<Revista> implements OnInit {
 
   getPrice = async () => {
     return Promise.resolve({ precio: 55, notas: [] as string[] });
+  };
+
+  addToCartFn = async (order: Revista) => {
+    return this.shopCart.addMagazineToCart.bind(this.shopCart)(order);
   };
 
   ngOnInit() {

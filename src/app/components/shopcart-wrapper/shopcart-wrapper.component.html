@@ -1,0 +1,26 @@
+<p-sidebar class="shopcart-wrapper" [(visible)]="display" [position]="'right'">
+  <div class="shopcart-content">
+    <div class="buttons">
+      <div class="p-fluid">
+        <button
+          pButton
+          label="Continuar con el pago"
+          class="button p-button-sm Secondary no-padding"
+          (click)="continue()"
+        ></button>
+
+        <button
+          pButton
+          label="Seguir comprando"
+          class="button p-button-sm Secondary no-padding pink"
+        ></button>
+      </div>
+    </div>
+    <app-shopcart #shopcart></app-shopcart>
+
+    <div class="total">
+      <span class="title">Total: </span>
+      <span class="value">{{ shopcart.getTotalPrice() }}€</span>
+    </div>
+  </div>
+</p-sidebar>

@@ -7,16 +7,16 @@
             Nombre y apellidos <span class="mandatory">*</span>
           </label>
           <input
-            [(ngModel)]="this.shippingDetails.first_name"
+            [(ngModel)]="shippingDetails.first_name"
             id="first_name"
             pInputText
           />
         </div>
         <small
-          *ngIf="this.shippingDetailsErrors.first_name"
+          *ngIf="shippingDetailsErrors.first_name"
           id="first_name-help"
           class="p-error"
-          >{{ this.shippingDetailsErrors.first_name }}</small
+          >{{ shippingDetailsErrors.first_name }}</small
         >
       </div>
     </div>
@@ -27,16 +27,16 @@
             DNI/NIE/CIF <span class="mandatory">*</span>
           </label>
           <input
-            [(ngModel)]="this.shippingDetails.last_name"
+            [(ngModel)]="shippingDetails.last_name"
             id="last_name"
             pInputText
           />
         </div>
         <small
-          *ngIf="this.shippingDetailsErrors.last_name"
+          *ngIf="shippingDetailsErrors.last_name"
           id="last_name-help"
           class="p-error"
-          >{{ this.shippingDetailsErrors.last_name }}</small
+          >{{ shippingDetailsErrors.last_name }}</small
         >
       </div>
     </div>
@@ -50,17 +50,17 @@
             Dirección de envío <span class="mandatory">*</span> calle y número
           </label>
           <input
-            [(ngModel)]="this.shippingDetails.address_1"
+            [(ngModel)]="shippingDetails.address_1"
             id="address_1"
             aria-describedby="address_1-help"
             pInputText
           />
         </div>
         <small
-          *ngIf="this.shippingDetailsErrors.address_1"
+          *ngIf="shippingDetailsErrors.address_1"
           id="address_1-help"
           class="p-error"
-          >{{ this.shippingDetailsErrors.address_1 }}</small
+          >{{ shippingDetailsErrors.address_1 }}</small
         >
       </div>
     </div>
@@ -70,7 +70,7 @@
         <div class="input-container">
           <label for="" class="form-label"> planta, piso/puerta u otro </label>
           <input
-            [(ngModel)]="this.shippingDetails.address_2"
+            [(ngModel)]="shippingDetails.address_2"
             id="address_2"
             aria-describedby="address_2-help"
             pInputText
@@ -78,10 +78,10 @@
         </div>
 
         <small
-          *ngIf="this.shippingDetailsErrors.address_2"
+          *ngIf="shippingDetailsErrors.address_2"
           id="address_2-help"
           class="p-error"
-          >{{ this.shippingDetailsErrors.address_2 }}</small
+          >{{ shippingDetailsErrors.address_2 }}</small
         >
       </div>
     </div>
@@ -94,17 +94,17 @@
             Localidad / Ciudad <span class="mandatory">*</span>
           </label>
           <input
-            [(ngModel)]="this.shippingDetails.city"
+            [(ngModel)]="shippingDetails.city"
             id="city"
             aria-describedby="city-help"
             pInputText
           />
         </div>
         <small
-          *ngIf="this.shippingDetailsErrors.city"
+          *ngIf="shippingDetailsErrors.city"
           id="city-help"
           class="p-error"
-          >{{ this.shippingDetailsErrors.city }}</small
+          >{{ shippingDetailsErrors.city }}</small
         >
       </div>
     </div>
@@ -116,8 +116,8 @@
             Código postal <span class="mandatory">*</span>
           </label>
           <input
-            (change)="this.onUpdatePostalCode()"
-            [(ngModel)]="this.shippingDetails.postcode"
+            (change)="onUpdatePostalCode()"
+            [(ngModel)]="shippingDetails.postcode"
             id="postcode"
             aria-describedby="postcode-help"
             pInputText
@@ -125,10 +125,10 @@
         </div>
 
         <small
-          *ngIf="this.shippingDetailsErrors.postcode"
+          *ngIf="shippingDetailsErrors.postcode"
           id="postcode-help"
           class="p-error"
-          >{{ this.shippingDetailsErrors.postcode }}</small
+          >{{ shippingDetailsErrors.postcode }}</small
         >
       </div>
     </div>

@@ -1,25 +1,40 @@
 <div class="grid">
   <div class="col-6">
     <div class="Label">Orientación vertical</div>
-    <p-selectButton [options]="optionsGroup1" [(ngModel)]="option" optionLabel="name"
-      (onChange)="this.handleChange($event)">
+    <p-selectButton
+      [options]="optionsGroup1"
+      [(ngModel)]="option"
+      optionLabel="name"
+      (onChange)="handleChange($event)"
+    >
       <ng-template let-item>
-
         <div class="Button">
-          <img class="Button__img" src="{{item.image}}{{item.code === this.option.code ? '_active': ''}}.png">
-
+          <img
+            class="Button__img"
+            src="{{ item.image }}{{
+              item.code === option.code ? '_active' : ''
+            }}.png"
+          />
         </div>
       </ng-template>
     </p-selectButton>
   </div>
   <div class="col-6">
     <div class="Label">Orientación horizontal</div>
-    <p-selectButton [options]="optionsGroup2" [(ngModel)]="option" optionLabel="name"
-      (onChange)="this.handleChange($event)">
+    <p-selectButton
+      [options]="optionsGroup2"
+      [(ngModel)]="option"
+      optionLabel="name"
+      (onChange)="handleChange($event)"
+    >
       <ng-template let-item>
-
         <div class="Button">
-          <img class="Button__img" src="{{item.image}}{{item.code === this.option.code ? '_active': ''}}.png">
+          <img
+            class="Button__img"
+            src="{{ item.image }}{{
+              item.code === option.code ? '_active' : ''
+            }}.png"
+          />
         </div>
       </ng-template>
     </p-selectButton>

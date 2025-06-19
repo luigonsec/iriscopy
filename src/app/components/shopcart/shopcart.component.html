@@ -1,19 +1,147 @@
-<p-sidebar class="Shopcart" [(visible)]="display" [position]="'right'">
-  <div class="buttons">
-    <div class="p-fluid">
-      <button
-        pButton
-        label="Continuar con el pago"
-        class="button p-button-sm Secondary no-padding"
-        (click)="this.continue()"
-      ></button>
-
-      <button
-        pButton
-        label="Seguir comprando"
-        class="button p-button-sm Secondary no-padding pink"
-      ></button>
+<div class="order-item" *ngFor="let order of copies">
+  <div class="title">
+    <div class="value" *ngFor="let file of order.files">
+      {{ file.name }} ({{ file.pages }} páginas)
     </div>
   </div>
-  <app-order></app-order>
-</p-sidebar>
+  <div class="description">
+    <div class="item white">
+      <img [src]="order.printType.image" alt="" />
+    </div>
+    <div class="item">{{ order.paperSize.name }}</div>
+    <div class="item">{{ order.paperType.description }}</div>
+    <div class="item">{{ order.printForm.name }}</div>
+    <div class="item">
+      <img [src]="order.pagesPerSide.image + '_active.png'" alt="" />
+    </div>
+    <div class="item">
+      <img [src]="order.orientation.image + '_active.png'" alt="" />
+    </div>
+    <div class="item">
+      {{ order.copiesQuantity }}
+      {{ order.copiesQuantity == 1 ? "copia" : "copias" }}
+    </div>
+    <div class="item" *ngIf="order.finishType.code !== 'encuadernado'">
+      {{ order.finishType.name }}
+    </div>
+    <div class="item" *ngIf="order.finishType.code === 'encuadernado'">
+      Encuadernado<br />
+      {{ order.boundType.name }}
+    </div>
+  </div>
+  <div *ngIf="order.finishType.code === 'encuadernado'" class="bound-details">
+    <div class="bound-detail">
+      <img [src]="order.boundColors.anillas.image" alt="" />
+      <div class="Text">Anilla: {{ order.boundColors.anillas.name }}</div>
+    </div>
+    <div class="bound-detail">
+      <img [src]="order.boundColors.delantera.image" alt="" />
+      <div class="Text">
+        Tapa delantera: {{ order.boundColors.delantera.name }}
+      </div>
+    </div>
+    <div class="bound-detail">
+      <img [src]="order.boundColors.trasera.image" alt="" />
+      <div class="Text">Tapa trasera: {{ order.boundColors.trasera.name }}</div>
+    </div>
+  </div>
+  <div class="order-options">
+    <div class="price">
+      <div class="remove">
+        <i class="far fa-trash-alt" (click)="removeCopy(order)"></i>
+      </div>
+      <div class="value">{{ (itemsPrice[order.id] || 0).toFixed(2) }}€</div>
+    </div>
+  </div>
+  <div class="order_note" *ngFor="let note of itemsNotes[order.id] || []">
+    {{ note }}
+  </div>
+</div>
+
+<div class="order-item" *ngFor="let card of businessCards">
+  <app-shopcart-print-item
+    [name]="'Tarjeta de visita'"
+    [item]="card"
+    [price]="itemsPrice[card.id]"
+    [removeFn]="removeItemFunctions.businessCards"
+  ></app-shopcart-print-item>
+</div>
+
+<div class="order-item" *ngFor="let flyer of flyers">
+  <app-shopcart-print-item
+    [name]="'Flyer'"
+    [item]="flyer"
+    [price]="itemsPrice[flyer.id]"
+    [removeFn]="removeItemFunctions.flyers"
+  ></app-shopcart-print-item>
+</div>
+
+<div class="order-item" *ngFor="let poster of posters">
+  <app-shopcart-print-item
+    [name]="'Poster'"
+    [item]="poster"
+    [price]="itemsPrice[poster.id]"
+    [removeFn]="removeItemFunctions.posters"
+  ></app-shopcart-print-item>
+</div>
+
+<div class="order-item" *ngFor="let rollup of rollups">
+  <app-shopcart-print-item
+    [name]="'Rollup'"
+    [item]="rollup"
+    [price]="itemsPrice[rollup.id]"
+    [removeFn]="removeItemFunctions.rollups"
+  ></app-shopcart-print-item>
+</div>
+
+<div class="order-item" *ngFor="let folder of folders">
+  <app-shopcart-print-item
+    [name]="'Carpeta'"
+    [item]="folder"
+    [price]="itemsPrice[folder.id]"
+    [removeFn]="removeItemFunctions.folders"
+  ></app-shopcart-print-item>
+</div>
+
+<!--Flyers-->
+<div class="order-item" *ngFor="let diptych of diptychs">
+  <app-shopcart-print-item
+    [name]="'Dipticos'"
+    [item]="diptych"
+    [price]="itemsPrice[diptych.id]"
+    [removeFn]="removeItemFunctions.diptychs"
+  ></app-shopcart-print-item>
+</div>
+
+<div class="order-item" *ngFor="let triptych of triptychs">
+  <app-shopcart-print-item
+    [name]="'Tripticos'"
+    [item]="triptych"
+    [price]="itemsPrice[triptych.id]"
+    [removeFn]="removeItemFunctions.triptychs"
+  ></app-shopcart-print-item>
+</div>
+
+<div class="order-item" *ngFor="let product of products">
+  <div class="title">
+    {{ product.product.name }}<br />
+    {{ product.variation?.attributes[0].option }}
+  </div>
+  <div class="description">
+    <div class="item white">
+      <img [src]="product.product.images[0].src" alt="" />
+    </div>
+    <div class="item">Unidades: {{ product.quantity }}</div>
+    <div class="item">Precio unidad: {{ product.product.price }} €</div>
+  </div>
+  <div class="order-options">
+    <div class="price">
+      <div class="remove">
+        <i class="far fa-trash-alt" (click)="removeProduct(product)"></i>
+      </div>
+      <div class="value">{{ getProductPrice(product).toFixed(2) }} €</div>
+    </div>
+  </div>
+</div>
+
+{{ getTotalPrice() | number : "1.2-2" }} €

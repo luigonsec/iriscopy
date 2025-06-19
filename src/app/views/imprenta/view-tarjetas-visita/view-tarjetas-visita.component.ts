@@ -5,6 +5,7 @@ import tarjetaVisitaOptions from 'src/config/tarjetas-visita';
 import { FormBase } from '../../../_classes/form-base.class';
 import { PricesService } from '../../../services/prices.service';
 import { firstValueFrom } from 'rxjs';
+import { ShopcartService } from '../../../services/shopcart.service';
 @Component({
   selector: 'app-view-tarjetas-visita',
   templateUrl: './view-tarjetas-visita.component.html',
@@ -17,7 +18,10 @@ export class ViewTarjetasVisitaComponent
   @ViewChild('uploader') public uploader: UploaderComponent;
   public tarjetaVisitaOptions = tarjetaVisitaOptions;
 
-  constructor(public pricesService: PricesService) {
+  constructor(
+    public pricesService: PricesService,
+    public shopCart: ShopcartService
+  ) {
     super();
   }
 
@@ -35,6 +39,10 @@ export class ViewTarjetasVisitaComponent
     return await firstValueFrom(
       this.pricesService.getBusinessCardPrice(this.order)
     );
+  };
+
+  addToCartFn = async (order: TarjetaVisita) => {
+    return this.shopCart.addBusinessCardToCart.bind(this.shopCart)(order);
   };
 
   ngOnInit() {

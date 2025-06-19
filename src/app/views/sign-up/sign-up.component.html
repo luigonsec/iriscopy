@@ -8,68 +8,68 @@
           <div class="field col-12 md:col-5">
             <label for="username">Nombre de usuario</label>
             <input
-              [(ngModel)]="this.username"
+              [(ngModel)]="username"
               id="username"
               type="text"
               name="username"
               class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
             />
-            <small class="error" *ngIf="this.errors['username']">
-              {{ this.errors["username"] }}
+            <small class="error" *ngIf="errors['username']">
+              {{ errors["username"] }}
             </small>
           </div>
           <div class="field col-12 md:col-7">
             <label for="username">Email</label>
             <input
-              [(ngModel)]="this.email"
+              [(ngModel)]="email"
               id="email"
               type="text"
               name="email"
               class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
             />
-            <small class="error" *ngIf="this.errors['email']">
-              {{ this.errors["email"] }}
+            <small class="error" *ngIf="errors['email']">
+              {{ errors["email"] }}
             </small>
           </div>
           <div class="field col-12 md:col-6">
             <label for="password">Contraseña</label>
             <input
-              [(ngModel)]="this.password"
+              [(ngModel)]="password"
               id="password"
               type="password"
               name="password"
               class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
             />
-            <small class="error" *ngIf="this.errors['password']">
-              {{ this.errors["password"] }}
+            <small class="error" *ngIf="errors['password']">
+              {{ errors["password"] }}
             </small>
           </div>
           <div class="field col-12 md:col-6">
             <label for="passwordConfirm">Confirmar contraseña</label>
             <input
-              [(ngModel)]="this.passwordConfirm"
+              [(ngModel)]="passwordConfirm"
               id="passwordConfirm"
               type="password"
               name="passwordConfirm"
               class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
             />
-            <small class="error" *ngIf="this.errors['passwordConfirm']">
-              {{ this.errors["passwordConfirm"] }}
+            <small class="error" *ngIf="errors['passwordConfirm']">
+              {{ errors["passwordConfirm"] }}
             </small>
           </div>
           <div class="col-12 md:col-12">
             <button
               type="submit"
               pButton
-              [label]="this.buttonText"
+              [label]="buttonText"
               class="p-button-sm Secondary"
-              (click)="this.register()"
+              (click)="register()"
             ></button>
           </div>
-          <div class="field col-12 md:col-12" *ngIf="this.errors['general']">
-            {{ this.errors["general"] }}. Accede a tu cuenta
-            <a href="/login?email={{ this.email }}">aquí</a> o
-            <a href="/forgot-password?email={{ this.email }}"
+          <div class="field col-12 md:col-12" *ngIf="errors['general']">
+            {{ errors["general"] }}. Accede a tu cuenta
+            <a href="/login?email={{ email }}">aquí</a> o
+            <a href="/forgot-password?email={{ email }}"
               >recupera tu contraseña</a
             >.
           </div>
