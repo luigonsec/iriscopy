@@ -147,6 +147,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   public removeCoupon() {
     this.coupon = undefined;
     this.couponHandlerService.removeCoupon();
+    this.calcularPrecios();
   }
 
   public getCoupon() {
@@ -507,12 +508,20 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     precioCopias: number,
     precioProductos: number
   ): void {
+    console.log('Calculando subtotal...');
+
     this.subtotal = precioCopias + precioProductos;
 
     // Sumamos los precios de todos los demás tipos de elementos
     Object.values(CartItemType).forEach((itemType) => {
       const propertyName = this.itemTypePropertyMap[itemType];
-      if (!propertyName || itemType === CartItemType.PRODUCT) return;
+      // Excluimos productos y copias ya que su precio ya está incluido en el subtotal
+      if (
+        !propertyName ||
+        itemType === CartItemType.PRODUCT ||
+        itemType === CartItemType.COPY
+      )
+        return;
 
       const items = this[propertyName];
       if (!items || !items.length) return;
