@@ -108,7 +108,7 @@ export class ShippingHandlerService {
   }
 
   /**
-   * Calcula la fecha estimada de entrega
+   * Calcula la fecha estimada de entrega basada en el día de la semana
    * @returns Texto formateado con el rango de fechas de entrega previsto
    */
   public calculateExpectedDeliveryDate(): string {
@@ -116,11 +116,35 @@ export class ShippingHandlerService {
     moment.locale('es');
 
     const today = moment();
-    const earliest = this.addWorkingDays(today, 2);
-    const latest = this.addWorkingDays(today, 4);
+    const dayOfWeek = today.isoWeekday(); // 1 (Lunes) al 7 (Domingo)
+    const currentHour = today.hour();
+    let earliestDelivery: moment.Moment;
+    let latestDelivery: moment.Moment;
+
+    // Cálculo basado en el día de la semana
+    if (dayOfWeek < 5 && dayOfWeek > 0) {
+      earliestDelivery = this.addWorkingDays(today, 2); // Miércoles
+      latestDelivery = this.addWorkingDays(today, 3); // Jueves
+    } else if (dayOfWeek === 5) {
+      // Viernes
+      if (currentHour < 10) {
+        earliestDelivery = this.addWorkingDays(today, 1); // Lunes siguiente
+        latestDelivery = this.addWorkingDays(today, 3); // Miércoles siguiente
+      } else {
+        earliestDelivery = this.addWorkingDays(today, 2); // Martes siguiente
+        latestDelivery = this.addWorkingDays(today, 3); // Miércoles siguiente
+      }
+    } else {
+      // Sábado o Domingo
+      // Consideramos como si fuera un pedido de lunes
+      // Ajustamos today para que sea el lunes siguiente
+      const nextMonday = today.clone().add(1, 'week').isoWeekday(1);
+      earliestDelivery = this.addWorkingDays(nextMonday, 2); // Miércoles
+      latestDelivery = this.addWorkingDays(nextMonday, 3); // Jueves
+    }
 
     // Formateamos la salida para mostrar abreviaturas en minúsculas
-    return `${earliest.format('ddd D').toLowerCase()} - ${latest
+    return `${earliestDelivery.format('ddd D').toLowerCase()} - ${latestDelivery
       .format('ddd D')
       .toLowerCase()}`;
   }
