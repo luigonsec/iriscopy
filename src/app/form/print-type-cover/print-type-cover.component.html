@@ -1,0 +1,13 @@
+<p-selectButton
+  [options]="options"
+  [(ngModel)]="option"
+  optionLabel="name"
+  (onChange)="handleChange($event)"
+>
+  <ng-template let-item>
+    <div class="Button">
+      <div class="Button__label">{{ item.name }}</div>
+      <div class="Button__description">{{ item.description }}</div>
+    </div>
+  </ng-template>
+</p-selectButton>

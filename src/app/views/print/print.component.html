@@ -21,7 +21,17 @@
 
       <div class="Form__Section p-field">
         <div class="p-fluid">
-          <div class="Label">Tipo de impresión</div>
+          <div class="Label">Tipo de impresión (portada)</div>
+          <app-print-type-cover
+            (emitChange)="getPrintTypeCover($event)"
+            [(paperType)]="paperType"
+          ></app-print-type-cover>
+        </div>
+      </div>
+
+      <div class="Form__Section p-field">
+        <div class="p-fluid">
+          <div class="Label">Tipo de impresión (resto de páginas)</div>
           <app-print-type
             (emitChange)="getPrintType($event)"
             [(paperType)]="paperType"

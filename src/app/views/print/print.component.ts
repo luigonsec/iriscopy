@@ -20,6 +20,7 @@ export class PrintComponent implements OnInit, OnDestroy {
   public pagesPerSide: Option;
   public printForm: Option;
   public printType: Option;
+  public printTypeCover: Option;
   public paperType: Option;
   public paperSize: Option;
   public boundType: Option = options.boundTypes.find((x) => x.default);
@@ -56,6 +57,7 @@ export class PrintComponent implements OnInit, OnDestroy {
       pagesPerSide: this.pagesPerSide,
       printForm: this.printForm,
       printType: this.printType,
+      printTypeCover: this.printTypeCover,
       paperType: this.paperType,
       paperSize: this.paperSize,
       boundType: this.boundType,
@@ -100,6 +102,12 @@ export class PrintComponent implements OnInit, OnDestroy {
   getPrintType(value) {
     this.printType = value;
     this.order.printType = this.printType;
+    this.order = Object.assign({}, this.order);
+  }
+
+  getPrintTypeCover(value) {
+    this.printTypeCover = value;
+    this.order.printTypeCover = this.printTypeCover;
     this.order = Object.assign({}, this.order);
   }
 

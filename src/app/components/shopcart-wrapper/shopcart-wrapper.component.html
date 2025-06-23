@@ -20,7 +20,9 @@
 
     <div class="total">
       <span class="title">Total: </span>
-      <span class="value">{{ shopcart.getTotalPrice() }}€</span>
+      <span class="value"
+        >{{ shopcart.getTotalPrice() | number : "1.2-2" }}€</span
+      >
     </div>
   </div>
 </p-sidebar>

@@ -101,6 +101,7 @@ import { ViewTripticosComponent } from './views/imprenta/view-tripticos/view-tri
 import { InputCustomSizeComponent } from './components/inputs/input-custom-size/input-custom-size.component';
 import { SelectButtonComponent } from './components/inputs/select-button/select-button.component';
 import { ShopcartPrintItemComponent } from './components/shopcart-print-item/shopcart-print-item.component';
+import { PrintTypeCoverComponent } from './form/print-type-cover/print-type-cover.component';
 
 @NgModule({
   declarations: [
@@ -150,6 +151,7 @@ import { ShopcartPrintItemComponent } from './components/shopcart-print-item/sho
     UserOrdersComponent,
     UserInformationComponent,
     OrderDetailsComponent,
+    PrintTypeCoverComponent,
     UserPasswordComponent,
     BoundPagesComponent,
     OrderProcessingComponent,

@@ -512,8 +512,6 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     precioCopias: number,
     precioProductos: number
   ): void {
-    console.log('Calculando subtotal...');
-
     this.subtotal = precioCopias + precioProductos;
 
     // Sumamos los precios de todos los demás tipos de elementos
