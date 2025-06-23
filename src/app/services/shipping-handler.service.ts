@@ -8,7 +8,8 @@ import moment from 'moment';
 export class ShippingHandlerService {
   // Constantes para los costos de envío
   private readonly shippingCostStandard: number = 4.9;
-  private readonly shippingCostUrgent: number = 6.9;
+  // El costo urgente base ya no se usa directamente, ahora es calculado
+  private readonly urgentShippingPremium: number = 1.5; // Diferencia fija entre estándar y urgente
 
   constructor(private shippingCostService: ShippingCostsService) {}
 
@@ -34,9 +35,10 @@ export class ShippingHandlerService {
     urgentAvailable: boolean;
   } {
     if (!billing) {
+      const standardCost = this.shippingCostStandard;
       return {
-        standardCost: this.shippingCostStandard,
-        urgentCost: this.shippingCostUrgent,
+        standardCost: standardCost,
+        urgentCost: standardCost + this.urgentShippingPremium,
         standardAvailable: true,
         urgentAvailable: true,
       };
@@ -56,9 +58,12 @@ export class ShippingHandlerService {
       postcode
     );
 
+    // El costo de envío urgente es siempre el costo estándar + 1.5€
+    const urgentCost = standardCost + this.urgentShippingPremium;
+
     return {
       standardCost,
-      urgentCost: this.shippingCostUrgent,
+      urgentCost,
       standardAvailable,
       urgentAvailable,
     };

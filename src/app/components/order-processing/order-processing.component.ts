@@ -100,8 +100,11 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   precio_copias: number = 0;
   shippingCostStandard: number = 4.9;
   shippingCostFinal: number = 0;
-  shippingCostUrgent: number = 6.9;
+  shippingCostUrgent: number = 6.4; // Ya no se usa directamente, ahora lo calcula el servicio
   shippingDiscount: number = 0;
+
+  // Premium para envío urgente (la diferencia sobre el estándar)
+  private readonly urgentShippingPremium: number = 1.5;
 
   public itemsPrice: { [id: string]: number } = {};
   public itemsNotes: { [id: string]: string[] } = {};
@@ -703,10 +706,12 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
       const role = customer?.role;
       if (role === 'ustudiantes_unir') {
         this.shippingDiscount = 30;
-        this.shippingCostUrgent =
-          this.shippingCostUrgent * (1 - this.shippingDiscount / 100);
+        // Solo aplicamos el descuento al envío estándar
         this.shippingCostStandard =
           this.shippingCostStandard * (1 - this.shippingDiscount / 100);
+        // El costo urgente siempre es estándar + premium
+        this.shippingCostUrgent =
+          this.shippingCostStandard + this.urgentShippingPremium;
       }
     });
   }
