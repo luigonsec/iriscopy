@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Observable, Subject } from 'rxjs';
 import Order from '../interfaces/Order';
 import OrderProduct from '../interfaces/OrderProduct';
+import { PricesService } from './prices.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,12 +14,14 @@ export class OrdersService {
   private order$: Subject<OrderCopy>;
   private orderToEdit: OrderCopy;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private pricesService: PricesService) {
     this.order$ = new Subject();
   }
 
   async orderCopyToAnalytics(order: OrderCopy, copies: OrderCopy[]) {
-    const precio = (await this.getCopyPrice(order, copies).toPromise()).precio;
+    const precio = (
+      await this.pricesService.getCopyPrice(order, copies).toPromise()
+    ).precio;
     return {
       item_name: 'Impresión',
       item_id: 1,
@@ -63,23 +66,6 @@ export class OrdersService {
 
   getOrder() {
     return this.order$;
-  }
-
-  getCopyPrice(
-    line: OrderCopy,
-    order: OrderCopy[]
-  ): Observable<{ precio: number; notas: string[] }> {
-    return this.http.post<{ precio: number; notas: string[] }>(
-      `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/orders/price/line`,
-      { line, order }
-    );
-  }
-
-  getOrderPrice(order: OrderCopy[]): Observable<number> {
-    return this.http.post<number>(
-      `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/orders/price`,
-      { order }
-    );
   }
 
   getByCustomer(customers_id: number): Observable<Order[]> {

@@ -1,12 +1,19 @@
 <div class="grid">
-    <div class="col-12">
-        <div class="Pills" (mousedown)="startDragging($event)" (mouseup)="stopDragging()" (mouseleave)="stopDragging()"
-            (mousemove)="drag($event)">
-
-            <div [class]="'Pill ' + item.styleClass" *ngFor="let item of this.pills" (click)="this.activePill(item)">
-                {{item.label}}
-            </div>
-
-        </div>
+  <div class="col-12">
+    <div
+      class="Pills"
+      (mousedown)="startDragging($event)"
+      (mouseup)="stopDragging()"
+      (mouseleave)="stopDragging()"
+      (mousemove)="drag($event)"
+    >
+      <div
+        [class]="'Pill ' + item.styleClass"
+        *ngFor="let item of pills"
+        (click)="activePill(item)"
+      >
+        {{ item.label }}
+      </div>
     </div>
+  </div>
 </div>

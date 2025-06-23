@@ -16,6 +16,9 @@ describe('ForgotPasswordComponent', () => {
   beforeEach(async () => {
     usersService = jasmine.createSpyObj('UsersService', ['forgotPassword']);
     messageService = jasmine.createSpyObj('MessageService', ['add']);
+    activatedRoute = jasmine.createSpyObj('ActivatedRoute', ['queryParams']);
+
+    activatedRoute.queryParams = of({ email: 'email' });
 
     usersService.forgotPassword.and.returnValue(of(undefined));
     activatedRoute = jasmine.createSpyObj('ActivatedRoute', ['queryParams']);
@@ -25,12 +28,7 @@ describe('ForgotPasswordComponent', () => {
       providers: [
         { provide: UsersService, useValue: usersService },
         { provide: MessageService, useValue: messageService },
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            queryParams: of({ email: 'email' }),
-          },
-        },
+        { provide: ActivatedRoute, useValue: activatedRoute },
       ],
     }).compileComponents();
 

@@ -28,11 +28,11 @@ import { QuantityCopiesComponent } from './form/quantity-copies/quantity-copies.
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ToastModule } from 'primeng/toast';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AdditionalCommentComponent } from './form/additional-comment/additional-comment.component';
+import { AdditionalCommentComponent } from './components/inputs/additional-comment/additional-comment.component';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ConfirmBarComponent } from './components/confirm-bar/confirm-bar.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ShopcartComponent } from './components/shopcart/shopcart.component';
+import { ShopcartWrapperComponent } from './components/shopcart-wrapper/shopcart-wrapper.component';
 import { SidebarModule } from 'primeng/sidebar';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { PrintComponent } from './views/print/print.component';
@@ -44,7 +44,7 @@ import { TableModule } from 'primeng/table';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MenuModule } from 'primeng/menu';
 import { CheckboxModule } from 'primeng/checkbox';
-import { OrderComponent } from './components/order/order.component';
+import { ShopcartComponent } from './components/shopcart/shopcart.component';
 import { TermsComponent } from './views/terms/terms.component';
 import { SuccessComponent } from './views/success/success.component';
 import { ErrorComponent } from './views/error/error.component';
@@ -90,6 +90,17 @@ import { PaymentsEmptyCartWarningComponent } from './components/payments-empty-c
 import { MenuSidebarComponent } from './components/menu-sidebar/menu-sidebar.component';
 import { MobileMenuComponent } from './components/mobile-menu/mobile-menu.component';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { ViewTarjetasVisitaComponent } from './views/imprenta/view-tarjetas-visita/view-tarjetas-visita.component';
+import { ViewFlyersComponent } from './views/imprenta/view-flyers/view-flyers.component';
+import { ViewCarpetasComponent } from './views/imprenta/view-carpetas/view-carpetas.component';
+import { ViewRevistasComponent } from './views/imprenta/view-revistas/view-revistas.component';
+import { ViewRollupsComponent } from './views/imprenta/view-rollups/view-rollups.component';
+import { ViewCartelesComponent } from './views/imprenta/view-carteles/view-carteles.component';
+import { ViewDipticosComponent } from './views/imprenta/view-dipticos/view-dipticos.component';
+import { ViewTripticosComponent } from './views/imprenta/view-tripticos/view-tripticos.component';
+import { InputCustomSizeComponent } from './components/inputs/input-custom-size/input-custom-size.component';
+import { SelectButtonComponent } from './components/inputs/select-button/select-button.component';
+import { ShopcartPrintItemComponent } from './components/shopcart-print-item/shopcart-print-item.component';
 
 @NgModule({
   declarations: [
@@ -111,10 +122,10 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     QuantityCopiesComponent,
     AdditionalCommentComponent,
     ConfirmBarComponent,
-    ShopcartComponent,
+    ShopcartWrapperComponent,
     PrintComponent,
     PaymentComponent,
-    OrderComponent,
+    ShopcartComponent,
     TermsComponent,
     SuccessComponent,
     ErrorComponent,
@@ -145,6 +156,17 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     PaymentsEmptyCartWarningComponent,
     MenuSidebarComponent,
     MobileMenuComponent,
+    ViewTarjetasVisitaComponent,
+    ViewFlyersComponent,
+    ViewCarpetasComponent,
+    ViewRevistasComponent,
+    ViewRollupsComponent,
+    ViewCartelesComponent,
+    ViewDipticosComponent,
+    ViewTripticosComponent,
+    InputCustomSizeComponent,
+    SelectButtonComponent,
+    ShopcartPrintItemComponent,
   ],
   imports: [
     BrowserModule,

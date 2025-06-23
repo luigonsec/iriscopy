@@ -27,15 +27,11 @@
               </tr>
               <tr>
                 <th>
-                  <img [src]="this.banner.url" width="100" class="shadow-4" />
+                  <img [src]="banner.url" width="100" class="shadow-4" />
                 </th>
                 <th>
                   <div class="p-fluid">
-                    <input
-                      type="text"
-                      pInputText
-                      [(ngModel)]="this.banner.url"
-                    />
+                    <input type="text" pInputText [(ngModel)]="banner.url" />
                   </div>
                 </th>
                 <th>
@@ -43,31 +39,31 @@
                     <input
                       type="text"
                       pInputText
-                      [(ngModel)]="this.banner.link_to"
+                      [(ngModel)]="banner.link_to"
                     />
                   </div>
                 </th>
                 <th>
                   <p-checkbox
-                    [(ngModel)]="this.banner.visible_phone"
+                    [(ngModel)]="banner.visible_phone"
                     [binary]="true"
                   ></p-checkbox>
                 </th>
                 <th>
                   <p-checkbox
-                    [(ngModel)]="this.banner.visible_pc"
+                    [(ngModel)]="banner.visible_pc"
                     [binary]="true"
                   ></p-checkbox>
                 </th>
                 <th>
                   <p-checkbox
-                    [(ngModel)]="this.banner.visible_shop"
+                    [(ngModel)]="banner.visible_shop"
                     [binary]="true"
                   ></p-checkbox>
                 </th>
                 <th>
                   <p-checkbox
-                    [(ngModel)]="this.banner.visible_print"
+                    [(ngModel)]="banner.visible_print"
                     [binary]="true"
                   ></p-checkbox>
                 </th>
@@ -76,7 +72,7 @@
                     pButton
                     class="p-button-info p-button-sm"
                     label="Crear"
-                    (click)="this.confirmCreate()"
+                    (click)="confirmCreate()"
                   ></button>
                 </th>
               </tr>
@@ -129,13 +125,13 @@
                       pButton
                       class="p-button-info p-button-sm"
                       label="Editar"
-                      (click)="this.confirmUpdate(banner)"
+                      (click)="confirmUpdate(banner)"
                     ></button>
                     <button
                       pButton
                       class="p-button-danger p-button-sm"
                       label="Borrar"
-                      (click)="this.confirmDelete(banner.id)"
+                      (click)="confirmDelete(banner.id)"
                     ></button>
                   </div>
                 </td>

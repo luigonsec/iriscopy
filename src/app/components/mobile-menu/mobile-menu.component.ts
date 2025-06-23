@@ -7,8 +7,13 @@ import { Component } from '@angular/core';
 })
 export class MobileMenuComponent {
   pickUpPointsOpened = false;
+  printOptionsOpened = false;
 
   public togglePickUpPoints() {
     this.pickUpPointsOpened = !!!this.pickUpPointsOpened;
+  }
+
+  public togglePrintOptions() {
+    this.printOptionsOpened = !!!this.printOptionsOpened;
   }
 }

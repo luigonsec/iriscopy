@@ -13,7 +13,6 @@ export class AnalyticsService {
    * Equivale a 'view_item_list'
    */
   public verListadoProductos(items: any[]): void {
-    //console.log('verListadoProductos:', items);
     this.dataLayer.push({ ecommerce: null });
     this.dataLayer.push({
       event: 'view_item_list',
@@ -25,7 +24,6 @@ export class AnalyticsService {
   }
 
   public verListadoImpresiones(items: any[]): void {
-    //console.log('verListadoImpresiones:', items);
     this.dataLayer.push({ ecommerce: null });
     this.dataLayer.push({
       event: 'view_item_list',
@@ -41,7 +39,6 @@ export class AnalyticsService {
    * Equivale a 'select_item'
    */
   public clickEnProducto(items: any[]): void {
-    //console.log('clickEnProducto:', items);
     this.dataLayer.push({ ecommerce: null });
     this.dataLayer.push({
       event: 'select_item',
@@ -56,7 +53,6 @@ export class AnalyticsService {
    * Equivale a 'select_item'
    */
   public inicioPago(items: any[]): void {
-    //console.log('inicioPago:', items);
     this.dataLayer.push({ ecommerce: null });
     this.dataLayer.push({
       event: 'begin_checkout',
@@ -71,7 +67,6 @@ export class AnalyticsService {
    * Equivale a 'view_item'
    */
   public verDetalleProducto(items: any[]): void {
-    //console.log('verDetalleProducto:', items);
     this.dataLayer.push({ ecommerce: null });
     this.dataLayer.push({
       event: 'view_item',
@@ -86,7 +81,6 @@ export class AnalyticsService {
    * Equivale a 'add_to_cart'
    */
   public anadirAlCarrito(items: any[], cartUpdate?: number): void {
-    //console.log('anadirAlCarrito:', items, cartUpdate);
     this.dataLayer.push({ ecommerce: null });
     this.dataLayer.push({
       event: 'add_to_cart',
@@ -102,7 +96,6 @@ export class AnalyticsService {
    * Equivale a 'remove_from_cart'
    */
   public quitarDelCarrito(items: any[], cartUpdate?: number): void {
-    //console.log('quitarDelCarrito:', items, cartUpdate);
     this.dataLayer.push({ ecommerce: null });
     this.dataLayer.push({
       event: 'remove_from_cart',
@@ -118,7 +111,6 @@ export class AnalyticsService {
    * Equivale a 'add_shipping_info'
    */
   public infoEntrega(items: any[], shippingTier: string): void {
-    //console.log('infoEntrega:', items, shippingTier);
     this.dataLayer.push({ ecommerce: null });
     this.dataLayer.push({
       event: 'add_shipping_info',
@@ -134,7 +126,6 @@ export class AnalyticsService {
    * Equivale a 'add_payment_info'
    */
   public infoPago(items: any[], paymentType: string): void {
-    //console.log('infoPago:', items, paymentType);
     this.dataLayer.push({ ecommerce: null });
     this.dataLayer.push({
       event: 'add_payment_info',
@@ -151,7 +142,6 @@ export class AnalyticsService {
    * Recibe los datos básicos de la transacción y el array de productos
    */
   public registrarCompra(currency: string, coupon: string, items: any[]): void {
-    //console.log('registrarCompra:', currency, coupon, items);
     this.dataLayer.push({ ecommerce: null });
     this.dataLayer.push({
       event: 'purchase',
@@ -170,7 +160,6 @@ export class AnalyticsService {
    * Equivale a 'view_cart'
    */
   public verCarrito(items: any[]): void {
-    //console.log('verCarrito:', items);
     this.dataLayer.push({ ecommerce: null });
     this.dataLayer.push({
       event: 'view_cart',

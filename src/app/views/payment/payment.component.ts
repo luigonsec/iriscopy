@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { OrderComponent } from 'src/app/components/order/order.component';
+import { ShopcartComponent } from 'src/app/components/shopcart/shopcart.component';
 import Location from 'src/app/interfaces/Location';
 import RedsysData from 'src/app/interfaces/RedsysData';
 
@@ -22,6 +22,15 @@ import OrderProduct from 'src/app/interfaces/OrderProduct';
 import { OrderProcessingComponent } from 'src/app/components/order-processing/order-processing.component';
 import { AnalyticsService } from '../../services/analytics.service';
 import { OrdersService } from '../../services/orders.service';
+import Cart from '../../interfaces/Cart';
+import Flyer from '../../interfaces/Flyer';
+import TarjetaVisita from '../../interfaces/TarjetaVisita';
+import Carpeta from '../../interfaces/Carpeta';
+import Diptico from '../../interfaces/Diptico';
+import Triptico from '../../interfaces/Triptico';
+import Rollup from '../../interfaces/Rollup';
+import Cartel from '../../interfaces/Cartel';
+import Revista from '../../interfaces/Revista';
 
 @Component({
   selector: 'app-payment',
@@ -32,8 +41,17 @@ export class PaymentComponent implements OnInit, OnDestroy {
   public emptyCart: boolean = false;
   public differentAddress = false;
   public deliver: string = 'Pickup';
-  public copies: OrderCopy[];
-  public products: OrderProduct[];
+  public copies: OrderCopy[] = [];
+  public products: OrderProduct[] = [];
+  public flyers: Flyer[] = [];
+  public businessCards: TarjetaVisita[] = [];
+  public folders: Carpeta[] = [];
+  public diptychs: Diptico[] = [];
+  public triptychs: Triptico[] = [];
+  public rollups: Rollup[] = [];
+  public posters: Cartel[] = [];
+  public magazines: Revista[] = [];
+
   public first_time_coupon_applied = false;
 
   public locations = locations;
@@ -49,7 +67,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   @ViewChild('orderProcessing')
   public orderProcessing: OrderProcessingComponent;
 
-  @ViewChild('order') public order: OrderComponent;
+  @ViewChild('shopcart') public order: ShopcartComponent;
   @ViewChild('billing') public billing: BillingComponent;
   // Cambia la inicialización de shipping a nulo
   private _shipping: ShippingComponent | null = null;
@@ -65,7 +83,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
   public subscriptionCart: Subscription;
 
   constructor(
-    private orderService: OrdersService,
     private shopcartService: ShopcartService,
     private store: Store,
     private cdr: ChangeDetectorRef,
@@ -108,19 +125,49 @@ export class PaymentComponent implements OnInit, OnDestroy {
     this.analytics.inicioPago(await this.shopcartService.getAnalyticsCart());
   }
 
+  private updateCartItems(cart: Cart) {
+    this.copies = cart.copies || [];
+    this.products = cart.products || [];
+    this.businessCards = cart.bussinessCard || [];
+    this.flyers = cart.flyers || [];
+    this.folders = cart.folders || [];
+    this.diptychs = cart.diptychs || [];
+    this.triptychs = cart.triptychs || [];
+    this.rollups = cart.rollups || [];
+    // Si añades más tipos en el futuro, agrégalos aquí
+  }
+
+  public getTotalCartItems(): number {
+    return (
+      this.copies.length +
+      this.products.length +
+      this.flyers.length +
+      this.businessCards.length +
+      this.folders.length +
+      this.diptychs.length +
+      this.triptychs.length +
+      this.rollups.length +
+      this.posters.length +
+      this.magazines.length
+    );
+  }
+
+  public isCartEmpty(): boolean {
+    return this.getTotalCartItems() === 0;
+  }
+
   async ngOnInit() {
-    this.copies = this.shopcartService.getCart().copies;
-    this.products = this.shopcartService.getCart().products;
-    this.emptyCart = this.copies.length + this.products.length === 0;
+    this.updateCartItems(this.shopcartService.getCart());
+
+    this.emptyCart = this.isCartEmpty();
 
     this.notifyAnalytics();
 
     this.subscriptionCart = this.shopcartService
       .getCart$()
       .subscribe((order) => {
-        this.copies = order.copies;
-        this.products = order.products;
-        this.emptyCart = this.copies.length + this.products.length === 0;
+        this.updateCartItems(this.shopcartService.getCart());
+        this.emptyCart = this.isCartEmpty();
         this.notifyAnalytics();
       });
   }

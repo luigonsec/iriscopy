@@ -1,4 +1,4 @@
-<div id="confirm-bar">
+<div id="confirm-bar" role="region" aria-label="Confirmación de pedido">
   <div class="grid">
     <div id="button-column" class="col-12 lg:col-8 xl:col-4">
       <div id="buttons">
@@ -6,39 +6,55 @@
           <div class="col-12 sm:col-6 xl:col-6">
             <div class="p-fluid">
               <button
-                [disabled]="this.disableButtons"
+                [disabled]="disableButtons || isLoading"
                 pButton
+                type="button"
                 class="p-button-sm Secondary pink"
                 label="Finalizar y pagar"
-                (click)="this.finishAndPay()"
-              ></button>
+                (click)="finishAndPay()"
+                aria-label="Finalizar y pagar"
+              >
+                <ng-container *ngIf="isLoading">
+                  <i class="pi pi-spin pi-spinner" aria-hidden="true"></i>
+                  <span class="visually-hidden">Cargando...</span>
+                </ng-container>
+              </button>
             </div>
           </div>
           <div class="col-12 sm:col-6 xl:col-6">
             <div class="p-fluid">
               <button
-                [disabled]="this.disableButtons"
+                [disabled]="disableButtons || isLoading"
                 pButton
+                type="button"
                 class="p-button-sm Secondary pink"
                 label="Añadir al carrito"
-                (click)="this.addConfiguration()"
-              ></button>
+                (click)="addConfiguration()"
+                aria-label="Añadir al carrito"
+              >
+                <ng-container *ngIf="isLoading">
+                  <i class="pi pi-spin pi-spinner" aria-hidden="true"></i>
+                  <span class="visually-hidden">Cargando...</span>
+                </ng-container>
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
+
     <div id="notes-column" class="col-12 lg:col-12 xl:col-5">
       <div
         class="notes"
-        *ngFor="let nota of this.notas"
-        [innerHTML]="nota"
+        *ngFor="let nota of notas; trackBy: trackByNota"
+        [innerHTML]="nota.text"
       ></div>
     </div>
+
     <div id="price-column" class="col-12 lg:col-4 xl:col-3">
-      <div id="Precio">
-        <span id="Texto">Total a pagar </span
-        ><span id="Cantidad">{{ this.precio }} €</span>
+      <div id="Precio" aria-live="polite">
+        <span id="Texto">Total a pagar </span>
+        <span id="Cantidad">{{ precio | number : "1.2-2" }} €</span>
       </div>
     </div>
   </div>

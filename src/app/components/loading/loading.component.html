@@ -1,5 +1,9 @@
-<div class="" id="Loading" [style]="{'display': this.payload.isLoading ? 'flex' : 'none'}">
+<div
+  class=""
+  id="Loading"
+  [style]="{ display: payload.isLoading ? 'flex' : 'none' }"
+>
   <div class="Text">
-    {{this.payload.text}} <i class="fas fa-spinner fa-spin"></i>
+    {{ payload.text }} <i class="fas fa-spinner fa-spin"></i>
   </div>
 </div>

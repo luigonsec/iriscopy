@@ -14,7 +14,7 @@
           <app-paper-type
             #paperTypeComponent
             (emitChange)="getPaperType($event)"
-            [(paperSize)]="this.paperSize"
+            [(paperSize)]="paperSize"
           ></app-paper-type>
         </div>
       </div>
@@ -24,7 +24,7 @@
           <div class="Label">Tipo de impresión</div>
           <app-print-type
             (emitChange)="getPrintType($event)"
-            [(paperType)]="this.paperType"
+            [(paperType)]="paperType"
           ></app-print-type>
         </div>
       </div>
@@ -34,7 +34,7 @@
           <div class="Label">Forma de impresión</div>
           <app-print-form
             (emitChange)="getPrintForm($event)"
-            [(paperType)]="this.paperType"
+            [(paperType)]="paperType"
           ></app-print-form>
         </div>
       </div>
@@ -52,7 +52,7 @@
           <div class="Label">Páginas por cara</div>
           <app-pages-per-side
             (emitChange)="getPagesPerSide($event)"
-            [(orientation)]="this.orientation"
+            [(orientation)]="orientation"
           ></app-pages-per-side>
         </div>
       </div>
@@ -62,25 +62,25 @@
           <div class="Label">Tipo de acabado</div>
           <app-finish-type
             (emitChange)="getFinishType($event)"
-            [(paperSize)]="this.paperSize"
-            [(printForm)]="this.printForm"
-            [(files)]="this.files"
-            [(pagesPerSide)]="this.pagesPerSide"
+            [(paperSize)]="paperSize"
+            [(printForm)]="printForm"
+            [(files)]="files"
+            [(pagesPerSide)]="pagesPerSide"
           ></app-finish-type>
         </div>
       </div>
       <div
         class="Form__Section p-field"
-        *ngIf="this.finishType && this.finishType.code === 'encuadernado'"
+        *ngIf="finishType && finishType.code === 'encuadernado'"
       >
         <div class="p-fluid">
           <div class="Label">Encuadernar los documentos</div>
           <app-bound
             (emitChangeBound)="getBound($event)"
-            [boundType]="this.boundType"
-            [boundPages]="this.boundPages"
-            [boundColors]="this.boundColors"
-            [(files)]="this.files"
+            [boundType]="boundType"
+            [boundPages]="boundPages"
+            [boundColors]="boundColors"
+            [(files)]="files"
           >
           </app-bound>
         </div>
@@ -152,7 +152,7 @@
                   pButton
                   class="Secondary pink no-padding"
                   label="Eliminar"
-                  (click)="this.removeFile(file.id)"
+                  (click)="removeFile(file.id)"
                 ></button>
               </div>
             </div>
@@ -178,8 +178,10 @@
   </div>
 
   <app-confirm-bar
-    *ngIf="this.isReady()"
-    [reset]="this.reset"
-    [(order)]="this.order"
+    [addToCartFn]="addToCartFn"
+    *ngIf="isReady()"
+    [getPrecio]="getPrecio"
+    [reset]="reset"
+    [(order)]="order"
   ></app-confirm-bar>
 </div>

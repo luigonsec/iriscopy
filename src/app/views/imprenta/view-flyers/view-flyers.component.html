@@ -1,0 +1,120 @@
+<div id="print-wrapper" class="grid p-0 m-0">
+  <div id="form-column" class="col-12 lg:col-5">
+    <div id="form">
+      <div class="Form__Section p-field">
+        <div class="p-fluid">
+          <div class="Label">Forma de impresion</div>
+          <app-select-button
+            [options]="flyerOptions.printForm"
+            (emitChange)="getProperty('printForm', $event)"
+          ></app-select-button>
+        </div>
+      </div>
+
+      <div class="Form__Section p-field">
+        <div class="p-fluid">
+          <div class="Label">Tipo de papel</div>
+          <app-select-button
+            [options]="flyerOptions.paperType"
+            (emitChange)="getProperty('paperType', $event)"
+          ></app-select-button>
+        </div>
+      </div>
+
+      <div class="Form__Section p-field">
+        <div class="p-fluid">
+          <div class="Label">Tamaño (cerrado)</div>
+          <app-select-button
+            [options]="flyerOptions.paperSize"
+            (emitChange)="getProperty('paperSize', $event)"
+          ></app-select-button>
+        </div>
+      </div>
+
+      <div class="Form__Section p-field" *ngIf="isCustomSize()">
+        <div class="p-fluid">
+          <div class="Label">Tamaño personalizado</div>
+          <app-input-custom-size
+            (emitChange)="getProperty('size', $event)"
+          ></app-input-custom-size>
+        </div>
+      </div>
+
+      <div class="Form__Section p-field">
+        <div class="p-fluid">
+          <div class="Label">Cantidad</div>
+          <app-select-button
+            [options]="flyerOptions.copiesQuantity"
+            (emitChange)="getProperty('copiesQuantity', $event)"
+          ></app-select-button>
+        </div>
+      </div>
+      <div class="Form__Section p-field">
+        <div class="p-fluid">
+          <div class="Label">Comentarios adicionales</div>
+          <app-additional-comment
+            (emitChange)="getProperty('additionalComments', $event)"
+          ></app-additional-comment>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="other-column" class="col-12 lg:col-7">
+    <div class="grid p-0 m-0">
+      <div id="upload-column" class="col-12 lg:pt-8 lg:col-12 xl:col-6">
+        <div id="upload">
+          <app-uploader #uploader (emitChange)="getFile($event)"></app-uploader>
+        </div>
+      </div>
+
+      <div id="files-column" class="col-12">
+        <div class="grid">
+          <div
+            *ngFor="let file of order.files || []"
+            class="col-6 sm:col-4 md:col-4 lg:col-4 xl:col-3"
+          >
+            <div class="uploaded-file">
+              <div class="titulo">
+                {{ file.name }}
+              </div>
+              <img src="{{ file.image }}" alt="" />
+              <p>{{ file.pages }} páginas</p>
+              <div class="flex justify-content-right">
+                <button
+                  pButton
+                  class="Secondary pink no-padding"
+                  label="Eliminar"
+                  (click)="removeFile(file.id)"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="banner-sm-column" class="lg:hidden">
+    <div id="banner-column" class="col-12 sm:col-6 sm:col-offset-3 sm:visible">
+      <div id="banner">
+        <app-banner
+          class="hidden sm:block"
+          [options]="{ visible_pc: true, visible_print: true }"
+        ></app-banner>
+        <app-banner
+          class="block sm:hidden"
+          [options]="{ visible_phone: true, visible_print: true }"
+        ></app-banner>
+      </div>
+    </div>
+  </div>
+
+  <app-confirm-bar
+    [addToCartFn]="addToCartFn"
+    [getPrecio]="getPrice"
+    *ngIf="ready"
+    [reset]="reset"
+    [(order)]="order"
+  ></app-confirm-bar>
+</div>

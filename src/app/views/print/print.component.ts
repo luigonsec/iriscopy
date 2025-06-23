@@ -1,14 +1,14 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-
 import Option from 'src/app/interfaces/Option';
 import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import options from 'src/config/options';
 import File from 'src/app/interfaces/File';
 import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
 import { OrdersService } from 'src/app/services/orders.service';
-import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { AnalyticsService } from 'src/app/services/analytics.service';
+import { ShopcartService } from '../../services/shopcart.service';
+import { PricesService } from '../../services/prices.service';
 @Component({
   selector: 'app-print',
   templateUrl: './print.component.html',
@@ -45,7 +45,9 @@ export class PrintComponent implements OnInit, OnDestroy {
 
   constructor(
     private orderService: OrdersService,
-    private analytics: AnalyticsService
+    private analytics: AnalyticsService,
+    private shopcartService: ShopcartService,
+    private pricesService: PricesService
   ) {
     this.reset = this.reset.bind(this);
     this.order = {
@@ -182,6 +184,19 @@ export class PrintComponent implements OnInit, OnDestroy {
     this.orientation = order.orientation;
     this.pagesPerSide = order.pagesPerSide;
   }
+
+  getPrecio = async () => {
+    const others = this.shopcartService.getCart().copies;
+    others.push(this.order);
+    const res = await firstValueFrom(
+      this.pricesService.getCopyPrice(this.order, others)
+    );
+    return res;
+  };
+
+  addToCartFn = async (order: OrderCopy) => {
+    return this.shopcartService.addCopyToCart.bind(this.shopcartService)(order);
+  };
 
   ngOnInit() {
     this.analytics.verListadoImpresiones([]);

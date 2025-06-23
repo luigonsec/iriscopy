@@ -1,0 +1,106 @@
+@import "src/assets/scss/colors";
+
+// Variables
+$card-border-radius: 5px;
+$card-spacing: 20px;
+$feature-border-radius: 5px;
+
+// Estilos del elemento del carrito
+:host {
+  display: block;
+  width: 100%;
+  border: 1px solid black;
+  border-radius: $card-border-radius;
+  padding: 10px $card-spacing;
+  margin-bottom: $card-spacing;
+  background-color: white;
+}
+
+// Título del producto
+.title {
+  color: black;
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 15px;
+
+  .value {
+    display: block;
+  }
+}
+
+// Descripción y características
+.description {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  text-align: center;
+
+  .item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $feature-border-radius;
+    padding: 5px;
+    background-color: $lila;
+    color: black;
+    border: 1px solid black;
+    font-size: 14px;
+    min-width: 40px;
+    height: 40px;
+    box-sizing: border-box;
+
+    img {
+      height: 100%;
+      width: auto;
+    }
+
+    &.white {
+      background-color: white;
+    }
+  }
+}
+
+// Sección de precio y acciones
+.cart-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: $card-spacing;
+
+  .remove {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: $darkGray;
+  }
+
+  .price {
+    display: flex;
+    align-items: center;
+    color: $primary;
+
+    .value {
+      font-weight: 300;
+      font-size: 24px;
+      margin-left: 10px;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .title {
+    font-size: 14px;
+  }
+
+  .description .item {
+    font-size: 12px;
+    min-width: 30px;
+    height: 30px;
+  }
+
+  .cart-actions .price .value {
+    font-size: 16px;
+  }
+}

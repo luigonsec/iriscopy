@@ -1,11 +1,21 @@
-<p-selectButton [options]="options" [(ngModel)]="option" optionLabel="name" (onChange)="this.handleChange($event)">
+<p-selectButton
+  [options]="options"
+  [(ngModel)]="option"
+  optionLabel="name"
+  (onChange)="handleChange($event)"
+>
   <ng-template let-item>
     <div class="Button" *ngIf="!!!item.image">
-      <div class="Button__label">{{item.name}}</div>
-      <div class="Button__description">{{item.description}}</div>
+      <div class="Button__label">{{ item.name }}</div>
+      <div class="Button__description">{{ item.description }}</div>
     </div>
     <div class="Button" *ngIf="item.image">
-      <img class="Button__img" src="{{item.image}}{{item.code === this.option.code ? '_active' : ''}}.png">
+      <img
+        class="Button__img"
+        src="{{ item.image }}{{
+          item.code === option.code ? '_active' : ''
+        }}.png"
+      />
     </div>
   </ng-template>
 </p-selectButton>

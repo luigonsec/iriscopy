@@ -2,44 +2,36 @@
 <div id="process-order" class="iriscopy-box padding-sm">
   <div id="Shipping">
     <div class="Title">Envío / Recogida</div>
-    <div
-      class="Option p-field-radiobutton"
-      *ngIf="this.standardShippingAvailable"
-    >
+    <div class="Option p-field-radiobutton" *ngIf="standardShippingAvailable">
       <p-radioButton
         value="Shipping"
         [(ngModel)]="deliver"
         inputId="shipping"
-        (onClick)="this.handleDeliveryMethodChange()"
+        (onClick)="handleDeliveryMethodChange()"
       ></p-radioButton>
       <label for="shipping">
-        Envío estándar <span>({{ this.expectedDeliveryDate }})</span></label
+        Envío estándar <span>({{ expectedDeliveryDate }})</span></label
       >
       <span class="Extra">
-        {{ this.shippingCostStandard | number : "1.2-2" }}€
+        {{ shippingCostStandard | number : "1.2-2" }}€
       </span>
     </div>
-    <div
-      class="Option p-field-radiobutton"
-      *ngIf="this.urgentShippingAvailable"
-    >
+    <div class="Option p-field-radiobutton" *ngIf="urgentShippingAvailable">
       <p-radioButton
         value="UrgentShipping"
         [(ngModel)]="deliver"
         inputId="urgent_shipping"
-        (onClick)="this.handleDeliveryMethodChange()"
+        (onClick)="handleDeliveryMethodChange()"
       ></p-radioButton>
       <label for="urgent_shipping"> Envío urgente (24-48h)</label>
-      <span class="Extra">
-        {{ this.shippingCostUrgent | number : "1.2-2" }}€
-      </span>
+      <span class="Extra"> {{ shippingCostUrgent | number : "1.2-2" }}€ </span>
     </div>
     <div class="Option p-field-radiobutton">
       <p-radioButton
         value="Pickup"
         [(ngModel)]="deliver"
         inputId="pickup"
-        (onClick)="this.handleDeliveryMethodChange()"
+        (onClick)="handleDeliveryMethodChange()"
       ></p-radioButton>
       <label for="pickup"> Recogida en local</label>
       <span class="Extra"> Gratuita</span>
@@ -47,7 +39,7 @@
 
     <div class="p-fluid">
       <p-dropdown
-        *ngIf="this.deliver === 'Pickup'"
+        *ngIf="deliver === 'Pickup'"
         [options]="locations"
         [(ngModel)]="selectedLocation"
         optionLabel="name"
@@ -79,7 +71,7 @@
         value="CARD"
         [(ngModel)]="payment"
         inputId="card"
-        (ngModelChange)="this.infoPagoAnalytics()"
+        (ngModelChange)="infoPagoAnalytics()"
       >
       </p-radioButton>
       <label class="Payment__type" for="card">Tarjeta de crédito/débito</label>
@@ -119,7 +111,7 @@
     </div>
     <div class="Option p-field-radiobutton">
       <p-radioButton
-        (ngModelChange)="this.infoPagoAnalytics()"
+        (ngModelChange)="infoPagoAnalytics()"
         value="BIZUM"
         [(ngModel)]="payment"
         inputId="bizum"
@@ -141,7 +133,7 @@
       <p-checkbox
         name="groupname"
         value="val1"
-        [(ngModel)]="this.termsAccepted"
+        [(ngModel)]="termsAccepted"
       ></p-checkbox>
       He leído y acepto la
       <a href="https://iriscopyshop.com/politica-de-privacidad/" target="_blank"
@@ -152,7 +144,7 @@
     </p>
   </div>
 
-  <div id="Promotional" class="grid" *ngIf="!!!this.coupon">
+  <div id="Promotional" class="grid" *ngIf="!!!coupon">
     <div class="col-12"></div>
     <div class="col-12 sm:col-8">
       <div class="p-fluid">
@@ -160,7 +152,7 @@
           pInputText
           class="p-inputtext-sm"
           type="text"
-          [(ngModel)]="this.inputCoupon"
+          [(ngModel)]="inputCoupon"
           placeholder="¿Tienes un código promocional?"
         />
       </div>
@@ -169,10 +161,10 @@
       <button
         pButton
         class="p-button Secondary p-button-sm pink low-padding"
-        (click)="this.getCoupon()"
-        [disabled]="this.searching_coupon"
+        (click)="getCoupon()"
+        [disabled]="searching_coupon"
       >
-        {{ this.apply_cupon_text }}
+        {{ apply_cupon_text }}
       </button>
     </div>
   </div>
@@ -181,25 +173,23 @@
     <div class="col-12">
       <div class="Cost Subtotal">
         <div class="Title">Subtotal</div>
-        <div class="Amount">{{ this.subtotal | number : "1.2-2" }} €</div>
+        <div class="Amount">{{ subtotal | number : "1.2-2" }} €</div>
       </div>
-      <div class="Cost Shipping" *ngIf="this.deliver.includes('Shipping')">
+      <div class="Cost Shipping" *ngIf="deliver.includes('Shipping')">
         <div class="Title">Envío</div>
-        <div class="Amount">
-          {{ this.shippingCostFinal | number : "1.2-2" }} €
-        </div>
+        <div class="Amount">{{ shippingCostFinal | number : "1.2-2" }} €</div>
       </div>
 
-      <div class="Cost Discount" *ngIf="this.coupon">
+      <div class="Cost Discount" *ngIf="coupon">
         <div class="Title">
-          Descuento ({{ this.coupon.code }})
-          <i class="far fa-trash-alt" (click)="this.removeCoupon()"></i>
+          Descuento ({{ coupon.code }})
+          <i class="far fa-trash-alt" (click)="removeCoupon()"></i>
         </div>
-        <div class="Amount">-{{ this.discount | number : "1.2-2" }} €</div>
+        <div class="Amount">-{{ discount | number : "1.2-2" }} €</div>
       </div>
       <div class="Cost Total">
         <div class="Title">Total</div>
-        <div class="Amount">{{ this.total | number : "1.2-2" }} €</div>
+        <div class="Amount">{{ total | number : "1.2-2" }} €</div>
       </div>
     </div>
   </div>
@@ -210,26 +200,26 @@
     </button>
     <form
       #redsysForm
-      *ngIf="this.redsysData"
+      *ngIf="redsysData"
       [action]="'https://sis.redsys.es/sis/realizarPago'"
       method="POST"
     >
       <input
         type="hidden"
         name="Ds_SignatureVersion"
-        [(ngModel)]="this.redsysData.Ds_SignatureVersion"
+        [(ngModel)]="redsysData.Ds_SignatureVersion"
       />
       <input
         type="hidden"
         name="Ds_MerchantParameters"
-        [(ngModel)]="this.redsysData.Ds_MerchantParameters"
+        [(ngModel)]="redsysData.Ds_MerchantParameters"
       />
       <input
         type="hidden"
         name="Ds_Signature"
-        [(ngModel)]="this.redsysData.Ds_Signature"
+        [(ngModel)]="redsysData.Ds_Signature"
       />
-      <input type="hidden" name="Order_ID" [(ngModel)]="this.OrderID" />
+      <input type="hidden" name="Order_ID" [(ngModel)]="OrderID" />
     </form>
   </div>
 </div>

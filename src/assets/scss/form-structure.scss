@@ -1,0 +1,96 @@
+@import "src/assets/scss/colors.scss";
+
+:host {
+  display: flex; /* la vista se convierte en flex‐item y flex‐container */
+  flex-direction: column; /* para que #print-wrapper crezca y el confirm‐bar quede abajo */
+  flex: 1 1 auto; /* llena todo el contenedor .contain */
+  min-height: 0; /* habilita % y flex‐shrink */
+}
+
+#print-wrapper {
+  display: flex; /* opcional: si quieres seguir usando grid/flex de Prime */
+  flex: 1 1 auto; /* rellena el host */
+  min-height: 0;
+}
+#form-column {
+  order: 1;
+}
+
+#other-column {
+  order: 2;
+}
+#upload-column {
+  order: 3;
+}
+#banner-column {
+  order: 4;
+}
+
+#files-column {
+  order: 5;
+}
+
+#banner-sm-column {
+  padding-bottom: 180px;
+  order: 6;
+}
+
+#form-column {
+  background-color: white;
+  border-right: $border;
+  padding: 20px 50px 0px 50px;
+}
+
+#banner {
+  padding-top: 40px;
+}
+
+.uploaded-file {
+  .titulo {
+    font-weight: bold;
+    color: $rosa;
+    height: 40px;
+  }
+  padding: 10px;
+  background-color: white;
+  font-family: "Montserrat" !important;
+  img {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1199px) {
+  #form-column {
+    padding: 10px 10px;
+  }
+}
+
+@media (max-width: 991px) {
+  #form-column {
+    padding: 10px 4px;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+  }
+
+  #form-column {
+    order: 3;
+  }
+
+  #other-column {
+    order: 1;
+  }
+  #upload-column {
+    order: 1;
+  }
+  #banner-column {
+    order: 4;
+  }
+
+  #files-column {
+    order: 2;
+  }
+
+  #banner-sm-column {
+    order: 5;
+  }
+}

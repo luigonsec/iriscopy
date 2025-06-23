@@ -1,35 +1,43 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
 import Coupon from 'src/app/interfaces/Coupon';
-import File from 'src/app/interfaces/File';
 import Location from 'src/app/interfaces/Location';
 import Order from 'src/app/interfaces/Order';
 import RedsysData from 'src/app/interfaces/RedsysData';
-
-import { CouponsService } from 'src/app/services/coupons.service';
+import { CouponHandlerService } from 'src/app/services/coupon-handler.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { RedsysService } from 'src/app/services/redsys.service';
-import { ShopcartService } from 'src/app/services/shopcart.service';
+import { OrderBuilderService } from 'src/app/services/order-builder.service';
+import { ShippingHandlerService } from 'src/app/services/shipping-handler.service';
+import {
+  CartItemType,
+  ShopcartService,
+} from 'src/app/services/shopcart.service';
 import locations from 'src/config/locations';
-import { applyCoupon, clearCoupon } from 'src/app/_actions/coupons.actions';
 import { BillingComponent } from 'src/app/components/forms/billing/billing.component';
 import { ShippingComponent } from 'src/app/components/forms/shipping/shipping.component';
-import { Subscription } from 'rxjs';
+import { Subscription, forkJoin, Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import Customer from 'src/app/interfaces/Customer';
-
 import generalConfig from 'src/config/general';
-
-import ShippingDetails from 'src/app/interfaces/ShippingDetails';
 import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import OrderProduct from 'src/app/interfaces/OrderProduct';
 import { HttpErrorResponse } from '@angular/common/http';
-import { selectCoupon } from 'src/app/_selectors/coupons.selector';
-import { ShippingCostsService } from 'src/app/services/shipping-costs.service';
-import moment from 'moment';
 import { AnalyticsService } from 'src/app/services/analytics.service';
 import { selectCustomer } from '../../_selectors/customer.selectors';
+import { PricesService } from '../../services/prices.service';
+import { PriceResult } from '../../interfaces/PriceResult';
+import Flyer from '../../interfaces/Flyer';
+import TarjetaVisita from '../../interfaces/TarjetaVisita';
+import Carpeta from '../../interfaces/Carpeta';
+import Diptico from '../../interfaces/Diptico';
+import Triptico from '../../interfaces/Triptico';
+import Rollup from '../../interfaces/Rollup';
+import Cartel from '../../interfaces/Cartel';
+import Revista from '../../interfaces/Revista';
+import Cart from '../../interfaces/Cart';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-order-processing',
@@ -43,8 +51,17 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   public inputCoupon: string;
   public coupon: Coupon;
   public payment: string;
-  public copies: OrderCopy[];
-  public products: OrderProduct[];
+  public copies: OrderCopy[] = [];
+  public products: OrderProduct[] = [];
+  public flyers: Flyer[] = [];
+  public businessCards: TarjetaVisita[] = [];
+  public folders: Carpeta[] = [];
+  public diptychs: Diptico[] = [];
+  public triptychs: Triptico[] = [];
+  public rollups: Rollup[] = [];
+  public posters: Cartel[] = [];
+  public magazines: Revista[] = [];
+
   public first_time_coupon_applied = false;
 
   public locations = locations;
@@ -86,15 +103,20 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   shippingCostUrgent: number = 6.9;
   shippingDiscount: number = 0;
 
+  public itemsPrice: { [id: string]: number } = {};
+  public itemsNotes: { [id: string]: string[] } = {};
+
   constructor(
     private shopcartService: ShopcartService,
     private orderService: OrdersService,
     private redsysService: RedsysService,
     private loadingService: LoadingService,
     private messageService: MessageService,
-    private couponsService: CouponsService,
-    private shippingCostService: ShippingCostsService,
+    private couponHandlerService: CouponHandlerService,
+    private pricesService: PricesService,
+    private shippingHandlerService: ShippingHandlerService,
     private analytics: AnalyticsService,
+    private orderBuilderService: OrderBuilderService,
     private store: Store
   ) {}
 
@@ -128,74 +150,33 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
 
   public removeCoupon() {
     this.coupon = undefined;
-    this.store.dispatch(clearCoupon());
+    this.couponHandlerService.removeCoupon();
+    this.calcularPrecios();
   }
 
   public getCoupon() {
     this.first_time_coupon_applied = true;
-    this.searching_coupon = true;
-    this.apply_cupon_text = 'Buscando cupón...';
-    this.couponsService
-      .validate(this.inputCoupon)
-      .subscribe({
-        next: (coupon: Coupon) => {
-          coupon.valid_until = moment().valueOf() + 15 * 60 * 1000;
-
-          this.store.dispatch(applyCoupon({ coupon: coupon }));
-        },
-        error: () => {
-          return this.messageService.add({
-            severity: 'error',
-            detail: 'El código promocional no existe',
-            summary: 'Código erróneo',
-          });
-        },
-      })
-      .add(() => {
-        this.searching_coupon = false;
-        this.apply_cupon_text = 'Aplicar mi cupón';
-      });
-  }
-
-  private comprobarCantidadMinima(coupon: Coupon) {
-    if (coupon.minimum_amount > this.precio_copias) {
-      return false;
-    }
-    return true;
-  }
-
-  public clearCoupon() {
-    this.store.dispatch(clearCoupon());
-    this.coupon = undefined;
+    this.couponHandlerService.getCoupon(this.inputCoupon).subscribe({
+      next: () => {},
+      error: () => {},
+    });
   }
 
   public validateCoupon(coupon) {
     if (!coupon) return false;
 
-    if (!this.comprobarCantidadMinima(coupon)) {
-      this.messageService.add({
-        severity: 'error',
-        detail: `El código promocional solo puede aplicarse a pedidos de copias mayores de ${coupon.minimum_amount} €`,
-        summary: 'Código no aplicado',
-      });
-      return this.clearCoupon();
-    } else if (coupon.valid_until < moment().valueOf()) {
-      return this.clearCoupon();
+    const result = this.couponHandlerService.validateCoupon(
+      coupon,
+      this.precio_copias,
+      this.calcularPrecios.bind(this)
+    );
+
+    if (result) {
+      this.coupon = coupon;
+      this.discount = this.coupon.amount;
     }
 
-    this.coupon = coupon;
-    this.discount = this.coupon.amount;
-
-    this.store.dispatch(applyCoupon({ coupon: coupon }));
-    this.calcularPrecios();
-
-    if (this.first_time_coupon_applied) {
-      this.messageService.add({
-        severity: 'success',
-        detail: 'El código promocional se ha aplicado',
-        summary: 'Código aplicado',
-      });
-    }
+    return result;
   }
 
   public validate() {
@@ -283,35 +264,23 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     });
   }
 
-  public calculateGastosDeEnvioEstandar(): void {
-    const discountFactor = 1 - this.shippingDiscount / 100;
+  public calculateGastosDeEnvioEstandar() {
+    const shippingCosts = this.shippingHandlerService.calculateShippingCosts(
+      this.billing,
+      this.shipping,
+      this.differentAddress,
+      this.subtotal,
+      this.discount
+    );
 
-    if (!this.billing) {
-      this.shippingCostStandard = 4.9 * discountFactor;
-      return;
-    }
-
-    const postcode = this.getPostcode();
-    this.urgentShippingAvailable =
-      this.shippingCostService.isUrgentShippingAvailable(postcode);
-    this.standardShippingAvailable =
-      this.shippingCostService.isStandarShippingAvailable(postcode);
+    this.shippingCostStandard = shippingCosts.standardCost;
+    this.shippingCostUrgent = shippingCosts.urgentCost;
+    this.urgentShippingAvailable = shippingCosts.urgentAvailable;
+    this.standardShippingAvailable = shippingCosts.standardAvailable;
 
     if (!this.urgentShippingAvailable) {
       this.deliver = 'Pickup';
     }
-
-    const baseShippingCost = this.shippingCostService.getGastosDeEnvio(
-      this.subtotal - this.discount,
-      postcode
-    );
-    this.shippingCostStandard = baseShippingCost * discountFactor;
-  }
-
-  private getPostcode(): string {
-    return this.differentAddress && this.shipping
-      ? this.shipping.shippingDetails.postcode
-      : this.billing.billingDetails.postcode;
   }
 
   public getTotal() {
@@ -325,22 +294,15 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   private getPrecioCopias() {
     this.subtotal = 0;
 
-    return this.orderService.getOrderPrice(this.copies);
+    return this.pricesService.getOrderPrice(this.copies);
   }
 
   public getDiscount() {
     const subtotal = this.precio_copias;
-    this.discount = 0;
-    if (this.coupon) {
-      let discountAmount = 0;
-
-      if (this.coupon.discount_type === 'percent') {
-        discountAmount = subtotal * (this.coupon.amount / 100);
-      } else if (this.coupon.discount_type === 'fixed_cart') {
-        discountAmount = this.coupon.amount;
-      }
-      this.discount = discountAmount;
-    }
+    this.discount = this.couponHandlerService.getDiscount(
+      subtotal,
+      this.coupon
+    );
   }
 
   public processOrder() {
@@ -362,9 +324,18 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   public async prepareOrder(callback): Promise<void> {
     this.setLoadingState(true, 'Preparando pedido');
 
-    const shippingLine = this.getShippingLine();
-    const flattenFiles = this.getFlattenFiles();
-    const order: Order = this.buildOrderObject(shippingLine, flattenFiles);
+    const order: Order = this.orderBuilderService.buildOrderObject(
+      this.customer,
+      this.coupon,
+      this.billing,
+      this.shipping,
+      this.differentAddress,
+      this.copies,
+      this.products,
+      this.payment,
+      this.deliver,
+      this.selectedLocation
+    );
 
     this.orderService.create(order).subscribe({
       next: (response: { order: number }) => {
@@ -389,149 +360,224 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getShippingLine(): ShippingDetails {
-    const shippingLine = {} as ShippingDetails;
+  // Los métodos getShippingLine, getFlattenFiles y buildOrderObject
+  // han sido trasladados al servicio OrderBuilderService
 
-    if (this.deliver === 'Pickup') {
-      this.setPickupProperties(shippingLine);
-    } else {
-      this.setShippingProperties(shippingLine);
-    }
+  // Los métodos setShippingProperties y setPickupProperties
+  // han sido trasladados al servicio OrderBuilderService
 
-    return shippingLine;
-  }
-
-  private getFlattenFiles(): File[] {
-    return this.copies
-      .map((order) => order.files)
-      .reduce((acc, val) => acc.concat(val), []);
-  }
-
-  private buildOrderObject(shippingLine, flattenFiles: File[]): Order {
-    const customer_id = this.customer ? this.customer.id : 0;
-    return {
-      customer_id,
-      coupon: this.coupon,
-      billing: this.billing.billingDetails,
-      shipping: this.differentAddress
-        ? this.shipping.shippingDetails
-        : this.billing.billingDetails,
-      copies: this.copies,
-      products: this.products,
-      payment_method: this.payment,
-      payment_method_title: this.payment,
-      shipping_lines: [shippingLine],
-      meta_data: [
-        {
-          key: '_wcuf_uploaded_files',
-          value: {
-            '0-37198-37595': {
-              id: '0-37198-37595',
-              quantity: flattenFiles.map(() => '1'),
-              original_filename: flattenFiles.map(
-                (x: File) => x.original_filename
-              ),
-              url: flattenFiles.map((x: File) => x.url),
-              source: flattenFiles.map((x: File) => x.source),
-              num_uploaded_files: flattenFiles.length,
-              user_feedback: '',
-              is_multiple_file_upload: true,
-            },
-          },
-        },
-      ],
-    };
-  }
-
-  private setShippingProperties(shippingLine) {
-    shippingLine.method_title =
-      this.deliver == 'UrgentShipping' ? 'Envío urgente' : 'Envío en 48 horas';
-    shippingLine.method_id =
-      this.deliver == 'UrgentShipping' ? 'urgent_flat_rate' : 'flat_rate';
-    shippingLine.instance_id = '9';
-    // shippingLine.total = this.getGastosDeEnvio().toFixed(2);
-    shippingLine.total_tax = '0.00';
-  }
-
-  private setPickupProperties(shippingLine) {
-    shippingLine.method_title = 'Local de Recogida';
-    shippingLine.method_id = 'local_pickup_plus';
-    shippingLine.total = '0.00';
-    shippingLine.meta_data = [
-      {
-        key: '_pickup_location_id',
-        value: this.selectedLocation.id,
-      },
-    ];
-  }
+  // Los métodos addWorkingDays y el cálculo completo de fechas de envío
+  // han sido trasladados al servicio ShippingHandlerService
 
   handleDeliveryMethodChange() {
     this.updateDeliveryMethod(this.deliver);
     this.calcularPrecios();
   }
 
-  calcularPrecios(callback = undefined) {
-    this.getPrecioCopias().subscribe((price) => {
-      this.precio_copias = price;
-      this.subtotal =
-        price +
-        this.products
-          .map((order) => +order.product.price * order.quantity)
-          .reduce((a, b) => a + b, 0);
-      this.getDiscount();
-      this.comprobarMetodoDePago();
-      this.getGastosDeEnvio();
-      this.getTotal();
-      if (callback) {
-        callback();
+  getPrintItemPrices(): Observable<any[]> {
+    const observables: Observable<any>[] = [];
+
+    Object.values(CartItemType).forEach((itemType) => {
+      const propertyName = this.itemTypePropertyMap[itemType];
+      if (!propertyName) return;
+
+      const items = this[propertyName];
+      if (!items || !items.length || itemType === CartItemType.PRODUCT) return;
+
+      items.forEach((item) => {
+        const observable = this.getItemPriceObservable(itemType, item);
+        if (observable) {
+          observables.push(observable);
+        }
+      });
+    });
+
+    // Si no hay observables, devolvemos un array vacío como observable
+    return observables.length ? forkJoin(observables) : of([]);
+  }
+
+  private getItemPriceObservable(
+    itemType: CartItemType,
+    item: any
+  ): Observable<any> {
+    try {
+      // Caso especial para copies que necesitan el array completo de copies
+      if (itemType === CartItemType.COPY) {
+        return this.pricesService
+          .getCopyPrice(item, this.copies)
+          .pipe(this.processPriceResultOperator(item));
+      } else {
+        return this.pricesService
+          .getItemPrice(itemType, item)
+          .pipe(this.processPriceResultOperator(item));
       }
+    } catch (error) {
+      console.error(
+        `Error al obtener el precio para el tipo ${itemType}:`,
+        error
+      );
+      return null;
+    }
+  }
+
+  private processPriceResultOperator(item: any) {
+    return map((result: PriceResult) => {
+      this.itemsPrice[item.id] = result.precio;
+      this.itemsNotes[item.id] = result.notas;
+      return result;
     });
   }
 
-  getGastosDeEnvio() {
-    if (this.deliver === 'Pickup') {
-      this.shippingCostFinal = 0;
-    } else if (this.deliver === 'Shipping') {
-      this.calculateGastosDeEnvioEstandar();
-      this.shippingCostFinal = this.shippingCostStandard;
-    } else if (this.deliver === 'UrgentShipping') {
-      this.shippingCostFinal = this.shippingCostUrgent;
+  // Los métodos originales getItemPrice y processPriceResult han sido reemplazados por
+  // getItemPriceObservable y processPriceResultOperator que trabajan con Observables
+
+  private itemTypePropertyMap = {
+    [CartItemType.COPY]: 'copies',
+    [CartItemType.PRODUCT]: 'products',
+    [CartItemType.BUSINESS_CARD]: 'businessCards',
+    [CartItemType.FLYER]: 'flyers',
+    [CartItemType.FOLDER]: 'folders',
+    [CartItemType.DIPTYCH]: 'diptychs',
+    [CartItemType.TRIPTYCH]: 'triptychs',
+    [CartItemType.ROLLUP]: 'rollups',
+    [CartItemType.POSTER]: 'posters',
+    [CartItemType.MAGAZINE]: 'magazines',
+  };
+
+  /**
+   * Calcula el precio total del pedido
+   * @param callback Función callback que se ejecuta al finalizar todos los cálculos
+   */
+  calcularPrecios(callback = undefined) {
+    // Primero obtenemos el precio de las copias
+    this.getPrecioCopias().subscribe({
+      next: (price) => {
+        this.precio_copias = price;
+        this.calcularPreciosRestantes(price, callback);
+      },
+      error: (err) => {
+        console.error('Error al calcular el precio de las copias:', err);
+        // Intentamos continuar con precio 0 para copias
+        this.precio_copias = 0;
+        this.calcularPreciosRestantes(0, callback);
+      },
+    });
+  }
+
+  /**
+   * Calcula los precios del resto de elementos después de obtener el precio de las copias
+   * @param precioCopias Precio calculado de las copias
+   * @param callback Función a ejecutar al finalizar los cálculos
+   */
+  private calcularPreciosRestantes(
+    precioCopias: number,
+    callback = undefined
+  ): void {
+    // Calculamos precio de productos
+    const precioProductos = this.calcularPrecioProductos();
+
+    // Iniciamos el cálculo de precios para todos los demás elementos
+    this.getPrintItemPrices().subscribe({
+      next: () => {
+        // Calculamos subtotal con todos los elementos
+        this.calcularSubtotal(precioCopias, precioProductos);
+
+        // Finalizamos los cálculos
+        this.finalizarCalculos(callback);
+      },
+      error: (err) => {
+        console.error('Error al calcular los precios de los elementos:', err);
+        // Aun con error, calculamos con lo que tenemos
+        this.subtotal = precioCopias + precioProductos;
+        this.finalizarCalculos(callback);
+      },
+    });
+  }
+
+  /**
+   * Calcula el precio total de los productos
+   */
+  private calcularPrecioProductos(): number {
+    return this.products.length > 0
+      ? this.products
+          .map((order) => +order.product.price * order.quantity)
+          .reduce((a, b) => a + b, 0)
+      : 0;
+  }
+
+  /**
+   * Calcula el subtotal sumando todos los precios de los elementos
+   */
+  private calcularSubtotal(
+    precioCopias: number,
+    precioProductos: number
+  ): void {
+    console.log('Calculando subtotal...');
+
+    this.subtotal = precioCopias + precioProductos;
+
+    // Sumamos los precios de todos los demás tipos de elementos
+    Object.values(CartItemType).forEach((itemType) => {
+      const propertyName = this.itemTypePropertyMap[itemType];
+      // Excluimos productos y copias ya que su precio ya está incluido en el subtotal
+      if (
+        !propertyName ||
+        itemType === CartItemType.PRODUCT ||
+        itemType === CartItemType.COPY
+      )
+        return;
+
+      const items = this[propertyName];
+      if (!items || !items.length) return;
+
+      // Sumamos al subtotal los precios de cada tipo de elemento
+      const precioItems = items
+        .map((item) => this.itemsPrice[item.id] || 0)
+        .reduce((a, b) => a + b, 0);
+
+      this.subtotal += precioItems;
+    });
+  }
+
+  /**
+   * Finaliza los cálculos del pedido aplicando descuentos y calculando gastos de envío
+   */
+  private finalizarCalculos(callback = undefined): void {
+    this.getDiscount();
+
+    // Revisar si el subtotal es suficiente para los métodos de pago disponibles
+    const subtotalMasDescuento = this.subtotal - this.discount;
+    if (subtotalMasDescuento < this.PAYMENT_MINIMUM_PRICE_BIZUM) {
+      this.payment = 'CARD';
+      this.infoPagoAnalytics();
     }
-    return this.shippingCostFinal;
-  }
-
-  private addWorkingDays(
-    date: moment.Moment,
-    workingDays: number
-  ): moment.Moment {
-    const result = date.clone();
-    while (workingDays > 0) {
-      result.add(1, 'day');
-      // Con isoWeekday(), de lunes (1) a viernes (5) son días laborables.
-      if (result.isoWeekday() <= 5) {
-        workingDays--;
-      }
+    if (subtotalMasDescuento < this.PAYMENT_MINIMUM_PRICE_CARD) {
+      this.payment = null;
     }
-    return result;
+
+    // Siempre calculamos los gastos de envío estándar para tener el costo actualizado
+    this.calculateGastosDeEnvioEstandar();
+
+    // Calculamos el costo final de envío según el método seleccionado
+    this.shippingCostFinal =
+      this.shippingHandlerService.calculateFinalShippingCost(
+        this.deliver,
+        this.shippingCostStandard,
+        this.shippingCostUrgent
+      );
+
+    this.getTotal();
+
+    if (callback) {
+      callback();
+    }
   }
 
-  calculateExpectedDeliveryDate() {
-    // Asegurarse de que Moment use el locale en español
-    moment.locale('es');
-
-    const today = moment();
-    const earliest = this.addWorkingDays(today, 2);
-    const latest = this.addWorkingDays(today, 4);
-
-    // Formateamos la salida para mostrar abreviaturas en minúsculas (por ejemplo, 'vie 9' en vez de 'Vie 9')
-    // Nota: Para obtener las abreviaturas en minúsculas, puedes transformar el string resultante a minúsculas.
-    this.expectedDeliveryDate = `${earliest
-      .format('ddd D')
-      .toLowerCase()} - ${latest.format('ddd D').toLowerCase()}`;
-  }
-
+  /**
+   * Comprueba si el método de pago seleccionado es válido para el total actual
+   */
   comprobarMetodoDePago() {
-    const subtotalMasDescuento = this.subtotal + this.discount;
+    const subtotalMasDescuento = this.subtotal - this.discount;
     if (subtotalMasDescuento < this.PAYMENT_MINIMUM_PRICE_BIZUM) {
       this.payment = 'CARD';
       this.infoPagoAnalytics();
@@ -541,30 +587,115 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Calcula los gastos de envío basado en el método de entrega seleccionado
+   */
+  getGastosDeEnvio() {
+    // Siempre calculamos los gastos de envío estándar para tener el costo actualizado
+    // independientemente del método de entrega seleccionado
+    this.calculateGastosDeEnvioEstandar();
+
+    this.shippingCostFinal =
+      this.shippingHandlerService.calculateFinalShippingCost(
+        this.deliver,
+        this.shippingCostStandard,
+        this.shippingCostUrgent
+      );
+
+    return this.shippingCostFinal;
+  }
+
+  /**
+   * Calcula la fecha estimada de entrega utilizando el servicio de envío
+   */
+  calculateExpectedDeliveryDate() {
+    this.expectedDeliveryDate =
+      this.shippingHandlerService.calculateExpectedDeliveryDate();
+  }
+
+  /**
+   * Actualiza los elementos del carrito con los valores actuales
+   */
+  private updateCartItems(cart: Cart) {
+    this.copies = cart.copies || [];
+    this.products = cart.products || [];
+    this.businessCards = cart.bussinessCard || [];
+    this.flyers = cart.flyers || [];
+    this.folders = cart.folders || [];
+    this.diptychs = cart.diptychs || [];
+    this.triptychs = cart.triptychs || [];
+    this.rollups = cart.rollups || [];
+    // Los posters y magazines no están en la interfaz Cart, pero mantenemos el array vacío
+    this.posters = [];
+    this.magazines = [];
+  }
+
+  /**
+   * Calcula el total de elementos en el carrito
+   */
+  public getTotalCartItems(): number {
+    return (
+      this.copies.length +
+      this.products.length +
+      this.flyers.length +
+      this.businessCards.length +
+      this.folders.length +
+      this.diptychs.length +
+      this.triptychs.length +
+      this.rollups.length +
+      this.posters.length +
+      this.magazines.length
+    );
+  }
+
+  /**
+   * Verifica si el carrito está vacío
+   */
+  public isCartEmpty(): boolean {
+    return this.getTotalCartItems() === 0;
+  }
+
+  /**
+   * Suscribe al componente a cambios en el cupón
+   */
   subscribeCoupon() {
-    this.subcriptorCoupon = this.store
-      .select(selectCoupon)
-      .subscribe((coupon) => {
+    this.subcriptorCoupon = this.couponHandlerService.subscribeCoupon(
+      (coupon) => {
         this.validateCoupon(coupon);
-      });
+      }
+    );
   }
 
+  /**
+   * Método que se ejecuta al destruir el componente
+   */
   public ngOnDestroy(): void {
-    this.subcriptorCoupon.unsubscribe();
+    if (this.subcriptorCoupon) {
+      this.subcriptorCoupon.unsubscribe();
+    }
+    if (this.subscriptionCart) {
+      this.subscriptionCart.unsubscribe();
+    }
   }
 
+  /**
+   * Método que se ejecuta al inicializar el componente
+   */
   ngOnInit(): void {
-    this.copies = this.shopcartService.getCart().copies;
-    this.products = this.shopcartService.getCart().products;
-    this.calcularPrecios(this.subscribeCoupon.bind(this));
-    this.applyStudentDiscount();
+    this.updateCartItems(this.shopcartService.getCart());
+    this.calcularPrecios(() => {
+      this.subscribeCoupon();
+      this.applyStudentDiscount();
+    });
     this.calculateExpectedDeliveryDate();
     this.subscriptionCart = this.shopcartService
       .getCart$()
       .subscribe((order) => {
-        this.copies = order.copies;
-        this.products = order.products;
-        this.calcularPrecios(this.validateCoupon.bind(this, this.coupon));
+        this.updateCartItems(this.shopcartService.getCart());
+
+        this.calcularPrecios(() => {
+          this.validateCoupon(this.coupon);
+        });
       });
   }
 

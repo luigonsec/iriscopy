@@ -48,7 +48,8 @@
       padding-left: 30px;
     }
 
-    #pickup-points {
+    #pickup-points,
+    #print-options {
       &.closed {
         display: none;
       }

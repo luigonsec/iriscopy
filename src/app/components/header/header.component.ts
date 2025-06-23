@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import { ShopcartService } from 'src/app/services/shopcart.service';
-import { ShopcartComponent } from '../shopcart/shopcart.component';
+import { ShopcartWrapperComponent } from '../shopcart-wrapper/shopcart-wrapper.component';
 import Cart from 'src/app/interfaces/Cart';
 import { Store } from '@ngrx/store';
 import OrderProduct from 'src/app/interfaces/OrderProduct';
@@ -31,8 +31,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public mobileMenuOpened = false;
 
   @ViewChild('menu') public menu: Menu;
-
-  @ViewChild('shopcart') public shopcart: ShopcartComponent;
+  @ViewChild('shopcartWrapper') public shopcart: ShopcartWrapperComponent;
   @ViewChild('sidebar') public sidebar: MenuSidebarComponent;
 
   cartSubscription: Subscription;
@@ -41,6 +40,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   configSubscription: Subscription;
   profile: MenuItem[];
   puntosRecogida: MenuItem[];
+  opcionesImprenta: MenuItem[];
 
   constructor(
     private shopcartService: ShopcartService,
@@ -97,6 +97,51 @@ export class HeaderComponent implements OnInit, OnDestroy {
     } else {
       this.router.navigate(['/login']);
     }
+  }
+
+  setMenuImprenta() {
+    this.opcionesImprenta = [
+      {
+        label: 'Tarjetas de visita',
+        icon: 'pi pi-fw pi-id-card',
+        routerLink: '/imprenta/tarjetas-visita',
+      },
+      {
+        label: 'Flyers',
+        icon: 'pi pi-fw pi-paperclip',
+        routerLink: '/imprenta/flyers',
+      },
+      {
+        label: 'Carpetas',
+        icon: 'pi pi-fw pi-folder',
+        routerLink: '/imprenta/carpetas',
+      },
+      {
+        label: 'Revistas',
+        icon: 'pi pi-fw pi-book',
+        routerLink: '/imprenta/revistas',
+      },
+      {
+        label: 'Rollups',
+        icon: 'pi pi-fw pi-image',
+        routerLink: '/imprenta/rollups',
+      },
+      {
+        label: 'Carteles',
+        icon: 'pi pi-fw pi-image',
+        routerLink: '/imprenta/carteles',
+      },
+      {
+        label: 'Dipticos',
+        icon: 'pi pi-fw pi-image',
+        routerLink: '/imprenta/dipticos',
+      },
+      {
+        label: 'Tripticos',
+        icon: 'pi pi-fw pi-image',
+        routerLink: '/imprenta/tripticos',
+      },
+    ];
   }
 
   setPuntosRecogida() {
@@ -157,6 +202,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getConfig();
     this.setPuntosRecogida();
+    this.setMenuImprenta();
     this.setProfile();
     this.configSubscription = this.config.config$.subscribe(
       (conf: { shop_active: boolean }) => {
