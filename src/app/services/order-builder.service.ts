@@ -104,7 +104,7 @@ export class OrderBuilderService {
    */
   public buildOrderObject(
     customer: Customer,
-    coupon: Coupon,
+    coupons: Coupon[],
     billing: BillingComponent,
     shipping: ShippingComponent,
     differentAddress: boolean,
@@ -122,7 +122,7 @@ export class OrderBuilderService {
     const customer_id = customer ? customer.id : 0;
     return {
       customer_id,
-      coupon,
+      coupons,
       billing: billing.billingDetails,
       shipping: differentAddress
         ? shipping.shippingDetails

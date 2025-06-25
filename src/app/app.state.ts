@@ -13,5 +13,5 @@ export interface CustomerState {
 }
 
 export interface CouponState {
-  coupon: Coupon | undefined;
+  coupons: Coupon[];
 }

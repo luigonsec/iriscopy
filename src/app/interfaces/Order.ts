@@ -8,7 +8,7 @@ import ShippingLine from './ShippingLine';
 export default interface Order {
   id?: number;
   customer_id?: number;
-  coupon?: Coupon;
+  coupons?: Coupon[];
   billing: BillingDetails;
   shipping: ShippingDetails;
   payment_method: string;

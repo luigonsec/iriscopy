@@ -45,11 +45,22 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./order-processing.component.scss'],
 })
 export class OrderProcessingComponent implements OnInit, OnDestroy {
+  @ViewChild('redsysForm') redsysForm;
+  @Input('billing') public billing: BillingComponent;
+  @Input('shipping') public shipping: ShippingComponent;
+  @Input('customer') public customer: Customer;
+  @Input('differentAddress') public differentAddress = false;
+
+  @Input('updateDeliveryMethod') public updateDeliveryMethod: (
+    delivery: string
+  ) => void;
+  public deliver: string = 'Pickup';
+
   public PAYMENT_MINIMUM_PRICE_BIZUM =
     generalConfig.PAYMENT_MINIMUM_PRICE_BIZUM;
   public PAYMENT_MINIMUM_PRICE_CARD = generalConfig.PAYMENT_MINIMUM_PRICE_CARD;
   public inputCoupon: string;
-  public coupon: Coupon;
+  public coupons: Coupon[] = [];
   public payment: string;
   public copies: OrderCopy[] = [];
   public products: OrderProduct[] = [];
@@ -77,23 +88,14 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   public standardShippingAvailable = true;
 
   public OrderID;
-  @ViewChild('redsysForm') redsysForm;
-  @Input('billing') public billing: BillingComponent;
-  @Input('shipping') public shipping: ShippingComponent;
-  @Input('customer') public customer: Customer;
-  @Input('differentAddress') public differentAddress = false;
-
-  @Input('updateDeliveryMethod') public updateDeliveryMethod: (
-    delivery: string
-  ) => void;
-  public deliver: string = 'Pickup';
 
   public subcriptorCoupon: Subscription;
   public subscriptionCart: Subscription;
   subtotal: number = 0;
+  subtotalBeforeShippingCoupons: number = 0;
   precioEnvio: number = 0;
   total: number = 0;
-  discount: number = 0;
+  discounts: { [code: string]: number } = {};
 
   apply_cupon_text = 'Aplicar mi cupón';
   searching_coupon = false;
@@ -108,6 +110,19 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
 
   public itemsPrice: { [id: string]: number } = {};
   public itemsNotes: { [id: string]: string[] } = {};
+
+  private itemTypePropertyMap = {
+    [CartItemType.COPY]: 'copies',
+    [CartItemType.PRODUCT]: 'products',
+    [CartItemType.BUSINESS_CARD]: 'businessCards',
+    [CartItemType.FLYER]: 'flyers',
+    [CartItemType.FOLDER]: 'folders',
+    [CartItemType.DIPTYCH]: 'diptychs',
+    [CartItemType.TRIPTYCH]: 'triptychs',
+    [CartItemType.ROLLUP]: 'rollups',
+    [CartItemType.POSTER]: 'posters',
+    [CartItemType.MAGAZINE]: 'magazines',
+  };
 
   constructor(
     private shopcartService: ShopcartService,
@@ -151,36 +166,6 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     );
   }
 
-  public removeCoupon() {
-    this.coupon = undefined;
-    this.couponHandlerService.removeCoupon();
-    this.calcularPrecios();
-  }
-
-  public getCoupon() {
-    this.first_time_coupon_applied = true;
-    this.couponHandlerService.getCoupon(this.inputCoupon).subscribe({
-      next: () => {},
-      error: () => {},
-    });
-  }
-
-  public validateCoupon(coupon) {
-    if (!coupon) return false;
-
-    const result = this.couponHandlerService.validateCoupon(
-      coupon,
-      this.precio_copias,
-      this.calcularPrecios.bind(this)
-    );
-
-    if (result) {
-      this.coupon = coupon;
-    }
-
-    return result;
-  }
-
   public validate() {
     const validBilling = this.billing.validate();
     if (!validBilling) return;
@@ -211,7 +196,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
 
     if (
       this.payment == 'BIZUM' &&
-      this.getSubtotalWithDiscount() < this.PAYMENT_MINIMUM_PRICE_BIZUM
+      this.total < this.PAYMENT_MINIMUM_PRICE_BIZUM
     ) {
       return this.messageService.add({
         severity: 'error',
@@ -271,8 +256,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
       this.billing,
       this.shipping,
       this.differentAddress,
-      this.subtotal,
-      this.coupon
+      this.subtotalBeforeShippingCoupons
     );
 
     this.shippingCostStandard = shippingCosts.standardCost;
@@ -290,49 +274,13 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   }
 
   public getSubtotalWithDiscount() {
-    return this.subtotal - this.discount;
+    return this.subtotal - this.getTotalDiscounts();
   }
 
   private getPrecioCopias() {
     this.subtotal = 0;
 
     return this.pricesService.getOrderPrice(this.copies);
-  }
-
-  public getDiscounts(): {
-    shippingDiscount: number;
-    productsDiscount: number;
-    copiesDiscount: number;
-  } {
-    const discounts = {
-      productsDiscount: 0,
-      copiesDiscount: 0,
-      shippingDiscount: 0,
-    };
-    if (this.coupon) {
-      const subtotal = this.precio_copias;
-
-      if (this.coupon.applicability === 'shipping') {
-        if (this.deliver === 'Shipping') {
-          discounts.shippingDiscount =
-            this.shippingCostStandard / ((100 - this.coupon.amount) / 100) -
-            this.shippingCostStandard;
-        } else if (this.deliver === 'UrgentShipping') {
-          const realPrice =
-            this.shippingCostStandard / ((100 - this.coupon.amount) / 100) +
-            1.5;
-          discounts.shippingDiscount = realPrice - this.shippingCostUrgent;
-        } else {
-          discounts.shippingDiscount = 0;
-        }
-      } else {
-        discounts.copiesDiscount = this.couponHandlerService.getDiscount(
-          subtotal,
-          this.coupon
-        );
-      }
-    }
-    return discounts;
   }
 
   public processOrder() {
@@ -356,7 +304,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
 
     const order: Order = this.orderBuilderService.buildOrderObject(
       this.customer,
-      this.coupon,
+      this.coupons,
       this.billing,
       this.shipping,
       this.differentAddress,
@@ -389,15 +337,6 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
       text: text || '',
     });
   }
-
-  // Los métodos getShippingLine, getFlattenFiles y buildOrderObject
-  // han sido trasladados al servicio OrderBuilderService
-
-  // Los métodos setShippingProperties y setPickupProperties
-  // han sido trasladados al servicio OrderBuilderService
-
-  // Los métodos addWorkingDays y el cálculo completo de fechas de envío
-  // han sido trasladados al servicio ShippingHandlerService
 
   handleDeliveryMethodChange() {
     this.updateDeliveryMethod(this.deliver);
@@ -455,42 +394,6 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
       this.itemsPrice[item.id] = result.precio;
       this.itemsNotes[item.id] = result.notas;
       return result;
-    });
-  }
-
-  // Los métodos originales getItemPrice y processPriceResult han sido reemplazados por
-  // getItemPriceObservable y processPriceResultOperator que trabajan con Observables
-
-  private itemTypePropertyMap = {
-    [CartItemType.COPY]: 'copies',
-    [CartItemType.PRODUCT]: 'products',
-    [CartItemType.BUSINESS_CARD]: 'businessCards',
-    [CartItemType.FLYER]: 'flyers',
-    [CartItemType.FOLDER]: 'folders',
-    [CartItemType.DIPTYCH]: 'diptychs',
-    [CartItemType.TRIPTYCH]: 'triptychs',
-    [CartItemType.ROLLUP]: 'rollups',
-    [CartItemType.POSTER]: 'posters',
-    [CartItemType.MAGAZINE]: 'magazines',
-  };
-
-  /**
-   * Calcula el precio total del pedido
-   * @param callback Función callback que se ejecuta al finalizar todos los cálculos
-   */
-  calcularPrecios(callback = undefined) {
-    // Primero obtenemos el precio de las copias
-    this.getPrecioCopias().subscribe({
-      next: (price) => {
-        this.precio_copias = price;
-        this.calcularPreciosRestantes(price, callback);
-      },
-      error: (err) => {
-        console.error('Error al calcular el precio de las copias:', err);
-        // Intentamos continuar con precio 0 para copias
-        this.precio_copias = 0;
-        this.calcularPreciosRestantes(0, callback);
-      },
     });
   }
 
@@ -567,6 +470,112 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     });
   }
 
+  private applyCopiesCouponDiscounts() {
+    // Si hay un cupón aplicado y es de tipo 'copies', aplicamos el descuento
+    this.coupons.forEach((coupon) => {
+      if (coupon.applicability === 'copies') {
+        const discount = this.couponHandlerService.getDiscount(
+          this.precio_copias,
+          coupon
+        );
+        this.discounts[coupon.code] = discount;
+      }
+    });
+  }
+
+  private applyProductDiscounts() {
+    // Si hay un cupón aplicado y es de tipo 'copies', aplicamos el descuento
+    this.coupons.forEach((coupon) => {
+      if (coupon.applicability === 'products') {
+        const discount = this.couponHandlerService.getDiscount(
+          this.precio_copias,
+          coupon
+        );
+        this.discounts[coupon.code] = discount;
+      }
+    });
+  }
+
+  //     const discounts = {
+  //     productsDiscount: 0,
+  //     copiesDiscount: 0,
+  //     shippingDiscount: 0,
+  //   };
+  //   if (this.coupons.length > 0) {
+  //     const subtotal = this.precio_copias;
+
+  //     if (this.coupons[0].applicability === 'shipping') {
+  //       if (this.deliver === 'Shipping') {
+  //         discounts.shippingDiscount =
+  //           this.shippingCostStandard / ((100 - this.coupons[0].amount) / 100) -
+  //           this.shippingCostStandard;
+  //       } else if (this.deliver === 'UrgentShipping') {
+  //         const realPrice =
+  //           this.shippingCostStandard / ((100 - this.coupons[0].amount) / 100) +
+  //           1.5;
+  //         discounts.shippingDiscount = realPrice - this.shippingCostUrgent;
+  //       } else {
+  //         discounts.shippingDiscount = 0;
+  //       }
+  //     } else {
+  //       discounts.copiesDiscount = this.couponHandlerService.getDiscount(
+  //         subtotal,
+  //         this.coupons[0]
+  //       );
+  //     }
+  //   }
+  //   return discounts;
+  // }
+
+  private applyShippingCouponDiscounts() {
+    // Si hay un cupón aplicado y es de tipo 'shipping', aplicamos el descuento
+    this.coupons.forEach((coupon) => {
+      if (coupon.applicability === 'shipping') {
+        if (coupon.discount_type === 'percent') {
+          const originalEstandardCost = this.shippingCostStandard;
+          const originalUrgentCost = this.shippingCostUrgent;
+
+          const reducedStandardCost =
+            originalEstandardCost * (1 - coupon.amount / 100);
+          const reducedUrgentCost =
+            originalUrgentCost * (1 - coupon.amount / 100);
+
+          if (this.deliver === 'Shipping') {
+            this.discounts[coupon.code] =
+              originalEstandardCost - reducedStandardCost;
+          } else if (this.deliver === 'UrgentShipping') {
+            this.discounts[coupon.code] =
+              originalUrgentCost - reducedUrgentCost;
+          } else {
+            // Si no es envío estándar ni urgente, no aplicamos descuento
+            this.discounts[coupon.code] = 0;
+          }
+        } else if (coupon.discount_type === 'fixed_cart') {
+          const originalEstandardCost = this.shippingCostStandard;
+          const originalUrgentCost = this.shippingCostUrgent;
+
+          const reducedStandardCost = originalEstandardCost - coupon.amount;
+          const reducedUrgentCost = originalUrgentCost - coupon.amount;
+
+          if (this.deliver === 'Shipping') {
+            this.discounts[coupon.code] =
+              originalEstandardCost - reducedStandardCost;
+          } else if (this.deliver === 'UrgentShipping') {
+            this.discounts[coupon.code] =
+              originalUrgentCost - reducedUrgentCost;
+          } else {
+            // Si no es envío estándar ni urgente, no aplicamos descuento
+            this.discounts[coupon.code] = 0;
+          }
+        }
+      }
+    });
+  }
+
+  private getTotalDiscounts(): number {
+    return Object.values(this.discounts).reduce((a, b) => a + b, 0);
+  }
+
   /**
    * Finaliza los cálculos del pedido aplicando descuentos y calculando gastos de envío
    */
@@ -574,21 +583,22 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     // Siempre calculamos los gastos de envío estándar para tener el costo actualizado
     this.calculateGastosDeEnvioEstandar();
 
-    const discounts = this.getDiscounts();
-    this.discount =
-      discounts.copiesDiscount +
-      discounts.productsDiscount +
-      discounts.shippingDiscount;
+    this.applyCopiesCouponDiscounts();
+    this.applyProductDiscounts();
 
     // Revisar si el subtotal es suficiente para los métodos de pago disponibles
-    const subtotalMasDescuento = this.subtotal - this.discount;
-    if (subtotalMasDescuento < this.PAYMENT_MINIMUM_PRICE_BIZUM) {
+    this.subtotalBeforeShippingCoupons =
+      this.subtotal - this.getTotalDiscounts();
+
+    if (this.subtotalBeforeShippingCoupons < this.PAYMENT_MINIMUM_PRICE_BIZUM) {
       this.payment = 'CARD';
       this.infoPagoAnalytics();
     }
-    if (subtotalMasDescuento < this.PAYMENT_MINIMUM_PRICE_CARD) {
+    if (this.subtotalBeforeShippingCoupons < this.PAYMENT_MINIMUM_PRICE_CARD) {
       this.payment = null;
     }
+
+    this.applyShippingCouponDiscounts();
 
     // Calculamos el costo final de envío según el método seleccionado
     this.shippingCostFinal =
@@ -602,20 +612,6 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
 
     if (callback) {
       callback();
-    }
-  }
-
-  /**
-   * Comprueba si el método de pago seleccionado es válido para el total actual
-   */
-  comprobarMetodoDePago() {
-    const subtotalMasDescuento = this.subtotal - this.discount;
-    if (subtotalMasDescuento < this.PAYMENT_MINIMUM_PRICE_BIZUM) {
-      this.payment = 'CARD';
-      this.infoPagoAnalytics();
-    }
-    if (subtotalMasDescuento < this.PAYMENT_MINIMUM_PRICE_CARD) {
-      this.payment = null;
     }
   }
 
@@ -689,17 +685,6 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Suscribe al componente a cambios en el cupón
-   */
-  subscribeCoupon() {
-    this.subcriptorCoupon = this.couponHandlerService.subscribeCoupon(
-      (coupon) => {
-        this.validateCoupon(coupon);
-      }
-    );
-  }
-
-  /**
    * Método que se ejecuta al destruir el componente
    */
   public ngOnDestroy(): void {
@@ -711,40 +696,74 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     }
   }
 
+  public removeCoupon(coupon: Coupon) {
+    this.coupons = [];
+    this.couponHandlerService.removeCoupon(coupon);
+  }
+
+  public getCoupon() {
+    this.first_time_coupon_applied = true;
+    this.couponHandlerService.getCoupon(this.inputCoupon).subscribe({
+      next: () => {},
+      error: () => {},
+    });
+  }
+
+  public validateCoupon(coupon) {
+    if (!coupon) return false;
+
+    const result = this.couponHandlerService.validateCoupon(
+      coupon,
+      this.precio_copias,
+      this.calcularPrecios.bind(this)
+    );
+
+    if (result) {
+      this.coupons = [coupon];
+    }
+
+    return result;
+  }
+
+  /**
+   * Calcula el precio total del pedido
+   * @param callback Función callback que se ejecuta al finalizar todos los cálculos
+   */
+  calcularPrecios(callback = undefined) {
+    // Primero obtenemos el precio de las copias
+    this.getPrecioCopias().subscribe({
+      next: (price) => {
+        this.precio_copias = price;
+        this.calcularPreciosRestantes(price, callback);
+      },
+      error: (err) => {
+        console.error('Error al calcular el precio de las copias:', err);
+        // Intentamos continuar con precio 0 para copias
+        this.precio_copias = 0;
+        this.calcularPreciosRestantes(0, callback);
+      },
+    });
+  }
+
   /**
    * Método que se ejecuta al inicializar el componente
    */
   ngOnInit(): void {
     this.updateCartItems(this.shopcartService.getCart());
-    this.calcularPrecios(() => {
-      this.subscribeCoupon();
-      this.applyStudentDiscount();
-    });
+    this.subcriptorCoupon = this.couponHandlerService.subscribeCoupons(
+      (coupons: Coupon[]) => {
+        this.coupons = coupons;
+        this.calcularPrecios(() => {});
+      }
+    );
     this.calculateExpectedDeliveryDate();
+
     this.subscriptionCart = this.shopcartService
       .getCart$()
       .subscribe((order) => {
         this.updateCartItems(this.shopcartService.getCart());
 
-        this.calcularPrecios(() => {
-          this.validateCoupon(this.coupon);
-        });
+        this.calcularPrecios(() => {});
       });
-  }
-
-  private applyStudentDiscount() {
-    this.store.select(selectCustomer).subscribe((customer) => {
-      this.customer = customer;
-      const role = customer?.role;
-      if (role === 'ustudiantes_unir') {
-        this.shippingDiscount = 30;
-        // Solo aplicamos el descuento al envío estándar
-        this.shippingCostStandard =
-          this.shippingCostStandard * (1 - this.shippingDiscount / 100);
-        // El costo urgente siempre es estándar + premium
-        this.shippingCostUrgent =
-          this.shippingCostStandard + this.urgentShippingPremium;
-      }
-    });
   }
 }

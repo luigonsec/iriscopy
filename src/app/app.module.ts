@@ -204,7 +204,7 @@ import { PrintTypeCoverComponent } from './form/print-type-cover/print-type-cove
     StoreModule.forRoot({
       customer: customerReducer,
       loading: loadingReducer,
-      coupon: couponsReducer,
+      coupons: couponsReducer,
     }),
     EffectsModule.forRoot([CustomerEffects]),
   ],

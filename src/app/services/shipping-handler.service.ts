@@ -2,16 +2,12 @@ import { Injectable } from '@angular/core';
 import { ShippingCostsService } from './shipping-costs.service';
 import moment from 'moment';
 import Coupon from '../interfaces/Coupon';
+import generalConfig from 'src/config/general';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ShippingHandlerService {
-  // Constantes para los costos de envío
-  private readonly shippingCostStandard: number = 4.9;
-  // El costo urgente base ya no se usa directamente, ahora es calculado
-  private readonly urgentShippingPremium: number = 1.5; // Diferencia fija entre estándar y urgente
-
   constructor(private shippingCostService: ShippingCostsService) {}
 
   /**
@@ -27,8 +23,7 @@ export class ShippingHandlerService {
     billing: any,
     shipping: any,
     differentAddress: boolean,
-    subtotal: number,
-    coupon: Coupon
+    subtotal: number
   ): {
     standardCost: number;
     urgentCost: number;
@@ -36,10 +31,10 @@ export class ShippingHandlerService {
     urgentAvailable: boolean;
   } {
     if (!billing) {
-      const standardCost = this.shippingCostStandard;
+      const standardCost = generalConfig.SHIPPING_COST;
       return {
         standardCost: standardCost,
-        urgentCost: standardCost + this.urgentShippingPremium,
+        urgentCost: standardCost + generalConfig.URGENT_SHIPPING_PREMIUM,
         standardAvailable: true,
         urgentAvailable: true,
       };
@@ -59,23 +54,22 @@ export class ShippingHandlerService {
       postcode
     );
 
-    let urgentCost = standardCost + this.urgentShippingPremium;
+    let urgentCost = standardCost + generalConfig.URGENT_SHIPPING_PREMIUM;
 
-    if (coupon && coupon.applicability === 'shipping') {
-      // Si el cupón aplica al envío, se aplica el descuento al costo estándar
-      const urgentDiscount =
-        coupon.discount_type === 'percent'
-          ? (urgentCost * coupon.amount) / 100
-          : coupon.amount;
-      urgentCost = Math.max(0, urgentCost - urgentDiscount);
+    // if (coupons.length && coupons[0].applicability === 'shipping') {
+    //   // Si el cupón aplica al envío, se aplica el descuento al costo estándar
+    //   const urgentDiscount =
+    //     coupons[0].discount_type === 'percent'
+    //       ? (urgentCost * coupons[0].amount) / 100
+    //       : coupons[0].amount;
+    //   urgentCost = Math.max(0, urgentCost - urgentDiscount);
 
-      const standardDiscount =
-        coupon.discount_type === 'percent'
-          ? (standardCost * coupon.amount) / 100
-          : coupon.amount;
-      standardCost = Math.max(0, standardCost - standardDiscount);
-      // El costo de envío urgente es siempre el costo estándar + 1.5€
-    }
+    //   const standardDiscount =
+    //     coupons[0].discount_type === 'percent'
+    //       ? (standardCost * coupons[0].amount) / 100
+    //       : coupons[0].amount;
+    //   standardCost = Math.max(0, standardCost - standardDiscount);
+    // }
 
     return {
       standardCost,

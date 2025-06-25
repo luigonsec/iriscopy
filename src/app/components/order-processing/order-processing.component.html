@@ -144,7 +144,7 @@
     </p>
   </div>
 
-  <div id="Promotional" class="grid" *ngIf="!!!coupon">
+  <div id="Promotional" class="grid">
     <div class="col-12"></div>
     <div class="col-12 sm:col-8">
       <div class="p-fluid">
@@ -180,12 +180,14 @@
         <div class="Amount">{{ shippingCostFinal | number : "1.2-2" }} €</div>
       </div>
 
-      <div class="Cost Discount" *ngIf="coupon">
+      <div class="Cost Discount" *ngFor="let coupon of coupons">
         <div class="Title">
           Descuento ({{ coupon.code }})
-          <i class="far fa-trash-alt" (click)="removeCoupon()"></i>
+          <i class="far fa-trash-alt" (click)="removeCoupon(coupon)"></i>
         </div>
-        <div class="Amount">-{{ discount | number : "1.2-2" }} €</div>
+        <div class="Amount">
+          -{{ discounts[coupon.code] | number : "1.2-2" }} €
+        </div>
       </div>
       <div class="Cost Total">
         <div class="Title">Total</div>

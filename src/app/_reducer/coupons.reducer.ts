@@ -4,29 +4,42 @@ import * as CouponsActions from '../_actions/coupons.actions';
 import Coupon from '../interfaces/Coupon';
 
 export interface State {
-  coupon: Coupon;
+  coupons: Coupon[];
 }
 
-const coupon = localStorage.getItem('coupon');
+const coupon = localStorage.getItem('coupons');
 export const initialState: State = {
-	coupon: coupon ? JSON.parse(coupon) : null,
+  coupons: coupon ? JSON.parse(coupon) : [],
 };
 
 export const couponsReducer = createReducer(
-	initialState,
-	on(CouponsActions.applyCoupon, (state, { coupon }) => {
-		localStorage.setItem('coupon', JSON.stringify(coupon));
-		return {
-			...state,
-			coupon,
-		};
-	}),
+  initialState,
+  on(CouponsActions.applyCoupon, (state, { coupon }) => {
+    const existingCoupons = state.coupons || [];
+    // Check if the coupon already exists in the state
+    if (
+      existingCoupons.some(
+        (existingCoupon) => existingCoupon.code === coupon.code
+      )
+    ) {
+      // If it exists, return the current state without modification
+      return state;
+    }
+    // If it doesn't exist, add the new coupon to the state
+    const updatedCoupons = [...existingCoupons, coupon];
+    // Save the updated coupons to localStorage
+    localStorage.setItem('coupons', JSON.stringify(updatedCoupons));
+    return {
+      ...state,
+      coupons: updatedCoupons,
+    };
+  }),
 
-	on(CouponsActions.clearCoupon, (state) => {
-		localStorage.removeItem('coupon');
-		return {
-			...state,
-			coupon: undefined,
-		};
-	})
+  on(CouponsActions.clearCoupon, (state) => {
+    localStorage.setItem('coupons', '[]');
+    return {
+      ...state,
+      coupons: [],
+    };
+  })
 );

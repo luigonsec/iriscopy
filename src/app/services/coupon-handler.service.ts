@@ -12,7 +12,6 @@ import moment from 'moment';
   providedIn: 'root',
 })
 export class CouponHandlerService {
-  private coupon: Coupon;
   private first_time_coupon_applied = false;
   private searching_coupon = false;
   private apply_cupon_text = 'Aplicar mi cupón';
@@ -26,8 +25,8 @@ export class CouponHandlerService {
   /**
    * Elimina el cupón actual
    */
-  public removeCoupon(): void {
-    this.coupon = undefined;
+  public removeCoupon(coupon): void {
+    if (!coupon) return;
     this.store.dispatch(clearCoupon());
   }
 
@@ -84,14 +83,6 @@ export class CouponHandlerService {
   }
 
   /**
-   * Elimina el cupón actual
-   */
-  public clearCoupon(): void {
-    this.store.dispatch(clearCoupon());
-    this.coupon = undefined;
-  }
-
-  /**
    * Valida un cupón y lo aplica si es válido
    * @param coupon Cupón a validar
    * @param precio_copias Precio actual de las copias
@@ -111,14 +102,12 @@ export class CouponHandlerService {
         detail: `El código promocional solo puede aplicarse a pedidos de copias mayores de ${coupon.minimum_amount} €`,
         summary: 'Código no aplicado',
       });
-      this.clearCoupon();
+      this.removeCoupon(coupon);
       return false;
     } else if (coupon.valid_until < moment().valueOf()) {
-      this.clearCoupon();
+      this.removeCoupon(coupon);
       return false;
     }
-
-    this.coupon = coupon;
 
     this.store.dispatch(applyCoupon({ coupon: coupon }));
     calcularPreciosCallback();
@@ -156,7 +145,7 @@ export class CouponHandlerService {
    * @param callback Función a ejecutar cuando cambie el estado del cupón
    * @returns Suscripción al estado del cupón
    */
-  public subscribeCoupon(callback: (coupon: Coupon) => void): Subscription {
+  public subscribeCoupons(callback: (coupon: Coupon[]) => void): Subscription {
     return this.store.select(selectCoupon).subscribe(callback);
   }
 
