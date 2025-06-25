@@ -176,7 +176,6 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
 
     if (result) {
       this.coupon = coupon;
-      this.discount = this.coupon.amount;
     }
 
     return result;
@@ -273,7 +272,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
       this.shipping,
       this.differentAddress,
       this.subtotal,
-      this.discount
+      this.coupon
     );
 
     this.shippingCostStandard = shippingCosts.standardCost;
@@ -300,12 +299,40 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     return this.pricesService.getOrderPrice(this.copies);
   }
 
-  public getDiscount() {
-    const subtotal = this.precio_copias;
-    this.discount = this.couponHandlerService.getDiscount(
-      subtotal,
-      this.coupon
-    );
+  public getDiscounts(): {
+    shippingDiscount: number;
+    productsDiscount: number;
+    copiesDiscount: number;
+  } {
+    const discounts = {
+      productsDiscount: 0,
+      copiesDiscount: 0,
+      shippingDiscount: 0,
+    };
+    if (this.coupon) {
+      const subtotal = this.precio_copias;
+
+      if (this.coupon.applicability === 'shipping') {
+        if (this.deliver === 'Shipping') {
+          discounts.shippingDiscount =
+            this.shippingCostStandard / ((100 - this.coupon.amount) / 100) -
+            this.shippingCostStandard;
+        } else if (this.deliver === 'UrgentShipping') {
+          const realPrice =
+            this.shippingCostStandard / ((100 - this.coupon.amount) / 100) +
+            1.5;
+          discounts.shippingDiscount = realPrice - this.shippingCostUrgent;
+        } else {
+          discounts.shippingDiscount = 0;
+        }
+      } else {
+        discounts.copiesDiscount = this.couponHandlerService.getDiscount(
+          subtotal,
+          this.coupon
+        );
+      }
+    }
+    return discounts;
   }
 
   public processOrder() {
@@ -544,7 +571,14 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
    * Finaliza los cálculos del pedido aplicando descuentos y calculando gastos de envío
    */
   private finalizarCalculos(callback = undefined): void {
-    this.getDiscount();
+    // Siempre calculamos los gastos de envío estándar para tener el costo actualizado
+    this.calculateGastosDeEnvioEstandar();
+
+    const discounts = this.getDiscounts();
+    this.discount =
+      discounts.copiesDiscount +
+      discounts.productsDiscount +
+      discounts.shippingDiscount;
 
     // Revisar si el subtotal es suficiente para los métodos de pago disponibles
     const subtotalMasDescuento = this.subtotal - this.discount;
@@ -555,9 +589,6 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     if (subtotalMasDescuento < this.PAYMENT_MINIMUM_PRICE_CARD) {
       this.payment = null;
     }
-
-    // Siempre calculamos los gastos de envío estándar para tener el costo actualizado
-    this.calculateGastosDeEnvioEstandar();
 
     // Calculamos el costo final de envío según el método seleccionado
     this.shippingCostFinal =
@@ -594,6 +625,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   getGastosDeEnvio() {
     // Siempre calculamos los gastos de envío estándar para tener el costo actualizado
     // independientemente del método de entrega seleccionado
+
     this.calculateGastosDeEnvioEstandar();
 
     this.shippingCostFinal =

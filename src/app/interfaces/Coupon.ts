@@ -6,4 +6,5 @@ export default interface Coupon {
   minimum_amount: number;
   maximum_amount: number;
   valid_until?: number;
+  applicability: 'all' | 'products' | 'copies' | 'shipping';
 }

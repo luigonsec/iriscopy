@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ShippingCostsService } from './shipping-costs.service';
 import moment from 'moment';
+import Coupon from '../interfaces/Coupon';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,7 @@ export class ShippingHandlerService {
     shipping: any,
     differentAddress: boolean,
     subtotal: number,
-    discount: number
+    coupon: Coupon
   ): {
     standardCost: number;
     urgentCost: number;
@@ -53,13 +54,28 @@ export class ShippingHandlerService {
       this.shippingCostService.isUrgentShippingAvailable(postcode);
     const standardAvailable = urgentAvailable; // Mismas restricciones
 
-    const standardCost = this.shippingCostService.getGastosDeEnvio(
-      subtotal - discount,
+    let standardCost = this.shippingCostService.getGastosDeEnvio(
+      subtotal,
       postcode
     );
 
-    // El costo de envío urgente es siempre el costo estándar + 1.5€
-    const urgentCost = standardCost + this.urgentShippingPremium;
+    let urgentCost = standardCost + this.urgentShippingPremium;
+
+    if (coupon && coupon.applicability === 'shipping') {
+      // Si el cupón aplica al envío, se aplica el descuento al costo estándar
+      const urgentDiscount =
+        coupon.discount_type === 'percent'
+          ? (urgentCost * coupon.amount) / 100
+          : coupon.amount;
+      urgentCost = Math.max(0, urgentCost - urgentDiscount);
+
+      const standardDiscount =
+        coupon.discount_type === 'percent'
+          ? (standardCost * coupon.amount) / 100
+          : coupon.amount;
+      standardCost = Math.max(0, standardCost - standardDiscount);
+      // El costo de envío urgente es siempre el costo estándar + 1.5€
+    }
 
     return {
       standardCost,
