@@ -99,6 +99,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
 
   apply_cupon_text = 'Aplicar mi cupón';
   searching_coupon = false;
+  precio_productos: number = 0;
   precio_copias: number = 0;
   shippingCostStandard: number = 4.9;
   shippingCostFinal: number = 0;
@@ -274,6 +275,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   }
 
   public getSubtotalWithDiscount() {
+    // Restamos el total de todos los descuentos (copias, productos y envío) del subtotal
     return this.subtotal - this.getTotalDiscounts();
   }
 
@@ -407,13 +409,13 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     callback = undefined
   ): void {
     // Calculamos precio de productos
-    const precioProductos = this.calcularPrecioProductos();
 
+    this.precio_productos = this.calcularPrecioProductos();
     // Iniciamos el cálculo de precios para todos los demás elementos
     this.getPrintItemPrices().subscribe({
       next: () => {
         // Calculamos subtotal con todos los elementos
-        this.calcularSubtotal(precioCopias, precioProductos);
+        this.calcularSubtotal(precioCopias, this.precio_productos);
 
         // Finalizamos los cálculos
         this.finalizarCalculos(callback);
@@ -421,7 +423,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
       error: (err) => {
         console.error('Error al calcular los precios de los elementos:', err);
         // Aun con error, calculamos con lo que tenemos
-        this.subtotal = precioCopias + precioProductos;
+        this.subtotal = precioCopias + this.precio_productos;
         this.finalizarCalculos(callback);
       },
     });
@@ -479,16 +481,22 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
           coupon
         );
         this.discounts[coupon.code] = discount;
+      } else if (
+        coupon.applicability !== 'products' &&
+        coupon.applicability !== 'shipping'
+      ) {
+        // Si el tipo no es uno de los conocidos, lo reseteamos
+        this.discounts[coupon.code] = 0;
       }
     });
   }
 
   private applyProductDiscounts() {
-    // Si hay un cupón aplicado y es de tipo 'copies', aplicamos el descuento
+    // Si hay un cupón aplicado y es de tipo 'products', aplicamos el descuento
     this.coupons.forEach((coupon) => {
       if (coupon.applicability === 'products') {
         const discount = this.couponHandlerService.getDiscount(
-          this.precio_copias,
+          this.precio_productos,
           coupon
         );
         this.discounts[coupon.code] = discount;
@@ -577,19 +585,51 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Calcula el total de descuentos solo para productos y copias (excluyendo envíos)
+   */
+  private getNonShippingDiscounts(): number {
+    let total = 0;
+    this.coupons.forEach((coupon) => {
+      if (
+        coupon.applicability === 'copies' ||
+        coupon.applicability === 'products'
+      ) {
+        total += this.discounts[coupon.code] || 0;
+      }
+    });
+    return total;
+  }
+
+  /**
+   * Calcula el total de descuentos solo para gastos de envío
+   */
+  private getShippingDiscounts(): number {
+    let total = 0;
+    this.coupons.forEach((coupon) => {
+      if (coupon.applicability === 'shipping') {
+        total += this.discounts[coupon.code] || 0;
+      }
+    });
+    return total;
+  }
+
+  /**
    * Finaliza los cálculos del pedido aplicando descuentos y calculando gastos de envío
    */
   private finalizarCalculos(callback = undefined): void {
-    // Siempre calculamos los gastos de envío estándar para tener el costo actualizado
-    this.calculateGastosDeEnvioEstandar();
-
+    // 1. Aplicamos descuentos de productos y copias
     this.applyCopiesCouponDiscounts();
     this.applyProductDiscounts();
 
-    // Revisar si el subtotal es suficiente para los métodos de pago disponibles
+    // 2. Calculamos el subtotal antes de aplicar descuentos de envío
+    // Solo restamos los descuentos de productos y copias, no de envío
     this.subtotalBeforeShippingCoupons =
-      this.subtotal - this.getTotalDiscounts();
+      this.subtotal - this.getNonShippingDiscounts();
 
+    // 3. Calculamos los gastos de envío basados en el subtotal ya con descuentos de productos/copias
+    this.calculateGastosDeEnvioEstandar();
+
+    // 4. Revisamos si el subtotal es suficiente para los métodos de pago disponibles
     if (this.subtotalBeforeShippingCoupons < this.PAYMENT_MINIMUM_PRICE_BIZUM) {
       this.payment = 'CARD';
       this.infoPagoAnalytics();
@@ -598,9 +638,10 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
       this.payment = null;
     }
 
+    // 5. Aplicamos descuentos de envío después de calcular los gastos de envío
     this.applyShippingCouponDiscounts();
 
-    // Calculamos el costo final de envío según el método seleccionado
+    // 6. Calculamos el costo final de envío según el método seleccionado
     this.shippingCostFinal =
       this.shippingHandlerService.calculateFinalShippingCost(
         this.deliver,
@@ -608,6 +649,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
         this.shippingCostUrgent
       );
 
+    // 7. Calculamos el total final
     this.getTotal();
 
     if (callback) {
@@ -621,7 +663,6 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   getGastosDeEnvio() {
     // Siempre calculamos los gastos de envío estándar para tener el costo actualizado
     // independientemente del método de entrega seleccionado
-
     this.calculateGastosDeEnvioEstandar();
 
     this.shippingCostFinal =

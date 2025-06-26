@@ -109,7 +109,10 @@
         alt=""
       />
     </div>
-    <div class="Option p-field-radiobutton">
+    <div
+      class="Option p-field-radiobutton"
+      *ngIf="this.subtotalBeforeShippingCoupons >= PAYMENT_MINIMUM_PRICE_BIZUM"
+    >
       <p-radioButton
         (ngModelChange)="infoPagoAnalytics()"
         value="BIZUM"
