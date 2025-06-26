@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { clearCoupon } from 'src/app/_actions/coupons.actions';
+import { clearCoupons } from 'src/app/_actions/coupons.actions';
 import { AnalyticsService } from 'src/app/services/analytics.service';
 import { ShopcartService } from 'src/app/services/shopcart.service';
 
@@ -27,7 +27,7 @@ export class SuccessComponent implements OnInit {
 
   async ngOnInit() {
     this.notifyAnalytics();
-    this.store.dispatch(clearCoupon());
+    this.store.dispatch(clearCoupons());
     this.shopcart.clearCart();
   }
 }

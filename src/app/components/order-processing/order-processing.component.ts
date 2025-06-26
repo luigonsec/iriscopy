@@ -25,7 +25,6 @@ import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import OrderProduct from 'src/app/interfaces/OrderProduct';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AnalyticsService } from 'src/app/services/analytics.service';
-import { selectCustomer } from '../../_selectors/customer.selectors';
 import { PricesService } from '../../services/prices.service';
 import { PriceResult } from '../../interfaces/PriceResult';
 import Flyer from '../../interfaces/Flyer';
@@ -793,6 +792,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     this.updateCartItems(this.shopcartService.getCart());
     this.subcriptorCoupon = this.couponHandlerService.subscribeCoupons(
       (coupons: Coupon[]) => {
+        this.discounts = {};
         this.coupons = coupons;
         this.calcularPrecios(() => {});
       }

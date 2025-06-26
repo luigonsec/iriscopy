@@ -46,8 +46,28 @@ describe('CouponHandlerService', () => {
 
   describe('removeCoupon', () => {
     it('should dispatch clearCoupon action', () => {
-      service.removeCoupon();
-      expect(store.dispatch).toHaveBeenCalledWith(clearCoupon());
+      service.removeCoupon({
+        code: 'TEST10',
+        id: 1,
+        discount_type: 'percent',
+        amount: 10,
+        minimum_amount: 5,
+        maximum_amount: 100,
+        applicability: 'all',
+      });
+      expect(store.dispatch).toHaveBeenCalledWith(
+        clearCoupon({
+          coupon: {
+            code: 'TEST10',
+            id: 1,
+            discount_type: 'percent',
+            amount: 10,
+            minimum_amount: 5,
+            maximum_amount: 100,
+            applicability: 'all',
+          },
+        })
+      );
     });
   });
 
@@ -60,6 +80,7 @@ describe('CouponHandlerService', () => {
         amount: 10,
         minimum_amount: 5,
         maximum_amount: 100,
+        applicability: 'all',
       };
       couponsService.validate.and.returnValue(of(mockCoupon));
 
@@ -103,13 +124,16 @@ describe('CouponHandlerService', () => {
         amount: 10,
         minimum_amount: 50,
         maximum_amount: 100,
+        applicability: 'all',
       };
 
       const result = service.validateCoupon(mockCoupon, 40, () => {});
 
       expect(result).toBeFalse();
       expect(messageService.add).toHaveBeenCalled();
-      expect(store.dispatch).toHaveBeenCalledWith(clearCoupon());
+      expect(store.dispatch).toHaveBeenCalledWith(
+        clearCoupon({ coupon: mockCoupon })
+      );
     });
 
     it('should return false when coupon is expired', () => {
@@ -121,12 +145,15 @@ describe('CouponHandlerService', () => {
         minimum_amount: 5,
         maximum_amount: 100,
         valid_until: moment().subtract(1, 'day').valueOf(),
+        applicability: 'all',
       };
 
       const result = service.validateCoupon(mockCoupon, 100, () => {});
 
       expect(result).toBeFalse();
-      expect(store.dispatch).toHaveBeenCalledWith(clearCoupon());
+      expect(store.dispatch).toHaveBeenCalledWith(
+        clearCoupon({ coupon: mockCoupon })
+      );
     });
 
     it('should return true when coupon is valid and apply it', () => {
@@ -138,6 +165,7 @@ describe('CouponHandlerService', () => {
         minimum_amount: 5,
         maximum_amount: 100,
         valid_until: moment().add(1, 'day').valueOf(),
+        applicability: 'all',
       };
 
       const calcularPrecios = jasmine.createSpy('calcularPrecios');
@@ -165,6 +193,7 @@ describe('CouponHandlerService', () => {
         amount: 10,
         minimum_amount: 0,
         maximum_amount: 100,
+        applicability: 'all',
       };
 
       expect(service.getDiscount(100, mockCoupon)).toBe(10);
@@ -178,6 +207,7 @@ describe('CouponHandlerService', () => {
         amount: 10,
         minimum_amount: 0,
         maximum_amount: 100,
+        applicability: 'all',
       };
 
       expect(service.getDiscount(100, mockCoupon)).toBe(10);

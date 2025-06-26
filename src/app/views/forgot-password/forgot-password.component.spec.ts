@@ -16,12 +16,11 @@ describe('ForgotPasswordComponent', () => {
   beforeEach(async () => {
     usersService = jasmine.createSpyObj('UsersService', ['forgotPassword']);
     messageService = jasmine.createSpyObj('MessageService', ['add']);
-    activatedRoute = jasmine.createSpyObj('ActivatedRoute', ['queryParams']);
-
-    activatedRoute.queryParams = of({ email: 'email' });
+    activatedRoute = {
+      queryParams: of({ email: 'email' }),
+    } as any;
 
     usersService.forgotPassword.and.returnValue(of(undefined));
-    activatedRoute = jasmine.createSpyObj('ActivatedRoute', ['queryParams']);
 
     await TestBed.configureTestingModule({
       declarations: [ForgotPasswordComponent],

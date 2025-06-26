@@ -27,7 +27,7 @@ export class CouponHandlerService {
    */
   public removeCoupon(coupon): void {
     if (!coupon) return;
-    this.store.dispatch(clearCoupon());
+    this.store.dispatch(clearCoupon({ coupon }));
   }
 
   /**

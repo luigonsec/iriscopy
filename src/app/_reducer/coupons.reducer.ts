@@ -35,8 +35,24 @@ export const couponsReducer = createReducer(
     };
   }),
 
-  on(CouponsActions.clearCoupon, (state) => {
-    localStorage.setItem('coupons', '[]');
+  on(CouponsActions.clearCoupon, (state, { coupon }) => {
+    const coupons = state.coupons || [];
+    const updatedCoupons = coupons.filter(
+      (existingCoupon) => existingCoupon.code !== coupon.code
+    );
+    // Save the updated coupons to localStorage
+    console.log('Updated coupons after clearing:', updatedCoupons);
+
+    localStorage.setItem('coupons', JSON.stringify(updatedCoupons));
+    return {
+      ...state,
+      coupons: updatedCoupons,
+    };
+  }),
+
+  on(CouponsActions.clearCoupons, (state) => {
+    // Clear the coupons from localStorage
+    localStorage.removeItem('coupons');
     return {
       ...state,
       coupons: [],
