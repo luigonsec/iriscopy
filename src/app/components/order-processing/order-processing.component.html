@@ -9,12 +9,13 @@
         inputId="shipping"
         (onClick)="handleDeliveryMethodChange()"
       ></p-radioButton>
-      <label for="shipping">
-        Envío estándar <span>({{ expectedDeliveryDate }})</span></label
-      >
+      <label for="shipping"> Envío estándar <span></span></label>
       <span class="Extra">
         {{ shippingCostStandard | number : "1.2-2" }}€
       </span>
+      <div class="shipping-info">
+        <span> Entrega prevista: {{ expectedDeliveryDate }}</span>
+      </div>
     </div>
     <div class="Option p-field-radiobutton" *ngIf="urgentShippingAvailable">
       <p-radioButton
@@ -23,8 +24,15 @@
         inputId="urgent_shipping"
         (onClick)="handleDeliveryMethodChange()"
       ></p-radioButton>
-      <label for="urgent_shipping"> Envío urgente (24-48h)</label>
-      <span class="Extra"> {{ shippingCostUrgent | number : "1.2-2" }}€ </span>
+      <label for="urgent_shipping">
+        Por 1,50€ más convierte tu envío en urgente</label
+      >
+      <div class="shipping-info">
+        <span>
+          Plazo de envío 24-48h (no aplicable a fines de semana y
+          festivos).</span
+        >
+      </div>
     </div>
     <div class="Option p-field-radiobutton">
       <p-radioButton
