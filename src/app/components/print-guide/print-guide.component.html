@@ -1,0 +1,67 @@
+<div class="print-guide-container">
+  <!-- Contenedor rojo (sangrado) - ancho 100%, altura proporcional -->
+  <div class="guide-info">
+    <h3>Guía de Impresión</h3>
+    <p>
+      <strong>Tamaño total del PDF:</strong> {{ totalWidth }}mm ×
+      {{ totalHeight }}mm
+    </p>
+    <p><strong>Área de impresión:</strong> {{ width }}mm × {{ height }}mm</p>
+    <p><strong>Sangrado:</strong> 1.5mm por cada lado</p>
+    <p>
+      <strong>Margen de seguridad:</strong> 1.5mm por cada lado (evitar texto en
+      esta zona)
+    </p>
+  </div>
+  <div
+    class="bleed-section"
+    [style]="'--aspect-ratio: ' + this.totalWidth + ' / ' + this.totalHeight"
+  >
+    <div class="bleed-section-width">{{ this.width + 6 }}mm</div>
+    <div class="bleed-section-height">{{ this.height + 6 }}mm</div>
+    <!-- Contenedor gris (margen de seguridad) -->
+    <div
+      class="margin-section"
+      [style]="{
+        width: 'calc(100% - ' + (6 * 100) / this.totalWidth + '%)',
+        height: 'calc(100% - ' + (6 * 100) / this.totalHeight + '%)',
+        top: (3 * 100) / this.totalHeight + '%',
+        left: (3 * 100) / this.totalWidth + '%'
+      }"
+    >
+      <!-- Contenedor blanco (zona segura) -->
+      <div
+        class="safe-section"
+        [style]="{
+          width: 'calc(100% - ' + (6 * 100) / this.width + '%)',
+          height: 'calc(100% - ' + (6 * 100) / this.height + '%)',
+          top: (3 * 100) / this.height + '%',
+          left: (3 * 100) / this.width + '%'
+        }"
+      >
+        <div class="safe-section-width">{{ this.width - 3 }}mm</div>
+        <div class="safe-section-height">{{ this.height - 3 }}mm</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leyenda -->
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-color bleed-color"></div>
+      <span>Zona de sangrado (se cortará)</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color cut-color"></div>
+      <span>Línea de corte final</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color margin-color"></div>
+      <span>Margen de seguridad (evitar texto)</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color safe-color"></div>
+      <span>Área segura para contenido</span>
+    </div>
+  </div>
+</div>

@@ -5,4 +5,6 @@ export default interface Option {
   default?: boolean;
   factor?: number;
   group?: string;
+  width?: number;
+  height?: number;
 }

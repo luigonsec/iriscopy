@@ -68,6 +68,18 @@ export default {
     },
   ],
 
+  requireBox: [
+    {
+      default: true,
+      name: 'No',
+      code: 'no',
+    },
+    {
+      name: 'Sí',
+      code: 'si',
+    },
+  ],
+
   copiesQuantity: [
     {
       default: true,

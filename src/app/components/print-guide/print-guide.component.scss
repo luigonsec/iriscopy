@@ -1,0 +1,125 @@
+.print-guide-container {
+  width: 100%;
+  max-width: 400px; /* Ancho máximo para el contenedor */
+  margin: 0 auto;
+  position: relative;
+
+  font-family: Arial, sans-serif;
+}
+
+.guide-info {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #007bff;
+}
+
+.guide-info h3 {
+  margin-top: 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.guide-info p {
+  margin: 8px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.bleed-section {
+  background-color: #ff4444; /* Rojo para zona de sangrado */
+  position: relative;
+  border: 2px solid #cc0000;
+  width: 100%;
+  aspect-ratio: var(
+    --aspect-ratio
+  ); /* Usaremos CSS custom property para las proporciones */
+
+  .bleed-section-width {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    font-size: 12px;
+  }
+  .bleed-section-height {
+    position: absolute;
+    right: -30px;
+    line-height: 0;
+    top: 50%;
+    transform: rotate(90deg);
+    font-size: 12px;
+  }
+}
+
+.margin-section {
+  background-color: #e8e8e8; /* Gris para margen de seguridad */
+  position: absolute;
+  border: 3px solid black;
+}
+
+.safe-section {
+  background-color: white; /* Blanco para zona segura */
+  position: absolute;
+  border: 3px solid #007bff;
+
+  .safe-section-width {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    font-size: 12px;
+  }
+  .safe-section-height {
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: rotate(90deg);
+    font-size: 12px;
+  }
+}
+
+/* Leyenda */
+.legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  width: 100%;
+  max-width: 600px;
+  margin-top: 30px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  padding: 8px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  border: 1px solid #e9ecef;
+}
+
+.legend-color {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #333;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.bleed-color {
+  background-color: #ff4444;
+}
+
+.cut-color {
+  background: black;
+}
+
+.margin-color {
+  background-color: #e8e8e8;
+}
+
+.safe-color {
+  background-color: white;
+  border: 2px solid #007bff;
+}

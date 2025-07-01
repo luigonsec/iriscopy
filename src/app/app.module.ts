@@ -102,6 +102,7 @@ import { InputCustomSizeComponent } from './components/inputs/input-custom-size/
 import { SelectButtonComponent } from './components/inputs/select-button/select-button.component';
 import { ShopcartPrintItemComponent } from './components/shopcart-print-item/shopcart-print-item.component';
 import { PrintTypeCoverComponent } from './form/print-type-cover/print-type-cover.component';
+import { PrintGuideComponent } from './components/print-guide/print-guide.component';
 
 @NgModule({
   declarations: [
@@ -169,6 +170,7 @@ import { PrintTypeCoverComponent } from './form/print-type-cover/print-type-cove
     InputCustomSizeComponent,
     SelectButtonComponent,
     ShopcartPrintItemComponent,
+    PrintGuideComponent,
   ],
   imports: [
     BrowserModule,

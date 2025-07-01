@@ -1,5 +1,7 @@
 <div id="print-wrapper" class="grid p-0 m-0">
   <div id="form-column" class="col-12 lg:col-5">
+    <h2>Tarjetas de visita</h2>
+
     <div id="form">
       <div class="Form__Section p-field">
         <div class="p-fluid">
@@ -42,6 +44,16 @@
 
       <div class="Form__Section p-field">
         <div class="p-fluid">
+          <div class="Label">Caja para las tarjetas</div>
+          <app-select-button
+            [options]="tarjetaVisitaOptions.requireBox"
+            (emitChange)="getProperty('requireBox', $event)"
+          ></app-select-button>
+        </div>
+      </div>
+
+      <div class="Form__Section p-field">
+        <div class="p-fluid">
           <div class="Label">Comentarios adicionales</div>
           <app-additional-comment
             (emitChange)="getProperty('additionalComments', $event)"
@@ -53,17 +65,15 @@
 
   <div id="other-column" class="col-12 lg:col-7">
     <div class="grid p-0 m-0">
-      <div id="upload-column" class="col-12 lg:pt-8 lg:col-12 xl:col-6">
+      <div id="upload-column" class="col-12 lg:col-12 xl:col-6">
         <div id="upload">
           <app-uploader #uploader (emitChange)="getFile($event)"></app-uploader>
         </div>
-      </div>
 
-      <div id="files-column" class="col-12">
-        <div class="grid">
+        <div class="grid" id="files">
           <div
             *ngFor="let file of order.files || []"
-            class="col-6 sm:col-4 md:col-4 lg:col-4 xl:col-3"
+            class="col-6 col-offset-3"
           >
             <div class="uploaded-file">
               <div class="titulo">
@@ -83,20 +93,10 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <div id="banner-sm-column" class="lg:hidden">
-    <div id="banner-column" class="col-12 sm:col-6 sm:col-offset-3 sm:visible">
-      <div id="banner">
-        <app-banner
-          class="hidden sm:block"
-          [options]="{ visible_pc: true, visible_print: true }"
-        ></app-banner>
-        <app-banner
-          class="block sm:hidden"
-          [options]="{ visible_phone: true, visible_print: true }"
-        ></app-banner>
+      <div id="print-guide-column" class="col-6">
+        <div id="print-guide">
+          <app-print-guide [width]="85" [height]="55"></app-print-guide>
+        </div>
       </div>
     </div>
   </div>
