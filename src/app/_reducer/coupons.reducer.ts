@@ -41,8 +41,6 @@ export const couponsReducer = createReducer(
       (existingCoupon) => existingCoupon.code !== coupon.code
     );
     // Save the updated coupons to localStorage
-    console.log('Updated coupons after clearing:', updatedCoupons);
-
     localStorage.setItem('coupons', JSON.stringify(updatedCoupons));
     return {
       ...state,

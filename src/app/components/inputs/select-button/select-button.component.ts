@@ -19,6 +19,7 @@ export class SelectButtonComponent implements OnInit {
   public option: Option = undefined;
   public groups: string[] = [];
   public optionsByGroup: { [key: string]: Option[] } = {};
+  public disabled = false;
 
   @Output() emitChange = new EventEmitter<Option>();
 
@@ -27,6 +28,19 @@ export class SelectButtonComponent implements OnInit {
   handleChange($event) {
     const option = $event.value;
     this.emitChange.emit(option);
+  }
+
+  setUpOption(option: Option) {
+    this.option = option;
+    this.emitChange.emit(this.option);
+  }
+
+  disable() {
+    this.disabled = true;
+  }
+
+  enable() {
+    this.disabled = false;
   }
 
   ngOnInit(): void {

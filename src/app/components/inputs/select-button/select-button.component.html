@@ -5,6 +5,7 @@
   [(ngModel)]="option"
   optionLabel="name"
   (onChange)="handleChange($event)"
+  [disabled]="disabled"
 >
   <ng-template let-item>
     <div class="Button">

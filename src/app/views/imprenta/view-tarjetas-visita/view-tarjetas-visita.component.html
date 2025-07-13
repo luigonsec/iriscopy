@@ -7,6 +7,7 @@
         <div class="p-fluid">
           <div class="Label">Forma de impresión</div>
           <app-select-button
+            #printFormSelector
             [options]="tarjetaVisitaOptions.printForm"
             (emitChange)="getProperty('printForm', $event)"
           ></app-select-button>
@@ -67,7 +68,12 @@
     <div class="grid p-0 m-0">
       <div id="upload-column" class="col-12 lg:col-12 xl:col-6">
         <div id="upload">
-          <app-uploader #uploader (emitChange)="getFile($event)"></app-uploader>
+          <app-uploader
+            #uploader
+            *ngIf="!ready"
+            (emitChange)="getFile($event)"
+            [multiple]="false"
+          ></app-uploader>
         </div>
 
         <div class="grid" id="files">
@@ -93,18 +99,32 @@
           </div>
         </div>
       </div>
-      <div id="print-guide-column" class="col-6">
+      <div id="print-guide-column" class="col-12 lg:col-6 hidden lg:block">
         <div id="print-guide">
-          <app-print-guide [width]="85" [height]="55"></app-print-guide>
+          <app-print-guide
+            [width]="85"
+            [height]="55"
+            *ngIf="!!!ready"
+          ></app-print-guide>
         </div>
       </div>
     </div>
   </div>
 
+  <div id="print-guide-column-sm" class="col-12 lg:hidden">
+    <div id="print-guide">
+      <app-print-guide
+        [width]="85"
+        [height]="55"
+        *ngIf="!!!ready"
+      ></app-print-guide>
+    </div>
+  </div>
+
   <app-confirm-bar
+    *ngIf="ready"
     [addToCartFn]="addToCartFn"
     [getPrecio]="getPrice"
-    *ngIf="ready"
     [reset]="reset"
     [(order)]="order"
   ></app-confirm-bar>

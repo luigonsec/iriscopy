@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import File from 'src/app/interfaces/File';
 import { FilesService } from 'src/app/services/files.service';
@@ -10,6 +10,8 @@ import { LoadingService } from 'src/app/services/loading.service';
   styleUrls: ['./uploader.component.scss'],
 })
 export class UploaderComponent implements OnInit {
+  @Input('multiple') public multiple = true;
+
   public uploadedFiles: File[] = [];
   public src: string;
   @Output() emitChange = new EventEmitter<unknown>();
@@ -53,6 +55,11 @@ export class UploaderComponent implements OnInit {
     }
   }
 
+  removeFile(file: File) {
+    this.uploadedFiles = this.uploadedFiles.filter((x) => x.id !== file.id);
+    this.emitChange.emit(this.uploadedFiles);
+  }
+
   createFileObject(uploadedFile, file) {
     return {
       id: uploadedFile.id,
@@ -63,6 +70,7 @@ export class UploaderComponent implements OnInit {
       original_filename: uploadedFile.title.raw,
       source: 'local',
       image: uploadedFile.media_details.sizes.medium.source_url,
+      pageDimensions: uploadedFile.pageDimensions,
     };
   }
 

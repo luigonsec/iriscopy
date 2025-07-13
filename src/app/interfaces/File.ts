@@ -7,4 +7,10 @@ export default interface File {
   original_filename: string;
   source: string;
   image: string;
+  pageDimensions?: PageDimensions[];
+}
+
+export interface PageDimensions {
+  width: number;
+  height: number;
 }
