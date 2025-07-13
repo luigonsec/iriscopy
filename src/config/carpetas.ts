@@ -118,6 +118,15 @@ export default {
       code: 'a4',
       factor: 1,
     },
+    {
+      name: 'Tamaño Especial',
+      group: '1',
+      description: '20 x 30.5 cm',
+      width: 200,
+      height: 305,
+      code: 'especial-200x305',
+      factor: 1,
+    },
   ],
 
   copiesQuantity: [

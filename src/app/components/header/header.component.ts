@@ -116,28 +116,28 @@ export class HeaderComponent implements OnInit, OnDestroy {
         icon: 'pi pi-fw pi-folder',
         routerLink: '/imprenta/carpetas',
       },
+      // {
+      //   label: 'Revistas',
+      //   icon: 'pi pi-fw pi-book',
+      //   routerLink: '/imprenta/revistas',
+      // },
+      // {
+      //   label: 'Rollups',
+      //   icon: 'pi pi-fw pi-image',
+      //   routerLink: '/imprenta/rollups',
+      // },
+      // {
+      //   label: 'Carteles',
+      //   icon: 'pi pi-fw pi-image',
+      //   routerLink: '/imprenta/carteles',
+      // },
       {
-        label: 'Revistas',
-        icon: 'pi pi-fw pi-book',
-        routerLink: '/imprenta/revistas',
-      },
-      {
-        label: 'Rollups',
-        icon: 'pi pi-fw pi-image',
-        routerLink: '/imprenta/rollups',
-      },
-      {
-        label: 'Carteles',
-        icon: 'pi pi-fw pi-image',
-        routerLink: '/imprenta/carteles',
-      },
-      {
-        label: 'Dipticos',
+        label: 'Dípticos',
         icon: 'pi pi-fw pi-image',
         routerLink: '/imprenta/dipticos',
       },
       {
-        label: 'Tripticos',
+        label: 'Trípticos',
         icon: 'pi pi-fw pi-image',
         routerLink: '/imprenta/tripticos',
       },

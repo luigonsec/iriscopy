@@ -1,10 +1,13 @@
 <div id="print-wrapper" class="grid p-0 m-0">
   <div id="form-column" class="col-12 lg:col-5">
+    <h2>Carpetas</h2>
+
     <div id="form">
       <div class="Form__Section p-field">
         <div class="p-fluid">
           <div class="Label">Forma de impresión</div>
           <app-select-button
+            #printFormSelector
             [options]="folderOptions.printForm"
             (emitChange)="getProperty('printForm', $event)"
           ></app-select-button>
@@ -35,6 +38,7 @@
         <div class="p-fluid">
           <div class="Label">Tamaño (cerrado)</div>
           <app-select-button
+            #paperSizeSelector
             [options]="folderOptions.paperSize"
             (emitChange)="getProperty('paperSize', $event)"
           ></app-select-button>
@@ -60,17 +64,23 @@
       </div>
     </div>
   </div>
+
   <div id="other-column" class="col-12 lg:col-7">
     <div class="grid p-0 m-0">
       <div id="upload-column" class="col-12 lg:col-12 xl:col-6">
         <div id="upload">
-          <app-uploader #uploader (emitChange)="getFile($event)"></app-uploader>
+          <app-uploader
+            #uploader
+            *ngIf="!ready"
+            (emitChange)="getFile($event)"
+            [multiple]="false"
+          ></app-uploader>
         </div>
 
         <div class="grid" id="files">
           <div
             *ngFor="let file of order.files || []"
-            class="col-6 col-offset-3"
+            class="col-offset-3 col-6 lg:col-10 lg:col-offset-1"
           >
             <div class="uploaded-file">
               <div class="titulo">
@@ -90,14 +100,25 @@
           </div>
         </div>
       </div>
-      <div id="print-guide-column" class="col-6">
+      <div id="print-guide-column" class="col-12 lg:col-6 hidden lg:block">
         <div id="print-guide">
           <app-print-guide
+            *ngIf="this.order.paperSize && !!!this.ready"
             [width]="this.order.paperSize.width * 2"
             [height]="this.order.paperSize.height"
           ></app-print-guide>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div id="print-guide-column-sm" class="col-12 lg:hidden">
+    <div id="print-guide">
+      <app-print-guide
+        *ngIf="this.order.paperSize"
+        [width]="this.order.paperSize.width * 2"
+        [height]="this.order.paperSize.height"
+      ></app-print-guide>
     </div>
   </div>
 
