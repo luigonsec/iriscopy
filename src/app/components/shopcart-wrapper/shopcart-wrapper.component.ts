@@ -27,6 +27,11 @@ export class ShopcartWrapperComponent {
     this.router.navigate(['payment']);
   }
 
+  continueShopping() {
+    this.display = false;
+    this.router.navigate(['print']);
+  }
+
   edit(order) {
     this.orderService.edit(order);
     this.shopcartService.removeCopy(order);

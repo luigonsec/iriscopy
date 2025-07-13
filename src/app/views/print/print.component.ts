@@ -102,14 +102,15 @@ export class PrintComponent implements OnInit, OnDestroy {
   getPrintType(value) {
     this.printType = value;
     this.order.printType = this.printType;
+    this.order.printTypeCover = this.printType;
     this.order = Object.assign({}, this.order);
   }
 
-  getPrintTypeCover(value) {
-    this.printTypeCover = value;
-    this.order.printTypeCover = this.printTypeCover;
-    this.order = Object.assign({}, this.order);
-  }
+  // getPrintTypeCover(value) {
+  //   this.printTypeCover = value;
+  //   this.order.printTypeCover = this.printTypeCover;
+  //   this.order = Object.assign({}, this.order);
+  // }
 
   getPrintForm(value) {
     this.printForm = value;
