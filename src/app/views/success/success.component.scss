@@ -1,10 +1,10 @@
-@import "src/assets/scss/colors";
+@use "src/assets/scss/colors.scss" as colors;
 
 .Message {
   padding-left: 20px;
   .Title {
     margin-top: 60px;
-    color: $primary;
+    color: colors.$primary;
     font-weight: 600;
     font-size: 23px;
   }

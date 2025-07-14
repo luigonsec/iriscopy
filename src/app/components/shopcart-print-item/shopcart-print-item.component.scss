@@ -1,4 +1,4 @@
-@import "src/assets/scss/colors";
+@use "src/assets/scss/colors.scss" as colors;
 
 // Variables
 $card-border-radius: 5px;
@@ -41,7 +41,7 @@ $feature-border-radius: 5px;
     justify-content: center;
     border-radius: $feature-border-radius;
     padding: 5px;
-    background-color: $lila;
+    background-color: colors.$lila;
     color: black;
     border: 1px solid black;
     font-size: 14px;
@@ -72,13 +72,13 @@ $feature-border-radius: 5px;
     display: flex;
     align-items: center;
     cursor: pointer;
-    color: $darkGray;
+    color: colors.$darkGray;
   }
 
   .price {
     display: flex;
     align-items: center;
-    color: $primary;
+    color: colors.$primary;
 
     .value {
       font-weight: 300;

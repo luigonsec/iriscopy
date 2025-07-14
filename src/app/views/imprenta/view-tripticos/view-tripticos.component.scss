@@ -1,2 +1,2 @@
-@import "../../../../assets/scss/form-structure.scss";
-@import "../../../../assets/scss/form-structure-printing.scss";
+@use "src/assets/scss/form-structure.scss" as form;
+@use "src/assets/scss/form-structure-printing.scss" as printing;

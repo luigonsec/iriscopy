@@ -1,4 +1,4 @@
-@import "src/assets/scss/colors.scss";
+@use "src/assets/scss/colors.scss" as colors;
 
 #Loading {
   display: flex;
@@ -14,7 +14,7 @@
 
   .Text {
     font-size: 30px;
-    color: $primary;
+    color: colors.$primary;
     width: 100%;
     display: block;
     text-align: center;

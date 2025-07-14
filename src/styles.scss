@@ -1,19 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
-$borderRadius: 8px;
-@import "primeicons/primeicons.css";
-@import "primeicons/primeicons.css";
-@import "primeflex/primeflex.css";
-@import "primeng/themes/saga-blue/theme.css";
-@import "primeng/core/core.css";
-@import "assets/scss/colors.scss";
-@import "assets/scss/select_button.scss";
-@import "assets/scss/table.scss";
-@import "assets/scss/tabmenu.scss";
-@import "assets/scss/buttons.scss";
-@import "assets/scss/toast.scss";
-@import "assets/scss/menu.scss";
+@use "assets/scss/colors.scss" as colors;
+@use "primeicons/primeicons.css";
+@use "primeflex/primeflex.css";
+@use "assets/scss/select_button.scss";
+@use "assets/scss/table.scss";
+@use "assets/scss/tabmenu.scss";
+@use "assets/scss/buttons.scss";
+@use "assets/scss/toast.scss";
+@use "assets/scss/menu.scss";
+@use "assets/scss/select.scss";
+@use "@fortawesome/fontawesome-free/css/all.min.css";
 
-@import "@fortawesome/fontawesome-free/css/all.min.css";
 @import url("https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,700,800,900");
 @import url("https://fonts.googleapis.com/css?family=Tilt+Warp:100,200,300,400,500,700,800,900");
 
@@ -25,7 +22,7 @@ $borderRadius: 8px;
 }
 
 html {
-  background-color: $lila;
+  background-color: colors.$lila;
 }
 
 body {
@@ -45,7 +42,7 @@ body {
 
 h2 {
   font-family: "Tilt Warp";
-  color: $rosa;
+  color: colors.$rosa;
   font-size: 30px;
   margin: 0;
   padding: 0;
@@ -54,7 +51,7 @@ h2 {
 
 h3 {
   font-family: "Tilt Warp";
-  color: $rosa;
+  color: colors.$rosa;
   font-size: 20px;
   margin: 0;
   padding: 0;
@@ -94,14 +91,15 @@ label.form-label {
   word-break: break-all;
 }
 
+/* Legacy ButtonSet styles */
 .p-buttonset .p-button:first-of-type {
-  border-bottom-left-radius: $borderRadius;
-  border-top-left-radius: $borderRadius;
+  border-bottom-left-radius: 8px;
+  border-top-left-radius: 8px;
 }
 
 .p-buttonset .p-button:last-of-type {
-  border-bottom-right-radius: $borderRadius;
-  border-top-right-radius: $borderRadius;
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
 .p-fluid .p-buttonset .p-button {
@@ -113,7 +111,7 @@ label.form-label {
 }
 
 ::ng-deep .p-badge {
-  background-color: $primary;
+  background-color: colors.$primary;
 }
 
 /* Media Query para pantallas de móviles */
@@ -139,4 +137,14 @@ label.form-label {
   .form-label {
     font-size: 14px;
   }
+}
+
+.p-galleria.p-component {
+  border: none !important;
+}
+
+.p-radiobutton-checked .p-radiobutton-box,
+.p-checkbox-checked .p-checkbox-box {
+  background-color: colors.$primary !important;
+  border-color: colors.$primary !important;
 }

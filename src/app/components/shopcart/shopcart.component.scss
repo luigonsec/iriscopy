@@ -1,4 +1,4 @@
-@import "src/assets/scss/colors";
+@use "src/assets/scss/colors.scss" as colors;
 
 .order-item {
   border: 1px solid black;
@@ -29,7 +29,7 @@
       justify-content: center;
       border-radius: 5px;
       padding: 5px;
-      background-color: $lila;
+      background-color: colors.$lila;
       color: black;
       border: 1px solid black;
       font-size: 14px;
@@ -80,13 +80,13 @@
       display: flex;
       align-items: center;
       cursor: pointer;
-      color: $darkGray;
+      color: colors.$darkGray;
     }
 
     .price {
       display: flex;
       align-items: center;
-      color: $primary;
+      color: colors.$primary;
 
       .value {
         font-weight: 300;

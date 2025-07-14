@@ -1,32 +1,33 @@
+@use "src/assets/scss/colors.scss" as colors;
 .p-button {
   color: #ffffff;
-  background: $darkGray;
-  border: 1px solid $darkGray;
+  background: colors.$darkGray;
+  border: 1px solid colors.$darkGray;
 
   .p-button-label {
     font-family: "Montserrat" !important;
   }
 }
 .p-button {
-  border-radius: $borderRadius;
+  border-radius: 8px;
 }
 
 .p-button:enabled:hover {
-  background: $darkGray;
+  background: colors.$darkGray;
   color: #ffffff;
-  border-color: $darkGray;
+  border-color: colors.$darkGray;
 }
-
+.p-fileupload-choose-button,
 .p-button.p-fileupload-choose,
 .p-button.p-fileupload-choose:hover,
 .p-fileupload-choose:not(.p-disabled):hover,
 .p-button.Secondary,
 .p-button.Secondary:hover,
 .Secondary:not(.p-disabled):hover {
-  color: black;
-  background: $yellow;
-  border: 2px solid $negro;
-  font-weight: bold;
+  color: black !important;
+  background: colors.$yellow !important;
+  border: 2px solid colors.$negro !important;
+  font-weight: bold !important;
   padding: 15px 40px 15px 40px;
 
   .p-button-label {
@@ -42,7 +43,7 @@
   }
 
   &.pink {
-    background-color: $rosa;
-    color: white;
+    background-color: colors.$rosa !important;
+    color: white !important;
   }
 }

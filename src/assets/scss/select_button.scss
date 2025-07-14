@@ -1,50 +1,200 @@
-$bordered: 2px solid black !important;
-.p-buttonset .p-button:focus {
+@use "src/assets/scss/colors.scss" as colors;
+
+/* ===========================================
+   PRIMENG SELECTBUTTON GLOBAL STYLES
+   All SelectButton styling consolidated here
+   =========================================== */
+
+/* Focus state - remove z-index conflicts */
+.p-selectbutton .p-togglebutton:focus {
   z-index: 0 !important;
 }
 
-.p-selectbutton .p-button {
-  border-top: $bordered;
-  border-bottom: $bordered;
-  color: $rosa;
-  box-shadow: none;
+/* Core SelectButton Layout - P-FLUID support */
+.p-fluid .p-selectbutton {
+  width: 100% !important;
+  display: flex !important;
 
-  &:hover {
-    &:not(.p-highlight) {
-      color: $rosa !important;
-    }
+  .p-togglebutton,
+  .p-button {
+    flex: 1 !important;
+    width: 100% !important;
+    padding: 0px !important;
   }
-
-  &.p-highlight,
-  &.p-highlight:hover,
-  &.p-highlight:focus {
-    background: $lila;
-    color: $negro;
-    &:first-of-type {
-      border-left: $bordered;
-    }
-  }
-
-  &:first-of-type {
-    border-left: $bordered;
-  }
-
-  border-right: $bordered;
-  border-left: none !important;
 }
 
+/* PrimeNG v19 SelectButton base styles */
+.p-selectbutton {
+  width: 100% !important;
+  display: flex !important;
+
+  .p-togglebutton-content {
+    width: 100%;
+  }
+
+  .p-togglebutton,
+  .p-button {
+    flex: 1 !important;
+    width: 100% !important;
+    border: 2px solid black !important;
+    border-left: none !important;
+    color: colors.$rosa !important;
+    box-shadow: none !important;
+    background-color: white !important;
+    font-family: "Montserrat" !important;
+    position: relative !important;
+    padding: 8px !important;
+    text-align: center !important;
+
+    /* Border radius for first and last buttons */
+    &:first-child,
+    &:first-of-type {
+      border-left: 2px solid black !important;
+      border-bottom-left-radius: 8px !important;
+      border-top-left-radius: 8px !important;
+    }
+
+    &:last-child,
+    &:last-of-type {
+      border-bottom-right-radius: 8px !important;
+      border-top-right-radius: 8px !important;
+    }
+
+    /* REMOVE ALL HOVER EFFECTS - NO CHANGES ON HOVER */
+    &:hover:not(.p-highlight) {
+      color: colors.$rosa !important;
+      background-color: white !important;
+      border-color: black !important;
+      box-shadow: none !important;
+    }
+
+    /* Selected/highlighted state - NO HOVER EFFECTS */
+    &.p-highlight,
+    &.p-highlight:hover,
+    &.p-highlight:focus,
+    &.p-highlight:active,
+    &[aria-pressed="true"] {
+      background-color: colors.$lila !important;
+      color: colors.$negro !important;
+      border-color: black !important;
+      box-shadow: none !important;
+
+      /* Force all children to inherit colors and transparent backgrounds */
+      *,
+      *::before,
+      *::after {
+        background-color: transparent !important;
+        color: colors.$negro !important;
+      }
+
+      .Button,
+      .Button *,
+      .Button__label,
+      .Button__description {
+        background-color: transparent !important;
+        color: colors.$negro !important;
+      }
+
+      /* FORCE: No hover effects even when selected */
+      &:hover {
+        background-color: colors.$lila !important;
+        color: colors.$negro !important;
+        border-color: black !important;
+        box-shadow: none !important;
+      }
+    }
+
+    /* Button content wrapper styling */
+    .p-button-label,
+    .p-togglebutton-label {
+      width: 100% !important;
+      padding: 0 !important;
+      background-color: transparent !important;
+      color: inherit !important;
+      text-align: center !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+  }
+}
+
+/* ===========================================
+   BUTTON TEMPLATE CONTENT STYLING
+   Custom Button__label and Button__description
+   =========================================== */
+
 .Button {
-  text-align: center;
-  width: 100%;
+  text-align: center !important;
+  width: 100% !important;
+  padding: 4px !important;
+  background-color: transparent !important;
+  color: inherit !important;
+  font-family: "Montserrat" !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+
   .Button__label {
     font-family: "Montserrat" !important;
-    font-weight: 800 !important;
-    font-size: 16px;
+    font-weight: 900 !important; /* Extra bold */
+    font-size: 16px !important;
+    color: inherit !important;
+    display: block !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+    margin-bottom: 2px !important;
+    background-color: transparent !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    text-align: center !important;
+    width: 100% !important;
   }
 
   .Button__description {
-    font-size: 10px;
-    font-weight: bold;
+    font-family: "Montserrat" !important;
+    font-size: 10px !important;
+    font-weight: 700 !important; /* Bold */
+    color: inherit !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    background-color: transparent !important;
+    line-height: 1.1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+    overflow: visible !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  .Button__info {
+    position: absolute !important;
+    top: 2px !important;
+    right: 2px !important;
+    width: 18px !important;
+    height: 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background-color: white !important;
+    color: colors.$rosa !important;
+    border-radius: 50% !important;
+    font-size: 12px !important;
+    cursor: pointer !important;
+    z-index: 2 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    border: 1px solid colors.$rosa !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+
+    i {
+      font-size: 10px !important;
+      color: colors.$rosa !important;
+      line-height: 1 !important;
+    }
   }
 
   .Button__img {
@@ -52,14 +202,285 @@ $bordered: 2px solid black !important;
   }
 }
 
+/* ===========================================
+   GLOBAL NG-DEEP OVERRIDES
+   For maximum compatibility across components
+   =========================================== */
+
+::ng-deep .p-selectbutton {
+  width: 100% !important;
+  display: flex !important;
+
+  .p-togglebutton,
+  .p-button {
+    border: 2px solid black !important;
+    border-left: none !important;
+    color: colors.$rosa !important;
+    background-color: white !important;
+    box-shadow: none !important;
+    text-align: center !important;
+
+    &:first-child {
+      border-left: 2px solid black !important;
+      border-bottom-left-radius: 8px !important;
+      border-top-left-radius: 8px !important;
+    }
+
+    &:last-child {
+      border-bottom-right-radius: 8px !important;
+      border-top-right-radius: 8px !important;
+    }
+
+    /* NO HOVER EFFECTS FOR ANY BUTTON STATE */
+    &:hover:not(.p-highlight) {
+      color: colors.$rosa !important;
+      background-color: white !important;
+      border-color: black !important;
+      box-shadow: none !important;
+    }
+
+    /* SELECTED STATE - ABSOLUTELY NO HOVER EFFECTS */
+    &.p-highlight {
+      background-color: colors.$lila !important;
+      color: colors.$negro !important;
+      border-color: black !important;
+      box-shadow: none !important;
+
+      * {
+        background-color: transparent !important;
+        color: inherit !important;
+      }
+
+      /* Force no hover changes when selected */
+      &:hover,
+      &:focus,
+      &:active {
+        background-color: colors.$lila !important;
+        color: colors.$negro !important;
+        border-color: black !important;
+        box-shadow: none !important;
+      }
+    }
+
+    &.p-highlight:hover,
+    &.p-highlight:focus {
+      background-color: colors.$lila !important;
+      color: colors.$negro !important;
+      border-color: black !important;
+      box-shadow: none !important;
+
+      * {
+        background-color: transparent !important;
+        color: inherit !important;
+      }
+    }
+  }
+
+  /* Button content styling - global with enhanced visibility */
+  .Button__label {
+    font-weight: 900 !important; /* Extra bold */
+    font-family: "Montserrat" !important;
+    font-size: 16px !important;
+    display: block !important;
+    background-color: transparent !important;
+    color: inherit !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    margin-bottom: 2px !important;
+    text-align: center !important;
+    width: 100% !important;
+    line-height: 1.2 !important;
+  }
+
+  .Button__description {
+    font-weight: 700 !important; /* Bold */
+    font-family: "Montserrat" !important;
+    font-size: 10px !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    background-color: transparent !important;
+    color: inherit !important;
+    height: auto !important;
+    overflow: visible !important;
+    line-height: 1.1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  .Button__info {
+    position: absolute !important;
+    top: 2px !important;
+    right: 2px !important;
+    width: 18px !important;
+    height: 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background-color: colors.$rosa !important;
+    color: white !important;
+    border-radius: 50% !important;
+    font-size: 12px !important;
+    cursor: pointer !important;
+    z-index: 100 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    border: 1px solid white !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+
+    i {
+      font-size: 10px !important;
+      color: white !important;
+      line-height: 1 !important;
+    }
+
+    &:hover {
+      background-color: colors.$lila !important;
+      color: white !important;
+      transform: scale(1.1) !important;
+    }
+  }
+
+  /* Enhanced template content wrapper */
+  .Button {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    text-align: center !important;
+    background-color: transparent !important;
+    color: inherit !important;
+  }
+
+  /* Color overrides for different states */
+  .p-togglebutton:not(.p-highlight),
+  .p-button:not(.p-highlight) {
+    .Button__label,
+    .Button__description,
+    .Button {
+      color: colors.$rosa !important;
+      background-color: transparent !important;
+    }
+
+    /* Exception: Button__info maintains its own styling */
+    .Button__info {
+      background-color: colors.$rosa !important;
+      color: white !important;
+
+      &:hover {
+        background-color: colors.$lila !important;
+        color: white !important;
+      }
+
+      i {
+        color: white !important;
+      }
+    }
+  }
+
+  .p-togglebutton.p-highlight,
+  .p-button.p-highlight {
+    .Button__label,
+    .Button__description,
+    .Button {
+      color: colors.$negro !important;
+      background-color: transparent !important;
+    }
+
+    /* Exception: Button__info maintains its own styling even when selected */
+    .Button__info {
+      background-color: colors.$rosa !important;
+      color: white !important;
+
+      &:hover {
+        background-color: colors.$lila !important;
+        color: white !important;
+      }
+
+      i {
+        color: white !important;
+      }
+    }
+  }
+}
+
+/* ===========================================
+   ABSOLUTE HOVER REMOVAL
+   Force no hover effects at all levels
+   =========================================== */
+
+/* Remove all hover effects globally for SelectButton */
+.p-selectbutton .p-togglebutton:hover,
+.p-selectbutton .p-button:hover {
+  background-color: inherit !important;
+  color: inherit !important;
+  border-color: inherit !important;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* Force selected buttons to maintain exact same appearance on hover */
+.p-selectbutton .p-togglebutton.p-highlight:hover,
+.p-selectbutton .p-button.p-highlight:hover {
+  background-color: colors.$lila !important;
+  color: colors.$negro !important;
+  border-color: black !important;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* ::ng-deep force no hover effects */
+::ng-deep .p-selectbutton .p-togglebutton:hover,
+::ng-deep .p-selectbutton .p-button:hover {
+  background-color: inherit !important;
+  color: inherit !important;
+  border-color: inherit !important;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+::ng-deep .p-selectbutton .p-togglebutton.p-highlight:hover,
+::ng-deep .p-selectbutton .p-button.p-highlight:hover {
+  background-color: colors.$lila !important;
+  color: colors.$negro !important;
+  border-color: black !important;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* ===========================================
+   RESPONSIVE DESIGN
+   Mobile-friendly adjustments
+   =========================================== */
+
 @media (max-width: 768px) {
   .Button {
     .Button__label {
-      font-size: 13px;
+      font-size: 13px !important;
+      font-weight: 900 !important; /* Maintain extra bold on mobile */
     }
 
     .Button__description {
-      font-size: 9px;
+      font-size: 9px !important;
+      font-weight: 700 !important; /* Maintain bold on mobile */
     }
+  }
+
+  ::ng-deep .p-selectbutton .Button__label {
+    font-size: 13px !important;
+    font-weight: 900 !important;
+  }
+
+  ::ng-deep .p-selectbutton .Button__description {
+    font-size: 9px !important;
+    font-weight: 700 !important;
   }
 }

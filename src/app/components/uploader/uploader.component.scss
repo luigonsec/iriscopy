@@ -1,4 +1,4 @@
-@import "src/assets/scss/colors.scss";
+@use "src/assets/scss/colors.scss" as colors;
 #uploader {
   text-align: center;
   margin-bottom: 40px;

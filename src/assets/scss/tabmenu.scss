@@ -1,3 +1,4 @@
+@use "src/assets/scss/colors.scss" as colors;
 p-tabmenu {
   .p-tabmenu-nav.p-reset,
   .p-ripple.p-element.p-menuitem-link.ng-star-inserted,
@@ -8,8 +9,8 @@ p-tabmenu {
   .p-element.p-tabmenuitem.p-highlight.ng-star-inserted {
     .p-ripple.p-element.p-menuitem-link.ng-star-inserted {
       background-color: transparent;
-      border-bottom-color: $negro;
-      color: $negro;
+      border-bottom-color: colors.$negro;
+      color: colors.$negro;
     }
   }
 
@@ -30,5 +31,14 @@ p-tabmenu {
     .p-ripple.p-element.p-menuitem-link.ng-star-inserted {
       background-color: transparent;
     }
+  }
+
+  .p-tabmenuitem.p-tabmenuitem-active .p-menuitem-link {
+    color: colors.$primary;
+  }
+
+  .p-tabmenuitem-active {
+    border-color: colors.$primary;
+    color: colors.$primary;
   }
 }

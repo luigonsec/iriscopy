@@ -5,7 +5,13 @@
         <label class="form-label" for="name"
           >Nombre y apellidos <span class="mandatory">*</span></label
         >
-        <input id="name" [(ngModel)]="billingDetails.first_name" pInputText />
+        <input
+          id="name"
+          [(ngModel)]="billingDetails.first_name"
+          pInputText
+          fluid
+          pSize="small"
+        />
       </div>
       <small
         *ngIf="billingDetailsErrors.first_name"
@@ -26,6 +32,8 @@
           [(ngModel)]="billingDetails.last_name"
           id="last_name"
           pInputText
+          fluid
+          pSize="small"
         />
       </div>
       <small
@@ -49,6 +57,8 @@
           id="phone"
           aria-describedby="phone-help"
           pInputText
+          fluid
+          pSize="small"
         />
       </div>
       <small
@@ -72,6 +82,8 @@
           id="email"
           aria-describedby="email-help"
           pInputText
+          fluid
+          pSize="small"
         />
       </div>
       <small
@@ -96,6 +108,8 @@
           id="address_1"
           aria-describedby="address_1-help"
           pInputText
+          fluid
+          pSize="small"
         />
       </div>
       <small
@@ -118,6 +132,8 @@
           id="address_2"
           aria-describedby="address_2-help"
           pInputText
+          fluid
+          pSize="small"
         />
       </div>
 
@@ -143,6 +159,8 @@
           id="city"
           aria-describedby="city-help"
           pInputText
+          fluid
+          pSize="small"
         />
       </div>
 
@@ -164,6 +182,8 @@
           id="postcode"
           aria-describedby="postcode-help"
           pInputText
+          fluid
+          pSize="small"
         />
       </div>
       <small
@@ -177,21 +197,20 @@
 </div>
 <div class="grid">
   <div class="field col-12">
-    <div class="p-fluid">
-      <div class="input-container">
-        <label class="form-label" for="comments"
-          >Observaciones de tu pedido</label
-        >
-        <textarea
-          id="comments"
-          [(ngModel)]="billingDetails.others"
-          [rows]="5"
-          aria-labelledby="others-help"
-          [cols]="30"
-          pInputTextarea
-          autoResize="autoResize"
-        ></textarea>
-      </div>
+    <div class="input-container">
+      <label class="form-label" for="comments">
+        Observaciones de tu pedido
+      </label>
+      <textarea
+        id="comments"
+        [(ngModel)]="billingDetails.others"
+        [rows]="5"
+        aria-labelledby="others-help"
+        [cols]="30"
+        pTextarea
+        autoResize="autoResize"
+        fluid
+      ></textarea>
     </div>
   </div>
 </div>

@@ -1,5 +1,5 @@
 /* Añade esta regla a tu archivo CSS global */
-@import "src/assets/scss/colors.scss";
+@use "src/assets/scss/colors.scss" as colors;
 
 ::ng-deep {
   .p-sidebar {
@@ -15,7 +15,7 @@
 
     .item-link {
       padding: 15px;
-      border-bottom: 2px solid $rosa;
+      border-bottom: 2px solid colors.$rosa;
       width: 100%;
 
       .link {
@@ -23,7 +23,7 @@
         display: block;
         width: 100%;
         text-decoration: none;
-        color: $negro;
+        color: colors.$negro;
       }
 
       .sublink {
@@ -31,7 +31,7 @@
         display: block;
         width: 100%;
         text-decoration: none;
-        color: $negro;
+        color: colors.$negro;
         padding-left: 30px;
       }
     }

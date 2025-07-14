@@ -1,4 +1,4 @@
-@import "src/assets/scss/colors.scss";
+@use "src/assets/scss/colors.scss" as colors;
 
 .Shop__menu {
   ::ng-deep.p-menubar {
@@ -27,7 +27,7 @@
 #shop-menu-container {
   z-index: 99;
   // hace el fondo borroso a partir de una variable scss
-  background-color: rgba($lila, 0.4);
+  background-color: rgba(colors.$lila, 0.4);
   padding: 30px;
   border-bottom: 2px solid black;
   input {

@@ -1,13 +1,16 @@
-<p-selectButton
-  [options]="options"
-  [(ngModel)]="option"
-  optionLabel="name"
-  (onChange)="handleChange($event)"
->
-  <ng-template let-item>
-    <div class="Button">
-      <div class="Button__label">{{ item.name }}</div>
-      <div class="Button__description">{{ item.description }}</div>
-    </div>
-  </ng-template>
-</p-selectButton>
+<div class="p-fluid">
+  <p-selectButton
+    [options]="options"
+    [(ngModel)]="option"
+    optionLabel="name"
+    (onChange)="handleChange($event)"
+    styleClass="custom-selectbutton"
+  >
+    <ng-template let-item pTemplate="item">
+      <div class="Button" [attr.data-option]="item.code">
+        <span class="Button__label">{{ item.name }}</span>
+        <span class="Button__description">{{ item.description }}</span>
+      </div>
+    </ng-template>
+  </p-selectButton>
+</div>

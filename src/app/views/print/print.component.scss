@@ -1,4 +1,4 @@
-@import "src/assets/scss/colors.scss";
+@use "src/assets/scss/colors.scss" as colors;
 
 #form-column {
   order: 1;
@@ -25,7 +25,7 @@
 
 #form-column {
   background-color: white;
-  border-right: $border;
+  border-right: colors.$border;
   padding: 20px 50px 0px 50px;
 }
 
@@ -36,7 +36,7 @@
 .uploaded-file {
   .titulo {
     font-weight: bold;
-    color: $rosa;
+    color: colors.$rosa;
     height: 40px;
   }
   padding: 10px;

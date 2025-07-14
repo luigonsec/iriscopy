@@ -1,9 +1,15 @@
-@import "src/assets/scss/colors.scss";
+@use "src/assets/scss/colors.scss" as colors;
 
 .buttons {
   .button {
     margin-bottom: 10px !important;
   }
+}
+
+::ng-deep .p-ripple.p-button.p-component {
+  background-color: colors.$yellow !important;
+  color: black;
+  border: 2px solid black;
 }
 
 /* Añade esta regla a tu archivo CSS global */
@@ -34,6 +40,6 @@
   .value {
     font-size: 1.2rem;
     font-weight: 600;
-    color: $primary;
+    color: colors.$primary;
   }
 }

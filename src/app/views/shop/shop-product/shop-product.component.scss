@@ -1,4 +1,4 @@
-@import "src/assets/scss/colors.scss";
+@use "src/assets/scss/colors.scss" as colors;
 
 .ProductDetails {
   .Details {
@@ -20,14 +20,14 @@
       }
 
       .Name {
-        color: $primary;
+        color: colors.$primary;
         align-content: center;
         text-align: right;
       }
     }
   }
   .Price {
-    color: $primary;
+    color: colors.$primary;
     align-content: center;
   }
 
@@ -61,7 +61,7 @@
 
     &:hover,
     &.active {
-      border: 2px solid $primary;
+      border: 2px solid colors.$primary;
     }
     .Variation {
       width: 100%;

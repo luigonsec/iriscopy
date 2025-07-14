@@ -1,12 +1,20 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
 import Option from 'src/app/interfaces/Option';
 import options from 'src/config/options';
 
 @Component({
-    selector: 'app-paper-type',
-    templateUrl: './paper-type.component.html',
-    styleUrls: ['./paper-type.component.scss'],
-    standalone: false
+  selector: 'app-paper-type',
+  templateUrl: './paper-type.component.html',
+  styleUrls: ['./paper-type.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  standalone: false,
 })
 export class PaperTypeComponent implements OnInit {
   public options: Option[];

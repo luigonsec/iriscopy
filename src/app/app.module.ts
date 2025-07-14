@@ -26,6 +26,8 @@ import {
 import { BoundComponent } from './form/bound/bound.component';
 import { BoundColorsComponent } from './form/bound-colors/bound-colors.component';
 import { TabViewModule } from 'primeng/tabview';
+import { TooltipModule } from 'primeng/tooltip';
+
 import { BadgeModule } from 'primeng/badge';
 import { ColorOptionComponent } from './components/color-option/color-option.component';
 import { QuantityCopiesComponent } from './form/quantity-copies/quantity-copies.component';
@@ -42,6 +44,7 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { PrintComponent } from './views/print/print.component';
 import { PaymentComponent } from './views/payment/payment.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { GalleriaModule } from 'primeng/galleria';
 import { TableModule } from 'primeng/table';
@@ -107,6 +110,12 @@ import { SelectButtonComponent } from './components/inputs/select-button/select-
 import { ShopcartPrintItemComponent } from './components/shopcart-print-item/shopcart-print-item.component';
 import { PrintTypeCoverComponent } from './form/print-type-cover/print-type-cover.component';
 import { PrintGuideComponent } from './components/print-guide/print-guide.component';
+import { providePrimeNG } from 'primeng/config';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { TextareaModule } from 'primeng/textarea';
+import { SelectModule } from 'primeng/select';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 @NgModule({
   declarations: [
@@ -184,6 +193,7 @@ import { PrintGuideComponent } from './components/print-guide/print-guide.compon
     ReactiveFormsModule,
     TabMenuModule,
     AppRoutingModule,
+    TooltipModule,
     FormsModule,
     TableModule,
     MenuModule,
@@ -194,7 +204,10 @@ import { PrintGuideComponent } from './components/print-guide/print-guide.compon
     SelectButtonModule,
     FileUploadModule,
     RadioButtonModule,
+    ButtonModule,
+    SelectModule,
     MenubarModule,
+    TextareaModule,
     InputTextModule,
     InputNumberModule,
     GalleriaModule,
@@ -202,6 +215,8 @@ import { PrintGuideComponent } from './components/print-guide/print-guide.compon
     CardModule,
     ConfirmDialogModule,
     CheckboxModule,
+    IconFieldModule,
+    InputIconModule,
     BadgeModule,
     ToastModule,
     BrowserAnimationsModule,
@@ -214,6 +229,9 @@ import { PrintGuideComponent } from './components/print-guide/print-guide.compon
     EffectsModule.forRoot([CustomerEffects]),
   ],
   providers: [
+    provideAnimationsAsync(),
+
+    providePrimeNG(),
     MessageService,
     ConfirmationService,
     {

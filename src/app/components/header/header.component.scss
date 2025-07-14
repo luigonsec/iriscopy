@@ -1,11 +1,11 @@
-@import "src/assets/scss/colors.scss";
+@use "src/assets/scss/colors.scss" as colors;
 
 #header {
   padding: 10px;
   padding-left: 10%;
   display: flex;
   align-items: center;
-  border-bottom: $border;
+  border-bottom: colors.$border;
   font-family: "NeverMind";
   height: 80px;
 
@@ -30,7 +30,7 @@
       gap: 10px;
       .icon {
         cursor: pointer;
-        color: $rosa;
+        color: colors.$rosa;
         padding: 10px;
         border-radius: 100%;
         i {
@@ -46,7 +46,7 @@
         }
       }
       .ShoppingCart__Icon {
-        ::ng-deep .p-badge {
+        ::ng-deep .p-badge-circle {
           font-size: 0.6rem;
           font-weight: 700;
           min-width: 1.2rem;
@@ -83,9 +83,9 @@
   }
 }
 
-::ng-deep .p-badge {
-  background-color: white;
-  color: black;
+::ng-deep .p-badge-circle {
+  background-color: white !important;
+  color: black !important;
 }
 
 /* Media Query para pantallas de móviles */

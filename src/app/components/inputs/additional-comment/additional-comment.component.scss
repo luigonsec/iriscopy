@@ -8,6 +8,7 @@
   border-radius: 10px; /* Aplica bordes redondeados en todo el textarea */
   box-shadow: none;
   resize: none; /* Evita que el usuario pueda cambiar el tamaño del textarea manualmente */
+  width: 100%;
 }
 
 .Textarea::placeholder {

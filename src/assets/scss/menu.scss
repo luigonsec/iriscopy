@@ -1,3 +1,4 @@
+@use "src/assets/scss/colors.scss" as colors;
 .ng-trigger.p-menu.p-component.p-menu-overlay.ng-star-inserted {
   font-family: "Tilt Warp" !important;
 
@@ -12,6 +13,6 @@
 .p-menu .p-menuitem-link:not(.p-disabled):hover {
   background: white;
   span.p-menuitem-text.ng-star-inserted {
-    color: $rosa;
+    color: colors.$rosa;
   }
 }

@@ -1,13 +1,13 @@
-@import "./colors.scss";
+@use "./colors.scss" as colors;
 
 .p-toast .p-toast-message.p-toast-message-success {
-    background: $darkGray;
-    border: solid $primary;
-    border-width: 0 0 0 6px;
-    color: $primary;
+  background: colors.$darkGray;
+  border: solid colors.$primary;
+  border-width: 0 0 0 6px;
+  color: colors.$primary;
 }
 
 .p-toast .p-toast-message.p-toast-message-success .p-toast-message-icon,
 .p-toast .p-toast-message.p-toast-message-success .p-toast-icon-close {
-    color: $primary;
+  color: colors.$primary;
 }

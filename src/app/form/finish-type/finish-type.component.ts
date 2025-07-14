@@ -10,12 +10,13 @@ import Option from 'src/app/interfaces/Option';
 import options from 'src/config/options';
 import { OverlayPanel } from 'primeng/overlaypanel';
 import File from 'src/app/interfaces/File';
+import { Tooltip } from 'primeng/tooltip';
 
 @Component({
-    selector: 'app-finish-type',
-    templateUrl: './finish-type.component.html',
-    styleUrls: ['./finish-type.component.scss'],
-    standalone: false
+  selector: 'app-finish-type',
+  templateUrl: './finish-type.component.html',
+  styleUrls: ['./finish-type.component.scss'],
+  standalone: false,
 })
 export class FinishTypeComponent implements OnInit {
   public optionsGroup1: Option[];
@@ -27,7 +28,8 @@ export class FinishTypeComponent implements OnInit {
   private _pagesPerSide: Option;
 
   public overlayVisible = false;
-  @ViewChild('overlayPanel') overlayPanel: OverlayPanel;
+  public currentOverlayInfo = '';
+  @ViewChild('tooltip') tooltip: Tooltip;
 
   @Output() emitChange = new EventEmitter<any>();
   @Input() set printForm(value: any) {
@@ -88,12 +90,7 @@ export class FinishTypeComponent implements OnInit {
   }
 
   onSelect(event: { value: Option }) {
-    this.emitChange.emit(event.value);
-  }
-
-  showOverlay($event) {
-    $event.stopPropagation();
-    this.overlayPanel.show($event);
+    if (event.value) this.emitChange.emit(event.value);
   }
 
   ngOnInit(): void {

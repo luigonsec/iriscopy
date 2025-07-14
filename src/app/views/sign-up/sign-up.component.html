@@ -58,13 +58,12 @@
             </small>
           </div>
           <div class="col-12 md:col-12">
-            <button
+            <p-button
               type="submit"
-              pButton
               [label]="buttonText"
-              class="p-button-sm Secondary"
-              (click)="register()"
-            ></button>
+              styleClass="p-button-sm Secondary"
+              (onClick)="register()"
+            ></p-button>
           </div>
           <div class="field col-12 md:col-12" *ngIf="errors['general']">
             {{ errors["general"] }}. Accede a tu cuenta

@@ -1,4 +1,4 @@
-@import "src/assets/scss/colors.scss";
+@use "src/assets/scss/colors.scss" as colors;
 
 .Pills {
   cursor: pointer;
@@ -13,7 +13,7 @@
     font-weight: 300;
     border-radius: 5px;
     color: white;
-    background-color: $primary;
+    background-color: colors.$primary;
     margin-right: 15px;
     margin-bottom: 15px;
     display: inline-flex;
@@ -25,7 +25,7 @@
 
     &.active {
       color: white;
-      background-color: $primary;
+      background-color: colors.$primary;
     }
   }
 }

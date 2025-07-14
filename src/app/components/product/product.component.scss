@@ -1,4 +1,4 @@
-@import "src/assets/scss/colors.scss";
+@use "src/assets/scss/colors.scss" as colors;
 
 .Product {
   background-color: white;
@@ -22,7 +22,7 @@
 
   .Price {
     text-align: right;
-    color: $primary;
+    color: colors.$primary;
     font-weight: 600;
     padding-right: 30px;
   }

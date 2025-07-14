@@ -46,13 +46,15 @@
     </div>
 
     <div class="p-fluid">
-      <p-dropdown
+      <p-select
         *ngIf="deliver === 'Pickup'"
         [options]="locations"
         [(ngModel)]="selectedLocation"
         optionLabel="name"
+        pSize="small"
         [showClear]="true"
         placeholder="Local de recogida"
+        fluid
       >
         <ng-template pTemplate="selectedItem">
           <div
@@ -68,7 +70,7 @@
             <div class="Address">{{ location.address_1 }}</div>
           </div>
         </ng-template>
-      </p-dropdown>
+      </p-select>
     </div>
   </div>
 
@@ -165,6 +167,7 @@
           type="text"
           [(ngModel)]="inputCoupon"
           placeholder="¿Tienes un código promocional?"
+          fluid
         />
       </div>
     </div>

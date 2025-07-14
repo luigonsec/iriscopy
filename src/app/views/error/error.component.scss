@@ -1,4 +1,4 @@
-@import "src/assets/scss/colors";
+@use "src/assets/scss/colors.scss" as colors;
 
 .Information {
   justify-content: center;

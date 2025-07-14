@@ -6,7 +6,7 @@
   optionLabel="name"
   (onChange)="handleChange($event)"
 >
-  <ng-template let-item>
+  <ng-template let-item pTemplate="item">
     <div class="Button">
       <div class="Button__label">{{ item.name }}</div>
       <div class="Button__description">{{ item.description }}</div>

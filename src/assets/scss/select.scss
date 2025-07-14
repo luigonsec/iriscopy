@@ -1,0 +1,9 @@
+@use "src/assets/scss/colors.scss" as colors;
+.p-select:not(.p-disabled).p-focus {
+  border-color: inherit !important;
+}
+
+.p-select-option.p-select-option-selected.p-focus {
+  color: inherit !important;
+  background-color: none !important;
+}

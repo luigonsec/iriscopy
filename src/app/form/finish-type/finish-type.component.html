@@ -5,24 +5,23 @@
     [(ngModel)]="option"
     (onChange)="onSelect($event)"
   >
-    <ng-template let-item>
+    <ng-template let-item pTemplate="item">
       <div class="Button">
         <div class="Button__label">{{ item.name }}</div>
         <div class="Button__description">{{ item.description }}</div>
-        <div
-          class="Button__info"
+
+        <!-- icono con tooltip al hover -->
+        <button
+          icon="fas fa-info"
+          #tooltip
           *ngIf="item.info"
-          (click)="showOverlay($event)"
-          (mouseenter)="overlayPanel.show($event)"
-          (mouseleave)="overlayPanel.hide($event)"
-        >
-          <i class="fas fa-info"></i>
-          <p-overlayPanel #overlayPanel>
-            <ng-template pTemplate="content">
-              <div>{{ item.info }}</div>
-            </ng-template>
-          </p-overlayPanel>
-        </div>
+          class="fas fa-info Button__info"
+          [pTooltip]="item.info"
+          tooltipEvent="focus"
+          tooltipPosition="right"
+          tooltipAppendTo="body"
+          tooltipStyleClass="info-tooltip"
+        ></button>
       </div>
     </ng-template>
   </p-selectButton>
@@ -35,7 +34,7 @@
     optionLabel="name"
     (onChange)="onSelect($event)"
   >
-    <ng-template let-item>
+    <ng-template let-item pTemplate="item">
       <div class="Button">
         <div class="Button__label">{{ item.name }}</div>
         <div class="Button__description">{{ item.description }}</div>
