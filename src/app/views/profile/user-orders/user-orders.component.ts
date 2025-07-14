@@ -10,10 +10,11 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { OrdersService } from 'src/app/services/orders.service';
 
 @Component({
-  selector: 'app-user-orders',
-  templateUrl: './user-orders.component.html',
-  styleUrls: ['./user-orders.component.scss'],
-  providers: [DialogService],
+    selector: 'app-user-orders',
+    templateUrl: './user-orders.component.html',
+    styleUrls: ['./user-orders.component.scss'],
+    providers: [DialogService],
+    standalone: false
 })
 export class UserOrdersComponent implements OnInit, OnDestroy {
   customer$: any;

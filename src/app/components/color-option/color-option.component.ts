@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-color-option',
-  templateUrl: './color-option.component.html',
-  styleUrls: ['./color-option.component.scss'],
+    selector: 'app-color-option',
+    templateUrl: './color-option.component.html',
+    styleUrls: ['./color-option.component.scss'],
+    standalone: false
 })
 export class ColorOptionComponent implements OnInit {
   @Output() public eventEmitter = new EventEmitter<{

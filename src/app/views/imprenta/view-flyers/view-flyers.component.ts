@@ -10,9 +10,10 @@ import { FileValidatorFactory } from '../../../_helpers/file-validator';
 import { MessageService } from 'primeng/api';
 import { SelectButtonComponent } from '../../../components/inputs/select-button/select-button.component';
 @Component({
-  selector: 'app-view-flyers',
-  templateUrl: './view-flyers.component.html',
-  styleUrls: ['./view-flyers.component.scss'],
+    selector: 'app-view-flyers',
+    templateUrl: './view-flyers.component.html',
+    styleUrls: ['./view-flyers.component.scss'],
+    standalone: false
 })
 export class ViewFlyersComponent extends FormBase<Flyer> implements OnInit {
   @ViewChild('uploader') public uploader: UploaderComponent;

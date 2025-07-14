@@ -21,9 +21,10 @@ import Revista from '../../interfaces/Revista';
 import { PriceResult } from '../../interfaces/PriceResult';
 
 @Component({
-  selector: 'app-shopcart',
-  templateUrl: './shopcart.component.html',
-  styleUrls: ['./shopcart.component.scss'],
+    selector: 'app-shopcart',
+    templateUrl: './shopcart.component.html',
+    styleUrls: ['./shopcart.component.scss'],
+    standalone: false
 })
 export class ShopcartComponent implements OnInit, OnDestroy {
   // Para mantener compatibilidad con el resto del código

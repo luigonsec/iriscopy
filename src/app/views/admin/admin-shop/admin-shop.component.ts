@@ -5,9 +5,10 @@ import { ConfigService } from 'src/app/services/config.service';
 import { ProductCategoriesService } from 'src/app/services/product-categories.service';
 
 @Component({
-  selector: 'app-admin-shop',
-  templateUrl: './admin-shop.component.html',
-  styleUrls: ['./admin-shop.component.scss'],
+    selector: 'app-admin-shop',
+    templateUrl: './admin-shop.component.html',
+    styleUrls: ['./admin-shop.component.scss'],
+    standalone: false
 })
 export class AdminShopComponent implements OnInit {
   categories: ProductCategory[];

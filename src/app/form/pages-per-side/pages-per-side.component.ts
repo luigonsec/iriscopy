@@ -3,9 +3,10 @@ import Option from 'src/app/interfaces/Option';
 import options from 'src/config/options';
 
 @Component({
-  selector: 'app-pages-per-side',
-  templateUrl: './pages-per-side.component.html',
-  styleUrls: ['./pages-per-side.component.scss'],
+    selector: 'app-pages-per-side',
+    templateUrl: './pages-per-side.component.html',
+    styleUrls: ['./pages-per-side.component.scss'],
+    standalone: false
 })
 export class PagesPerSideComponent implements OnInit {
   public options: Option[];

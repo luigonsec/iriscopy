@@ -3,9 +3,10 @@ import Option from 'src/app/interfaces/Option';
 import options from 'src/config/options';
 
 @Component({
-  selector: 'app-print-type',
-  templateUrl: './print-type.component.html',
-  styleUrls: ['./print-type.component.scss'],
+    selector: 'app-print-type',
+    templateUrl: './print-type.component.html',
+    styleUrls: ['./print-type.component.scss'],
+    standalone: false
 })
 export class PrintTypeComponent implements OnInit {
   public options: Option[];

@@ -3,9 +3,10 @@ import Banner from 'src/app/interfaces/Banner';
 import { BannersService } from 'src/app/services/banners.service';
 
 @Component({
-  selector: 'app-banner',
-  templateUrl: './banner.component.html',
-  styleUrls: ['./banner.component.scss'],
+    selector: 'app-banner',
+    templateUrl: './banner.component.html',
+    styleUrls: ['./banner.component.scss'],
+    standalone: false
 })
 export class BannerComponent implements OnInit {
   @Input('options')

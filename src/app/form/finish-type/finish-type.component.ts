@@ -12,9 +12,10 @@ import { OverlayPanel } from 'primeng/overlaypanel';
 import File from 'src/app/interfaces/File';
 
 @Component({
-  selector: 'app-finish-type',
-  templateUrl: './finish-type.component.html',
-  styleUrls: ['./finish-type.component.scss'],
+    selector: 'app-finish-type',
+    templateUrl: './finish-type.component.html',
+    styleUrls: ['./finish-type.component.scss'],
+    standalone: false
 })
 export class FinishTypeComponent implements OnInit {
   public optionsGroup1: Option[];

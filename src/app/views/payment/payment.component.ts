@@ -33,9 +33,10 @@ import Cartel from '../../interfaces/Cartel';
 import Revista from '../../interfaces/Revista';
 
 @Component({
-  selector: 'app-payment',
-  templateUrl: './payment.component.html',
-  styleUrls: ['./payment.component.scss'],
+    selector: 'app-payment',
+    templateUrl: './payment.component.html',
+    styleUrls: ['./payment.component.scss'],
+    standalone: false
 })
 export class PaymentComponent implements OnInit, OnDestroy {
   public emptyCart: boolean = false;

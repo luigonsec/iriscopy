@@ -5,10 +5,11 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AnalyticsService } from 'src/app/services/analytics.service';
 
 @Component({
-  selector: 'app-product',
-  templateUrl: './product.component.html',
-  styleUrls: ['./product.component.scss'],
-  providers: [DialogService],
+    selector: 'app-product',
+    templateUrl: './product.component.html',
+    styleUrls: ['./product.component.scss'],
+    providers: [DialogService],
+    standalone: false
 })
 export class ProductComponent {
   @Input('product') product: Product;

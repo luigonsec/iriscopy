@@ -4,9 +4,10 @@ import Banner from 'src/app/interfaces/Banner';
 import { BannersService } from 'src/app/services/banners.service';
 
 @Component({
-  selector: 'app-admin-banner',
-  templateUrl: './admin-banner.component.html',
-  styleUrls: ['./admin-banner.component.scss'],
+    selector: 'app-admin-banner',
+    templateUrl: './admin-banner.component.html',
+    styleUrls: ['./admin-banner.component.scss'],
+    standalone: false
 })
 export class AdminBannerComponent implements OnInit {
   banners: Banner[];

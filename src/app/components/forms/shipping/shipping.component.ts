@@ -8,9 +8,10 @@ import ShippingDetails from 'src/app/interfaces/ShippingDetails';
 import { ShippingService } from 'src/app/services/shipping.service';
 
 @Component({
-  selector: 'app-shipping',
-  templateUrl: './shipping.component.html',
-  styleUrls: ['./shipping.component.scss'],
+    selector: 'app-shipping',
+    templateUrl: './shipping.component.html',
+    styleUrls: ['./shipping.component.scss'],
+    standalone: false
 })
 export class ShippingComponent implements OnDestroy {
   @Input('onUpdatePostalCode') onUpdatePostalCode: () => void = () => {};

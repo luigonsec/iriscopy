@@ -1,9 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-quantity-copies',
-  templateUrl: './quantity-copies.component.html',
-  styleUrls: ['./quantity-copies.component.scss'],
+    selector: 'app-quantity-copies',
+    templateUrl: './quantity-copies.component.html',
+    styleUrls: ['./quantity-copies.component.scss'],
+    standalone: false
 })
 export class QuantityCopiesComponent implements OnInit {
   @Output() emitChange = new EventEmitter<number>();

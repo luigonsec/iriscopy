@@ -9,9 +9,10 @@ import { ProductCategoriesService } from 'src/app/services/product-categories.se
 import { ProductsService } from 'src/app/services/products.service';
 
 @Component({
-  selector: 'app-shop-index',
-  templateUrl: './shop-index.component.html',
-  styleUrls: ['./shop-index.component.scss'],
+    selector: 'app-shop-index',
+    templateUrl: './shop-index.component.html',
+    styleUrls: ['./shop-index.component.scss'],
+    standalone: false
 })
 export class ShopIndexComponent implements OnInit {
   second_per_slide = 8;

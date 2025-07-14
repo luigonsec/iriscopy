@@ -2,9 +2,10 @@ import { Component, Input } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
 @Component({
-  selector: 'app-pills',
-  templateUrl: './pills.component.html',
-  styleUrls: ['./pills.component.scss'],
+    selector: 'app-pills',
+    templateUrl: './pills.component.html',
+    styleUrls: ['./pills.component.scss'],
+    standalone: false
 })
 export class PillsComponent {
   @Input('pills')

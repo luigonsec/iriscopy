@@ -6,9 +6,10 @@ import { FormBase } from '../../../_classes/form-base.class';
 import { PricesService } from '../../../services/prices.service';
 import { ShopcartService } from '../../../services/shopcart.service';
 @Component({
-  selector: 'app-view-revistas',
-  templateUrl: './view-revistas.component.html',
-  styleUrls: ['./view-revistas.component.scss'],
+    selector: 'app-view-revistas',
+    templateUrl: './view-revistas.component.html',
+    styleUrls: ['./view-revistas.component.scss'],
+    standalone: false
 })
 export class ViewRevistasComponent extends FormBase<Revista> implements OnInit {
   @ViewChild('uploader') public uploader: UploaderComponent;

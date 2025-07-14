@@ -7,9 +7,10 @@ import { Store } from '@ngrx/store';
 import Customer from 'src/app/interfaces/Customer';
 
 @Component({
-  selector: 'app-user-password',
-  templateUrl: './user-password.component.html',
-  styleUrls: ['./user-password.component.scss'],
+    selector: 'app-user-password',
+    templateUrl: './user-password.component.html',
+    styleUrls: ['./user-password.component.scss'],
+    standalone: false
 })
 export class UserPasswordComponent implements OnInit {
   public password: string = '';

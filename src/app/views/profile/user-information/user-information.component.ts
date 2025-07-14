@@ -6,9 +6,10 @@ import { ShippingComponent } from 'src/app/components/forms/shipping/shipping.co
 import { CustomersService } from 'src/app/services/customers.service';
 
 @Component({
-  selector: 'app-user-information',
-  templateUrl: './user-information.component.html',
-  styleUrls: ['./user-information.component.scss'],
+    selector: 'app-user-information',
+    templateUrl: './user-information.component.html',
+    styleUrls: ['./user-information.component.scss'],
+    standalone: false
 })
 export class UserInformationComponent {
   @ViewChild('billing') billing: BillingComponent;

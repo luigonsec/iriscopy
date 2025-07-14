@@ -7,9 +7,10 @@ import { firstValueFrom } from 'rxjs';
 import { PricesService } from '../../../services/prices.service';
 import { ShopcartService } from '../../../services/shopcart.service';
 @Component({
-  selector: 'app-view-rollups',
-  templateUrl: './view-rollups.component.html',
-  styleUrls: ['./view-rollups.component.scss'],
+    selector: 'app-view-rollups',
+    templateUrl: './view-rollups.component.html',
+    styleUrls: ['./view-rollups.component.scss'],
+    standalone: false
 })
 export class ViewRollupsComponent extends FormBase<Rollup> implements OnInit {
   @ViewChild('uploader') public uploader: UploaderComponent;

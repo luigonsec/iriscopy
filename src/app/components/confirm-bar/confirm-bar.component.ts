@@ -26,10 +26,11 @@ interface PrecioCalculado {
  * añadir configuraciones al carrito o finalizar la compra
  */
 @Component({
-  selector: 'app-confirm-bar',
-  templateUrl: './confirm-bar.component.html',
-  styleUrls: ['./confirm-bar.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-confirm-bar',
+    templateUrl: './confirm-bar.component.html',
+    styleUrls: ['./confirm-bar.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class ConfirmBarComponent implements OnInit, OnChanges {
   /** Función para calcular el precio y obtener las notas */

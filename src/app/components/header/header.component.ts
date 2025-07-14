@@ -16,9 +16,10 @@ import { Menu } from 'primeng/menu';
 import { MenuSidebarComponent } from '../menu-sidebar/menu-sidebar.component';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss'],
+    standalone: false
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   public items: MenuItem[];

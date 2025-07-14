@@ -6,9 +6,10 @@ import { FormBase } from '../../../_classes/form-base.class';
 import { ShopcartService } from '../../../services/shopcart.service';
 import { PricesService } from '../../../services/prices.service';
 @Component({
-  selector: 'app-view-carteles',
-  templateUrl: './view-carteles.component.html',
-  styleUrls: ['./view-carteles.component.scss'],
+    selector: 'app-view-carteles',
+    templateUrl: './view-carteles.component.html',
+    styleUrls: ['./view-carteles.component.scss'],
+    standalone: false
 })
 export class ViewCartelesComponent extends FormBase<Cartel> implements OnInit {
   @ViewChild('uploader') public uploader: UploaderComponent;

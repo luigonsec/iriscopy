@@ -12,9 +12,10 @@ import { FileValidatorFactory } from '../../../_helpers/file-validator';
 
 // Eliminamos las constantes y tipos locales ya que ahora usamos el sistema genérico
 @Component({
-  selector: 'app-view-tarjetas-visita',
-  templateUrl: './view-tarjetas-visita.component.html',
-  styleUrls: ['./view-tarjetas-visita.component.scss'],
+    selector: 'app-view-tarjetas-visita',
+    templateUrl: './view-tarjetas-visita.component.html',
+    styleUrls: ['./view-tarjetas-visita.component.scss'],
+    standalone: false
 })
 export class ViewTarjetasVisitaComponent
   extends FormBase<TarjetaVisita>

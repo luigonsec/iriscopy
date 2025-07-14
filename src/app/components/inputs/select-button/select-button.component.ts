@@ -9,10 +9,11 @@ import {
 import Option from 'src/app/interfaces/Option';
 
 @Component({
-  selector: 'app-select-button',
-  templateUrl: './select-button.component.html',
-  styleUrls: ['./select-button.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-select-button',
+    templateUrl: './select-button.component.html',
+    styleUrls: ['./select-button.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class SelectButtonComponent implements OnInit {
   @Input('options') public options: Option[];

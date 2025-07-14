@@ -3,9 +3,10 @@ import Option from 'src/app/interfaces/Option';
 import options from 'src/config/options';
 
 @Component({
-  selector: 'app-print-type-cover',
-  templateUrl: './print-type-cover.component.html',
-  styleUrls: ['./print-type-cover.component.scss'],
+    selector: 'app-print-type-cover',
+    templateUrl: './print-type-cover.component.html',
+    styleUrls: ['./print-type-cover.component.scss'],
+    standalone: false
 })
 export class PrintTypeCoverComponent {
   public options: Option[];

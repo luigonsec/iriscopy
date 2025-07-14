@@ -3,9 +3,10 @@ import File from 'src/app/interfaces/File';
 import Option from 'src/app/interfaces/Option';
 import options from 'src/config/options';
 @Component({
-  selector: 'app-bound-type',
-  templateUrl: './bound-type.component.html',
-  styleUrls: ['./bound-type.component.scss'],
+    selector: 'app-bound-type',
+    templateUrl: './bound-type.component.html',
+    styleUrls: ['./bound-type.component.scss'],
+    standalone: false
 })
 export class BoundTypeComponent implements OnInit {
   public options: Option[];

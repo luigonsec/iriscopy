@@ -10,9 +10,10 @@ import { FileValidatorFactory } from '../../../_helpers/file-validator';
 import { MessageService } from 'primeng/api';
 import { SelectButtonComponent } from '../../../components/inputs/select-button/select-button.component';
 @Component({
-  selector: 'app-view-tripticos',
-  templateUrl: './view-tripticos.component.html',
-  styleUrls: ['./view-tripticos.component.scss'],
+    selector: 'app-view-tripticos',
+    templateUrl: './view-tripticos.component.html',
+    styleUrls: ['./view-tripticos.component.scss'],
+    standalone: false
 })
 export class ViewTripticosComponent
   extends FormBase<Triptico>

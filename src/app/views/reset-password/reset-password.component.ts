@@ -7,9 +7,10 @@ import { UsersService } from 'src/app/services/users.service';
 import { ValidatorsService } from 'src/app/services/validators.service';
 
 @Component({
-  selector: 'app-reset-password',
-  templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.scss'],
+    selector: 'app-reset-password',
+    templateUrl: './reset-password.component.html',
+    styleUrls: ['./reset-password.component.scss'],
+    standalone: false
 })
 export class ResetPasswordComponent {
   public password: string = '';

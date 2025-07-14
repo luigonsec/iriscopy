@@ -3,9 +3,10 @@ import Option from 'src/app/interfaces/Option';
 import options from 'src/config/tarjetas-visita';
 
 @Component({
-  selector: 'app-print-form',
-  templateUrl: './print-form.component.html',
-  styleUrls: ['./print-form.component.scss'],
+    selector: 'app-print-form',
+    templateUrl: './print-form.component.html',
+    styleUrls: ['./print-form.component.scss'],
+    standalone: false
 })
 export class PrintFormComponent implements OnInit {
   public options: Option[];

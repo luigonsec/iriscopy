@@ -3,9 +3,10 @@ import Option from 'src/app/interfaces/Option';
 import options from 'src/config/options';
 
 @Component({
-  selector: 'app-orientation',
-  templateUrl: './orientation.component.html',
-  styleUrls: ['./orientation.component.scss'],
+    selector: 'app-orientation',
+    templateUrl: './orientation.component.html',
+    styleUrls: ['./orientation.component.scss'],
+    standalone: false
 })
 export class OrientationComponent implements OnInit {
   public optionsGroup1: Option[];

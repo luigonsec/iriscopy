@@ -11,9 +11,10 @@ import { CustomersService } from 'src/app/services/customers.service';
 import { ValidatorsService } from 'src/app/services/validators.service';
 
 @Component({
-  selector: 'app-sign-up',
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss'],
+    selector: 'app-sign-up',
+    templateUrl: './sign-up.component.html',
+    styleUrls: ['./sign-up.component.scss'],
+    standalone: false
 })
 export class SignUpComponent implements OnInit, OnDestroy {
   public email: string;

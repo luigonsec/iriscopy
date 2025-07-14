@@ -39,9 +39,10 @@ import Cart from '../../interfaces/Cart';
 import { Store } from '@ngrx/store';
 
 @Component({
-  selector: 'app-order-processing',
-  templateUrl: './order-processing.component.html',
-  styleUrls: ['./order-processing.component.scss'],
+    selector: 'app-order-processing',
+    templateUrl: './order-processing.component.html',
+    styleUrls: ['./order-processing.component.scss'],
+    standalone: false
 })
 export class OrderProcessingComponent implements OnInit, OnDestroy {
   @ViewChild('redsysForm') redsysForm;

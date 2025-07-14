@@ -5,9 +5,10 @@ import { FilesService } from 'src/app/services/files.service';
 import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
-  selector: 'app-uploader',
-  templateUrl: './uploader.component.html',
-  styleUrls: ['./uploader.component.scss'],
+    selector: 'app-uploader',
+    templateUrl: './uploader.component.html',
+    styleUrls: ['./uploader.component.scss'],
+    standalone: false
 })
 export class UploaderComponent implements OnInit {
   @Input('multiple') public multiple = true;

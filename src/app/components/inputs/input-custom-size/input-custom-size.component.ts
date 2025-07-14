@@ -1,9 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-input-custom-size',
-  templateUrl: './input-custom-size.component.html',
-  styleUrls: ['./input-custom-size.component.scss'],
+    selector: 'app-input-custom-size',
+    templateUrl: './input-custom-size.component.html',
+    styleUrls: ['./input-custom-size.component.scss'],
+    standalone: false
 })
 export class InputCustomSizeComponent implements OnInit {
   @Output() emitChange = new EventEmitter<{

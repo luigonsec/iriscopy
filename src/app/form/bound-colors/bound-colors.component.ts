@@ -5,9 +5,10 @@ import RingColor from 'src/app/interfaces/RingColor';
 import options from 'src/config/options';
 
 @Component({
-  selector: 'app-bound-colors',
-  templateUrl: './bound-colors.component.html',
-  styleUrls: ['./bound-colors.component.scss'],
+    selector: 'app-bound-colors',
+    templateUrl: './bound-colors.component.html',
+    styleUrls: ['./bound-colors.component.scss'],
+    standalone: false
 })
 export class BoundColorsComponent implements OnInit {
   public bounds: Option[];

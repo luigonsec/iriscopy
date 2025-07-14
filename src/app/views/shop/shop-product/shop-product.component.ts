@@ -7,9 +7,10 @@ import ProductVariation from 'src/app/interfaces/ProductVariation';
 import { AnalyticsService } from '../../../services/analytics.service';
 
 @Component({
-  selector: 'app-shop-product',
-  templateUrl: './shop-product.component.html',
-  styleUrls: ['./shop-product.component.scss'],
+    selector: 'app-shop-product',
+    templateUrl: './shop-product.component.html',
+    styleUrls: ['./shop-product.component.scss'],
+    standalone: false
 })
 export class ShopProductComponent implements OnInit {
   public slug: string = undefined;

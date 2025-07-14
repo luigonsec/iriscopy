@@ -8,9 +8,10 @@ import Customer from 'src/app/interfaces/Customer';
 import { BillingService } from 'src/app/services/billing.service';
 
 @Component({
-  selector: 'app-billing',
-  templateUrl: './billing.component.html',
-  styleUrls: ['./billing.component.scss'],
+    selector: 'app-billing',
+    templateUrl: './billing.component.html',
+    styleUrls: ['./billing.component.scss'],
+    standalone: false
 })
 export class BillingComponent implements OnDestroy {
   @Input('onUpdatePostalCode') onUpdatePostalCode: () => void = () => {};

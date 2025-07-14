@@ -11,9 +11,10 @@ import { MessageService } from 'primeng/api';
 import { SelectButtonComponent } from '../../../components/inputs/select-button/select-button.component';
 
 @Component({
-  selector: 'app-view-carpetas',
-  templateUrl: './view-carpetas.component.html',
-  styleUrls: ['./view-carpetas.component.scss'],
+    selector: 'app-view-carpetas',
+    templateUrl: './view-carpetas.component.html',
+    styleUrls: ['./view-carpetas.component.scss'],
+    standalone: false
 })
 export class ViewCarpetasComponent extends FormBase<Carpeta> implements OnInit {
   @ViewChild('uploader') public uploader: UploaderComponent;

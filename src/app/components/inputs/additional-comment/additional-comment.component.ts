@@ -1,9 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-additional-comment',
-  templateUrl: './additional-comment.component.html',
-  styleUrls: ['./additional-comment.component.scss'],
+    selector: 'app-additional-comment',
+    templateUrl: './additional-comment.component.html',
+    styleUrls: ['./additional-comment.component.scss'],
+    standalone: false
 })
 export class AdditionalCommentComponent implements OnInit {
   @Output() emitChange = new EventEmitter<any>();

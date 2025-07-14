@@ -3,9 +3,10 @@ import Option from 'src/app/interfaces/Option';
 import options from 'src/config/options';
 
 @Component({
-  selector: 'app-paper-type',
-  templateUrl: './paper-type.component.html',
-  styleUrls: ['./paper-type.component.scss'],
+    selector: 'app-paper-type',
+    templateUrl: './paper-type.component.html',
+    styleUrls: ['./paper-type.component.scss'],
+    standalone: false
 })
 export class PaperTypeComponent implements OnInit {
   public options: Option[];

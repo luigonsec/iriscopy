@@ -6,8 +6,9 @@ import { FileValidator, ValidationResult } from '../_helpers/file-validator';
 import { MessageService } from 'primeng/api';
 
 @Component({
-  selector: 'app-form-base',
-  template: '',
+    selector: 'app-form-base',
+    template: '',
+    standalone: false
 })
 export abstract class FormBase<T> {
   public order: T;

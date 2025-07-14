@@ -15,9 +15,10 @@ interface Bound {
 }
 
 @Component({
-  selector: 'app-bound',
-  templateUrl: './bound.component.html',
-  styleUrls: ['./bound.component.scss'],
+    selector: 'app-bound',
+    templateUrl: './bound.component.html',
+    styleUrls: ['./bound.component.scss'],
+    standalone: false
 })
 export class BoundComponent implements OnInit {
   @Input() public boundColors: {

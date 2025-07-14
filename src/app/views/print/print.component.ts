@@ -10,9 +10,10 @@ import { AnalyticsService } from 'src/app/services/analytics.service';
 import { ShopcartService } from '../../services/shopcart.service';
 import { PricesService } from '../../services/prices.service';
 @Component({
-  selector: 'app-print',
-  templateUrl: './print.component.html',
-  styleUrls: ['./print.component.scss'],
+    selector: 'app-print',
+    templateUrl: './print.component.html',
+    styleUrls: ['./print.component.scss'],
+    standalone: false
 })
 export class PrintComponent implements OnInit, OnDestroy {
   public orientation: Option;

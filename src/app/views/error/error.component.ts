@@ -3,9 +3,10 @@ import { Store } from '@ngrx/store';
 import { clearCoupons } from 'src/app/_actions/coupons.actions';
 
 @Component({
-  selector: 'app-error',
-  templateUrl: './error.component.html',
-  styleUrls: ['./error.component.scss'],
+    selector: 'app-error',
+    templateUrl: './error.component.html',
+    styleUrls: ['./error.component.scss'],
+    standalone: false
 })
 export class ErrorComponent implements OnInit {
   constructor(private store: Store) {}

@@ -1,9 +1,10 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 
 @Component({
-  selector: 'app-print-guide',
-  templateUrl: './print-guide.component.html',
-  styleUrls: ['./print-guide.component.scss'],
+    selector: 'app-print-guide',
+    templateUrl: './print-guide.component.html',
+    styleUrls: ['./print-guide.component.scss'],
+    standalone: false
 })
 export class PrintGuideComponent implements OnInit, OnChanges {
   @Input() width: number = 85; // Ancho en mm

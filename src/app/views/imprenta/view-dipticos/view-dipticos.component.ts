@@ -10,9 +10,10 @@ import { FileValidatorFactory } from '../../../_helpers/file-validator';
 import { MessageService } from 'primeng/api';
 import { SelectButtonComponent } from '../../../components/inputs/select-button/select-button.component';
 @Component({
-  selector: 'app-view-dipticos',
-  templateUrl: './view-dipticos.component.html',
-  styleUrls: ['./view-dipticos.component.scss'],
+    selector: 'app-view-dipticos',
+    templateUrl: './view-dipticos.component.html',
+    styleUrls: ['./view-dipticos.component.scss'],
+    standalone: false
 })
 export class ViewDipticosComponent extends FormBase<Diptico> implements OnInit {
   @ViewChild('uploader') public uploader: UploaderComponent;

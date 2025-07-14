@@ -2,9 +2,10 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import Option from 'src/app/interfaces/Option';
 import options from 'src/config/options';
 @Component({
-  selector: 'app-paper-size',
-  templateUrl: './paper-size.component.html',
-  styleUrls: ['./paper-size.component.scss'],
+    selector: 'app-paper-size',
+    templateUrl: './paper-size.component.html',
+    styleUrls: ['./paper-size.component.scss'],
+    standalone: false
 })
 export class PaperSizeComponent implements OnInit {
   public options: Option[];

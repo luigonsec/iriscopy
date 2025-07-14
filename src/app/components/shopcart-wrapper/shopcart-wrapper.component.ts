@@ -7,9 +7,10 @@ import { ShopcartService } from 'src/app/services/shopcart.service';
 import { ShopcartComponent } from '../shopcart/shopcart.component';
 
 @Component({
-  selector: 'app-shopcart-wrapper',
-  templateUrl: './shopcart-wrapper.component.html',
-  styleUrls: ['./shopcart-wrapper.component.scss'],
+    selector: 'app-shopcart-wrapper',
+    templateUrl: './shopcart-wrapper.component.html',
+    styleUrls: ['./shopcart-wrapper.component.scss'],
+    standalone: false
 })
 export class ShopcartWrapperComponent {
   @ViewChild('shopcart') shopcart: ShopcartComponent;

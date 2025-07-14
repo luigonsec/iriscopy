@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-menu-sidebar',
-  templateUrl: './menu-sidebar.component.html',
-  styleUrls: ['./menu-sidebar.component.scss'],
+    selector: 'app-menu-sidebar',
+    templateUrl: './menu-sidebar.component.html',
+    styleUrls: ['./menu-sidebar.component.scss'],
+    standalone: false
 })
 export class MenuSidebarComponent implements OnInit {
   @Input('isShopActive') public isShopActive;
