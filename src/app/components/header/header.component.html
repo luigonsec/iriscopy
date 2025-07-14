@@ -64,7 +64,10 @@
   </div>
 </div>
 
-<app-mobile-menu *ngIf="mobileMenuOpened"></app-mobile-menu>
+<app-mobile-menu
+  *ngIf="mobileMenuOpened"
+  [toggleMobileMenu]="toggleMobileMenu"
+></app-mobile-menu>
 
 <app-menu-sidebar #sidebar [isShopActive]="shop_active"></app-menu-sidebar>
 <app-shopcart-wrapper class="" #shopcartWrapper></app-shopcart-wrapper>

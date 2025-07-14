@@ -1,17 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-mobile-menu',
-    templateUrl: './mobile-menu.component.html',
-    styleUrls: ['./mobile-menu.component.scss'],
-    standalone: false
+  selector: 'app-mobile-menu',
+  templateUrl: './mobile-menu.component.html',
+  styleUrls: ['./mobile-menu.component.scss'],
+  standalone: false,
 })
 export class MobileMenuComponent {
   constructor(private router: Router) {}
 
   pickUpPointsOpened = false;
   printOptionsOpened = false;
+
+  @Input('toggleMobileMenu') toggleMobileMenu: () => void;
 
   public togglePickUpPoints() {
     this.pickUpPointsOpened = !!!this.pickUpPointsOpened;
@@ -24,6 +26,7 @@ export class MobileMenuComponent {
   redirectTo(path: string) {
     // Cierra el menú móvil al redirigir
     this.printOptionsOpened = false;
+    this.toggleMobileMenu();
     this.router.navigate([path]);
   }
 }
