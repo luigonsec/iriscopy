@@ -47,3 +47,9 @@
     color: white !important;
   }
 }
+
+.p-inputnumber-button.p-inputnumber-increment-button,
+.p-inputnumber-button.p-inputnumber-decrement-button {
+  background-color: colors.$darkGray !important;
+  color: white;
+}
