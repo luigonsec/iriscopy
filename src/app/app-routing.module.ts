@@ -29,7 +29,6 @@ import { ViewRollupsComponent } from './views/imprenta/view-rollups/view-rollups
 import { ViewCartelesComponent } from './views/imprenta/view-carteles/view-carteles.component';
 import { ViewDipticosComponent } from './views/imprenta/view-dipticos/view-dipticos.component';
 import { ViewTripticosComponent } from './views/imprenta/view-tripticos/view-tripticos.component';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 const routes: Routes = [
   {
@@ -141,8 +140,6 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
   ],
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
-
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

@@ -4,10 +4,10 @@
       <a href="https://iriscopyshop.com">Inicio</a>
     </li>
     <li class="link">
-      <a href="/print">Imprimir</a>
+      <a routerLink="/print" (click)="redirectTo('/print')">Imprimir</a>
     </li>
     <li class="link">
-      <a href="/shop">Papelería</a>
+      <a routerLink="/shop" (click)="redirectTo('/shop')">Papelería</a>
     </li>
     <li class="link" (click)="togglePickUpPoints()">
       <a>
@@ -81,20 +81,29 @@
       [className]="printOptionsOpened ? 'opened' : 'closed'"
     >
       <li class="sublink">
-        <a href="/imprenta/tarjetas-visita">
+        <a
+          routerLink="/imprenta/tarjetas-visita"
+          (click)="redirectTo('/imprenta/tarjetas-visita')"
+        >
           <i class="chevron-right fas fa-chevron-right"></i>
           Tarjetas de visita
         </a>
       </li>
 
       <li class="sublink">
-        <a href="/imprenta/flyers">
+        <a
+          routerLink="/imprenta/flyers"
+          (click)="redirectTo('/imprenta/flyers')"
+        >
           <i class="chevron-right fas fa-chevron-right"></i>
           Flyers
         </a>
       </li>
       <li class="sublink">
-        <a href="/imprenta/carpetas">
+        <a
+          routerLink="/imprenta/carpetas"
+          (click)="redirectTo('/imprenta/carpetas')"
+        >
           <i class="chevron-right fas fa-chevron-right"></i>
           Carpetas
         </a>
@@ -118,13 +127,19 @@
         </a>
       </li> -->
       <li class="sublink">
-        <a href="/imprenta/dipticos">
+        <a
+          routerLink="/imprenta/dipticos"
+          (click)="redirectTo('/imprenta/dipticos')"
+        >
           <i class="chevron-right fas fa-chevron-right"></i>
           Dípticos
         </a>
       </li>
       <li class="sublink">
-        <a href="/imprenta/tripticos">
+        <a
+          routerLink="/imprenta/tripticos"
+          (click)="redirectTo('/imprenta/tripticos')"
+        >
           <i class="chevron-right fas fa-chevron-right"></i>
           Trípticos
         </a>
