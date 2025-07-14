@@ -101,13 +101,17 @@
             "browserTarget": "iriscopy:build"
           },
           "configurations": {
+            "development": {
+              "browserTarget": "iriscopy:build"
+            },
             "production": {
               "browserTarget": "iriscopy:build:production"
             },
             "testing": {
               "browserTarget": "iriscopy:build:testing"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

@@ -1,18 +1,12 @@
 import { Injectable } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  Router,
-  RouterStateSnapshot,
-  UrlTree,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { ConfigService } from '../services/config.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class IsShopActiveGuard implements CanActivate {
+export class IsShopActiveGuard  {
   constructor(private route: Router, private configService: ConfigService) {}
 
   canActivate(
