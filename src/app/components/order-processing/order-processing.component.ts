@@ -37,12 +37,13 @@ import Cartel from '../../interfaces/Cartel';
 import Revista from '../../interfaces/Revista';
 import Cart from '../../interfaces/Cart';
 import { Store } from '@ngrx/store';
+import { OrderItems } from '../../interfaces/OrderItems';
 
 @Component({
-    selector: 'app-order-processing',
-    templateUrl: './order-processing.component.html',
-    styleUrls: ['./order-processing.component.scss'],
-    standalone: false
+  selector: 'app-order-processing',
+  templateUrl: './order-processing.component.html',
+  styleUrls: ['./order-processing.component.scss'],
+  standalone: false,
 })
 export class OrderProcessingComponent implements OnInit, OnDestroy {
   @ViewChild('redsysForm') redsysForm;
@@ -59,7 +60,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   public PAYMENT_MINIMUM_PRICE_BIZUM =
     generalConfig.PAYMENT_MINIMUM_PRICE_BIZUM;
   public PAYMENT_MINIMUM_PRICE_CARD = generalConfig.PAYMENT_MINIMUM_PRICE_CARD;
-  public inputCoupon: string;
+  public inputCoupon: string = undefined;
   public coupons: Coupon[] = [];
   public payment: string;
   public copies: OrderCopy[] = [];
@@ -301,21 +302,39 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Crea el objeto OrderItems con todos los tipos de pedidos
+   * @returns Objeto OrderItems con todos los elementos del carrito
+   */
+  private createOrderItems(): OrderItems {
+    return {
+      copies: this.copies,
+      products: this.products,
+      flyers: this.flyers,
+      businessCards: this.businessCards,
+      folders: this.folders,
+      diptychs: this.diptychs,
+      triptychs: this.triptychs,
+      rollups: this.rollups,
+      posters: this.posters,
+      magazines: this.magazines,
+    };
+  }
+
   public async prepareOrder(callback): Promise<void> {
     this.setLoadingState(true, 'Preparando pedido');
 
-    const order: Order = this.orderBuilderService.buildOrderObject(
-      this.customer,
-      this.coupons,
-      this.billing,
-      this.shipping,
-      this.differentAddress,
-      this.copies,
-      this.products,
-      this.payment,
-      this.deliver,
-      this.selectedLocation
-    );
+    const order: Order = this.orderBuilderService.buildOrderObject({
+      customer: this.customer,
+      coupons: this.coupons,
+      billing: this.billing,
+      shipping: this.shipping,
+      differentAddress: this.differentAddress,
+      orderItems: this.createOrderItems(),
+      payment: this.payment,
+      deliver: this.deliver,
+      selectedLocation: this.selectedLocation,
+    });
 
     this.orderService.create(order).subscribe({
       next: (response: { order: number }) => {

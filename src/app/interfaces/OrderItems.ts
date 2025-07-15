@@ -1,9 +1,5 @@
-import BillingDetails from './BillingDetails';
-import Coupon from './Coupon';
 import { OrderCopy } from './OrderCopy';
 import OrderProduct from './OrderProduct';
-import ShippingDetails from './ShippingDetails';
-import ShippingLine from './ShippingLine';
 import Flyer from './Flyer';
 import TarjetaVisita from './TarjetaVisita';
 import Carpeta from './Carpeta';
@@ -13,16 +9,9 @@ import Rollup from './Rollup';
 import Cartel from './Cartel';
 import Revista from './Revista';
 
-export default interface Order {
-  id?: number;
-  customer_id?: number;
-  coupons?: Coupon[];
-  billing: BillingDetails;
-  shipping: ShippingDetails;
-  payment_method: string;
-  payment_method_title: string;
-  copies: OrderCopy[];
-  products: OrderProduct[];
+export interface OrderItems {
+  copies?: OrderCopy[];
+  products?: OrderProduct[];
   flyers?: Flyer[];
   businessCards?: TarjetaVisita[];
   folders?: Carpeta[];
@@ -31,6 +20,4 @@ export default interface Order {
   rollups?: Rollup[];
   posters?: Cartel[];
   magazines?: Revista[];
-  shipping_lines: ShippingLine[];
-  meta_data?;
 }

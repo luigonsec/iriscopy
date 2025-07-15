@@ -9,6 +9,8 @@ import Coupon from '../interfaces/Coupon';
 import { BillingComponent } from '../components/forms/billing/billing.component';
 import { ShippingComponent } from '../components/forms/shipping/shipping.component';
 import Customer from '../interfaces/Customer';
+import { OrderItems } from '../interfaces/OrderItems';
+import { OrderBuilderParams } from '../interfaces/OrderBuilderParams';
 
 @Injectable({
   providedIn: 'root',
@@ -78,45 +80,74 @@ export class OrderBuilderService {
   }
 
   /**
-   * Aplana los archivos de las copias en una sola lista
-   * @param copies Lista de pedidos de copias
+   * Aplana los archivos de cualquier tipo de pedido que contenga files
+   * @param items Lista de elementos que contengan archivos
    * @returns Lista plana de archivos
    */
-  public getFlattenFiles(copies: OrderCopy[]): File[] {
-    return copies
-      .map((order) => order.files)
+  public getFlattenFiles(items: any[]): File[] {
+    if (!items || items.length === 0) return [];
+
+    return items
+      .filter((item) => item.files && item.files.length > 0)
+      .map((item) => item.files)
       .reduce((acc, val) => acc.concat(val), []);
   }
 
   /**
+   * Obtiene todos los archivos de todos los tipos de pedidos
+   * @param orderItems Objeto con todos los tipos de pedidos
+   * @returns Lista plana de todos los archivos
+   */
+  public getAllFlattenFiles(orderItems: OrderItems): File[] {
+    const allFiles: File[] = [];
+
+    // Agregar archivos de copias
+    if (orderItems.copies) {
+      allFiles.push(...this.getFlattenFiles(orderItems.copies));
+    }
+
+    // Agregar archivos de otros tipos de pedidos que contengan files
+    const itemTypesWithFiles = [
+      orderItems.flyers,
+      orderItems.businessCards,
+      orderItems.folders,
+      orderItems.diptychs,
+      orderItems.triptychs,
+      orderItems.rollups,
+      orderItems.posters,
+      orderItems.magazines,
+    ];
+
+    itemTypesWithFiles.forEach((items) => {
+      if (items) {
+        allFiles.push(...this.getFlattenFiles(items));
+      }
+    });
+
+    return allFiles;
+  }
+
+  /**
    * Construye el objeto de pedido completo
-   * @param customer Cliente que realiza el pedido
-   * @param coupon Cupón aplicado al pedido
-   * @param billing Componente de datos de facturación
-   * @param shipping Componente de datos de envío
-   * @param differentAddress Indica si la dirección de envío es diferente de la de facturación
-   * @param copies Lista de pedidos de copias
-   * @param products Lista de pedidos de productos
-   * @param payment Método de pago seleccionado
-   * @param deliver Método de entrega seleccionado
-   * @param selectedLocation Ubicación seleccionada para recogida
+   * @param params Parámetros unificados para construir el pedido
    * @returns Objeto Order completo
    */
-  public buildOrderObject(
-    customer: Customer,
-    coupons: Coupon[],
-    billing: BillingComponent,
-    shipping: ShippingComponent,
-    differentAddress: boolean,
-    copies: OrderCopy[],
-    products: OrderProduct[],
-    payment: string,
-    deliver: string,
-    selectedLocation: Location
-  ): Order {
+  public buildOrderObject(params: OrderBuilderParams): Order {
+    const {
+      customer,
+      coupons,
+      billing,
+      shipping,
+      differentAddress,
+      orderItems,
+      payment,
+      deliver,
+      selectedLocation,
+    } = params;
+
     // Obtener línea de envío y aplanar archivos
     const shippingLine = this.getShippingLine(deliver, selectedLocation);
-    const flattenFiles = this.getFlattenFiles(copies);
+    const flattenFiles = this.getAllFlattenFiles(orderItems);
 
     // Construir y devolver el objeto de pedido
     const customer_id = customer ? customer.id : 0;
@@ -127,8 +158,16 @@ export class OrderBuilderService {
       shipping: differentAddress
         ? shipping.shippingDetails
         : billing.billingDetails,
-      copies,
-      products,
+      copies: orderItems.copies || [],
+      products: orderItems.products || [],
+      flyers: orderItems.flyers || [],
+      businessCards: orderItems.businessCards || [],
+      folders: orderItems.folders || [],
+      diptychs: orderItems.diptychs || [],
+      triptychs: orderItems.triptychs || [],
+      rollups: orderItems.rollups || [],
+      posters: orderItems.posters || [],
+      magazines: orderItems.magazines || [],
       payment_method: payment,
       payment_method_title: payment,
       shipping_lines: [shippingLine],
@@ -152,5 +191,37 @@ export class OrderBuilderService {
         },
       ],
     };
+  }
+
+  /**
+   * @deprecated Usar buildOrderObject(params: OrderBuilderParams) en su lugar
+   * Método de compatibilidad hacia atrás para la versión anterior
+   */
+  public buildOrderObjectLegacy(
+    customer: Customer,
+    coupons: Coupon[],
+    billing: BillingComponent,
+    shipping: ShippingComponent,
+    differentAddress: boolean,
+    copies: OrderCopy[],
+    products: OrderProduct[],
+    payment: string,
+    deliver: string,
+    selectedLocation: Location
+  ): Order {
+    return this.buildOrderObject({
+      customer,
+      coupons,
+      billing,
+      shipping,
+      differentAddress,
+      orderItems: {
+        copies: copies || [],
+        products: products || [],
+      },
+      payment,
+      deliver,
+      selectedLocation,
+    });
   }
 }

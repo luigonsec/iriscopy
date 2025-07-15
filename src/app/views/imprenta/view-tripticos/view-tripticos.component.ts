@@ -137,6 +137,9 @@ export class ViewTripticosComponent
       format: undefined,
       paperType: undefined,
       paperSize: undefined,
+      printForm: {
+        code: 'doble-cara',
+      },
       copiesQuantity: 0,
       additionalComments: '',
       files: [],

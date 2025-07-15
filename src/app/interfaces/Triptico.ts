@@ -6,6 +6,7 @@ export default interface Triptico extends Orderable {
   paperType: Option;
   format: Option;
   paperSize: Option;
+  printForm: Partial<Option>;
   copiesQuantity: number;
   files: File[];
 }

@@ -133,6 +133,9 @@ export class ViewDipticosComponent
   ngOnInit() {
     this.order = {
       format: undefined,
+      printForm: {
+        code: 'doble-cara',
+      },
       paperType: undefined,
       paperSize: undefined,
       copiesQuantity: 0,
