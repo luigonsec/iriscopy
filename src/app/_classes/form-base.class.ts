@@ -6,9 +6,9 @@ import { FileValidator, ValidationResult } from '../_helpers/file-validator';
 import { MessageService } from 'primeng/api';
 
 @Component({
-    selector: 'app-form-base',
-    template: '',
-    standalone: false
+  selector: 'app-form-base',
+  template: '',
+  standalone: false,
 })
 export abstract class FormBase<T> {
   public order: T;
@@ -115,12 +115,12 @@ export abstract class FormBase<T> {
       this.setRecommendedPrintForm(validationResult.recommendedPrintForm);
     }
 
-    if (validationResult.matchedSize) {
-      this.setDetectedSize(validationResult.matchedSize);
-    }
-
     if (validationResult.detectedOrientation) {
       this.setDetectedOrientation(validationResult.detectedOrientation);
+    }
+
+    if (validationResult.matchedSize) {
+      this.setDetectedSize(validationResult.matchedSize);
     }
   }
 

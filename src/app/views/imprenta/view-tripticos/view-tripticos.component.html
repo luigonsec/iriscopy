@@ -17,6 +17,7 @@
         <div class="p-fluid">
           <div class="Label">Orientación</div>
           <app-select-button
+            #formatSelector
             [options]="tripricoOptions.format"
             (emitChange)="getProperty('format', $event)"
           ></app-select-button>
@@ -27,17 +28,20 @@
         <div class="p-fluid">
           <div class="Label">Tamaño (cerrado)</div>
           <app-select-button
+            #paperSizeSelector
             *ngIf="order.format.code === 'vertical'"
             [options]="tripricoOptions.vertical_size"
             (emitChange)="getProperty('paperSize', $event)"
           ></app-select-button>
           <app-select-button
+            #paperSizeSelector
             *ngIf="order.format.code === 'horizontal'"
             [options]="tripricoOptions.horizontal_size"
             (emitChange)="getProperty('paperSize', $event)"
           ></app-select-button>
 
           <app-select-button
+            #paperSizeSelector
             *ngIf="order.format.code === 'cuadrado'"
             [options]="tripricoOptions.square_size"
             (emitChange)="getProperty('paperSize', $event)"

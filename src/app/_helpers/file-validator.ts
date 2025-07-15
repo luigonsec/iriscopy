@@ -227,22 +227,45 @@ export class FileValidator {
 
     // Si tenemos configuración de orientación (dípticos/trípticos)
     if (this.config.orientationSizes) {
-      detectedOrientation = this.detectOrientation(firstPageDimensions);
-      const sizesForOrientation =
-        this.config.orientationSizes[detectedOrientation];
+      // Para productos plegables, necesitamos buscar en todas las orientaciones
+      // ya que un díptico "vertical" se convierte en archivo "horizontal" cuando se abre
+      if (this.config.isOpenSize) {
+        // Buscar en todas las orientaciones posibles
+        for (const [orientation, sizes] of Object.entries(
+          this.config.orientationSizes
+        )) {
+          const orientationType = orientation as OrientationType;
+          const foundSize = this.findMatchingSize(
+            firstPageDimensions,
+            sizes,
+            orientationType
+          );
 
-      if (sizesForOrientation) {
-        matchedSize = this.findMatchingSize(
-          firstPageDimensions,
-          sizesForOrientation,
-          detectedOrientation
-        );
+          if (foundSize) {
+            detectedOrientation = orientationType;
+            matchedSize = foundSize;
+            break;
+          }
+        }
+      } else {
+        // Para productos no plegables, usar la detección de orientación tradicional
+        detectedOrientation = this.detectOrientation(firstPageDimensions);
+        const sizesForOrientation =
+          this.config.orientationSizes[detectedOrientation];
+
+        if (sizesForOrientation) {
+          matchedSize = this.findMatchingSize(
+            firstPageDimensions,
+            sizesForOrientation,
+            detectedOrientation
+          );
+        }
       }
 
       if (!matchedSize) {
         errors.push({
           type: 'dimensions',
-          message: `No se encontró un tamaño válido para la orientación ${detectedOrientation}`,
+          message: `No se encontró un tamaño válido para las dimensiones del archivo`,
           expected: this.getAvailableSizesMessage(),
           actual: `${firstPageDimensions.width}x${firstPageDimensions.height}mm`,
         });

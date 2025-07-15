@@ -32,6 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public mobileMenuOpened = false;
 
   @ViewChild('menu') public menu: Menu;
+  @ViewChild('menuImprenta') public menuImprenta: Menu;
   @ViewChild('shopcartWrapper') public shopcart: ShopcartWrapperComponent;
   @ViewChild('sidebar') public sidebar: MenuSidebarComponent;
 
@@ -89,6 +90,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.config.getConfig().subscribe((conf: { shop_active: boolean }) => {
       this.shop_active = conf.shop_active;
     });
+    this.configSubscription = this.config.config$.subscribe(
+      (conf: { shop_active: boolean }) => {
+        this.shop_active = conf.shop_active;
+      }
+    );
   }
 
   iconProfileClicked($event) {
@@ -100,47 +106,81 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
+  navigateToImprentaPage(path: string, event?: any) {
+    if (event?.originalEvent) {
+      event.originalEvent.stopPropagation();
+      event.originalEvent.preventDefault();
+    }
+    this.menuImprenta.hide();
+    this.router.navigate([path]);
+  }
+
   setMenuImprenta() {
     this.opcionesImprenta = [
       {
         label: 'Tarjetas de visita',
         icon: 'pi pi-fw pi-id-card',
-        routerLink: '/imprenta/tarjetas-visita',
+        command: ($event) => {
+          this.navigateToImprentaPage('/imprenta/tarjetas-visita', $event);
+        },
       },
       {
         label: 'Flyers',
         icon: 'pi pi-fw pi-paperclip',
-        routerLink: '/imprenta/flyers',
+        command: ($event) => {
+          this.navigateToImprentaPage('/imprenta/flyers', $event);
+        },
       },
       {
         label: 'Carpetas',
         icon: 'pi pi-fw pi-folder',
-        routerLink: '/imprenta/carpetas',
+        command: ($event) => {
+          this.navigateToImprentaPage('/imprenta/carpetas', $event);
+        },
       },
       // {
       //   label: 'Revistas',
       //   icon: 'pi pi-fw pi-book',
-      //   routerLink: '/imprenta/revistas',
+      //   command: ($event) => {
+      // this.menuImprenta.hideu()
+      // const path = // '/imprenta/revistas'
+      // this.router.navigate([path]);
+      // }
+      // ,
       // },
       // {
       //   label: 'Rollups',
       //   icon: 'pi pi-fw pi-image',
-      //   routerLink: '/imprenta/rollups',
+      //   command: ($event) => {
+      // this.menuImprenta.hideu()
+      // const path = // '/imprenta/rollups'
+      // this.router.navigate([path]);
+      // }
+      // ,
       // },
       // {
       //   label: 'Carteles',
       //   icon: 'pi pi-fw pi-image',
-      //   routerLink: '/imprenta/carteles',
+      //   command: ($event) => {
+      // this.menuImprenta.hideu()
+      // const path = '/imprenta/carteles'
+      // this.router.navigate([path]);
+      // }
+      // ,
       // },
       {
         label: 'Dípticos',
         icon: 'pi pi-fw pi-image',
-        routerLink: '/imprenta/dipticos',
+        command: ($event) => {
+          this.navigateToImprentaPage('/imprenta/dipticos', $event);
+        },
       },
       {
         label: 'Trípticos',
         icon: 'pi pi-fw pi-image',
-        routerLink: '/imprenta/tripticos',
+        command: ($event) => {
+          this.navigateToImprentaPage('/imprenta/tripticos', $event);
+        },
       },
     ];
   }
@@ -205,11 +245,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.setPuntosRecogida();
     this.setMenuImprenta();
     this.setProfile();
-    this.configSubscription = this.config.config$.subscribe(
-      (conf: { shop_active: boolean }) => {
-        this.shop_active = conf.shop_active;
-      }
-    );
     this.copies = this.shopcartService.getCart().copies;
     this.products = this.shopcartService.getCart().products;
     this.subscribeCart();

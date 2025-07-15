@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
 import tripricoOptions from 'src/config/tripticos';
 import Triptico from '../../../interfaces/Triptico';
@@ -10,20 +10,24 @@ import { FileValidatorFactory } from '../../../_helpers/file-validator';
 import { MessageService } from 'primeng/api';
 import { SelectButtonComponent } from '../../../components/inputs/select-button/select-button.component';
 @Component({
-    selector: 'app-view-tripticos',
-    templateUrl: './view-tripticos.component.html',
-    styleUrls: ['./view-tripticos.component.scss'],
-    standalone: false
+  selector: 'app-view-tripticos',
+  templateUrl: './view-tripticos.component.html',
+  styleUrls: ['./view-tripticos.component.scss'],
+  standalone: false,
 })
 export class ViewTripticosComponent
   extends FormBase<Triptico>
-  implements OnInit
+  implements OnInit, AfterViewInit
 {
   @ViewChild('uploader') public uploader: UploaderComponent;
   @ViewChild('formatSelector') public formatSelector: SelectButtonComponent;
   @ViewChild('paperSizeSelector')
   public paperSizeSelector: SelectButtonComponent;
   public tripricoOptions = tripricoOptions;
+
+  // Variables para almacenar la configuración automática
+  private detectedOrientationCode: string;
+  private detectedPaperSize: any;
 
   constructor(
     public pricesService: PricesService,
@@ -64,13 +68,27 @@ export class ViewTripticosComponent
    * Configura automáticamente la orientación basada en las dimensiones del archivo
    */
   protected setDetectedOrientation(orientation: string): void {
+    this.detectedOrientationCode = orientation;
+
     const formatOption = this.tripricoOptions.format.find(
       (option) => option.code === orientation
     );
 
-    if (formatOption && this.formatSelector) {
-      this.formatSelector.setUpOption(formatOption);
-      this.formatSelector.disable();
+    if (formatOption) {
+      // Actualizar el orden inmediatamente
+      this.order.format = formatOption;
+      this.order = Object.assign({}, this.order);
+
+      // Configurar el selector si está disponible
+      if (this.formatSelector) {
+        this.formatSelector.setUpOption(formatOption);
+        this.formatSelector.disable();
+      }
+
+      // Activar detección de cambios para mostrar el selector de tamaño correcto
+      setTimeout(() => {
+        this.applyPaperSizeIfDetected();
+      }, 0);
     }
   }
 
@@ -78,8 +96,21 @@ export class ViewTripticosComponent
    * Configura automáticamente el tamaño del papel basado en las dimensiones del archivo
    */
   protected setDetectedSize(paperSize: any): void {
-    if (this.paperSizeSelector) {
-      this.paperSizeSelector.setUpOption(paperSize);
+    this.detectedPaperSize = paperSize;
+    this.applyPaperSizeIfDetected();
+  }
+
+  /**
+   * Aplica la configuración de tamaño si está disponible y el selector está listo
+   */
+  private applyPaperSizeIfDetected(): void {
+    if (this.detectedPaperSize && this.paperSizeSelector) {
+      // Actualizar el orden inmediatamente
+      this.order.paperSize = this.detectedPaperSize;
+      this.order = Object.assign({}, this.order);
+
+      // Configurar el selector
+      this.paperSizeSelector.setUpOption(this.detectedPaperSize);
       this.paperSizeSelector.disable();
     }
   }
@@ -88,6 +119,11 @@ export class ViewTripticosComponent
    * Restaura la configuración cuando se elimina un archivo
    */
   public undoPresetProperties(): void {
+    // Limpiar las variables de detección
+    this.detectedOrientationCode = undefined;
+    this.detectedPaperSize = undefined;
+
+    // Habilitar los selectores
     if (this.formatSelector) {
       this.formatSelector.enable();
     }
@@ -106,5 +142,23 @@ export class ViewTripticosComponent
       files: [],
     };
     super.ngOnInit();
+  }
+
+  ngAfterViewInit() {
+    // Aplicar configuración automática si ya fue detectada
+    if (this.detectedOrientationCode && this.formatSelector) {
+      const formatOption = this.tripricoOptions.format.find(
+        (option) => option.code === this.detectedOrientationCode
+      );
+      if (formatOption) {
+        this.formatSelector.setUpOption(formatOption);
+        this.formatSelector.disable();
+      }
+    }
+
+    // Aplicar configuración de tamaño si ya fue detectada
+    setTimeout(() => {
+      this.applyPaperSizeIfDetected();
+    }, 0);
   }
 }
