@@ -8,6 +8,7 @@ import File, { PageDimensions } from '../interfaces/File';
 import dipticosOptions from '../../config/dipticos';
 import flyerOptions from '../../config/flyers';
 import tripticoOptions from '../../config/tripticos';
+import rollupsOptions from '../../config/rollups';
 
 describe('FileValidator', () => {
   let validator: FileValidator;
@@ -43,6 +44,12 @@ describe('FileValidator', () => {
 
     it('should create a flyer validator with correct configuration', () => {
       const validator = FileValidatorFactory.createFlyerValidator(flyerOptions);
+      expect(validator).toBeDefined();
+    });
+
+    it('should create a rollup validator with correct configuration', () => {
+      const validator =
+        FileValidatorFactory.createRollupValidator(rollupsOptions);
       expect(validator).toBeDefined();
     });
   });
@@ -316,6 +323,54 @@ describe('FileValidator', () => {
 
       expect(result.isValid).toBe(false);
       expect(result.errors.some((e) => e.type === 'pages')).toBe(true);
+    });
+  });
+
+  describe('Rollup Validator', () => {
+    beforeEach(() => {
+      validator = FileValidatorFactory.createRollupValidator(rollupsOptions);
+    });
+
+    it('should validate a correct rollup file', () => {
+      mockFile.pages = 1;
+      mockFile.pageDimensions = [{ width: 856, height: 2056 }]; // 85x205 + sangría (6mm)
+
+      const result = validator.validateFile(mockFile);
+
+      expect(result.isValid).toBe(true);
+      expect(result.matchedSize).toBeDefined();
+      expect(result.matchedSize?.code).toBe('85x205');
+    });
+
+    it('should detect correct rollup size for 100x205', () => {
+      mockFile.pages = 1;
+      mockFile.pageDimensions = [{ width: 1006, height: 2056 }]; // 100x205 + sangría (6mm)
+
+      const result = validator.validateFile(mockFile);
+
+      expect(result.isValid).toBe(true);
+      expect(result.matchedSize).toBeDefined();
+      expect(result.matchedSize?.code).toBe('100x205');
+    });
+
+    it('should reject files with wrong page count', () => {
+      mockFile.pages = 2;
+      mockFile.pageDimensions = [{ width: 91, height: 211 }];
+
+      const result = validator.validateFile(mockFile);
+
+      expect(result.isValid).toBe(false);
+      expect(result.errors.some((e) => e.type === 'pages')).toBe(true);
+    });
+
+    it('should reject files with wrong dimensions', () => {
+      mockFile.pages = 1;
+      mockFile.pageDimensions = [{ width: 100, height: 100 }];
+
+      const result = validator.validateFile(mockFile);
+
+      expect(result.isValid).toBe(false);
+      expect(result.errors.some((e) => e.type === 'dimensions')).toBe(true);
     });
   });
 });

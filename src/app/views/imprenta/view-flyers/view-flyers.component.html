@@ -114,8 +114,8 @@
   <div id="print-guide-column-sm" class="col-12 lg:hidden">
     <div id="print-guide">
       <app-print-guide
-        [width]="85"
-        [height]="55"
+        [width]="this.order.paperSize.width"
+        [height]="this.order.paperSize.height"
         *ngIf="!!!ready"
       ></app-print-guide>
     </div>

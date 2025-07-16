@@ -11,6 +11,7 @@ export enum ProductType {
   DIPTICOS = 'dipticos',
   TRIPTICOS = 'tripticos',
   TARJETAS_VISITA = 'tarjetas-visita',
+  ROLL_UPS = 'rollups',
 }
 
 export enum OrientationType {
@@ -510,6 +511,25 @@ export class FileValidatorFactory {
       },
       requiresBleed: true,
       isOpenSize: false, // Las tarjetas de visita usan tamaño cerrado
+    });
+  }
+
+  /**
+   * Crea un validador para rollups
+   */
+  static createRollupValidator(rollupOptions: any): FileValidator {
+    return new FileValidator({
+      productType: ProductType.ROLL_UPS, // Usamos FLYERS como tipo base para rollups
+      allowedPages: [1], // Los rollups solo permiten una página
+      paperSizes: rollupOptions.paperSize.map((size: any) => ({
+        code: size.code,
+        name: size.name,
+        width: size.width,
+        height: size.height,
+        description: size.name,
+      })),
+      requiresBleed: true,
+      isOpenSize: false, // Los rollups usan tamaño cerrado
     });
   }
 }

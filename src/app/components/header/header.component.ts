@@ -23,8 +23,6 @@ import { MenuSidebarComponent } from '../menu-sidebar/menu-sidebar.component';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   public items: MenuItem[];
-  public copies: OrderCopy[] = [];
-  public products: OrderProduct[] = [];
   public display: boolean = true;
   public shop_active: boolean = false;
   public sidebarVisible = true;
@@ -43,6 +41,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   profile: MenuItem[];
   puntosRecogida: MenuItem[];
   opcionesImprenta: MenuItem[];
+  cart: Cart;
 
   constructor(
     private shopcartService: ShopcartService,
@@ -50,7 +49,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private config: ConfigService
   ) {
-    this.copies = [];
     this.customer$ = this.store
       .select(selectCustomer)
       .subscribe((customer: Customer) => {
@@ -72,9 +70,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   subscribeCart() {
     this.cartSubscription = this.shopcartService
       .getCart$()
-      .subscribe((orders: Cart) => {
-        this.copies = orders.copies;
-        this.products = orders.products;
+      .subscribe((cart: Cart) => {
+        this.cart = cart;
       });
   }
 
@@ -148,14 +145,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
       // }
       // ,
       // },
-      // {
-      //   label: 'Rollups',
-      //   icon: 'pi pi-fw pi-image',
-      //   command: ($event) => {
-      // this.menuImprenta.hideu()
-      // const path = // '/imprenta/rollups'
-      // this.router.navigate([path]);
-      // }
+      {
+        label: 'Rollups',
+        icon: 'pi pi-fw pi-image',
+        command: ($event) => {
+          this.navigateToImprentaPage('/imprenta/rollups', $event);
+        },
+      },
       // ,
       // },
       // {
@@ -240,13 +236,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
     ];
   }
 
+  public elementsInCart(): number {
+    const total = Object.keys(this.cart)
+      .map((key) => {
+        return this.cart[key].length;
+      })
+      .reduce((a, b) => a + b, 0);
+    return total;
+  }
+
   ngOnInit() {
     this.getConfig();
     this.setPuntosRecogida();
     this.setMenuImprenta();
     this.setProfile();
-    this.copies = this.shopcartService.getCart().copies;
-    this.products = this.shopcartService.getCart().products;
+    this.cart = this.shopcartService.getCart();
     this.subscribeCart();
   }
 }

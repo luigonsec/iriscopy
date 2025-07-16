@@ -6,10 +6,10 @@ import { FormBase } from '../../../_classes/form-base.class';
 import { ShopcartService } from '../../../services/shopcart.service';
 import { PricesService } from '../../../services/prices.service';
 @Component({
-    selector: 'app-view-carteles',
-    templateUrl: './view-carteles.component.html',
-    styleUrls: ['./view-carteles.component.scss'],
-    standalone: false
+  selector: 'app-view-carteles',
+  templateUrl: './view-carteles.component.html',
+  styleUrls: ['./view-carteles.component.scss'],
+  standalone: false,
 })
 export class ViewCartelesComponent extends FormBase<Cartel> implements OnInit {
   @ViewChild('uploader') public uploader: UploaderComponent;
@@ -23,8 +23,8 @@ export class ViewCartelesComponent extends FormBase<Cartel> implements OnInit {
   }
 
   isCustomSize() {
-    if (this.order.size) {
-      if (this.order.size.code === 'personalizado') {
+    if (this.order.paperSize) {
+      if (this.order.paperSize.code === 'personalizado') {
         return true;
       }
     }
@@ -39,7 +39,7 @@ export class ViewCartelesComponent extends FormBase<Cartel> implements OnInit {
     let res = true;
 
     if (!this.order.paperType) res = false;
-    if (!this.order.size) res = false;
+    if (!this.order.paperSize) res = false;
     if (!this.order.copiesQuantity) res = false;
     if (!this.order.files || !this.order.files.length) res = false;
 
@@ -53,7 +53,7 @@ export class ViewCartelesComponent extends FormBase<Cartel> implements OnInit {
   ngOnInit() {
     this.order = {
       paperType: undefined,
-      size: undefined,
+      paperSize: undefined,
       copiesQuantity: 0,
       additionalComments: '',
       files: [],

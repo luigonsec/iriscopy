@@ -3,7 +3,7 @@ import File from 'src/app/interfaces/File';
 
 export default interface Cartel {
   id?: string;
-  size: Option;
+  paperSize: Option;
   paperType: Option;
   copiesQuantity: number;
   files: File[];

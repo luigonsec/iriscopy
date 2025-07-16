@@ -3,7 +3,7 @@
 // Tiradas: 50 / 100 / 150 / 200 / 250 / 300 / 400 / 500
 
 export default {
-  size: [
+  paperSize: [
     {
       default: true,
       name: 'A4',

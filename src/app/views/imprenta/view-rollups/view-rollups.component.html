@@ -5,6 +5,7 @@
         <div class="p-fluid">
           <div class="Label">Tamaño</div>
           <app-select-button
+            #paperSizeSelector
             [options]="rollupsOptions.paperSize"
             (emitChange)="getProperty('paperSize', $event)"
           ></app-select-button>
@@ -60,8 +61,8 @@
       <div id="print-guide-column" class="col-12 lg:col-6 hidden lg:block">
         <div id="print-guide">
           <app-print-guide
-            [width]="85"
-            [height]="55"
+            [width]="this.order.paperSize.width"
+            [height]="this.order.paperSize.height"
             *ngIf="!!!ready"
           ></app-print-guide>
         </div>
@@ -72,8 +73,8 @@
   <div id="print-guide-column-sm" class="col-12 lg:hidden">
     <div id="print-guide">
       <app-print-guide
-        [width]="85"
-        [height]="55"
+        [width]="this.order.paperSize.width"
+        [height]="this.order.paperSize.height"
         *ngIf="!!!ready"
       ></app-print-guide>
     </div>

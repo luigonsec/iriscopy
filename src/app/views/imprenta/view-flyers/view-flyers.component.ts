@@ -10,10 +10,10 @@ import { FileValidatorFactory } from '../../../_helpers/file-validator';
 import { MessageService } from 'primeng/api';
 import { SelectButtonComponent } from '../../../components/inputs/select-button/select-button.component';
 @Component({
-    selector: 'app-view-flyers',
-    templateUrl: './view-flyers.component.html',
-    styleUrls: ['./view-flyers.component.scss'],
-    standalone: false
+  selector: 'app-view-flyers',
+  templateUrl: './view-flyers.component.html',
+  styleUrls: ['./view-flyers.component.scss'],
+  standalone: false,
 })
 export class ViewFlyersComponent extends FormBase<Flyer> implements OnInit {
   @ViewChild('uploader') public uploader: UploaderComponent;
@@ -83,9 +83,16 @@ export class ViewFlyersComponent extends FormBase<Flyer> implements OnInit {
    * Configura automáticamente el tamaño del papel basado en las dimensiones del archivo
    */
   protected setDetectedSize(paperSize: any): void {
-    if (this.paperSizeSelector) {
-      this.paperSizeSelector.setUpOption(paperSize);
-      this.paperSizeSelector.disable();
+    if (this.paperSizeSelector && paperSize) {
+      // Buscar la opción correspondiente en las opciones del componente
+      const matchingOption = this.flyerOptions.paperSize.find(
+        (option) => option.code === paperSize.code
+      );
+
+      if (matchingOption) {
+        this.paperSizeSelector.setUpOption(matchingOption);
+        this.paperSizeSelector.disable();
+      }
     }
   }
 

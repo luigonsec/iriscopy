@@ -43,14 +43,14 @@
 
       <a class="icon" (click)="toggleShoppingCart()">
         <i
-          *ngIf="copies.length + products.length == 0"
+          *ngIf="this.elementsInCart() == 0"
           class="ShoppingCart__Icon fas fa-shopping-cart"
         ></i>
         <i
-          *ngIf="copies.length + products.length"
+          *ngIf="this.elementsInCart()"
           pBadge
           class="ShoppingCart__Icon fas fa-shopping-cart"
-          [value]="copies.length + products.length"
+          [value]="this.elementsInCart()"
         ></i>
       </a>
       <a class="lg:hidden icon not-rounded" (click)="toggleMobileMenu()">
