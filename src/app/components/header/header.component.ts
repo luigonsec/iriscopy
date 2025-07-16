@@ -5,7 +5,6 @@ import { ShopcartService } from 'src/app/services/shopcart.service';
 import { ShopcartWrapperComponent } from '../shopcart-wrapper/shopcart-wrapper.component';
 import Cart from 'src/app/interfaces/Cart';
 import { Store } from '@ngrx/store';
-import OrderProduct from 'src/app/interfaces/OrderProduct';
 import { Subscription } from 'rxjs';
 import { selectCustomer } from 'src/app/_selectors/customer.selectors';
 import Customer from 'src/app/interfaces/Customer';
@@ -13,7 +12,6 @@ import { logout } from 'src/app/_actions/customer.actions';
 import { Router } from '@angular/router';
 import { ConfigService } from 'src/app/services/config.service';
 import { Menu } from 'primeng/menu';
-import { MenuSidebarComponent } from '../menu-sidebar/menu-sidebar.component';
 
 @Component({
   selector: 'app-header',
@@ -32,7 +30,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @ViewChild('menu') public menu: Menu;
   @ViewChild('menuImprenta') public menuImprenta: Menu;
   @ViewChild('shopcartWrapper') public shopcart: ShopcartWrapperComponent;
-  @ViewChild('sidebar') public sidebar: MenuSidebarComponent;
 
   cartSubscription: Subscription;
   customer$: Subscription;

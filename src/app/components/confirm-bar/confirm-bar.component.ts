@@ -8,7 +8,6 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { ShopcartService } from 'src/app/services/shopcart.service';
 import { v4 as uuidv4 } from 'uuid';
 import Nota from '../../interfaces/Nota';
 import Orderable from '../../interfaces/Orderable';
@@ -26,11 +25,11 @@ interface PrecioCalculado {
  * añadir configuraciones al carrito o finalizar la compra
  */
 @Component({
-    selector: 'app-confirm-bar',
-    templateUrl: './confirm-bar.component.html',
-    styleUrls: ['./confirm-bar.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'app-confirm-bar',
+  templateUrl: './confirm-bar.component.html',
+  styleUrls: ['./confirm-bar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class ConfirmBarComponent implements OnInit, OnChanges {
   /** Función para calcular el precio y obtener las notas */
@@ -174,6 +173,7 @@ export class ConfirmBarComponent implements OnInit, OnChanges {
    */
   public finishAndPay(): void {
     this.addToCart(true);
+    this.router.navigate(['payment']);
   }
 
   /**

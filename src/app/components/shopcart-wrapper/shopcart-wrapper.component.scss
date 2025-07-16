@@ -10,11 +10,16 @@
   background-color: colors.$yellow !important;
   color: black;
   border: 2px solid black;
+
+  &:hover {
+    color: black;
+    border: 2px solid black;
+  }
 }
 
 /* Añade esta regla a tu archivo CSS global */
 ::ng-deep .Shopcart {
-  .p-sidebar {
+  .p-drawer {
     background-color: white;
   }
 }
@@ -31,6 +36,7 @@
   padding-right: 15px;
   padding-top: 5px;
   border-top: 1px black solid;
+  background-color: white;
 
   .text {
     font-size: 1.2rem;

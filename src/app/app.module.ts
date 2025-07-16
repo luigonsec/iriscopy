@@ -39,7 +39,7 @@ import { AdditionalCommentComponent } from './components/inputs/additional-comme
 import { ConfirmBarComponent } from './components/confirm-bar/confirm-bar.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ShopcartWrapperComponent } from './components/shopcart-wrapper/shopcart-wrapper.component';
-import { SidebarModule } from 'primeng/sidebar';
+import { DrawerModule } from 'primeng/drawer';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { PrintComponent } from './views/print/print.component';
 import { PaymentComponent } from './views/payment/payment.component';
@@ -94,7 +94,6 @@ import { UserPasswordComponent } from './views/profile/user-password/user-passwo
 import { BoundPagesComponent } from './form/bound-pages/bound-pages.component';
 import { OrderProcessingComponent } from './components/order-processing/order-processing.component';
 import { PaymentsEmptyCartWarningComponent } from './components/payments-empty-cart-warning/payments-empty-cart-warning.component';
-import { MenuSidebarComponent } from './components/menu-sidebar/menu-sidebar.component';
 import { MobileMenuComponent } from './components/mobile-menu/mobile-menu.component';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ViewTarjetasVisitaComponent } from './views/imprenta/view-tarjetas-visita/view-tarjetas-visita.component';
@@ -170,7 +169,6 @@ import { InputIconModule } from 'primeng/inputicon';
     BoundPagesComponent,
     OrderProcessingComponent,
     PaymentsEmptyCartWarningComponent,
-    MenuSidebarComponent,
     MobileMenuComponent,
     ViewTarjetasVisitaComponent,
     ViewFlyersComponent,
@@ -220,7 +218,7 @@ import { InputIconModule } from 'primeng/inputicon';
     BadgeModule,
     ToastModule,
     BrowserAnimationsModule,
-    SidebarModule,
+    DrawerModule,
     StoreModule.forRoot({
       customer: customerReducer,
       loading: loadingReducer,
