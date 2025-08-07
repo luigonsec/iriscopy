@@ -3,6 +3,7 @@ import File from 'src/app/interfaces/File';
 import Orderable from './Orderable';
 
 export default interface Diptico extends Orderable {
+  paperCategory: Option;
   paperType: Option;
   format: Option;
   printForm: Partial<Option>;

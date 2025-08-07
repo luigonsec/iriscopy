@@ -61,6 +61,37 @@ export class SelectButtonComponent implements OnInit {
     this.emitChange.emit(this.option);
   }
 
+  /**
+   * Actualiza las opciones disponibles dinámicamente
+   */
+  updateOptions(newOptions: Option[]) {
+    this.options = newOptions || [];
+    this.option = undefined;
+    this.previousOption = undefined;
+
+    if (this.options.length === 0) {
+      this.groups = [];
+      this.optionsByGroup = {};
+    } else {
+      this.groups = [...new Set(this.options.map((x) => x.group))];
+      this.optionsByGroup = {};
+      this.groups.forEach((group) => {
+        this.optionsByGroup[group] = this.options.filter(
+          (x) => x.group === group
+        );
+      });
+
+      // Seleccionar la opción por defecto si existe
+      const defaultOption = this.options.find((x) => x.default);
+      if (defaultOption) {
+        this.option = defaultOption;
+        this.previousOption = defaultOption;
+      }
+    }
+
+    this.emitChange.emit(this.option);
+  }
+
   disable() {
     this.disabled = true;
   }
@@ -70,6 +101,15 @@ export class SelectButtonComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (!this.options || this.options.length === 0) {
+      this.option = undefined;
+      this.previousOption = undefined;
+      this.groups = [];
+      this.optionsByGroup = {};
+      this.emitChange.emit(this.option);
+      return;
+    }
+
     this.option = this.options.find((x) => x.default);
     this.previousOption = this.option; // Inicializar la opción anterior
     this.groups = [...new Set(this.options.map((x) => x.group))];

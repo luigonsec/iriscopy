@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
 import tripricoOptions from 'src/config/tripticos';
 import Triptico from '../../../interfaces/Triptico';
+import Option from '../../../interfaces/Option';
 import { FormBase } from '../../../_classes/form-base.class';
 import { firstValueFrom } from 'rxjs';
 import { PricesService } from '../../../services/prices.service';
@@ -23,7 +24,13 @@ export class ViewTripticosComponent
   @ViewChild('formatSelector') public formatSelector: SelectButtonComponent;
   @ViewChild('paperSizeSelector')
   public paperSizeSelector: SelectButtonComponent;
+  @ViewChild('paperCategorySelector')
+  public paperCategorySelector: SelectButtonComponent;
+  @ViewChild('paperTypeSelector')
+  public paperTypeSelector: SelectButtonComponent;
+
   public tripricoOptions = tripricoOptions;
+  public paperTypeOptions: Option[] = [];
 
   // Variables para almacenar la configuración automática
   private detectedOrientationCode: string;
@@ -46,12 +53,30 @@ export class ViewTripticosComponent
   updateReady() {
     let res = true;
 
+    if (!this.order.paperCategory) res = false;
     if (!this.order.paperType) res = false;
     if (!this.order.paperSize) res = false;
     if (!this.order.copiesQuantity) res = false;
     if (!this.order.files || !this.order.files.length) res = false;
 
     this.ready = res;
+  }
+
+  /**
+   * Maneja el cambio de categoría de papel y actualiza las opciones disponibles
+   */
+  onPaperCategoryChange(category: any) {
+    if (category && category.code) {
+      this.paperTypeOptions =
+        this.tripricoOptions.paperType[category.code] || [];
+      // Actualizar las opciones del selector de tipo de papel
+      if (this.paperTypeSelector) {
+        this.paperTypeSelector.updateOptions(this.paperTypeOptions);
+      }
+      // Resetear la selección de tipo de papel
+      this.order.paperType = this.paperTypeOptions[0];
+    }
+    this.updateReady();
   }
 
   getPrice = async () => {
@@ -135,6 +160,7 @@ export class ViewTripticosComponent
   ngOnInit() {
     this.order = {
       format: undefined,
+      paperCategory: undefined,
       paperType: undefined,
       paperSize: undefined,
       printForm: {

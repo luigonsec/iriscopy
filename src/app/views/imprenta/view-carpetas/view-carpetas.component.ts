@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
 import Carpeta from '../../../interfaces/Carpeta';
+import Option from '../../../interfaces/Option';
 import folderOptions from 'src/config/carpetas';
 import { FormBase } from '../../../_classes/form-base.class';
 import { firstValueFrom } from 'rxjs';
@@ -11,10 +12,10 @@ import { MessageService } from 'primeng/api';
 import { SelectButtonComponent } from '../../../components/inputs/select-button/select-button.component';
 
 @Component({
-    selector: 'app-view-carpetas',
-    templateUrl: './view-carpetas.component.html',
-    styleUrls: ['./view-carpetas.component.scss'],
-    standalone: false
+  selector: 'app-view-carpetas',
+  templateUrl: './view-carpetas.component.html',
+  styleUrls: ['./view-carpetas.component.scss'],
+  standalone: false,
 })
 export class ViewCarpetasComponent extends FormBase<Carpeta> implements OnInit {
   @ViewChild('uploader') public uploader: UploaderComponent;
@@ -22,7 +23,13 @@ export class ViewCarpetasComponent extends FormBase<Carpeta> implements OnInit {
   public printFormSelector: SelectButtonComponent;
   @ViewChild('paperSizeSelector')
   public paperSizeSelector: SelectButtonComponent;
+  @ViewChild('paperCategorySelector')
+  public paperCategorySelector: SelectButtonComponent;
+  @ViewChild('paperTypeSelector')
+  public paperTypeSelector: SelectButtonComponent;
+
   public folderOptions = folderOptions;
+  public paperTypeOptions: Option[] = [];
 
   constructor(
     public pricesService: PricesService,
@@ -38,10 +45,27 @@ export class ViewCarpetasComponent extends FormBase<Carpeta> implements OnInit {
     this.setMessageService(messageService);
   }
 
+  /**
+   * Maneja el cambio de categoría de papel y actualiza las opciones disponibles
+   */
+  onPaperCategoryChange(category: any) {
+    if (category && category.code) {
+      this.paperTypeOptions = this.folderOptions.paperType[category.code] || [];
+      // Actualizar las opciones del selector de tipo de papel
+      if (this.paperTypeSelector) {
+        this.paperTypeSelector.updateOptions(this.paperTypeOptions);
+      }
+      // Resetear la selección de tipo de papel
+      this.order.paperType = this.paperTypeOptions[0];
+    }
+    this.updateReady();
+  }
+
   updateReady() {
     let res = true;
 
     if (!this.order.printForm) res = false;
+    if (!this.order.paperCategory) res = false;
     if (!this.order.paperType) res = false;
     if (!this.order.finishType) res = false;
     if (!this.order.paperSize) res = false;
@@ -93,11 +117,18 @@ export class ViewCarpetasComponent extends FormBase<Carpeta> implements OnInit {
     if (this.paperSizeSelector) {
       this.paperSizeSelector.enable();
     }
+    if (this.paperCategorySelector) {
+      this.paperCategorySelector.enable();
+    }
+    if (this.paperTypeSelector) {
+      this.paperTypeSelector.enable();
+    }
   }
 
   ngOnInit() {
     this.order = {
       printForm: undefined,
+      paperCategory: undefined,
       paperType: undefined,
       finishType: undefined,
       paperSize: undefined,
@@ -105,6 +136,16 @@ export class ViewCarpetasComponent extends FormBase<Carpeta> implements OnInit {
       additionalComments: '',
       files: [],
     };
+
+    // Inicializar las opciones de papel disponibles con la categoría por defecto
+    const defaultCategory = this.folderOptions.paperCategory.find(
+      (cat) => cat.default
+    );
+    if (defaultCategory) {
+      this.paperTypeOptions =
+        this.folderOptions.paperType[defaultCategory.code] || [];
+    }
+
     super.ngOnInit();
   }
 }

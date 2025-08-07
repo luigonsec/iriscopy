@@ -4,6 +4,7 @@ import Orderable from './Orderable';
 
 export default interface TarjetaVisita extends Orderable {
   printForm: Option;
+  paperCategory: Option;
   paperType: Option;
   finishType: Option;
   copiesQuantity: number;

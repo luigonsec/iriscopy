@@ -15,38 +15,56 @@ export default {
     },
   ],
 
-  paperType: [
+  paperCategory: [
     {
       default: true,
       name: 'Estucado mate',
-      group: 'estucado-mate',
-      code: 'estucado-mate-300',
-      description: '300 gr',
-      factor: 1,
-    },
-    {
-      name: 'Estucado mate',
-      group: 'estucado-mate',
-      code: 'estucado-mate-350',
-      description: '350 gr',
-      factor: 1,
+      code: 'estucado-mate',
+      group: '1',
     },
     {
       name: 'Estucado brillo',
-      group: 'estucado-brillo',
-      code: 'estucado-brillo-300',
-      description: '300 gr',
-      factor: 1,
-    },
-
-    {
-      name: 'Estucado brillo',
-      group: 'estucado-brillo',
-      code: 'estucado-brillo-350',
-      description: '350 gr',
-      factor: 1,
+      code: 'estucado-brillo',
+      group: '1',
     },
   ],
+
+  paperType: {
+    'estucado-mate': [
+      {
+        default: true,
+        name: '300 gr',
+        code: 'estucado-mate-300',
+        description: '300 gr',
+        group: '1',
+        factor: 1,
+      },
+      {
+        name: '350 gr',
+        code: 'estucado-mate-350',
+        description: '350 gr',
+        group: '1',
+        factor: 1,
+      },
+    ],
+    'estucado-brillo': [
+      {
+        default: true,
+        name: '300 gr',
+        code: 'estucado-brillo-300',
+        description: '300 gr',
+        group: '1',
+        factor: 1,
+      },
+      {
+        name: '350 gr',
+        code: 'estucado-brillo-350',
+        description: '350 gr',
+        group: '1',
+        factor: 1,
+      },
+    ],
+  },
 
   finishType: [
     {

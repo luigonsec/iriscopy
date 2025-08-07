@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
 import dipticosOptions from 'src/config/dipticos';
 import Diptico from '../../../interfaces/Diptico';
+import Option from '../../../interfaces/Option';
 import { FormBase } from '../../../_classes/form-base.class';
 import { firstValueFrom } from 'rxjs';
 import { PricesService } from '../../../services/prices.service';
@@ -23,7 +24,13 @@ export class ViewDipticosComponent
   @ViewChild('formatSelector') public formatSelector: SelectButtonComponent;
   @ViewChild('paperSizeSelector')
   public paperSizeSelector: SelectButtonComponent;
+  @ViewChild('paperCategorySelector')
+  public paperCategorySelector: SelectButtonComponent;
+  @ViewChild('paperTypeSelector')
+  public paperTypeSelector: SelectButtonComponent;
+
   public dipticosOptions = dipticosOptions;
+  public paperTypeOptions: Option[] = [];
 
   // Variables para almacenar la configuración automática
   private detectedOrientationCode: string;
@@ -43,9 +50,31 @@ export class ViewDipticosComponent
     this.setMessageService(messageService);
   }
 
+  /**
+   * Maneja el cambio de categoría de papel
+   */
+  public onPaperCategoryChange(paperCategory: Option): void {
+    this.order.paperCategory = paperCategory;
+
+    // Filtrar opciones de tipo de papel basado en la categoría seleccionada
+    if (paperCategory) {
+      this.paperTypeOptions =
+        this.dipticosOptions.paperType[paperCategory.code] || [];
+
+      // Actualizar el selector si está disponible
+      if (this.paperTypeSelector) {
+        this.paperTypeSelector.updateOptions(this.paperTypeOptions);
+      }
+
+      this.order.paperType = this.paperTypeOptions[0];
+    }
+    this.updateReady();
+  }
+
   updateReady() {
     let res = true;
 
+    if (!this.order.paperCategory) res = false;
     if (!this.order.paperType) res = false;
     if (!this.order.paperSize) res = false;
     if (!this.order.copiesQuantity) res = false;
@@ -136,12 +165,23 @@ export class ViewDipticosComponent
       printForm: {
         code: 'doble-cara',
       },
+      paperCategory: undefined,
       paperType: undefined,
       paperSize: undefined,
       copiesQuantity: 0,
       additionalComments: '',
       files: [],
     };
+
+    // Inicializar las opciones de tipo de papel con la categoría por defecto
+    const defaultCategory = this.dipticosOptions.paperCategory.find(
+      (cat) => cat.default
+    );
+    if (defaultCategory) {
+      this.paperTypeOptions =
+        this.dipticosOptions.paperType[defaultCategory.code] || [];
+    }
+
     super.ngOnInit();
   }
 

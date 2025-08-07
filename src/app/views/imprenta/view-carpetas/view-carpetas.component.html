@@ -16,9 +16,24 @@
 
       <div class="Form__Section p-field">
         <div class="p-fluid">
-          <div class="Label">Tipo de papel</div>
+          <div class="Label">Categoría de papel</div>
           <app-select-button
-            [options]="folderOptions.paperType"
+            #paperCategorySelector
+            [options]="folderOptions.paperCategory"
+            (emitChange)="
+              getProperty('paperCategory', $event);
+              onPaperCategoryChange($event)
+            "
+          ></app-select-button>
+        </div>
+      </div>
+
+      <div class="Form__Section p-field">
+        <div class="p-fluid">
+          <div class="Label">Gramaje</div>
+          <app-select-button
+            #paperTypeSelector
+            [options]="paperTypeOptions"
             (emitChange)="getProperty('paperType', $event)"
           ></app-select-button>
         </div>

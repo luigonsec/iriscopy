@@ -15,67 +15,92 @@ export default {
     },
   ],
 
-  paperType: [
+  paperCategory: [
     {
       default: true,
       name: 'Cartulina',
-      group: 'cartulina',
-      code: 'cartulina-240',
-      description: '240 gr',
-      factor: 1,
-    },
-    {
-      name: 'Cartulina',
-      group: 'cartulina',
-      code: 'cartulina-315',
-      description: '315 gr',
-      factor: 1,
+      code: 'cartulina',
+      group: '1',
     },
     {
       name: 'Estucado mate',
-      group: 'estucado-mate',
-      code: 'estucado-mate-250',
-      description: '250 gr',
-      factor: 1,
-    },
-
-    {
-      name: 'Estucado mate',
-      group: 'estucado-mate',
-      code: 'estucado-mate-300',
-      description: '300 gr',
-      factor: 1,
-    },
-    {
-      name: 'Estucado mate',
-      group: 'estucado-mate',
-      code: 'estucado-mate-350',
-      description: '350 gr',
-      factor: 1,
+      code: 'estucado-mate',
+      group: '1',
     },
     {
       name: 'Estucado brillo',
-      group: 'estucado-brillo',
-      code: 'estucado-brillo-250',
-      description: '250 gr',
-      factor: 1,
-    },
-    {
-      name: 'Estucado brillo',
-      group: 'estucado-brillo',
-      code: 'estucado-brillo-300',
-      description: '300 gr',
-      factor: 1,
-    },
-
-    {
-      name: 'Estucado brillo',
-      group: 'estucado-brillo',
-      code: 'estucado-brillo-350',
-      description: '350 gr',
-      factor: 1,
+      code: 'estucado-brillo',
+      group: '1',
     },
   ],
+
+  paperType: {
+    cartulina: [
+      {
+        default: true,
+        name: '240 gr',
+        code: 'cartulina-240',
+        description: '240 gr',
+        group: '1',
+        factor: 1,
+      },
+      {
+        name: '315 gr',
+        code: 'cartulina-315',
+        description: '315 gr',
+        group: '1',
+        factor: 1,
+      },
+    ],
+    'estucado-mate': [
+      {
+        default: true,
+        name: '250 gr',
+        code: 'estucado-mate-250',
+        description: '250 gr',
+        group: '1',
+        factor: 1,
+      },
+      {
+        name: '300 gr',
+        code: 'estucado-mate-300',
+        description: '300 gr',
+        group: '1',
+        factor: 1,
+      },
+      {
+        name: '350 gr',
+        code: 'estucado-mate-350',
+        description: '350 gr',
+        group: '1',
+        factor: 1,
+      },
+    ],
+    'estucado-brillo': [
+      {
+        default: true,
+        name: '250 gr',
+        code: 'estucado-brillo-250',
+        description: '250 gr',
+        group: '1',
+        factor: 1,
+      },
+      {
+        name: '300 gr',
+        code: 'estucado-brillo-300',
+        description: '300 gr',
+        group: '1',
+        factor: 1,
+      },
+      {
+        name: '350 gr',
+        code: 'estucado-brillo-350',
+        description: '350 gr',
+        group: '1',
+        factor: 1,
+      },
+    ],
+  },
 
   finishType: [
     {

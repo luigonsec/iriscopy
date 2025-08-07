@@ -2,9 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
 import cartelesOptions from 'src/config/carteles';
 import Cartel from '../../../interfaces/Cartel';
+import Option from '../../../interfaces/Option';
 import { FormBase } from '../../../_classes/form-base.class';
 import { ShopcartService } from '../../../services/shopcart.service';
 import { PricesService } from '../../../services/prices.service';
+import { SelectButtonComponent } from '../../../components/inputs/select-button/select-button.component';
 @Component({
   selector: 'app-view-carteles',
   templateUrl: './view-carteles.component.html',
@@ -13,7 +15,13 @@ import { PricesService } from '../../../services/prices.service';
 })
 export class ViewCartelesComponent extends FormBase<Cartel> implements OnInit {
   @ViewChild('uploader') public uploader: UploaderComponent;
+  @ViewChild('paperCategorySelector')
+  public paperCategorySelector: SelectButtonComponent;
+  @ViewChild('paperTypeSelector')
+  public paperTypeSelector: SelectButtonComponent;
+
   public cartelesOptions = cartelesOptions;
+  public paperTypeOptions: Option[] = [];
 
   constructor(
     public pricesService: PricesService,
@@ -38,6 +46,7 @@ export class ViewCartelesComponent extends FormBase<Cartel> implements OnInit {
   updateReady() {
     let res = true;
 
+    if (!this.order.paperCategory) res = false;
     if (!this.order.paperType) res = false;
     if (!this.order.paperSize) res = false;
     if (!this.order.copiesQuantity) res = false;
@@ -46,12 +55,30 @@ export class ViewCartelesComponent extends FormBase<Cartel> implements OnInit {
     this.ready = res;
   }
 
+  /**
+   * Maneja el cambio de categoría de papel y actualiza las opciones disponibles
+   */
+  onPaperCategoryChange(category: any) {
+    if (category && category.code) {
+      this.paperTypeOptions =
+        this.cartelesOptions.paperType[category.code] || [];
+      // Actualizar las opciones del selector de tipo de papel
+      if (this.paperTypeSelector) {
+        this.paperTypeSelector.updateOptions(this.paperTypeOptions);
+      }
+      // Resetear la selección de tipo de papel
+      this.order.paperType = this.paperTypeOptions[0];
+    }
+    this.updateReady();
+  }
+
   addToCartFn = async (order: Cartel) => {
     return this.shopCart.addPosterToCart.bind(this.shopCart)(order);
   };
 
   ngOnInit() {
     this.order = {
+      paperCategory: undefined,
       paperType: undefined,
       paperSize: undefined,
       copiesQuantity: 0,

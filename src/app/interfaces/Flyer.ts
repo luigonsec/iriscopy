@@ -4,6 +4,7 @@ import Orderable from './Orderable';
 
 export default interface Flyer extends Orderable {
   printForm: Option;
+  paperCategory: Option;
   paperType: Option;
   paperSize: Option;
   size: { height: number; width: number };
