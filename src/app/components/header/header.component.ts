@@ -132,16 +132,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.navigateToImprentaPage('/imprenta/carpetas', $event);
         },
       },
-      // {
-      //   label: 'Revistas',
-      //   icon: 'pi pi-fw pi-book',
-      //   command: ($event) => {
-      // this.menuImprenta.hideu()
-      // const path = // '/imprenta/revistas'
-      // this.router.navigate([path]);
-      // }
-      // ,
-      // },
+      {
+        label: 'Revistas',
+        icon: 'pi pi-fw pi-book',
+        command: ($event) => {
+          this.navigateToImprentaPage('/imprenta/revistas', $event);
+        },
+      },
       {
         label: 'Rollups',
         icon: 'pi pi-fw pi-image',
@@ -149,18 +146,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.navigateToImprentaPage('/imprenta/rollups', $event);
         },
       },
-      // ,
-      // },
-      // {
-      //   label: 'Carteles',
-      //   icon: 'pi pi-fw pi-image',
-      //   command: ($event) => {
-      // this.menuImprenta.hideu()
-      // const path = '/imprenta/carteles'
-      // this.router.navigate([path]);
-      // }
-      // ,
-      // },
+      {
+        label: 'Carteles',
+        icon: 'pi pi-fw pi-image',
+        command: ($event) => {
+          this.navigateToImprentaPage('/imprenta/carteles', $event);
+        },
+      },
       {
         label: 'Dípticos',
         icon: 'pi pi-fw pi-image',
