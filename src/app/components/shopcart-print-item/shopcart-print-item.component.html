@@ -6,7 +6,7 @@
     {{ item.printForm.name }}
   </div>
   <div class="item" *ngIf="item.paperType">
-    {{ item.paperType.name }} - {{ item.paperType.description }}
+    {{ item.paperCategory.name }} - {{ item.paperType.description }}
   </div>
   <div class="item" *ngIf="item.finishType">{{ item.finishType.name }}</div>
   <div class="item" *ngIf="item.format">{{ item.format.name }}</div>

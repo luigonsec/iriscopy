@@ -12,6 +12,7 @@ import Triptico from '../interfaces/Triptico';
 import { PriceResult } from '../interfaces/PriceResult';
 import CartItem from '../interfaces/CartItem';
 import { CartItemType } from './shopcart.service';
+import Cartel from '../interfaces/Cartel';
 
 @Injectable({
   providedIn: 'root',
@@ -81,17 +82,24 @@ export class PricesService {
     );
   }
 
-  getBusinessCardPrice(card: TarjetaVisita): Observable<PriceResult> {
+  getBusinessCardPrice(businessCard: TarjetaVisita): Observable<PriceResult> {
     return this.http.post<PriceResult>(
       `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/prices/business-card`,
-      card
+      businessCard
     );
   }
 
-  getFlyerPrice(card: Flyer): Observable<PriceResult> {
+  getFlyerPrice(flyer: Flyer): Observable<PriceResult> {
     return this.http.post<PriceResult>(
       `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/prices/flyer`,
-      card
+      flyer
+    );
+  }
+
+  getPosterPrice(cartel: Cartel): Observable<PriceResult> {
+    return this.http.post<PriceResult>(
+      `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/prices/poster`,
+      cartel
     );
   }
 

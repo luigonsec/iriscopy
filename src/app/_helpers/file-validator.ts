@@ -532,4 +532,20 @@ export class FileValidatorFactory {
       isOpenSize: false, // Los rollups usan tamaño cerrado
     });
   }
+
+  /**
+   * Crea un validador para carteles
+   */
+  static createCartelValidator(cartelOptions: any): FileValidator {
+    return new FileValidator({
+      productType: ProductType.FLYERS, // Usamos FLYERS como tipo base para carteles
+      allowedPages: [1], // Los carteles solo permiten una página (impresión por una cara)
+      paperSizes: cartelOptions.paperSize?.filter(
+        (size: any) =>
+          size.code !== 'personalizado' && size.width && size.height
+      ),
+      requiresBleed: true,
+      isOpenSize: false, // Los carteles usan tamaño cerrado
+    });
+  }
 }

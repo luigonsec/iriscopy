@@ -7,11 +7,8 @@ import {
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ShopcartComponent } from 'src/app/components/shopcart/shopcart.component';
-import Location from 'src/app/interfaces/Location';
-import RedsysData from 'src/app/interfaces/RedsysData';
 
 import { ShopcartService } from 'src/app/services/shopcart.service';
-import locations from 'src/config/locations';
 import { BillingComponent } from 'src/app/components/forms/billing/billing.component';
 import { ShippingComponent } from 'src/app/components/forms/shipping/shipping.component';
 import { Subscription } from 'rxjs';
@@ -21,7 +18,6 @@ import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import OrderProduct from 'src/app/interfaces/OrderProduct';
 import { OrderProcessingComponent } from 'src/app/components/order-processing/order-processing.component';
 import { AnalyticsService } from '../../services/analytics.service';
-import { OrdersService } from '../../services/orders.service';
 import Cart from '../../interfaces/Cart';
 import Flyer from '../../interfaces/Flyer';
 import TarjetaVisita from '../../interfaces/TarjetaVisita';
@@ -33,10 +29,10 @@ import Cartel from '../../interfaces/Cartel';
 import Revista from '../../interfaces/Revista';
 
 @Component({
-    selector: 'app-payment',
-    templateUrl: './payment.component.html',
-    styleUrls: ['./payment.component.scss'],
-    standalone: false
+  selector: 'app-payment',
+  templateUrl: './payment.component.html',
+  styleUrls: ['./payment.component.scss'],
+  standalone: false,
 })
 export class PaymentComponent implements OnInit, OnDestroy {
   public emptyCart: boolean = false;
@@ -53,18 +49,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
   public posters: Cartel[] = [];
   public magazines: Revista[] = [];
 
-  public first_time_coupon_applied = false;
-
-  public locations = locations;
-  public selectedLocation: Location;
-  public termsAccepted: boolean;
-  public redsysData: RedsysData = {
-    Ds_MerchantParameters: undefined,
-    Ds_Signature: undefined,
-    Ds_SignatureVersion: undefined,
-  };
-
-  public OrderID;
   @ViewChild('orderProcessing')
   public orderProcessing: OrderProcessingComponent;
 
@@ -135,7 +119,8 @@ export class PaymentComponent implements OnInit, OnDestroy {
     this.diptychs = cart.diptychs || [];
     this.triptychs = cart.triptychs || [];
     this.rollups = cart.rollups || [];
-    // Si añades más tipos en el futuro, agrégalos aquí
+    this.posters = cart.posters || [];
+    this.magazines = cart.magazines || [];
   }
 
   public getTotalCartItems(): number {

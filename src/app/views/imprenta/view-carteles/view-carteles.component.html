@@ -1,5 +1,7 @@
 <div id="print-wrapper" class="grid p-0 m-0">
   <div id="form-column" class="col-12 lg:col-5">
+    <h2>Carteles</h2>
+
     <div id="form">
       <div class="Form__Section p-field">
         <div class="p-fluid">
@@ -11,14 +13,14 @@
         </div>
       </div>
 
-      <div class="Form__Section p-field" *ngIf="isCustomSize()">
+      <!-- <div class="Form__Section p-field" *ngIf="isCustomSize()">
         <div class="p-fluid">
           <div class="Label">Tamaño personalizado</div>
           <app-input-flyers-custom-size
             (emitChange)="getPrintForm($event)"
           ></app-input-flyers-custom-size>
         </div>
-      </div>
+      </div> -->
 
       <div class="Form__Section p-field">
         <div class="p-fluid">
@@ -102,7 +104,13 @@
         </div>
       </div>
       <div id="print-guide-column" class="col-12 lg:col-6 hidden lg:block">
-        <div id="print-guide"></div>
+        <div id="print-guide">
+          <app-print-guide
+            [width]="this.order.paperSize.width"
+            [height]="this.order.paperSize.height"
+            *ngIf="!!!ready"
+          ></app-print-guide>
+        </div>
       </div>
     </div>
   </div>
@@ -110,14 +118,16 @@
   <div id="print-guide-column-sm" class="col-12 lg:hidden">
     <div id="print-guide">
       <app-print-guide
-        [width]="85"
-        [height]="55"
+        [width]="this.order.paperSize.width"
+        [height]="this.order.paperSize.height"
         *ngIf="!!!ready"
       ></app-print-guide>
     </div>
   </div>
 
   <app-confirm-bar
+    [addToCartFn]="addToCartFn"
+    [getPrecio]="getPrice"
     *ngIf="ready"
     [reset]="reset"
     [(order)]="order"

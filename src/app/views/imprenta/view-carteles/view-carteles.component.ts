@@ -7,6 +7,9 @@ import { FormBase } from '../../../_classes/form-base.class';
 import { ShopcartService } from '../../../services/shopcart.service';
 import { PricesService } from '../../../services/prices.service';
 import { SelectButtonComponent } from '../../../components/inputs/select-button/select-button.component';
+import { FileValidatorFactory } from '../../../_helpers/file-validator';
+import { MessageService } from 'primeng/api';
+import { firstValueFrom } from 'rxjs';
 @Component({
   selector: 'app-view-carteles',
   templateUrl: './view-carteles.component.html',
@@ -19,15 +22,24 @@ export class ViewCartelesComponent extends FormBase<Cartel> implements OnInit {
   public paperCategorySelector: SelectButtonComponent;
   @ViewChild('paperTypeSelector')
   public paperTypeSelector: SelectButtonComponent;
+  @ViewChild('paperSizeSelector')
+  public paperSizeSelector: SelectButtonComponent;
 
   public cartelesOptions = cartelesOptions;
   public paperTypeOptions: Option[] = [];
 
   constructor(
     public pricesService: PricesService,
-    public shopCart: ShopcartService
+    public shopCart: ShopcartService,
+    public messageService: MessageService
   ) {
     super();
+
+    // Configurar el validador específico para carteles (solo 1 página)
+    this.setFileValidator(
+      FileValidatorFactory.createCartelValidator(cartelesOptions)
+    );
+    this.setMessageService(messageService);
   }
 
   isCustomSize() {
@@ -40,7 +52,7 @@ export class ViewCartelesComponent extends FormBase<Cartel> implements OnInit {
   }
 
   getPrice = async () => {
-    return Promise.resolve({ precio: 55, notas: [] as string[] });
+    return await firstValueFrom(this.pricesService.getPosterPrice(this.order));
   };
 
   updateReady() {
@@ -72,19 +84,66 @@ export class ViewCartelesComponent extends FormBase<Cartel> implements OnInit {
     this.updateReady();
   }
 
+  /**
+   * Configura automáticamente el tamaño del papel basado en las dimensiones del archivo
+   */
+  protected setDetectedSize(paperSize: any): void {
+    if (this.paperSizeSelector && paperSize) {
+      // Buscar la opción correspondiente en las opciones del componente
+      const matchingOption = this.cartelesOptions.paperSize.find(
+        (option) => option.code === paperSize.code
+      );
+
+      if (matchingOption) {
+        this.paperSizeSelector.setUpOption(matchingOption);
+        this.paperSizeSelector.disable();
+      }
+    }
+  }
+
+  /**
+   * Restaura la configuración cuando se elimina un archivo
+   */
+  public undoPresetProperties(): void {
+    if (this.paperSizeSelector) {
+      this.paperSizeSelector.enable();
+    }
+    if (this.paperCategorySelector) {
+      this.paperCategorySelector.enable();
+    }
+    if (this.paperTypeSelector) {
+      this.paperTypeSelector.enable();
+    }
+  }
+
   addToCartFn = async (order: Cartel) => {
     return this.shopCart.addPosterToCart.bind(this.shopCart)(order);
   };
 
   ngOnInit() {
     this.order = {
+      printForm: {
+        name: 'Una cara',
+        code: 'una-cara',
+      },
       paperCategory: undefined,
       paperType: undefined,
       paperSize: undefined,
+      size: undefined,
       copiesQuantity: 0,
       additionalComments: '',
       files: [],
     };
+
+    // Inicializar las opciones de papel disponibles con la categoría por defecto
+    const defaultCategory = this.cartelesOptions.paperCategory.find(
+      (cat) => cat.default
+    );
+    if (defaultCategory) {
+      this.paperTypeOptions =
+        this.cartelesOptions.paperType[defaultCategory.code] || [];
+    }
+
     super.ngOnInit();
   }
 }
