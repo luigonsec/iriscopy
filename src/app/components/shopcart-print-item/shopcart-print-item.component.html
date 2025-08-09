@@ -25,5 +25,6 @@
       <i class="far fa-trash-alt" (click)="remove($event, item)"></i>
     </div>
     <div class="value">{{ (price || 0).toFixed(2) }}€</div>
+    <div class="value">{{ (weight / 1000 || 0).toFixed(2) }} kg</div>
   </div>
 </div>

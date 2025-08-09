@@ -1,8 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
-import cartelesOptions from 'src/config/carteles';
-import Cartel from '../../../interfaces/Cartel';
-import Option from '../../../interfaces/Option';
 import { FormBase } from '../../../_classes/form-base.class';
 import { ShopcartService } from '../../../services/shopcart.service';
 import { PricesService } from '../../../services/prices.service';
@@ -10,6 +7,9 @@ import { SelectButtonComponent } from '../../../components/inputs/select-button/
 import { FileValidatorFactory } from '../../../_helpers/file-validator';
 import { MessageService } from 'primeng/api';
 import { firstValueFrom } from 'rxjs';
+import cartelesOptions from 'src/config/carteles';
+import Cartel from '../../../interfaces/Cartel';
+import Option from '../../../interfaces/Option';
 @Component({
   selector: 'app-view-carteles',
   templateUrl: './view-carteles.component.html',
@@ -88,6 +88,7 @@ export class ViewCartelesComponent extends FormBase<Cartel> implements OnInit {
    * Configura automáticamente el tamaño del papel basado en las dimensiones del archivo
    */
   protected setDetectedSize(paperSize: any): void {
+    console.log('setDetectedSize', paperSize);
     if (this.paperSizeSelector && paperSize) {
       // Buscar la opción correspondiente en las opciones del componente
       const matchingOption = this.cartelesOptions.paperSize.find(
