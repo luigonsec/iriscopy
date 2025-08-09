@@ -16,7 +16,7 @@
   </div>
 
   <div class="item" *ngIf="item.copiesQuantity">
-    {{ item.copiesQuantity.code }} copias
+    {{ item.copiesQuantity.code || item.copiesQuantity }} copias
   </div>
 </div>
 <div class="cart-actions">

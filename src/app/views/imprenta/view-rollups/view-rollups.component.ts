@@ -80,7 +80,7 @@ export class ViewRollupsComponent extends FormBase<Rollup> implements OnInit {
   ngOnInit() {
     this.order = {
       paperSize: undefined,
-      copiesQuantity: 0,
+      copiesQuantity: 1,
       additionalComments: '',
       files: [],
     };

@@ -14,6 +14,15 @@
 
       <div class="Form__Section p-field">
         <div class="p-fluid">
+          <div class="Label">Copias</div>
+          <app-quantity-copies
+            (emitChange)="getProperty('copiesQuantity', $event)"
+          ></app-quantity-copies>
+        </div>
+      </div>
+
+      <div class="Form__Section p-field">
+        <div class="p-fluid">
           <div class="Label">Comentarios adicionales</div>
           <app-additional-comment
             (emitChange)="getProperty('additionalComments', $event)"
