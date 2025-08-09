@@ -3,5 +3,6 @@
  */
 export interface PriceResult {
   precio: number;
+  weight: number;
   notas: string[];
 }

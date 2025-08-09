@@ -105,13 +105,10 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
   shippingCostStandard: number = 4.9;
   shippingCostFinal: number = 0;
   shippingCostUrgent: number = 6.4; // Ya no se usa directamente, ahora lo calcula el servicio
-  shippingDiscount: number = 0;
-
-  // Premium para envío urgente (la diferencia sobre el estándar)
-  private readonly urgentShippingPremium: number = 1.5;
 
   public itemsPrice: { [id: string]: number } = {};
   public itemsNotes: { [id: string]: string[] } = {};
+  public itemsWeight: { [id: string]: number } = {};
 
   private itemTypePropertyMap = {
     [CartItemType.COPY]: 'copies',
@@ -253,12 +250,77 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Verifica si el pedido contiene elementos de imprenta
+   * @returns true si contiene elementos de imprenta, false en caso contrario
+   */
+  private hasPrintItems(): boolean {
+    return (
+      this.flyers.length > 0 ||
+      this.businessCards.length > 0 ||
+      this.folders.length > 0 ||
+      this.diptychs.length > 0 ||
+      this.triptychs.length > 0 ||
+      this.rollups.length > 0 ||
+      this.posters.length > 0 ||
+      this.magazines.length > 0
+    );
+  }
+
+  /**
+   * Calcula el peso total de los elementos de imprenta en gramos
+   * @returns Peso total en gramos
+   */
+  public calculateTotalPrintWeight(): number {
+    let totalWeight = 0;
+
+    // Sumamos el peso de todos los tipos de elementos de imprenta
+    Object.values(CartItemType).forEach((itemType) => {
+      const propertyName = this.itemTypePropertyMap[itemType];
+      // Solo consideramos elementos de imprenta (excluimos copias y productos)
+      if (
+        !propertyName ||
+        itemType === CartItemType.PRODUCT ||
+        itemType === CartItemType.COPY
+      )
+        return;
+
+      const items = this[propertyName];
+      if (!items || !items.length) return;
+
+      // Sumamos el peso de cada elemento
+      const pesoItems = items
+        .map((item) => this.itemsWeight[item.id] || 0)
+        .reduce((a, b) => a + b, 0);
+
+      totalWeight += pesoItems;
+    });
+
+    return totalWeight;
+  }
+
   public calculateGastosDeEnvioEstandar() {
+    const printItems = {
+      flyers: this.flyers,
+      businessCards: this.businessCards,
+      folders: this.folders,
+      diptychs: this.diptychs,
+      triptychs: this.triptychs,
+      rollups: this.rollups,
+      posters: this.posters,
+      magazines: this.magazines,
+    };
+
+    // Calculamos el peso total de los elementos de imprenta
+    const totalWeight = this.calculateTotalPrintWeight();
+
     const shippingCosts = this.shippingHandlerService.calculateShippingCosts(
       this.billing,
       this.shipping,
       this.differentAddress,
-      this.subtotalBeforeShippingCoupons
+      this.subtotalBeforeShippingCoupons,
+      printItems,
+      totalWeight
     );
 
     this.shippingCostStandard = shippingCosts.standardCost;
@@ -266,8 +328,8 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     this.urgentShippingAvailable = shippingCosts.urgentAvailable;
     this.standardShippingAvailable = shippingCosts.standardAvailable;
 
-    if (!this.urgentShippingAvailable) {
-      this.deliver = 'Pickup';
+    if (!this.urgentShippingAvailable && this.deliver === 'UrgentShipping') {
+      this.deliver = 'Shipping';
     }
   }
 
@@ -414,6 +476,7 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     return map((result: PriceResult) => {
       this.itemsPrice[item.id] = result.precio;
       this.itemsNotes[item.id] = result.notas;
+      this.itemsWeight[item.id] = result.weight;
       return result;
     });
   }
@@ -523,38 +586,17 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     });
   }
 
-  //     const discounts = {
-  //     productsDiscount: 0,
-  //     copiesDiscount: 0,
-  //     shippingDiscount: 0,
-  //   };
-  //   if (this.coupons.length > 0) {
-  //     const subtotal = this.precio_copias;
-
-  //     if (this.coupons[0].applicability === 'shipping') {
-  //       if (this.deliver === 'Shipping') {
-  //         discounts.shippingDiscount =
-  //           this.shippingCostStandard / ((100 - this.coupons[0].amount) / 100) -
-  //           this.shippingCostStandard;
-  //       } else if (this.deliver === 'UrgentShipping') {
-  //         const realPrice =
-  //           this.shippingCostStandard / ((100 - this.coupons[0].amount) / 100) +
-  //           1.5;
-  //         discounts.shippingDiscount = realPrice - this.shippingCostUrgent;
-  //       } else {
-  //         discounts.shippingDiscount = 0;
-  //       }
-  //     } else {
-  //       discounts.copiesDiscount = this.couponHandlerService.getDiscount(
-  //         subtotal,
-  //         this.coupons[0]
-  //       );
-  //     }
-  //   }
-  //   return discounts;
-  // }
-
   private applyShippingCouponDiscounts() {
+    // Si hay elementos de imprenta, no aplicamos descuentos de envío
+    if (this.hasPrintItems()) {
+      this.coupons.forEach((coupon) => {
+        if (coupon.applicability === 'shipping') {
+          this.discounts[coupon.code] = 0;
+        }
+      });
+      return;
+    }
+
     // Si hay un cupón aplicado y es de tipo 'shipping', aplicamos el descuento
     this.coupons.forEach((coupon) => {
       if (coupon.applicability === 'shipping') {
@@ -613,19 +655,6 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
         coupon.applicability === 'copies' ||
         coupon.applicability === 'products'
       ) {
-        total += this.discounts[coupon.code] || 0;
-      }
-    });
-    return total;
-  }
-
-  /**
-   * Calcula el total de descuentos solo para gastos de envío
-   */
-  private getShippingDiscounts(): number {
-    let total = 0;
-    this.coupons.forEach((coupon) => {
-      if (coupon.applicability === 'shipping') {
         total += this.discounts[coupon.code] || 0;
       }
     });
@@ -715,8 +744,8 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
     this.triptychs = cart.triptychs || [];
     this.rollups = cart.rollups || [];
     // Los posters y magazines no están en la interfaz Cart, pero mantenemos el array vacío
-    this.posters = [];
-    this.magazines = [];
+    this.posters = cart.posters || [];
+    this.magazines = cart.magazines || [];
   }
 
   /**
@@ -817,13 +846,13 @@ export class OrderProcessingComponent implements OnInit, OnDestroy {
         this.calcularPrecios(() => {});
       }
     );
+
     this.calculateExpectedDeliveryDate();
 
     this.subscriptionCart = this.shopcartService
       .getCart$()
       .subscribe((order) => {
         this.updateCartItems(this.shopcartService.getCart());
-
         this.calcularPrecios(() => {});
       });
   }

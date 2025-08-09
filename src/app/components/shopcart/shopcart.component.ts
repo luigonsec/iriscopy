@@ -21,10 +21,10 @@ import Revista from '../../interfaces/Revista';
 import { PriceResult } from '../../interfaces/PriceResult';
 
 @Component({
-    selector: 'app-shopcart',
-    templateUrl: './shopcart.component.html',
-    styleUrls: ['./shopcart.component.scss'],
-    standalone: false
+  selector: 'app-shopcart',
+  templateUrl: './shopcart.component.html',
+  styleUrls: ['./shopcart.component.scss'],
+  standalone: false,
 })
 export class ShopcartComponent implements OnInit, OnDestroy {
   // Para mantener compatibilidad con el resto del código
@@ -41,6 +41,7 @@ export class ShopcartComponent implements OnInit, OnDestroy {
 
   // Un solo objeto para todos los precios y notas
   public itemsPrice: { [id: string]: number } = {};
+  public itemsWeight: { [id: string]: number } = {};
   public itemsNotes: { [id: string]: string[] } = {};
 
   // Objeto público de funciones de eliminación para usar en la plantilla
@@ -51,6 +52,7 @@ export class ShopcartComponent implements OnInit, OnDestroy {
     diptychs: (item: Diptico) => this.removeDiptych(item),
     triptychs: (item: Triptico) => this.removeTriptych(item),
     rollups: (item: Rollup) => this.removeRollup(item),
+    posters: (item: Cartel) => this.removePoster(item),
     // Agregamos otros tipos según se necesite
   };
 
@@ -179,10 +181,11 @@ export class ShopcartComponent implements OnInit, OnDestroy {
    * Procesa el resultado de una llamada de precio
    */
   private processPriceResult(itemType: CartItemType, item: any) {
-    return ({ precio, notas }: PriceResult) => {
+    return ({ precio, notas, weight }: PriceResult) => {
       // Actualizar el mapa unificado
       this.itemsPrice[item.id] = precio;
       this.itemsNotes[item.id] = notas;
+      this.itemsWeight[item.id] = weight || 0; // Aseguramos que weight tenga un valor por defecto
     };
   }
 
@@ -268,6 +271,10 @@ export class ShopcartComponent implements OnInit, OnDestroy {
     this.removeItem(CartItemType.ROLLUP, rollup);
   }
 
+  removePoster(poster: Cartel): void {
+    this.removeItem(CartItemType.POSTER, poster);
+  }
+
   removeProduct(product: OrderProduct): void {
     this.removeItem(CartItemType.PRODUCT, product);
   }
@@ -307,7 +314,8 @@ export class ShopcartComponent implements OnInit, OnDestroy {
     this.diptychs = cart.diptychs || [];
     this.triptychs = cart.triptychs || [];
     this.rollups = cart.rollups || [];
-    // Si añades más tipos en el futuro, agrégalos aquí
+    this.posters = cart.posters || [];
+    this.magazines = cart.magazines || [];
   }
 
   ngOnInit(): void {

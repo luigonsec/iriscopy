@@ -12,6 +12,7 @@ export class ShopcartPrintItemComponent {
   @Input('item') item: any;
   @Input('removeFn') removeFn: (item: any) => void;
   @Input('price') price: number;
+  @Input('weight') weight: number;
 
   public remove(event: MouseEvent, item: any) {
     event.preventDefault();

@@ -63,6 +63,7 @@
     [name]="'Tarjeta de visita'"
     [item]="card"
     [price]="itemsPrice[card.id]"
+    [weight]="itemsWeight[card.id]"
     [removeFn]="removeItemFunctions.businessCards"
   ></app-shopcart-print-item>
 </div>
@@ -72,6 +73,7 @@
     [name]="'Flyer'"
     [item]="flyer"
     [price]="itemsPrice[flyer.id]"
+    [weight]="itemsWeight[flyer.id]"
     [removeFn]="removeItemFunctions.flyers"
   ></app-shopcart-print-item>
 </div>
@@ -81,6 +83,7 @@
     [name]="'Poster'"
     [item]="poster"
     [price]="itemsPrice[poster.id]"
+    [weight]="itemsWeight[poster.id]"
     [removeFn]="removeItemFunctions.posters"
   ></app-shopcart-print-item>
 </div>
@@ -90,6 +93,7 @@
     [name]="'Rollup'"
     [item]="rollup"
     [price]="itemsPrice[rollup.id]"
+    [weight]="itemsWeight[rollup.id]"
     [removeFn]="removeItemFunctions.rollups"
   ></app-shopcart-print-item>
 </div>
@@ -99,6 +103,7 @@
     [name]="'Carpeta'"
     [item]="folder"
     [price]="itemsPrice[folder.id]"
+    [weight]="itemsWeight[folder.id]"
     [removeFn]="removeItemFunctions.folders"
   ></app-shopcart-print-item>
 </div>
@@ -109,6 +114,7 @@
     [name]="'Dípticos'"
     [item]="diptych"
     [price]="itemsPrice[diptych.id]"
+    [weight]="itemsWeight[diptych.id]"
     [removeFn]="removeItemFunctions.diptychs"
   ></app-shopcart-print-item>
 </div>
@@ -118,6 +124,7 @@
     [name]="'Trípticos'"
     [item]="triptych"
     [price]="itemsPrice[triptych.id]"
+    [weight]="itemsWeight[triptych.id]"
     [removeFn]="removeItemFunctions.triptychs"
   ></app-shopcart-print-item>
 </div>
