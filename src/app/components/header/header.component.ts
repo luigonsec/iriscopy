@@ -158,10 +158,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         label: 'Copistería Sevilla centro',
         url: 'https://iriscopyshop.com/copisteria-sevilla-centro',
       },
-      {
-        label: 'Copistería FCOM',
-        url: 'https://iriscopyshop.com/copisteria-fcom',
-      },
+      // {
+      //   label: 'Copistería FCOM',
+      //   url: 'https://iriscopyshop.com/copisteria-fcom',
+      // },
       {
         label: 'Copistería Mairena del Aljarafe',
         url: 'https://iriscopyshop.com/copisteria-mairena-aljarafe',
