@@ -86,7 +86,8 @@ export class ViewFlyersComponent extends FormBase<Flyer> implements OnInit {
   };
 
   addToCartFn = async (order: Flyer) => {
-    return this.shopCart.addFlyerToCart.bind(this.shopCart)(order);
+    this.shopCart.addFlyerToCart.bind(this.shopCart)(order);
+    return this.reset();
   };
 
   /**
@@ -130,15 +131,9 @@ export class ViewFlyersComponent extends FormBase<Flyer> implements OnInit {
     if (this.paperSizeSelector) {
       this.paperSizeSelector.enable();
     }
-    if (this.paperCategorySelector) {
-      this.paperCategorySelector.enable();
-    }
-    if (this.paperTypeSelector) {
-      this.paperTypeSelector.enable();
-    }
   }
 
-  ngOnInit() {
+  public reset() {
     this.order = {
       paperSize: undefined,
       printForm: undefined,
@@ -149,6 +144,12 @@ export class ViewFlyersComponent extends FormBase<Flyer> implements OnInit {
       additionalComments: '',
       files: [],
     };
+    this.undoPresetProperties();
+    this.updateReady();
+  }
+
+  ngOnInit() {
+    this.reset();
 
     // Inicializar las opciones de papel disponibles con la categoría por defecto
     const defaultCategory = this.flyerOptions.paperCategory.find(

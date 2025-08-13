@@ -82,7 +82,8 @@ export class ViewTarjetasVisitaComponent
   };
 
   addToCartFn = async (order: TarjetaVisita) => {
-    return this.shopCart.addBusinessCardToCart.bind(this.shopCart)(order);
+    this.shopCart.addBusinessCardToCart.bind(this.shopCart)(order);
+    this.reset();
   };
 
   /**
@@ -106,15 +107,9 @@ export class ViewTarjetasVisitaComponent
     if (this.printFormSelector) {
       this.printFormSelector.enable();
     }
-    if (this.paperCategorySelector) {
-      this.paperCategorySelector.enable();
-    }
-    if (this.paperTypeSelector) {
-      this.paperTypeSelector.enable();
-    }
   }
 
-  ngOnInit() {
+  reset(): void {
     this.order = {
       finishType: undefined,
       printForm: undefined,
@@ -124,6 +119,13 @@ export class ViewTarjetasVisitaComponent
       additionalComments: '',
       files: [],
     };
+    this.printFormSelector.enable();
+    this.updateReady();
+  }
+
+  ngOnInit() {
+    // Inicializar el formulario con las opciones de tarjeta de visita
+    this.reset();
 
     // Inicializar las opciones de papel disponibles con la categoría por defecto
     const defaultCategory = this.tarjetaVisitaOptions.paperCategory.find(
