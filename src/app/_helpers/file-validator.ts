@@ -534,7 +534,7 @@ export class FileValidatorFactory {
    */
   static createRollupValidator(rollupOptions: any): FileValidator {
     return new FileValidator({
-      productType: ProductType.ROLL_UPS, // Usamos FLYERS como tipo base para rollups
+      productType: ProductType.ROLL_UPS,
       allowedPages: [1], // Los rollups solo permiten una página
       paperSizes: rollupOptions.paperSize.map((size: any) => ({
         code: size.code,
@@ -543,7 +543,7 @@ export class FileValidatorFactory {
         height: size.height,
         description: size.name,
       })),
-      requiresBleed: true,
+      requiresBleed: false, // Los rollups NO requieren sangrado
       isOpenSize: false, // Los rollups usan tamaño cerrado
     });
   }

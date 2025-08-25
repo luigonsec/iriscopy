@@ -72,6 +72,7 @@
           <app-print-guide
             [width]="this.order.paperSize?.width"
             [height]="this.order.paperSize?.height"
+            [requiresBleed]="false"
             *ngIf="
               !!!ready &&
               this.order.paperSize?.width &&
@@ -88,6 +89,7 @@
       <app-print-guide
         [width]="this.order.paperSize?.width"
         [height]="this.order.paperSize?.height"
+        [requiresBleed]="false"
         *ngIf="
           !!!ready &&
           this.order.paperSize?.width &&

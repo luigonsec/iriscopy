@@ -7,7 +7,8 @@
       {{ totalHeight }}mm
     </p>
     <p><strong>Área de impresión:</strong> {{ width }}mm × {{ height }}mm</p>
-    <p><strong>Sangrado:</strong> 1.5mm por cada lado</p>
+    <p *ngIf="requiresBleed"><strong>Sangrado:</strong> 1.5mm por cada lado</p>
+    <p *ngIf="!requiresBleed"><strong>Sin sangrado</strong></p>
     <p>
       <strong>Margen de seguridad:</strong> 1.5mm por cada lado (evitar texto en
       esta zona)
@@ -17,8 +18,8 @@
     class="bleed-section"
     [style]="'--aspect-ratio: ' + this.totalWidth + ' / ' + this.totalHeight"
   >
-    <div class="bleed-section-width">{{ this.width + 6 }}mm</div>
-    <div class="bleed-section-height">{{ this.height + 6 }}mm</div>
+    <div class="bleed-section-width">{{ this.totalWidth }}mm</div>
+    <div class="bleed-section-height">{{ this.totalHeight }}mm</div>
     <!-- Contenedor gris (margen de seguridad) -->
     <div
       class="margin-section"
@@ -47,7 +48,7 @@
 
   <!-- Leyenda -->
   <div class="legend">
-    <div class="legend-item">
+    <div class="legend-item" *ngIf="requiresBleed">
       <div class="legend-color bleed-color"></div>
       <span>Zona de sangrado (se cortará)</span>
     </div>

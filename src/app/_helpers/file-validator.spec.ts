@@ -333,7 +333,7 @@ describe('FileValidator', () => {
 
     it('should validate a correct rollup file', () => {
       mockFile.pages = 1;
-      mockFile.pageDimensions = [{ width: 856, height: 2056 }]; // 85x205 + sangría (6mm)
+      mockFile.pageDimensions = [{ width: 850, height: 2050 }]; // 85x205 sin sangría
 
       const result = validator.validateFile(mockFile);
 
@@ -344,7 +344,7 @@ describe('FileValidator', () => {
 
     it('should detect correct rollup size for 100x205', () => {
       mockFile.pages = 1;
-      mockFile.pageDimensions = [{ width: 1006, height: 2056 }]; // 100x205 + sangría (6mm)
+      mockFile.pageDimensions = [{ width: 1000, height: 2050 }]; // 100x205 sin sangría
 
       const result = validator.validateFile(mockFile);
 
@@ -355,7 +355,7 @@ describe('FileValidator', () => {
 
     it('should reject files with wrong page count', () => {
       mockFile.pages = 2;
-      mockFile.pageDimensions = [{ width: 91, height: 211 }];
+      mockFile.pageDimensions = [{ width: 850, height: 2050 }];
 
       const result = validator.validateFile(mockFile);
 
