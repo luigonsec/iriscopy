@@ -12,6 +12,7 @@ export enum ProductType {
   TRIPTICOS = 'tripticos',
   TARJETAS_VISITA = 'tarjetas-visita',
   ROLL_UPS = 'rollups',
+  REVISTAS = 'revistas',
 }
 
 export enum OrientationType {
@@ -467,6 +468,20 @@ export class FileValidatorFactory {
       },
       requiresBleed: true,
       isOpenSize: true, // Los dípticos SÍ se doblan, requieren tamaño abierto
+    });
+  }
+
+  static createMagazineValidator(magazineOptions: any): FileValidator {
+    return new FileValidator({
+      productType: ProductType.REVISTAS,
+      allowedPages: [8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52],
+      orientationSizes: {
+        vertical: magazineOptions.vertical_size,
+        horizontal: magazineOptions.horizontal_size,
+        cuadrado: magazineOptions.square_size,
+      },
+      requiresBleed: true,
+      isOpenSize: false,
     });
   }
 

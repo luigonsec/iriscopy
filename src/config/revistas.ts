@@ -22,6 +22,7 @@ export default {
         description: '115 gr',
         group: '1',
         factor: 1,
+        weight: 115,
       },
       {
         name: '130 gr',
@@ -29,6 +30,7 @@ export default {
         description: '130 gr',
         group: '1',
         factor: 1,
+        weight: 130,
       },
       {
         name: '150 gr',
@@ -36,6 +38,7 @@ export default {
         description: '150 gr',
         group: '1',
         factor: 1,
+        weight: 150,
       },
       {
         name: '200 gr',
@@ -43,6 +46,7 @@ export default {
         description: '200 gr',
         group: '1',
         factor: 1,
+        weight: 200,
       },
       {
         name: '250 gr',
@@ -50,6 +54,7 @@ export default {
         description: '250 gr',
         group: '1',
         factor: 1,
+        weight: 250,
       },
     ],
     'estucado-mate': [
@@ -60,6 +65,7 @@ export default {
         description: '115 gr',
         group: '1',
         factor: 1,
+        weight: 115,
       },
       {
         name: '130 gr',
@@ -67,6 +73,7 @@ export default {
         description: '130 gr',
         group: '1',
         factor: 1,
+        weight: 130,
       },
       {
         name: '150 gr',
@@ -74,6 +81,7 @@ export default {
         description: '150 gr',
         group: '1',
         factor: 1,
+        weight: 150,
       },
       {
         name: '200 gr',
@@ -81,6 +89,7 @@ export default {
         description: '200 gr',
         group: '1',
         factor: 1,
+        weight: 200,
       },
       {
         name: '250 gr',
@@ -88,9 +97,30 @@ export default {
         description: '250 gr',
         group: '1',
         factor: 1,
+        weight: 250,
       },
     ],
   },
+
+  finishType: [
+    {
+      default: true,
+      name: 'Sin acabado',
+      code: 'sin-acabado',
+    },
+    {
+      name: 'Laminado mate',
+      code: 'laminado-mate',
+    },
+    {
+      name: 'Laminado brillo',
+      code: 'laminado-brillo',
+    },
+    {
+      name: 'Soft touch',
+      code: 'soft-touch',
+    },
+  ],
 
   inner_paperType: {
     'estucado-brillo': [
@@ -101,6 +131,7 @@ export default {
         description: '115 gr',
         group: '1',
         factor: 1,
+        weight: 115,
       },
       {
         name: '130 gr',
@@ -108,6 +139,7 @@ export default {
         description: '130 gr',
         group: '1',
         factor: 1,
+        weight: 130,
       },
       {
         name: '150 gr',
@@ -115,6 +147,7 @@ export default {
         description: '150 gr',
         group: '1',
         factor: 1,
+        weight: 150,
       },
       {
         name: '200 gr',
@@ -122,6 +155,7 @@ export default {
         description: '200 gr',
         group: '1',
         factor: 1,
+        weight: 200,
       },
       {
         name: '250 gr',
@@ -129,6 +163,7 @@ export default {
         description: '250 gr',
         group: '1',
         factor: 1,
+        weight: 250,
       },
     ],
     'estucado-mate': [
@@ -139,6 +174,7 @@ export default {
         description: '115 gr',
         group: '1',
         factor: 1,
+        weight: 115,
       },
       {
         name: '130 gr',
@@ -146,6 +182,7 @@ export default {
         description: '130 gr',
         group: '1',
         factor: 1,
+        weight: 130,
       },
       {
         name: '150 gr',
@@ -153,6 +190,7 @@ export default {
         description: '150 gr',
         group: '1',
         factor: 1,
+        weight: 150,
       },
       {
         name: '200 gr',
@@ -160,6 +198,7 @@ export default {
         description: '200 gr',
         group: '1',
         factor: 1,
+        weight: 200,
       },
       {
         name: '250 gr',
@@ -167,6 +206,7 @@ export default {
         description: '250 gr',
         group: '1',
         factor: 1,
+        weight: 250,
       },
     ],
   },
@@ -209,6 +249,8 @@ export default {
       default: true,
       name: 'A6',
       code: 'a6',
+      width: 105,
+      height: 148,
       factor: 1,
       description: '105x148',
       group: '1',
@@ -218,6 +260,8 @@ export default {
       code: 'a5',
       factor: 1,
       description: '148x210',
+      width: 148,
+      height: 210,
       group: '1',
     },
     {
@@ -225,25 +269,18 @@ export default {
       code: 'a4',
       factor: 1,
       description: '210x297',
+      width: 210,
+      height: 297,
       group: '1',
     },
     {
-      name: '10.5x21',
-      code: '10.5x21',
+      name: '10x21',
+      code: '10x21',
+      description: '10x21',
+      width: 100,
+      height: 210,
       factor: 1,
-      group: '2',
-    },
-    {
-      name: '9.8x21',
-      code: '9.8x21',
-      factor: 1,
-      group: '2',
-    },
-    {
-      name: 'Personalizado',
-      code: 'personalizado',
-      factor: 1,
-      group: '2',
+      group: '1',
     },
   ],
 
@@ -252,41 +289,38 @@ export default {
       default: true,
       name: 'A6',
       code: 'a6',
-      description: '105x148',
+      description: '148x105',
+      width: 148,
+      height: 105,
       factor: 1,
       group: '1',
     },
     {
       name: 'A5',
       code: 'a5',
-      description: '148x210',
+      description: '210x148',
+      width: 210,
+      height: 148,
       factor: 1,
       group: '1',
     },
     {
       name: 'A4',
       code: 'a4',
-      description: '210x297',
+      description: '297x210',
+      width: 297,
+      height: 210,
       factor: 1,
       group: '1',
     },
     {
-      name: '21x10.5',
-      code: '21x10.5',
+      name: '21x10',
+      code: '21x10',
+      description: '21x10',
+      width: 210,
+      height: 100,
       factor: 1,
-      group: '2',
-    },
-    {
-      name: '21x9.8',
-      code: '21x9.8',
-      factor: 1,
-      group: '2',
-    },
-    {
-      name: 'Personalizado',
-      code: 'personalizado',
-      factor: 1,
-      group: '2',
+      group: '1',
     },
   ],
 
@@ -295,30 +329,36 @@ export default {
       default: true,
       name: '12x12',
       code: '12',
+      description: '12x12',
+      width: 120,
+      height: 120,
       factor: 1,
       group: '1',
     },
     {
       name: '10.5x10.5',
       code: '10.5',
+      description: '10.5x10.5',
+      width: 105,
+      height: 105,
       factor: 1,
       group: '1',
     },
     {
       name: '14.8x14.8',
       code: '14.8',
-      factor: 1,
-      group: '1',
-    },
-    {
-      name: '21x21',
-      code: '21',
+      description: '14.8x14.8',
+      width: 148,
+      height: 148,
       factor: 1,
       group: '2',
     },
     {
-      name: 'Personalizado',
-      code: 'personalizado',
+      name: '21x21',
+      code: '21',
+      description: '21x21',
+      width: 210,
+      height: 210,
       factor: 1,
       group: '2',
     },

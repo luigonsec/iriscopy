@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
 import dipticosOptions from 'src/config/dipticos';
 import Diptico from '../../../interfaces/Diptico';
@@ -39,7 +45,8 @@ export class ViewDipticosComponent
   constructor(
     public pricesService: PricesService,
     public shopCart: ShopcartService,
-    public messageService: MessageService
+    public messageService: MessageService,
+    private cdr: ChangeDetectorRef
   ) {
     super();
 
@@ -88,7 +95,8 @@ export class ViewDipticosComponent
   };
 
   addToCartFn = async (order: Diptico) => {
-    return this.shopCart.addDiptychToCart.bind(this.shopCart)(order);
+    this.shopCart.addDiptychToCart.bind(this.shopCart)(order);
+    return this.reset();
   };
 
   /**
@@ -159,29 +167,72 @@ export class ViewDipticosComponent
     }
   }
 
-  ngOnInit() {
+  public reset() {
+    // Obtener valores por defecto
+    const defaultFormat = this.dipticosOptions.format.find(
+      (option) => option.default
+    );
+    const defaultPaperCategory = this.dipticosOptions.paperCategory.find(
+      (option) => option.default
+    );
+    const defaultCopiesQuantity = this.dipticosOptions.copiesQuantity.find(
+      (option) => option.default
+    );
+
+    // Obtener tamaño por defecto basado en el formato por defecto
+    let defaultPaperSize;
+    if (defaultFormat) {
+      if (defaultFormat.code === 'vertical') {
+        defaultPaperSize = this.dipticosOptions.vertical_size.find(
+          (option) => option.default
+        );
+      } else if (defaultFormat.code === 'horizontal') {
+        defaultPaperSize = this.dipticosOptions.horizontal_size.find(
+          (option) => option.default
+        );
+      } else if (defaultFormat.code === 'cuadrado') {
+        defaultPaperSize = this.dipticosOptions.square_size.find(
+          (option) => option.default
+        );
+      }
+    }
+
+    // Inicializar las opciones de papel disponibles con la categoría por defecto
+    if (defaultPaperCategory) {
+      this.paperTypeOptions =
+        this.dipticosOptions.paperType[defaultPaperCategory.code] || [];
+    }
+
+    // Obtener el tipo de papel por defecto para la categoría seleccionada
+    const defaultPaperType = this.paperTypeOptions.find(
+      (option) => option.default
+    );
+
     this.order = {
-      format: undefined,
+      format: defaultFormat,
       printForm: {
         code: 'doble-cara',
       },
-      paperCategory: undefined,
-      paperType: undefined,
-      paperSize: undefined,
-      copiesQuantity: 0,
+      paperCategory: defaultPaperCategory,
+      paperType: defaultPaperType,
+      paperSize: defaultPaperSize,
+      copiesQuantity: defaultCopiesQuantity?.code
+        ? parseInt(defaultCopiesQuantity.code)
+        : 0,
       additionalComments: '',
       files: [],
     };
 
-    // Inicializar las opciones de tipo de papel con la categoría por defecto
-    const defaultCategory = this.dipticosOptions.paperCategory.find(
-      (cat) => cat.default
-    );
-    if (defaultCategory) {
-      this.paperTypeOptions =
-        this.dipticosOptions.paperType[defaultCategory.code] || [];
-    }
+    // Limpiar estado temporal
+    this.detectedOrientationCode = undefined;
+    this.detectedPaperSize = undefined;
 
+    this.undoPresetProperties();
+    this.updateReady();
+  }
+
+  ngOnInit() {
+    this.reset();
     super.ngOnInit();
   }
 

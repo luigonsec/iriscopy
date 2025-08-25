@@ -80,7 +80,8 @@ export class ViewCarpetasComponent extends FormBase<Carpeta> implements OnInit {
   };
 
   addToCartFn = async (order: Carpeta) => {
-    return this.shopCart.addFolderToCart.bind(this.shopCart)(order);
+    this.shopCart.addFolderToCart.bind(this.shopCart)(order);
+    return this.reset();
   };
 
   /**
@@ -125,27 +126,54 @@ export class ViewCarpetasComponent extends FormBase<Carpeta> implements OnInit {
     }
   }
 
-  ngOnInit() {
+  public reset() {
+    // Obtener valores por defecto
+    const defaultPrintForm = this.folderOptions.printForm.find(
+      (option) => option.default
+    );
+    const defaultPaperCategory = this.folderOptions.paperCategory.find(
+      (option) => option.default
+    );
+    const defaultPaperSize = this.folderOptions.paperSize.find(
+      (option) => option.default
+    );
+    const defaultFinishType = this.folderOptions.finishType.find(
+      (option) => option.default
+    );
+    const defaultCopiesQuantity = this.folderOptions.copiesQuantity.find(
+      (option) => option.default
+    );
+
+    // Inicializar las opciones de papel disponibles con la categoría por defecto
+    if (defaultPaperCategory) {
+      this.paperTypeOptions =
+        this.folderOptions.paperType[defaultPaperCategory.code] || [];
+    }
+
+    // Obtener el tipo de papel por defecto para la categoría seleccionada
+    const defaultPaperType = this.paperTypeOptions.find(
+      (option) => option.default
+    );
+
     this.order = {
-      printForm: undefined,
-      paperCategory: undefined,
-      paperType: undefined,
-      finishType: undefined,
-      paperSize: undefined,
-      copiesQuantity: 0,
+      printForm: defaultPrintForm,
+      paperCategory: defaultPaperCategory,
+      paperType: defaultPaperType,
+      finishType: defaultFinishType,
+      paperSize: defaultPaperSize,
+      copiesQuantity: defaultCopiesQuantity?.code
+        ? parseInt(defaultCopiesQuantity.code)
+        : 0,
       additionalComments: '',
       files: [],
     };
 
-    // Inicializar las opciones de papel disponibles con la categoría por defecto
-    const defaultCategory = this.folderOptions.paperCategory.find(
-      (cat) => cat.default
-    );
-    if (defaultCategory) {
-      this.paperTypeOptions =
-        this.folderOptions.paperType[defaultCategory.code] || [];
-    }
+    this.undoPresetProperties();
+    this.updateReady();
+  }
 
+  ngOnInit() {
+    this.reset();
     super.ngOnInit();
   }
 }

@@ -48,7 +48,8 @@ export class ViewRollupsComponent extends FormBase<Rollup> implements OnInit {
   };
 
   addToCartFn = async (order: Rollup) => {
-    return this.shopCart.addRollupToCart.bind(this.shopCart)(order);
+    this.shopCart.addRollupToCart.bind(this.shopCart)(order);
+    return this.reset();
   };
 
   /**
@@ -77,13 +78,25 @@ export class ViewRollupsComponent extends FormBase<Rollup> implements OnInit {
     }
   }
 
-  ngOnInit() {
+  public reset() {
+    // Obtener valores por defecto
+    const defaultPaperSize = this.rollupsOptions.paperSize.find(
+      (option) => option.default
+    );
+
     this.order = {
-      paperSize: undefined,
+      paperSize: defaultPaperSize,
       copiesQuantity: 1,
       additionalComments: '',
       files: [],
     };
+
+    this.undoPresetProperties();
+    this.updateReady();
+  }
+
+  ngOnInit() {
+    this.reset();
     super.ngOnInit();
   }
 }

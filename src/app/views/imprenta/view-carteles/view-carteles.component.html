@@ -107,9 +107,13 @@
       <div id="print-guide-column" class="col-12 lg:col-6 hidden lg:block">
         <div id="print-guide">
           <app-print-guide
-            [width]="this.order.paperSize.width"
-            [height]="this.order.paperSize.height"
-            *ngIf="!!!ready"
+            [width]="this.order.paperSize?.width"
+            [height]="this.order.paperSize?.height"
+            *ngIf="
+              !!!ready &&
+              this.order.paperSize?.width &&
+              this.order.paperSize?.height
+            "
           ></app-print-guide>
         </div>
       </div>
@@ -119,9 +123,13 @@
   <div id="print-guide-column-sm" class="col-12 lg:hidden">
     <div id="print-guide">
       <app-print-guide
-        [width]="this.order.paperSize.width"
-        [height]="this.order.paperSize.height"
-        *ngIf="!!!ready"
+        [width]="this.order.paperSize?.width"
+        [height]="this.order.paperSize?.height"
+        *ngIf="
+          !!!ready &&
+          this.order.paperSize?.width &&
+          this.order.paperSize?.height
+        "
       ></app-print-guide>
     </div>
   </div>

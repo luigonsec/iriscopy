@@ -44,20 +44,20 @@
           <div class="Label">Tamaño (cerrado)</div>
           <app-select-button
             #paperSizeSelector
-            *ngIf="order.format.code === 'vertical'"
+            *ngIf="order.format?.code === 'vertical'"
             [options]="dipticosOptions.vertical_size"
             (emitChange)="getProperty('paperSize', $event)"
           ></app-select-button>
           <app-select-button
             #paperSizeSelector
-            *ngIf="order.format.code === 'horizontal'"
+            *ngIf="order.format?.code === 'horizontal'"
             [options]="dipticosOptions.horizontal_size"
             (emitChange)="getProperty('paperSize', $event)"
           ></app-select-button>
 
           <app-select-button
             #paperSizeSelector
-            *ngIf="order.format.code === 'cuadrado'"
+            *ngIf="order.format?.code === 'cuadrado'"
             [options]="dipticosOptions.square_size"
             (emitChange)="getProperty('paperSize', $event)"
           ></app-select-button>
@@ -122,9 +122,13 @@
       <div id="print-guide-column" class="col-12 lg:col-6 hidden lg:block">
         <div id="print-guide">
           <app-print-guide
-            *ngIf="this.order.paperSize && !!!this.ready"
-            [width]="this.order.paperSize.width * 2"
-            [height]="this.order.paperSize.height"
+            *ngIf="
+              !!!this.ready &&
+              this.order.paperSize?.width &&
+              this.order.paperSize?.height
+            "
+            [width]="this.order.paperSize?.width * 2"
+            [height]="this.order.paperSize?.height"
           ></app-print-guide>
         </div>
       </div>
@@ -134,9 +138,9 @@
   <div id="print-guide-column-sm" class="col-12 lg:hidden">
     <div id="print-guide">
       <app-print-guide
-        *ngIf="this.order.paperSize"
-        [width]="this.order.paperSize.width * 2"
-        [height]="this.order.paperSize.height"
+        *ngIf="this.order.paperSize?.width && this.order.paperSize?.height"
+        [width]="this.order.paperSize?.width * 2"
+        [height]="this.order.paperSize?.height"
       ></app-print-guide>
     </div>
   </div>

@@ -110,7 +110,8 @@ label.form-label {
   font-family: "Montserrat" !important;
 }
 
-::ng-deep .p-badge {
+::ng-deep .p-badge,
+body .p-badge {
   background-color: colors.$primary;
 }
 

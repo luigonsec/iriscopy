@@ -108,6 +108,16 @@
   ></app-shopcart-print-item>
 </div>
 
+<div class="order-item" *ngFor="let magazine of magazines">
+  <app-shopcart-print-item
+    [name]="'Revistas'"
+    [item]="magazine"
+    [price]="itemsPrice[magazine.id]"
+    [weight]="itemsWeight[magazine.id]"
+    [removeFn]="removeItemFunctions.magazines"
+  ></app-shopcart-print-item>
+</div>
+
 <!--Flyers-->
 <div class="order-item" *ngFor="let diptych of diptychs">
   <app-shopcart-print-item

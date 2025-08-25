@@ -13,6 +13,7 @@ import { PriceResult } from '../interfaces/PriceResult';
 import CartItem from '../interfaces/CartItem';
 import { CartItemType } from './shopcart.service';
 import Cartel from '../interfaces/Cartel';
+import Revista from '../interfaces/Revista';
 
 @Injectable({
   providedIn: 'root',
@@ -93,6 +94,13 @@ export class PricesService {
     return this.http.post<PriceResult>(
       `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/prices/flyer`,
       flyer
+    );
+  }
+
+  getMagazinePrice(magazine: Revista): Observable<PriceResult> {
+    return this.http.post<PriceResult>(
+      `${environment.api.protocol}://${environment.api.host}:${environment.api.port}/api/v1/prices/magazine`,
+      magazine
     );
   }
 

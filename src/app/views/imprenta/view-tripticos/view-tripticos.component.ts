@@ -86,8 +86,73 @@ export class ViewTripticosComponent
   };
 
   addToCartFn = async (order: Triptico) => {
-    return this.shopCart.addTritychToCart.bind(this.shopCart)(order);
+    this.shopCart.addTritychToCart.bind(this.shopCart)(order);
+    return this.reset();
   };
+
+  public reset() {
+    // Obtener valores por defecto
+    const defaultFormat = this.tripricoOptions.format.find(
+      (option) => option.default
+    );
+    const defaultPaperCategory = this.tripricoOptions.paperCategory.find(
+      (option) => option.default
+    );
+    const defaultCopiesQuantity = this.tripricoOptions.copiesQuantity.find(
+      (option) => option.default
+    );
+
+    // Obtener tamaño por defecto basado en el formato por defecto
+    let defaultPaperSize;
+    if (defaultFormat) {
+      if (defaultFormat.code === 'vertical') {
+        defaultPaperSize = this.tripricoOptions.vertical_size.find(
+          (option) => option.default
+        );
+      } else if (defaultFormat.code === 'horizontal') {
+        defaultPaperSize = this.tripricoOptions.horizontal_size.find(
+          (option) => option.default
+        );
+      } else if (defaultFormat.code === 'cuadrado') {
+        defaultPaperSize = this.tripricoOptions.square_size.find(
+          (option) => option.default
+        );
+      }
+    }
+
+    // Inicializar las opciones de papel disponibles con la categoría por defecto
+    if (defaultPaperCategory) {
+      this.paperTypeOptions =
+        this.tripricoOptions.paperType[defaultPaperCategory.code] || [];
+    }
+
+    // Obtener el tipo de papel por defecto para la categoría seleccionada
+    const defaultPaperType = this.paperTypeOptions.find(
+      (option) => option.default
+    );
+
+    this.order = {
+      format: defaultFormat,
+      paperCategory: defaultPaperCategory,
+      paperType: defaultPaperType,
+      paperSize: defaultPaperSize,
+      printForm: {
+        code: 'doble-cara',
+      },
+      copiesQuantity: defaultCopiesQuantity?.code
+        ? parseInt(defaultCopiesQuantity.code)
+        : 0,
+      additionalComments: '',
+      files: [],
+    };
+
+    // Limpiar estado temporal
+    this.detectedOrientationCode = undefined;
+    this.detectedPaperSize = undefined;
+
+    this.undoPresetProperties();
+    this.updateReady();
+  }
 
   /**
    * Configura automáticamente la orientación basada en las dimensiones del archivo
@@ -158,18 +223,7 @@ export class ViewTripticosComponent
   }
 
   ngOnInit() {
-    this.order = {
-      format: undefined,
-      paperCategory: undefined,
-      paperType: undefined,
-      paperSize: undefined,
-      printForm: {
-        code: 'doble-cara',
-      },
-      copiesQuantity: 0,
-      additionalComments: '',
-      files: [],
-    };
+    this.reset();
     super.ngOnInit();
   }
 

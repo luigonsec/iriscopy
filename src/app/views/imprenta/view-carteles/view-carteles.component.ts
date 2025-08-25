@@ -88,7 +88,6 @@ export class ViewCartelesComponent extends FormBase<Cartel> implements OnInit {
    * Configura automáticamente el tamaño del papel basado en las dimensiones del archivo
    */
   protected setDetectedSize(paperSize: any): void {
-    console.log('setDetectedSize', paperSize);
     if (this.paperSizeSelector && paperSize) {
       // Buscar la opción correspondiente en las opciones del componente
       const matchingOption = this.cartelesOptions.paperSize.find(
@@ -118,33 +117,56 @@ export class ViewCartelesComponent extends FormBase<Cartel> implements OnInit {
   }
 
   addToCartFn = async (order: Cartel) => {
-    return this.shopCart.addPosterToCart.bind(this.shopCart)(order);
+    this.shopCart.addPosterToCart.bind(this.shopCart)(order);
+    return this.reset();
   };
 
-  ngOnInit() {
+  public reset() {
+    // Obtener valores por defecto
+    const defaultPrintForm = {
+      name: 'Una cara',
+      code: 'una-cara',
+    };
+    const defaultPaperCategory = this.cartelesOptions.paperCategory.find(
+      (option) => option.default
+    );
+    const defaultPaperSize = this.cartelesOptions.paperSize.find(
+      (option) => option.default
+    );
+    const defaultCopiesQuantity = this.cartelesOptions.copiesQuantity.find(
+      (option) => option.default
+    );
+
+    // Inicializar las opciones de papel disponibles con la categoría por defecto
+    if (defaultPaperCategory) {
+      this.paperTypeOptions =
+        this.cartelesOptions.paperType[defaultPaperCategory.code] || [];
+    }
+
+    // Obtener el tipo de papel por defecto para la categoría seleccionada
+    const defaultPaperType = this.paperTypeOptions.find(
+      (option) => option.default
+    );
+
     this.order = {
-      printForm: {
-        name: 'Una cara',
-        code: 'una-cara',
-      },
-      paperCategory: undefined,
-      paperType: undefined,
-      paperSize: undefined,
+      printForm: defaultPrintForm,
+      paperCategory: defaultPaperCategory,
+      paperType: defaultPaperType,
+      paperSize: defaultPaperSize,
       size: undefined,
-      copiesQuantity: 0,
+      copiesQuantity: defaultCopiesQuantity?.code
+        ? parseInt(defaultCopiesQuantity.code)
+        : 0,
       additionalComments: '',
       files: [],
     };
 
-    // Inicializar las opciones de papel disponibles con la categoría por defecto
-    const defaultCategory = this.cartelesOptions.paperCategory.find(
-      (cat) => cat.default
-    );
-    if (defaultCategory) {
-      this.paperTypeOptions =
-        this.cartelesOptions.paperType[defaultCategory.code] || [];
-    }
+    this.undoPresetProperties();
+    this.updateReady();
+  }
 
+  ngOnInit() {
+    this.reset();
     super.ngOnInit();
   }
 }

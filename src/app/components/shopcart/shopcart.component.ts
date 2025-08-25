@@ -53,6 +53,7 @@ export class ShopcartComponent implements OnInit, OnDestroy {
     triptychs: (item: Triptico) => this.removeTriptych(item),
     rollups: (item: Rollup) => this.removeRollup(item),
     posters: (item: Cartel) => this.removePoster(item),
+    magazines: (item: Revista) => this.removeMagazine(item),
     // Agregamos otros tipos según se necesite
   };
 
@@ -269,6 +270,10 @@ export class ShopcartComponent implements OnInit, OnDestroy {
 
   removeRollup(rollup: Rollup): void {
     this.removeItem(CartItemType.ROLLUP, rollup);
+  }
+
+  removeMagazine(magazine: Revista): void {
+    this.removeItem(CartItemType.MAGAZINE, magazine);
   }
 
   removePoster(poster: Cartel): void {

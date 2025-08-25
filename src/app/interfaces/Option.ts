@@ -7,4 +7,5 @@ export default interface Option {
   group?: string;
   width?: number;
   height?: number;
+  weight?: number;
 }

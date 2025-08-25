@@ -134,31 +134,50 @@ export class ViewFlyersComponent extends FormBase<Flyer> implements OnInit {
   }
 
   public reset() {
+    // Obtener valores por defecto
+    const defaultPrintForm = this.flyerOptions.printForm.find(
+      (option) => option.default
+    );
+    const defaultPaperCategory = this.flyerOptions.paperCategory.find(
+      (option) => option.default
+    );
+    const defaultPaperSize = this.flyerOptions.paperSize.find(
+      (option) => option.default
+    );
+    const defaultCopiesQuantity = this.flyerOptions.copiesQuantity.find(
+      (option) => option.default
+    );
+
+    // Inicializar las opciones de papel disponibles con la categoría por defecto
+    if (defaultPaperCategory) {
+      this.availablePaperTypes =
+        this.flyerOptions.paperType[defaultPaperCategory.code] || [];
+    }
+
+    // Obtener el tipo de papel por defecto para la categoría seleccionada
+    const defaultPaperType = this.availablePaperTypes.find(
+      (option) => option.default
+    );
+
     this.order = {
-      paperSize: undefined,
-      printForm: undefined,
-      paperCategory: undefined,
-      paperType: undefined,
+      paperSize: defaultPaperSize,
+      printForm: defaultPrintForm,
+      paperCategory: defaultPaperCategory,
+      paperType: defaultPaperType,
       size: undefined,
-      copiesQuantity: 0,
+      copiesQuantity: defaultCopiesQuantity?.code
+        ? parseInt(defaultCopiesQuantity.code)
+        : 0,
       additionalComments: '',
       files: [],
     };
+
     this.undoPresetProperties();
     this.updateReady();
   }
 
   ngOnInit() {
     this.reset();
-
-    // Inicializar las opciones de papel disponibles con la categoría por defecto
-    const defaultCategory = this.flyerOptions.paperCategory.find(
-      (cat) => cat.default
-    );
-    if (defaultCategory) {
-      this.availablePaperTypes =
-        this.flyerOptions.paperType[defaultCategory.code] || [];
-    }
 
     super.ngOnInit();
   }
