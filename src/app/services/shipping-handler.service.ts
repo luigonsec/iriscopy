@@ -259,7 +259,7 @@ export class ShippingHandlerService {
       );
     }
 
-    return range.prices[zone];
+    return (range.prices[zone] + 1.5) * 1.21; // Se suma el IVA y el coste de recogida;
   }
 
   /**
