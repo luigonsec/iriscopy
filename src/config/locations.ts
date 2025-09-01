@@ -24,11 +24,11 @@ const locations = [
     name: 'Escuela de Ingeniería ETSI (Sevilla)',
     address: 'Camino de los Descubrimientos s/n',
   },
-  // {
-  //   id: 152566,
-  //   name: 'Facultad de Derecho (Sevilla)',
-  //   address: 'Cl. Enramadilla, 18, 20, 41018 Sevilla',
-  // },
+  {
+    id: 152566,
+    name: 'Facultad de Derecho (Sevilla)',
+    address: 'Cl. Enramadilla, 18, 20, 41018 Sevilla',
+  },
 ];
 
 export default locations;
