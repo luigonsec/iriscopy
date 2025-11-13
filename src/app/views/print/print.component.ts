@@ -10,10 +10,10 @@ import { AnalyticsService } from 'src/app/services/analytics.service';
 import { ShopcartService } from '../../services/shopcart.service';
 import { PricesService } from '../../services/prices.service';
 @Component({
-    selector: 'app-print',
-    templateUrl: './print.component.html',
-    styleUrls: ['./print.component.scss'],
-    standalone: false
+  selector: 'app-print',
+  templateUrl: './print.component.html',
+  styleUrls: ['./print.component.scss'],
+  standalone: false,
 })
 export class PrintComponent implements OnInit, OnDestroy {
   public orientation: Option;
@@ -79,7 +79,13 @@ export class PrintComponent implements OnInit, OnDestroy {
   }
 
   removeFile(id) {
+    const fileToRemove = this.files.find((x) => x.id === id);
     this.files = this.files.filter((x) => x.id !== id);
+    if (fileToRemove && this.uploader) {
+      this.uploader.removeFile(fileToRemove);
+    }
+    this.order.files = this.files;
+    this.order = Object.assign({}, this.order);
   }
 
   getPaperType(value) {
@@ -196,8 +202,7 @@ export class PrintComponent implements OnInit, OnDestroy {
   }
 
   getPrecio = async () => {
-    const others = this.shopcartService.getCart().copies;
-    others.push(this.order);
+    const others = [...this.shopcartService.getCart().copies, this.order];
     const res = await firstValueFrom(
       this.pricesService.getCopyPrice(this.order, others)
     );

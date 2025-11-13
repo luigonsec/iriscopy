@@ -82,6 +82,9 @@
         [(ngModel)]="payment"
         inputId="card"
         (ngModelChange)="infoPagoAnalytics()"
+        [disabled]="
+          this.subtotalBeforeShippingCoupons < PAYMENT_MINIMUM_PRICE_CARD
+        "
       >
       </p-radioButton>
       <label class="Payment__type" for="card">Tarjeta de crédito/débito</label>
@@ -119,15 +122,15 @@
         alt=""
       />
     </div>
-    <div
-      class="Option p-field-radiobutton"
-      *ngIf="this.subtotalBeforeShippingCoupons >= PAYMENT_MINIMUM_PRICE_BIZUM"
-    >
+    <div class="Option p-field-radiobutton">
       <p-radioButton
         (ngModelChange)="infoPagoAnalytics()"
         value="BIZUM"
         [(ngModel)]="payment"
         inputId="bizum"
+        [disabled]="
+          this.subtotalBeforeShippingCoupons < PAYMENT_MINIMUM_PRICE_BIZUM
+        "
       ></p-radioButton>
       <label class="Payment__type" for="bizum">BIZUM</label>
       <label class="Payment__type_minimum" for="bizum"

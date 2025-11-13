@@ -54,7 +54,7 @@
     </div>
   </div>
   <div class="order_note" *ngFor="let note of itemsNotes[order.id] || []">
-    {{ note }}
+    <div [innerHTML]="note.text"></div>
   </div>
 </div>
 
