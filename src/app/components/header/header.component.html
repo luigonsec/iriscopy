@@ -19,7 +19,11 @@
         ></p-menu>
         Puntos de recogida <i class="collapse-icon fas fa-chevron-down"></i>
       </span>
-      <span class="link" (click)="menuImprenta.toggle($event)">
+      <span
+        class="link"
+        (click)="menuImprenta.toggle($event)"
+        *ngIf="this.imprentaActive"
+      >
         <p-menu
           #menuImprenta
           [model]="opcionesImprenta"

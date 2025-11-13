@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { OrderCopy } from 'src/app/interfaces/OrderCopy';
 import { ShopcartService } from 'src/app/services/shopcart.service';
 import { ShopcartWrapperComponent } from '../shopcart-wrapper/shopcart-wrapper.component';
 import Cart from 'src/app/interfaces/Cart';
@@ -20,6 +19,7 @@ import { Menu } from 'primeng/menu';
   standalone: false,
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+  public imprentaActive: boolean = false;
   public items: MenuItem[];
   public display: boolean = true;
   public shop_active: boolean = false;
